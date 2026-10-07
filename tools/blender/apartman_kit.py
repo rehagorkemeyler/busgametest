@@ -25,8 +25,8 @@ from mathutils import Matrix, Vector
 # ---------------------------------------------------------------------------
 # Palet
 # ---------------------------------------------------------------------------
-GRID = 8
-CELL = 32
+GRID = 16
+CELL = 16
 PALETTE = {
     # sıvalar
     "krem": (0.93, 0.88, 0.76), "bej": (0.85, 0.76, 0.62), "somon": (0.91, 0.69, 0.58),
@@ -54,6 +54,12 @@ PALETTE = {
     "kule_beton": (0.86, 0.85, 0.81), "metal": (0.52, 0.55, 0.58), "kuğu": (0.97, 0.97, 0.95),
     "gaga": (0.90, 0.45, 0.10), "ego_mavi": (0.05, 0.30, 0.62), "agac_govde": (0.33, 0.25, 0.18),
     "kirmizi_bayrak": (0.85, 0.05, 0.10),
+    # trafik araçları (arac_kit.py)
+    "taksi_sari": (0.98, 0.78, 0.05), "araba_beyaz": (0.92, 0.92, 0.90), "araba_kirmizi": (0.70, 0.08, 0.08),
+    "araba_lacivert": (0.10, 0.15, 0.35), "araba_bej": (0.80, 0.72, 0.55), "araba_gri": (0.55, 0.57, 0.60),
+    "araba_yesil": (0.15, 0.35, 0.22), "araba_mavi": (0.20, 0.40, 0.70), "araba_turuncu": (0.85, 0.40, 0.08),
+    "lastik": (0.08, 0.08, 0.08), "jant": (0.70, 0.71, 0.73), "far": (0.98, 0.97, 0.85), "stop": (0.75, 0.05, 0.05),
+    "arac_cam": (0.12, 0.16, 0.20), "plaka": (0.95, 0.95, 0.95), "krom": (0.80, 0.81, 0.83),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID

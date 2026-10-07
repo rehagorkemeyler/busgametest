@@ -101,7 +101,7 @@ def unity(f, r, z):
 
 class Layout:
     def __init__(self):
-        self.items, self.stops = [], []
+        self.items, self.stops, self.lanes = [], [], []
 
     def add(self, model, f, r, z, rot_deg, group):
         self.items.append({"model": model, "pos": unity(f, r, z), "rotY": round(rot_deg % 360, 2), "group": group})
@@ -254,7 +254,39 @@ def build_layout(widths, seed=2024):
                 lay.add(f"Props/{rng.choice(['Agac_Cinar_1', 'Agac_Kavak'])}", f, r, z + 0.15, rng.uniform(0, 360), "Agaclar")
             s += 26.0
 
+    lay.lanes = build_lanes(bul, cin)
     return lay, bul, cin, spawn
+
+
+def build_lanes(bul, cin, step=5.0):
+    """Trafik şeritleri: her şerit tek yönlü nokta dizisi (Unity koordinatı, düz liste x,y,z,...).
+    Ters yön şeritleri aynı ofsetin solunda, noktaları ters sırada."""
+    lanes = []
+
+    def lane(chain, offset, s0, s1, name, limit):
+        pts = []
+        s = s0
+        while s < s1:
+            f, r, z, _ = chain.frame(s, offset)
+            pts += unity(f, r, z)
+            s += step
+        f, r, z, _ = chain.frame(s1, offset)
+        pts += unity(f, r, z)
+        if offset < 0:
+            pts = [c for i in range(len(pts) // 3 - 1, -1, -1) for c in pts[i * 3:i * 3 + 3]]
+        lanes.append({"name": name, "limitKmh": limit, "points": pts})
+
+    m, w = B["median"], B["lane"]
+    for k in range(3):
+        off = m + w * (k + 0.5)
+        lane(bul, off, bul.s_start, bul.s_end, f"Bulvar_Gidis_{k + 1}", 50)
+        lane(bul, -off, bul.s_start, bul.s_end, f"Bulvar_Donus_{k + 1}", 50)
+    w = C["lane"]
+    for k in range(2):
+        off = w * (k + 0.5)
+        lane(cin, off, 2.0, cin.s_end, f"Cinnah_Gidis_{k + 1}", 40)
+        lane(cin, -off, 2.0, cin.s_end, f"Cinnah_Donus_{k + 1}", 40)
+    return lanes
 
 
 def build_ground(bul, cin, cell=8.0, margin=90.0):
@@ -329,13 +361,15 @@ def main():
     lay.add("Hat1/Zemin_Hat1", 0.0, 0.0, 0.0, 0.0, "Zemin")
 
     data = {"lineNumber": "1", "lineName": "Kızılay AVM - Atakule", "spawnPos": spawn["pos"],
-            "spawnRotY": round(spawn["rotY"], 2), "items": lay.items, "stops": lay.stops}
+            "spawnRotY": round(spawn["rotY"], 2), "items": lay.items, "stops": lay.stops,
+            "lanes": lay.lanes}
     with open(os.path.join(out, "Hat1_Yerlesim.json"), "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=1)
     counts = {}
     for it in lay.items:
         counts[it["group"]] = counts.get(it["group"], 0) + 1
-    print("yerleşim:", counts, "durak:", [s["name"] for s in lay.stops])
+    print("yerleşim:", counts, "durak:", [s["name"] for s in lay.stops], "şerit:", len(lay.lanes),
+          "nokta:", sum(len(l["points"]) // 3 for l in lay.lanes))
     print("bulvar uzunluğu", round(bul.s_end), "m, Cinnah uzunluğu", round(cin.s_end), "m, Atakule rakımı",
           round(cin.end[2], 1), "m")
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using AnkaraBus.Route;
+using AnkaraBus.Traffic;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace AnkaraBus.EditorTools
         private const string LayoutPath = MapsRoot + "Hat1/Hat1_Yerlesim.json";
         private const string PalettePath = "Assets/_Project/Materials/T_AnkaraPalet.png";
         private const string MaterialPath = "Assets/_Project/Materials/M_AnkaraPalet.mat";
+        private const string VehiclesFolder = "Assets/_Project/Traffic/Vehicles";
 
         [Serializable]
         private class Item
@@ -37,6 +39,14 @@ namespace AnkaraBus.EditorTools
         }
 
         [Serializable]
+        private class Lane
+        {
+            public string name;
+            public float limitKmh;
+            public float[] points;
+        }
+
+        [Serializable]
         private class Layout
         {
             public string lineNumber;
@@ -45,6 +55,7 @@ namespace AnkaraBus.EditorTools
             public float spawnRotY;
             public Item[] items;
             public Stop[] stops;
+            public Lane[] lanes;
         }
 
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
@@ -91,6 +102,7 @@ namespace AnkaraBus.EditorTools
             }
 
             BuildRoute(root.transform, layout);
+            BuildTraffic(root.transform, layout, material);
 
             var spawn = new GameObject("OtobusBaslangic");
             spawn.transform.SetParent(root.transform, false);
@@ -100,7 +112,8 @@ namespace AnkaraBus.EditorTools
             foreach (var model in missing)
                 Debug.LogWarning($"[Hat 1] Model bulunamadı: {MapsRoot}{model}.fbx");
             Debug.Log($"[Hat 1] {placed} obje ve {layout.stops.Length} durak yerleştirildi. " +
-                      "Otobüsü 'OtobusBaslangic' noktasına koyup RouteTracker'a 'Hat_" + layout.lineNumber + "' objesini bağlayın.");
+                      "Otobüsü 'OtobusBaslangic' noktasına koyup RouteTracker'a 'Hat_" + layout.lineNumber + "' objesini bağlayın; " +
+                      "trafik için otobüsün etiketini 'Player' yapın.");
         }
 
         private static Transform GroupFor(Transform root, Dictionary<string, Transform> groups, string name)
@@ -164,6 +177,54 @@ namespace AnkaraBus.EditorTools
             for (int i = 0; i < stops.Count; i++)
                 array.GetArrayElementAtIndex(i).objectReferenceValue = stops[i];
             rso.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static void BuildTraffic(Transform root, Layout layout, Material material)
+        {
+            if (layout.lanes == null || layout.lanes.Length == 0)
+                return;
+
+            var trafficGo = new GameObject("Trafik");
+            trafficGo.transform.SetParent(root, false);
+            foreach (var l in layout.lanes)
+            {
+                var go = new GameObject("Serit_" + l.name);
+                go.transform.SetParent(trafficGo.transform, false);
+                var points = new Vector3[l.points.Length / 3];
+                for (int i = 0; i < points.Length; i++)
+                    points[i] = new Vector3(l.points[i * 3], l.points[i * 3 + 1], l.points[i * 3 + 2]);
+                var lane = go.AddComponent<TrafficLane>();
+                lane.SetPoints(points, l.limitKmh);
+                EditorUtility.SetDirty(lane);
+            }
+
+            // Araç türleri: taksiler toplamın %30'u, dolmuşlar %10'u, diğerleri %60'ı
+            var models = new List<GameObject>();
+            if (AssetDatabase.IsValidFolder(VehiclesFolder))
+                foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { VehiclesFolder }))
+                    models.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid)));
+            int taxis = models.FindAll(m => m.name.StartsWith("Taksi")).Count;
+            int dolmus = models.FindAll(m => m.name.StartsWith("Dolmus")).Count;
+            int others = models.Count - taxis - dolmus;
+
+            var spawner = trafficGo.AddComponent<TrafficSpawner>();
+            var so = new SerializedObject(spawner);
+            so.FindProperty("paletteMaterial").objectReferenceValue = material;
+            var array = so.FindProperty("vehicles");
+            array.arraySize = models.Count;
+            for (int i = 0; i < models.Count; i++)
+            {
+                var m = models[i];
+                float weight = m.name.StartsWith("Taksi") ? 30f / Mathf.Max(1, taxis)
+                    : m.name.StartsWith("Dolmus") ? 10f / Mathf.Max(1, dolmus)
+                    : 60f / Mathf.Max(1, others);
+                var entry = array.GetArrayElementAtIndex(i);
+                entry.FindPropertyRelative("prefab").objectReferenceValue = m;
+                entry.FindPropertyRelative("weight").floatValue = weight;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+            if (models.Count == 0)
+                Debug.LogWarning("[Hat 1] Trafik aracı bulunamadı: " + VehiclesFolder);
         }
 
         /// <summary>Tüm harita modellerinin paylaştığı palet materyali; yoksa oluşturur.</summary>

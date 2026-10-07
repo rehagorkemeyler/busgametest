@@ -13,7 +13,7 @@ python tools/blender/yapilar_kit.py  --out AnkaraBusSimulator/Assets/_Project/Ma
 
 ## Ortak palet materyali
 
-Bina ve yolların hepsi **tek bir doku** kullanır: `Assets/_Project/Materials/T_AnkaraPalet.png` (8×8 renk karesi). Her yüzün UV'si bir renk karesinin ortasına bakar. Sonuç olarak:
+Bina ve yolların hepsi **tek bir doku** kullanır: `Assets/_Project/Materials/T_AnkaraPalet.png` (16×16 renk karesi, 256 piksel). Her yüzün UV'si bir renk karesinin ortasına bakar. Sonuç olarak:
 - Bütün bina ve yollar **tek materyali** paylaşır. Mobilde static batching ile çok az draw call olur.
 - Renk değiştirmek için palet dokusunu düzenlemek yeterlidir.
 
