@@ -23,7 +23,7 @@ namespace AnkaraBus.Traffic
         [Tooltip("Tüm araçlara uygulanacak ortak palet materyali (FBX'lerin kendi materyalinin yerine).")]
         [SerializeField] private Material paletteMaterial;
         [SerializeField] private int count = 24;
-        [Tooltip("Boşsa 'Player' etiketli obje aranır.")]
+        [Tooltip("Boşsa 'Player' etiketli obje, o da yoksa sahnedeki BusVehicle aranır.")]
         [SerializeField] private Transform player;
         [SerializeField] private float minSpawnDistance = 70f;
         [SerializeField] private float maxDistance = 280f;
@@ -42,6 +42,12 @@ namespace AnkaraBus.Traffic
                 var tagged = GameObject.FindWithTag("Player");
                 if (tagged != null)
                     player = tagged.transform;
+            }
+            if (player == null)
+            {
+                var bus = FindFirstObjectByType<AnkaraBus.Vehicle.BusVehicle>();
+                if (bus != null)
+                    player = bus.transform;
             }
             if (lanes.Length == 0 || vehicles == null || vehicles.Length == 0)
                 return;

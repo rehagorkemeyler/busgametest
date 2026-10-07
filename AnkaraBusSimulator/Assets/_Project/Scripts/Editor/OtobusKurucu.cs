@@ -78,6 +78,8 @@ namespace AnkaraBus.EditorTools
 
                 root.AddComponent<BusInput>();
                 root.AddComponent<RouteTracker>();
+                root.tag = "Player"; // trafik (TrafficSpawner) oyuncuyu bu etiketle bulur
+                SetupLivery(root);
 
                 var so = new SerializedObject(vehicle);
                 so.FindProperty("definition").objectReferenceValue = definition;
@@ -93,6 +95,30 @@ namespace AnkaraBus.EditorTools
             {
                 Object.DestroyImmediate(root);
             }
+        }
+
+        private static void SetupLivery(GameObject root)
+        {
+            var items = new (string name, string body, string roof)[]
+            {
+                ("EGO kırmızı", "Textures/caroserie.png", "Textures/cngtank.png"),
+                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
+                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
+            };
+            var livery = root.AddComponent<BusLivery>();
+            var so = new SerializedObject(livery);
+            var list = so.FindProperty("liveries");
+            list.arraySize = items.Length;
+            for (int i = 0; i < items.Length; i++)
+            {
+                var element = list.GetArrayElementAtIndex(i);
+                element.FindPropertyRelative("name").stringValue = items[i].name;
+                element.FindPropertyRelative("body").objectReferenceValue =
+                    AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].body);
+                element.FindPropertyRelative("roofModule").objectReferenceValue =
+                    AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].roof);
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void SetupWheels(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts, BusPhysicsSpec spec)

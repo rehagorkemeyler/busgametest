@@ -61,6 +61,8 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
    Diğerleri: `caroserie_beyaz_orijinal.png` (modelin orijinali), `white.png`, `tgm.png`, `r38.png`.
 
+   **Kaplama seçimi:** Prefabdaki `BusLivery` bileşeni (Inspector'da `Selected`: 0 kırmızı, 1 mavi, 2 Özel Halk; koddan `Select(i)` / `SelectRandom()`). MaterialPropertyBlock ile çalışır, paylaşılan materyali değiştirmez. Prefab **Ankara Bus → BMC Procity Prefabını Kur** ile yeniden kurulunca bileşen ve `Player` etiketi otomatik eklenir.
+
    | EGO mavi | Özel Halk |
    |---|---|
    | ![](onizleme/bmc_procity_ego_mavi.png) | ![](onizleme/bmc_procity_ozel_halk.png) |
