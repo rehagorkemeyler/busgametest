@@ -7,11 +7,13 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 
 ## Bulutta yapılacaklar (Claude)
 
-- [ ] Modüler Ankara apartman seti (A1–A5), `.fbx` + önizleme render'ları → `AnkaraBusSimulator/Assets/_Project/Maps/Buildings/`
-- [ ] Yol kiti: düz yol, eğimli yol, kavşak, refüj, kaldırım, durak cebi → `Maps/Roads/`
-- [ ] Simge yapılar: Atakule, Kızılay AVM, TBMM duvarı ve kapısı, Kuğulu gölet → `Maps/Landmarks/`
-- [ ] Sokak mobilyası: durak sundurması (EGO tipi), ağaç, sokak lambası, trafik lambası
-- [ ] MAN SL `.o3d` → `.fbx` dönüşümü (Blender'da OMSI importer ile), parçaları ayırma
+- [x] Modüler Ankara apartman seti (A1–A5), 10 varyasyon → `Maps/Buildings/Apartmanlar/` ([MODEL_KITLERI.md](MODEL_KITLERI.md))
+- [x] Yol kiti: bulvar/Cinnah düz-eğimli-viraj, durak cepleri, T kavşak, dönüş halkası → `Maps/Roads/`
+- [x] Simge yapılar: Atakule, Kızılay AVM, TBMM duvarı ve kapısı, Kuğulu gölet → `Maps/Landmarks/`
+- [x] Sokak objeleri: EGO durağı, ağaçlar (çınar, kavak), bulvar lambası → `Maps/Props/` (trafik lambası trafik modülüyle gelecek)
+- [x] İlk otobüs: **BMC Procity 12LF** → `Buses/BMC_Procity_12LF/` ([OTOBUS_BMC_PROCITY.md](OTOBUS_BMC_PROCITY.md))
+- [ ] MAN SL: repodaki mod eksik (dış gövde yok), temel eklenti bulunursa `o3d_okuyucu.py` ile dönüştürülecek
+- [ ] EGO kaplaması (`caroserie.png` şablonu üzerine)
 - [ ] Trafik araçları: sarı Accent Blue taksi, klasik Türkiye arabaları (low-poly)
 - [ ] C#: trafik AI, araç spawner (%30 taksi), yolcu sistemi
 - [ ] Dokümantasyon, plan güncellemeleri
@@ -29,10 +31,9 @@ Asset Store paketi senin hesabına bağlı olduğu için bunu Unity Package Mana
 **Prompt:**
 > RCC'yi import ettim. `Assets/` altında nereye kurulduğunu bul, demo sahnelerini ve örnek araçları ayrı tut, gereksiz demo içeriklerinin build'e girmediğinden emin ol. RCC'nin mobil kontrol arayüzünü (dokunmatik gaz/fren/direksiyon) nasıl açacağımızı bul ve `docs/RCC_NOTLARI.md` dosyasına not al. Commit'le, push'la.
 
-### Y3 — İlk sürülebilir otobüs
-Bulut tarafı MAN SL'nin `.fbx`'ini hazırladıktan sonra yapılır.
+### Y3 — İlk sürülebilir otobüs (hazır: BMC Procity 12LF)
 **Prompt:**
-> `Assets/_Project/Buses/MAN_SL223/` içindeki `.fbx`'ten bir otobüs prefabı kur: RCC ile araç kurulumu (kütle ~12000 kg, ağırlık merkezi alçak, 4 tekerlek collider'ı, otomatik vites), `RigidbodyTelemetry`, `BusDoorController` (her kapı kanadında `BusDoor`), `RouteTracker`. Kokpit ve dış takip kamerası ekle. `Assets/_Project/Scenes/TestTrack.unity` adında bir test sahnesi oluştur: düz zemin + %10 eğimli 100 m rampa. RCC mobil arayüzüne kapı butonu ekleyip `BusDoorController.ToggleAll`'a bağla. Commit'le, push'la.
+> `docs/OTOBUS_BMC_PROCITY.md`'yi oku. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.fbx`'ten bir otobüs prefabı kur: materyalleri çıkar ve `_Cam` ile bitenleri saydam yap, 4096'lık dokuları 2048'e sınırla. RCC ile araç kurulumu yap (belgedeki tablodaki kütle, ağırlık merkezi, tekerlek, motor ve şanzıman değerleriyle; `Teker_*` objeleri tekerlek modeli), gövdeye Box Collider ekle, `Lamba_*` objelerini kapat. `RigidbodyTelemetry`, `BusDoorController` (3 kapı grubu, her kanatta `BusDoor`, ±90° dönüş; yönleri sahnede test et), `RouteTracker` ekle. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.asset` adında bir `BusDefinition` oluştur. Kokpit ve dış takip kamerası ekle. `Assets/_Project/Scenes/TestTrack.unity` adında bir test sahnesi oluştur: düz zemin + %10 eğimli 100 m rampa. RCC mobil arayüzüne kapı butonu ekleyip `BusDoorController.ToggleAll`'a bağla. Commit'le, push'la.
 
 ### Y4 — Telefonda test
 **Prompt:**

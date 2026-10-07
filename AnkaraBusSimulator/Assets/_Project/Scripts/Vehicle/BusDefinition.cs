@@ -9,8 +9,8 @@ namespace AnkaraBus.Vehicle
     [CreateAssetMenu(menuName = "Ankara Bus/Bus Definition", fileName = "BusDefinition")]
     public class BusDefinition : ScriptableObject
     {
-        public string displayName = "MAN SL 223";
-        public string manufacturer = "MAN";
+        public string displayName = "BMC Procity 12LF";
+        public string manufacturer = "BMC";
         [Tooltip("Rigidbody + araç kontrolcüsü + BusDoorController içeren hazır prefab.")]
         public GameObject prefab;
         public Sprite preview;
