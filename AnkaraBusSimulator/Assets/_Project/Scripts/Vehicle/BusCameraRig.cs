@@ -54,6 +54,7 @@ namespace AnkaraBus.Vehicle
         }
 
         public void Toggle() => mode = mode == Mode.Chase ? Mode.Cockpit : Mode.Chase;
+        public void SetMode(Mode newMode) => mode = newMode;
 
         private static Transform FindChild(Transform root, string name)
         {

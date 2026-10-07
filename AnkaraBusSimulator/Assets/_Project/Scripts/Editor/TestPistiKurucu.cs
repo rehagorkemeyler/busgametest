@@ -69,8 +69,19 @@ namespace AnkaraBus.EditorTools
             for (int i = 0; i < points.Count - 1; i++)
                 Dashes(lines, points[i], points[i + 1], paint);
 
+            AddPlayer(prefab, new Vector3(0f, 0.05f, 0f), Quaternion.identity);
+            Camera.main.farClipPlane = 1500f;
+
+            if (!SaveScene(scene, ScenePath))
+                return;
+            Debug.Log("[TestPisti] Sahne kuruldu: " + ScenePath);
+        }
+
+        /// <summary>Otobüsü, takip kamerasını ve dokunmatik arayüzü açık sahneye ekler.</summary>
+        public static BusVehicle AddPlayer(GameObject prefab, Vector3 position, Quaternion rotation)
+        {
             var bus = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-            bus.transform.position = new Vector3(0f, 0.05f, 0f);
+            bus.transform.SetPositionAndRotation(position, rotation);
             var vehicle = bus.GetComponent<BusVehicle>();
 
             var cameraGo = Camera.main.gameObject;
@@ -78,25 +89,28 @@ namespace AnkaraBus.EditorTools
             var rigSo = new SerializedObject(rig);
             rigSo.FindProperty("target").objectReferenceValue = vehicle;
             rigSo.ApplyModifiedPropertiesWithoutUndo();
-            cameraGo.transform.position = new Vector3(0f, 4.5f, -14f);
-            cameraGo.transform.LookAt(new Vector3(0f, 1.8f, 4f));
-            Camera.main.farClipPlane = 1500f;
+            cameraGo.transform.position = bus.transform.TransformPoint(new Vector3(0f, 4.5f, -14f));
+            cameraGo.transform.LookAt(bus.transform.TransformPoint(new Vector3(0f, 1.8f, 4f)));
 
             var controls = new GameObject("DokunmatikKontroller").AddComponent<BusTouchControls>();
             var controlsSo = new SerializedObject(controls);
             controlsSo.FindProperty("input").objectReferenceValue = bus.GetComponent<BusInput>();
             controlsSo.FindProperty("cameraRig").objectReferenceValue = rig;
             controlsSo.ApplyModifiedPropertiesWithoutUndo();
+            return vehicle;
+        }
 
+        public static bool SaveScene(UnityEngine.SceneManagement.Scene scene, string path)
+        {
             if (!AssetDatabase.IsValidFolder("Assets/_Project/Scenes"))
                 AssetDatabase.CreateFolder("Assets/_Project", "Scenes");
-            if (!EditorSceneManager.SaveScene(scene, ScenePath))
+            if (!EditorSceneManager.SaveScene(scene, path))
             {
-                Debug.LogError("[TestPisti] Sahne kaydedilemedi: " + ScenePath);
-                return;
+                Debug.LogError("[Sahne] Kaydedilemedi: " + path);
+                return false;
             }
-            AddToBuild(ScenePath);
-            Debug.Log("[TestPisti] Sahne kuruldu: " + ScenePath);
+            AddToBuild(path);
+            return true;
         }
 
         private static void Slab(Transform parent, string name, Vector3 from, Vector3 to, Material material)

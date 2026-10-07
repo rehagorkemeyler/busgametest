@@ -1,0 +1,10 @@
+# ninja log v5
+0	450	1791411460527372695	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	d4df0a2c717c83b8
+0	452	1791411460530073903	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	1c02f4680647c203
+1	454	1791411460534213319	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b6421359bb77d0fb
+1	468	1791411460548020276	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	408f9cdabe4ce5fb
+1	479	1791411460559485524	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	6cdfb8354c3db8fc
+0	485	1791411460565929523	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a8cc06dca1ccb325
+1	503	1791411460582722979	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	b391e7285fcb4430
+0	520	1791411460599583810	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	52ecf53ec787e7bf
+520	555	1791411460634584180	/Users/ozzy/busgametest/AnkaraBusSimulator/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/4q5o36b5/obj/arm64-v8a/libgame.so	b30b6383b9236320

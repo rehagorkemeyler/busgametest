@@ -30,6 +30,13 @@ namespace AnkaraBus.EditorTools
             PlayerSettings.SetGraphicsAPIs(BuildTarget.Android,
                 new[] { GraphicsDeviceType.Vulkan, GraphicsDeviceType.OpenGLES3 });
 
+            // Yalnızca yatay ekran
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
+            PlayerSettings.allowedAutorotateToPortrait = false;
+            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+            PlayerSettings.allowedAutorotateToLandscapeLeft = true;
+            PlayerSettings.allowedAutorotateToLandscapeRight = true;
+
             // Mobil URP: gölge ~60 m, MSAA 2x, HDR kapalı
             var mobileRp = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(MobileRpAssetPath);
             if (mobileRp != null)
@@ -43,9 +50,6 @@ namespace AnkaraBus.EditorTools
             {
                 Debug.LogWarning($"[ProjectSetup] {MobileRpAssetPath} bulunamadı.");
             }
-
-            // Şablonun örnek sahnesi repoda yok
-            EditorBuildSettings.scenes = new EditorBuildSettingsScene[0];
 
             AssetDatabase.SaveAssets();
 

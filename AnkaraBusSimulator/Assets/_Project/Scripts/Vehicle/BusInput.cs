@@ -25,6 +25,8 @@ namespace AnkaraBus.Vehicle
         public float TouchBrake { get; set; }
         /// <summary>Sanal direksiyon: -1 sol, +1 sağ. Dokunulmuyorsa null.</summary>
         public float? TouchSteer { get; set; }
+        /// <summary>Otomatik sürüş için gaz (performans ölçümü, testler).</summary>
+        public float AutoThrottle { get; set; }
 
         public BusVehicle Vehicle => vehicle;
 
@@ -36,7 +38,7 @@ namespace AnkaraBus.Vehicle
 
         private void Update()
         {
-            float throttle = TouchThrottle;
+            float throttle = Mathf.Max(TouchThrottle, AutoThrottle);
             float brake = TouchBrake;
             float steerKeys = 0f;
 
