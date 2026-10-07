@@ -101,4 +101,33 @@ Telefon soğukken (ısıl durum 0) ve şarjda değilken tekrar ölçmek, kısıl
 
 ## Uygulanan optimizasyonlar
 
-- **Otobüs (bulut, `bmc_donustur.py`):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik `Golge_Govde` veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı: `docs/OTOBUS_BMC_PROCITY.md` → Performans. **Ölçüm 3 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.
+- **Otobüs (bulut, `bmc_donustur.py`):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik `Golge_Govde` veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı: `docs/OTOBUS_BMC_PROCITY.md` → Performans. Prefab yerelde yeniden kuruldu, ölçüldü: aşağıda Ölçüm 3.
+
+## Ölçüm 3 — 8 Ekim 2026, optimize otobüsle (Galaxy A32)
+
+Bulutun otobüs optimizasyonu (iç mekân sadeleştirme, doku atlası, `Golge_Govde` gölge vekili) sonrası, prefab ve sahneler yeniden kurularak. Ayarlar varsayılan (render scale 0.8, MSAA 2x). Koşullar Ölçüm 2 ile aynı: şarjda, pil %17, **ısıl durum 2**.
+
+| Yer | Kamera | FPS önce → sonra | %1 en kötü önce → sonra | Draw call önce → sonra | Üçgen önce → sonra |
+|---|---|---|---|---|---|
+| TestTrack, duran | dış | 44,9 → 45,0 | 44,8 → 44,6 | 141 → **55** | 312 → **125 bin** |
+| TestTrack, duran | kokpit | 22,8 → 23,8 | 11,3 → 12,9 | 99 → 39 | 262 → 98 bin |
+| Hat 1 · Kızılay AVM | dış | 29,0 → **34,3** | 15,0 → **29,9** | 364 → 279 | 1,24 M → 1,05 M |
+| Hat 1 · Kızılay AVM | kokpit | 18,0 → 22,1 | 4,3 → 18,0 | 313 → 243 | 1,18 M → 1,02 M |
+| Hat 1 · Meclis | dış | 37,1 → **45,0** | 8,2 → 44,7 | 300 → 211 | 823 → 633 bin |
+| Hat 1 · Meclis | kokpit | 23,1 → 24,1 | 11,3 → 22,5 | 284 → 214 | 763 → 596 bin |
+| Hat 1 · Kuğulu Park | dış | 45,0 → 45,0 | 44,8 → 44,6 | 180 → 98 | 450 → 263 bin |
+| Hat 1 · Kuğulu Park | kokpit | 25,6 → 26,9 | 22,5 → 22,5 | 160 → 106 | 410 → 245 bin |
+| Hat 1 · Cinnah | dış | 44,8 → 45,0 | 44,8 → 44,7 | 219 → 124 | 546 → 355 bin |
+| Hat 1 · Cinnah | kokpit | 23,4 → 26,1 | 9,0 → 22,5 | 203 → 117 | 495 → 324 bin |
+| Hat 1 · Atakule | dış | 44,9 → 45,0 | 44,8 → 44,6 | 131 → 43 | 396 → 208 bin |
+| Hat 1 · Atakule | kokpit | 27,0 → 28,4 | 15,0 → 22,5 | 84 → 27 | 344 → 182 bin |
+
+- **Bellek:** 239 → 200 MB (grafik 166 → 127 MB).
+- **Gölge veren obje:** 82 → 32 (Kızılay).
+
+### Değerlendirme
+
+- **Dış kamera artık her yerde ≥ 30 FPS**; Kızılay'daki takılma gitti (en kötü %1: 15 → 30). Kızılay ve Meclis'te kalan yük binalar: Kızılay'da hâlâ 279 draw call ve 1 M üçgen → bina LOD'u ve occlusion (sıradaki adım).
+- **Kokpit neredeyse değişmedi (22–28 FPS)**: obje sayısı yarıya inse de piksel maliyeti aynı. Ölçüm 2'deki teşhisi doğruluyor. Kokpit için çözüm kalite kademesi (render scale 0.6, MSAA kapalı → Ölçüm 2'de 34–39 FPS) ve ucuz cam.
+
+**Sıradaki adımlar:** (1) zayıf GPU'lar için otomatik düşük kalite kademesi + kokpit camı, (2) bina LOD'u, (3) occlusion ve ışık bake'i (Y5).

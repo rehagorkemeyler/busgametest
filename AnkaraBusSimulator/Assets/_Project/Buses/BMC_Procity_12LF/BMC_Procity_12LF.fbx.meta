@@ -27,6 +27,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Atlas_BMC
+    second: {fileID: 2100000, guid: 4264a7468715a4982bfbf745a8c3bdb2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Golge
+    second: {fileID: 2100000, guid: a75c33b8a779d46bfb19f4f52009c74d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Schedule
     second: {fileID: 2100000, guid: e1801968fb2724170a922ad920f207df, type: 2}
   - first:
