@@ -21,8 +21,13 @@ namespace AnkaraBus.EditorTools
             EditorSettings.serializationMode = SerializationMode.ForceText;
             VersionControlSettings.mode = "Visible Meta Files";
 
+            // Uygulama kimliği
+            PlayerSettings.companyName = "AnkaraBus";
+            PlayerSettings.productName = "Ankara Bus Simulator";
+
             // Android oynatıcı ayarları
             var android = NamedBuildTarget.Android;
+            PlayerSettings.SetApplicationIdentifier(android, "com.ankarabus.simulator");
             PlayerSettings.SetScriptingBackend(android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel26;
