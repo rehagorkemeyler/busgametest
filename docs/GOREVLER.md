@@ -28,14 +28,14 @@ Her maddedeki "Prompt" kısmını yerel Claude Code oturumuna olduğu gibi yapı
 **Prompt:**
 > Repodaki `AnkaraBusSimulator/` klasörü Unity projemiz ama içinde henüz `Packages/` ve `ProjectSettings/` yok. Unity Hub ile repo dışında geçici bir klasörde "Universal 3D (URP)" şablonuyla `AnkaraBusSimulator` adlı yeni proje oluşturmama yardım et. Sonra o projenin `Packages/` ve `ProjectSettings/` klasörlerini repodaki `AnkaraBusSimulator/` içine kopyala, repodaki `Assets/`, `.gitignore` ve `.gitattributes` dosyalarının üzerine yazma. Ardından Unity Hub'da "Add project from disk" ile repodaki klasörü açtır. Project Settings'te Asset Serialization = Force Text, Version Control = Visible Meta Files olsun. Android'e geç: IL2CPP, ARM64, min API 26, Graphics API Vulkan + OpenGLES3. Unity açılıp `Assets/_Project/Scripts` derlendikten sonra derleme hatası varsa düzelt. Oluşan `.meta` dosyaları, `Packages/` ve `ProjectSettings/` dahil commit'le ve kendi branch'ıma push'la. `git lfs install` çalıştırılmış olsun.
 
-### Y2 — Realistic Car Controller'ı import et
-Asset Store paketi senin hesabına bağlı olduğu için bunu Unity Package Manager → My Assets üzerinden sen import etmelisin.
+### Y2 — Realistic Car Controller'ı import et ✅ (bırakıldı)
+RCC Pro Lite denendi; otobüs için gereken ayarlar kilitli olduğundan kendi sürüş kodumuza (`BusVehicle`) geçildi. Ayrıntı: [RCC_NOTLARI.md](RCC_NOTLARI.md).
 **Prompt:**
 > RCC'yi import ettim. `Assets/` altında nereye kurulduğunu bul, demo sahnelerini ve örnek araçları ayrı tut, gereksiz demo içeriklerinin build'e girmediğinden emin ol. RCC'nin mobil kontrol arayüzünü (dokunmatik gaz/fren/direksiyon) nasıl açacağımızı bul ve `docs/RCC_NOTLARI.md` dosyasına not al. Commit'le, push'la.
 
 ### Y3 — İlk sürülebilir otobüs (hazır: BMC Procity 12LF)
 **Prompt:**
-> `docs/OTOBUS_BMC_PROCITY.md`'yi oku. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.fbx`'ten bir otobüs prefabı kur: materyalleri çıkar ve `_Cam` ile bitenleri saydam yap, 4096'lık dokuları 2048'e sınırla. RCC ile araç kurulumu yap (belgedeki tablodaki kütle, ağırlık merkezi, tekerlek, motor ve şanzıman değerleriyle; `Teker_*` objeleri tekerlek modeli), gövdeye Box Collider ekle, `Lamba_*` objelerini kapat. `RigidbodyTelemetry`, `BusDoorController` (3 kapı grubu, her kanatta `BusDoor`, ±90° dönüş; yönleri sahnede test et), `RouteTracker` ekle. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.asset` adında bir `BusDefinition` oluştur. Kokpit ve dış takip kamerası ekle. `Assets/_Project/Scenes/TestTrack.unity` adında bir test sahnesi oluştur: düz zemin + %10 eğimli 100 m rampa. RCC mobil arayüzüne kapı butonu ekleyip `BusDoorController.ToggleAll`'a bağla. Commit'le, push'la.
+> `docs/OTOBUS_BMC_PROCITY.md`'yi oku. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.fbx`'ten bir otobüs prefabı kur: materyalleri çıkar ve `_Cam` ile bitenleri saydam yap, 4096'lık dokuları 2048'e sınırla. Prefab ve `BusDefinition` **Ankara Bus → BMC Procity Prefabını Kur** ile kurulur (hazır). Sürüş değerleri `BMC_Procity_12LF.asset` → Physics; değiştirince **Ankara Bus → Sürüş Testi** ile ölç. Kokpit ve dış takip kamerası ekle. `Assets/_Project/Scenes/TestTrack.unity` adında bir test sahnesi oluştur: düz zemin + %10 eğimli 100 m rampa. Dokunmatik kontrolleri (`BusInput`'un Touch* özellikleri ve buton metotları) ve kapı butonunu kur. Commit'le, push'la.
 
 ### Y4 — Telefonda test
 **Prompt:**

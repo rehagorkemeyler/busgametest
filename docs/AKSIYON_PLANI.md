@@ -13,7 +13,7 @@ MVP'de **yok**: yolcu karakterleri, trafik, bilet/para sistemi, kariyer, gece/g�
 
 ## Mimari ilkeleri
 
-1. **Fizik paketinden bağımsızlık.** Araç sürüşü Realistic Car Controller (RCC) ile yapılır. Kapılar, duraklar ve HUD ise RCC'ye değil `IVehicleTelemetry` arayüzüne bağlıdır. İleride fizik paketi değişirse oyunun geri kalanı etkilenmez.
+1. **Fizikten bağımsızlık.** Otobüs sürüşü kendi kodumuz `BusVehicle` (Unity WheelCollider tabanlı) ile yapılır; RCC Lite denendi, otobüs ayarları kilitli olduğu için bırakıldı ([RCC_NOTLARI.md](RCC_NOTLARI.md)). Kapılar, duraklar ve HUD `IVehicleTelemetry` arayüzüne bağlıdır; sürüş kodu değişirse oyunun geri kalanı etkilenmez.
 2. **Veriyle eklenen içerik.** Yeni otobüs = yeni `BusDefinition` asset'i + prefab. Yeni hat = sahneye `BusStop`'lar + bir `BusRoute`. Kod değişikliği gerekmez.
 3. **Mobil öncelikli.** Her karar önce orta seviye bir Android telefonda test edilir, PC'de değil.
 
@@ -52,15 +52,16 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 
 ## Faz 1 — Otobüs sürülebilir olsun (3–5 gün)
 
-- [ ] **RCC** paketini Asset Store'dan import et.
-- [ ] İlk otobüsü seç (öneri: MAN SL 223 EGO — Ankara'nın simge otobüsü).
+- [x] ~~RCC~~ yerine kendi sürüş kodumuz: `BusVehicle`, `BusPhysicsSpec` (değerler `BusDefinition` içinde), `BusInput`.
+- [x] İlk otobüs: BMC Procity 12LF (MAN SL'nin dış gövdesi repoda yok, bkz. [OTOBUS_BMC_PROCITY.md](OTOBUS_BMC_PROCITY.md)).
 - [ ] Modeli Unity'ye getir:
   - BMC Procity: `.3ds` → Blender'da aç, temizle, `.fbx` olarak çıkar.
   - MAN SL: OMSI `.o3d` → Blender'a OMSI o3d importer eklentisiyle al → `.fbx`.
   - Gövde, tekerlekler (4–6 ayrı obje), kapı kanatları **ayrı objeler** olmalı; pivotlar menteşe noktasında.
-- [ ] Otobüs prefabı: RCC ile araç kurulumu (kütle ~12–16 t, ağırlık merkezi alçak, tekerlek collider'ları), `RigidbodyTelemetry`, `BusDoorController` + her kanatta `BusDoor`, `RouteTracker`.
-- [ ] Düz bir test zemini + **%8–10 eğimli rampa** üzerinde sürüş ayarı (yokuş kalkışı, el freni, otomatik vites).
-- [ ] RCC'nin mobil kontrol arayüzünü aç (gaz, fren, direksiyon/eğim). Arayüze kapı butonu ekle → `BusDoorController.ToggleAll`.
+- [x] Otobüs prefabı, FBX'ten otomatik: **Ankara Bus → BMC Procity Prefabını Kur** (`OtobusKurucu`). WheelCollider'lar, `BusVehicle`, `BusInput`, `BusDoorController` + 6 kanatta `BusDoor`, `RouteTracker`.
+- [x] Sürüş ayarı ölçümle: **Ankara Bus → Sürüş Testi** (`OtobusSurusTesti`): hızlanma, fren, dönüş çapı, %10/%12 yokuş kalkışı, kapı freni.
+- [ ] Materyaller: camlar saydam, dokular 2048/ASTC.
+- [ ] Dokunmatik kontroller: sanal direksiyon, gaz/fren pedalı, D/N/R, el freni, kapı butonu → `BusInput`.
 - [ ] Kamera: kokpit + dış takip kamerası.
 - [ ] **Telefonda ilk APK testi.**
 

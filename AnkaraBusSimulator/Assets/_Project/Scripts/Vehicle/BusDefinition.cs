@@ -16,5 +16,6 @@ namespace AnkaraBus.Vehicle
         public Sprite preview;
         public Material[] liveries;
         [Min(1)] public int passengerCapacity = 90;
+        public BusPhysicsSpec physics = new BusPhysicsSpec();
     }
 }
