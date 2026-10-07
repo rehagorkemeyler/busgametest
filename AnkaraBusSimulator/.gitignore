@@ -36,3 +36,8 @@ crashlytics-build.properties
 # Android anahtarları repoya girmesin
 *.keystore
 *.jks
+
+# Asset Store paketleri: lisans dağıtıma izin vermiyor, repo public.
+# Her geliştirici Package Manager → My Assets üzerinden kendisi import eder.
+/[Aa]ssets/Realistic Car Controller Pro/
+/[Aa]ssets/Realistic Car Controller Pro.meta
