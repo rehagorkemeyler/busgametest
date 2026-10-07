@@ -33,7 +33,10 @@ RCC Pro Lite denendi; otobüs için gereken ayarlar kilitli olduğundan kendi s�
 **Prompt:**
 > RCC'yi import ettim. `Assets/` altında nereye kurulduğunu bul, demo sahnelerini ve örnek araçları ayrı tut, gereksiz demo içeriklerinin build'e girmediğinden emin ol. RCC'nin mobil kontrol arayüzünü (dokunmatik gaz/fren/direksiyon) nasıl açacağımızı bul ve `docs/RCC_NOTLARI.md` dosyasına not al. Commit'le, push'la.
 
-### Y3 — İlk sürülebilir otobüs (hazır: BMC Procity 12LF)
+### Y3 — İlk sürülebilir otobüs ✅
+Yapıldı: prefab, kendi sürüş fiziği, dokunmatik kontroller, kamera, `TestTrack` sahnesi. Unity'de `Scenes/TestTrack` açıp Play ile denenebilir (klavye: W/S, A/D, Space el freni, 1/2/3 = D/N/R, K kapılar).
+
+Eski prompt (referans):
 **Prompt:**
 > `docs/OTOBUS_BMC_PROCITY.md`'yi oku. `Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.fbx`'ten bir otobüs prefabı kur: materyalleri çıkar ve `_Cam` ile bitenleri saydam yap, 4096'lık dokuları 2048'e sınırla. Prefab ve `BusDefinition` **Ankara Bus → BMC Procity Prefabını Kur** ile kurulur (hazır). Sürüş değerleri `BMC_Procity_12LF.asset` → Physics; değiştirince **Ankara Bus → Sürüş Testi** ile ölç. Kokpit ve dış takip kamerası ekle. `Assets/_Project/Scenes/TestTrack.unity` adında bir test sahnesi oluştur: düz zemin + %10 eğimli 100 m rampa. Dokunmatik kontrolleri (`BusInput`'un Touch* özellikleri ve buton metotları) ve kapı butonunu kur. Commit'le, push'la.
 

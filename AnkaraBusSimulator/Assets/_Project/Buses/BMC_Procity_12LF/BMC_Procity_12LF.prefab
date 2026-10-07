@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &809023853868986638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4384137316112195973}
+  m_Layer: 0
+  m_Name: SurucuGozu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4384137316112195973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809023853868986638}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.6197065, y: 2.0408792, z: 4.466125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 406006254250161331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1826166830368434153
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,9 +311,10 @@ GameObject:
   - component: {fileID: 2951490291052843353}
   - component: {fileID: 4131194846524566301}
   - component: {fileID: 3103105459118542619}
+  - component: {fileID: 2965646006205853051}
   m_Layer: 0
   m_Name: BMC_Procity_12LF
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -303,6 +335,7 @@ Transform:
   - {fileID: 3031791776908157179}
   - {fileID: 7645900715792675637}
   - {fileID: 4960421815103193858}
+  - {fileID: 4384137316112195973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5699952773099764102
@@ -419,6 +452,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Route.RouteTracker
   route: {fileID: 0}
   requiredDwellSeconds: 4
+--- !u!114 &2965646006205853051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cc9f730ff20452289103193e6d81b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusLivery
+  bodyMaterialName: caroserie
+  roofMaterialName: cngtank
+  liveries:
+  - name: "EGO k\u0131rm\u0131z\u0131"
+    body: {fileID: 2800000, guid: 1bc919d7e52a64b25b440f2896c9c12f, type: 3}
+    roofModule: {fileID: 2800000, guid: e7ef75e17aee244ad84b8d3ef39cc1e8, type: 3}
+  - name: EGO mavi
+    body: {fileID: 2800000, guid: 46fcc9e1f6ab54046a4695c351aa45de, type: 3}
+    roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
+  - name: "\xD6zel Halk"
+    body: {fileID: 2800000, guid: a90fd968e44e948788e64251f8975193, type: 3}
+    roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
+  selected: 0
 --- !u!1 &6901407252809486938
 GameObject:
   m_ObjectHideFlags: 0

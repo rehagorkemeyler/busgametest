@@ -17,6 +17,8 @@ namespace AnkaraBus.EditorTools
         private const string ModelPath = Folder + "BMC_Procity_12LF.fbx";
         public const string PrefabPath = Folder + "BMC_Procity_12LF.prefab";
         private const string DefinitionPath = Folder + "BMC_Procity_12LF.asset";
+        private const string MaterialFolder = Folder + "Materials";
+        private static readonly Color GlassColor = new Color(0.1f, 0.13f, 0.15f, 0.35f);
 
         private static readonly (string name, bool front, bool left)[] WheelParts =
         {
@@ -42,6 +44,8 @@ namespace AnkaraBus.EditorTools
                 Debug.LogError("[OtobusKurucu] Model bulunamadı: " + ModelPath);
                 return;
             }
+
+            PrepareMaterials();
 
             var definition = AssetDatabase.LoadAssetAtPath<BusDefinition>(DefinitionPath);
             if (definition == null)
@@ -121,6 +125,54 @@ namespace AnkaraBus.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        /// <summary>
+        /// Gömülü materyalleri Materials/ klasörüne çıkarır (bir kez) ve adı _Cam ile bitenleri saydam cam yapar.
+        /// </summary>
+        private static void PrepareMaterials()
+        {
+            if (!AssetDatabase.IsValidFolder(MaterialFolder))
+                AssetDatabase.CreateFolder(Folder.TrimEnd('/'), "Materials");
+
+            bool extracted = false;
+            foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(ModelPath))
+            {
+                if (asset is not Material embedded)
+                    continue;
+                string path = MaterialFolder + "/" + embedded.name + ".mat";
+                if (AssetDatabase.LoadAssetAtPath<Material>(path) != null)
+                    continue;
+                string error = AssetDatabase.ExtractAsset(embedded, path);
+                if (!string.IsNullOrEmpty(error))
+                    Debug.LogWarning($"[OtobusKurucu] {embedded.name} çıkarılamadı: {error}");
+                else
+                    extracted = true;
+            }
+            if (extracted)
+            {
+                AssetDatabase.WriteImportSettingsIfDirty(ModelPath);
+                AssetDatabase.ImportAsset(ModelPath, ImportAssetOptions.ForceUpdate);
+            }
+
+            foreach (var guid in AssetDatabase.FindAssets("t:Material", new[] { MaterialFolder }))
+            {
+                var material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
+                if (material.name.EndsWith("_Cam"))
+                    MakeGlass(material);
+            }
+        }
+
+        private static void MakeGlass(Material m)
+        {
+            // URP/Lit, Surface Type: Transparent, Blending: Alpha. Harmanlama ayrıntılarını URP kendisi kurar.
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetFloat("_Smoothness", 0.92f);
+            UnityEditor.BaseShaderGUI.SetupMaterialBlendMode(m);
+            m.SetTexture("_BaseMap", null);
+            m.SetColor("_BaseColor", GlassColor);
+            EditorUtility.SetDirty(m);
+        }
+
         private static void SetupWheels(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts, BusPhysicsSpec spec)
         {
             var holder = new GameObject("Tekerlekler").transform;
@@ -160,6 +212,12 @@ namespace AnkaraBus.EditorTools
         {
             if (!parts.TryGetValue("Direksiyon", out var wheel))
                 return;
+
+            // Kokpit kamerası: direksiyonun arkasında, sürücü göz hizasında
+            var eye = new GameObject("SurucuGozu").transform;
+            eye.SetParent(root, false);
+            eye.position = wheel.position + root.up * 0.6f - root.forward * 0.6f;
+            eye.rotation = root.rotation;
 
             var so = new SerializedObject(vehicle);
             so.FindProperty("steeringWheel").objectReferenceValue = wheel;

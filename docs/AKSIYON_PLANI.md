@@ -60,9 +60,10 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
   - Gövde, tekerlekler (4–6 ayrı obje), kapı kanatları **ayrı objeler** olmalı; pivotlar menteşe noktasında.
 - [x] Otobüs prefabı, FBX'ten otomatik: **Ankara Bus → BMC Procity Prefabını Kur** (`OtobusKurucu`). WheelCollider'lar, `BusVehicle`, `BusInput`, `BusDoorController` + 6 kanatta `BusDoor`, `RouteTracker`.
 - [x] Sürüş ayarı ölçümle: **Ankara Bus → Sürüş Testi** (`OtobusSurusTesti`): hızlanma, fren, dönüş çapı, %10/%12 yokuş kalkışı, kapı freni.
-- [ ] Materyaller: camlar saydam, dokular 2048/ASTC.
-- [ ] Dokunmatik kontroller: sanal direksiyon, gaz/fren pedalı, D/N/R, el freni, kapı butonu → `BusInput`.
-- [ ] Kamera: kokpit + dış takip kamerası.
+- [x] Materyaller `Buses/BMC_Procity_12LF/Materials/` altına çıkarıldı, `_Cam` materyalleri saydam cam. Dokular 2048, Android'de ASTC.
+- [x] Dokunmatik kontroller (`BusTouchControls`): sanal direksiyon, analog gaz/fren pedalı, D/N/R, el freni, kapı, kamera; üstte hız/vites/devir.
+- [x] Kamera (`BusCameraRig`): dış takip + kokpit (`SurucuGozu`).
+- [x] Test sahnesi `Scenes/TestTrack.unity`: **Ankara Bus → Test Pisti Sahnesini Kur** (düz zemin, %10 100 m rampa, düzlük, iniş).
 - [ ] **Telefonda ilk APK testi.**
 
 ## Faz 2 — Ankara haritası, ilk parça (1–2 hafta)

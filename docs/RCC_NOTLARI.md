@@ -1,5 +1,7 @@
 # Realistic Car Controller Notları
 
+> **8 Ekim 2026:** RCC Lite projeden kaldırıldı. Otobüs için gereken ayarlar Lite'ta kilitli olduğundan kendi sürüş kodumuz `BusVehicle` yazıldı. Bu notlar ileride RCC Pro'ya dönülürse diye duruyor.
+
 ## Kurulu sürüm
 
 **Realistic Car Controller Pro Lite** (BoneCracker Games, ücretsiz deneme sürümü)

@@ -33,12 +33,6 @@
         "com.unity.test-framework.performance": "3.2.0"
       }
     },
-    "com.unity.editorcoroutines": {
-      "version": "6.6.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {}
-    },
     "com.unity.ext.nunit": {
       "version": "2.1.0",
       "depth": 1,
