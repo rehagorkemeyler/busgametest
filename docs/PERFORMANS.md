@@ -54,6 +54,51 @@ Bu telefonda her yer 60 FPS, en ağır yerde (Kızılay) bile GPU'da %40 pay var
 
 Her adımdan sonra aynı APK ile tekrar ölçülür ve buraya yeni bir "Ölçüm N" bölümü eklenir.
 
+## Ölçüm 2 — 8 Ekim 2026, düşük seviye telefon
+
+**Cihaz:** Samsung Galaxy A32 (SM-A325F), MediaTek Helio G80, GPU Mali-G52 MC2, 6 GB RAM, Android 13, ekran 2400×1080 **90 Hz**, Vulkan.
+**Build:** Ölçüm 1 ile aynı (Development, hedef 60 FPS).
+**Koşullar:** Pil %14'ten şarj oluyordu, 35 °C, **ısıl durum 2 (orta) baştan sona**. Telefon büyük olasılıkla bir miktar kısılmış durumdaydı; sonuçlar kötümser olabilir.
+Bu GPU'da kare zamanlama (CPU/GPU ms) desteklenmiyor; yalnızca FPS var. Draw call ve üçgen sayıları Ölçüm 1 ile aynı.
+
+**Ekran 90 Hz olduğu için FPS basamaklı:** kare 90 Hz yenilemenin katlarına oturuyor (45 = 2 yenileme, 30 = 3, 22,5 = 4, 18 = 5). Hedef 60 FPS 90 Hz ekranda tam tutturulamadığından **dış kameradaki 45 FPS bir tavan**; telefonun daha hızlı çizebildiği yerlerde de 45 görünür.
+
+Aşağıda iki build var: varsayılan ayar (render scale 0.8, MSAA 2x) ve deneme (render scale 0.6, MSAA kapalı; repoya alınmadı).
+
+| Yer | Kamera | FPS varsayılan | %1 en kötü | FPS 0.6 + MSAA yok | %1 en kötü |
+|---|---|---|---|---|---|
+| TestTrack, duran | dış | 44,9 | 44,8 | 45,0 | 44,6 |
+| TestTrack, duran | kokpit | **22,8** | 11,3 | **33,9** | 29,9 |
+| TestTrack, tam gaz | dış | 44,7 | 30,0 | 45,0 | 44,6 |
+| Hat 1 · Kızılay AVM | dış | **29,0** | 15,0 | **32,9** | 22,5 |
+| Hat 1 · Kızılay AVM | kokpit | **18,0** | **4,3** | **26,5** | 18,0 |
+| Hat 1 · Meclis | dış | 37,1 | 8,2 | 44,2 | 30,0 |
+| Hat 1 · Meclis | kokpit | 23,1 | 11,3 | 32,8 | 30,0 |
+| Hat 1 · Kuğulu Park | dış | 45,0 | 44,8 | 45,0 | 44,7 |
+| Hat 1 · Kuğulu Park | kokpit | 25,6 | 22,5 | 37,1 | 30,0 |
+| Hat 1 · Cinnah | dış | 44,8 | 44,8 | 45,0 | 44,7 |
+| Hat 1 · Cinnah | kokpit | 23,4 | 9,0 | 36,6 | 30,0 |
+| Hat 1 · Atakule | dış | 44,9 | 44,8 | 45,0 | 44,7 |
+| Hat 1 · Atakule | kokpit | 27,0 | 15,0 | 38,6 | 30,0 |
+
+- **Bellek:** 239 MB (grafik 166 MB), sistem toplamı 650 MB'a kadar. 6 GB RAM'de sorun yok.
+
+### Değerlendirme
+
+1. **Varsayılan ayarla A32, MVP hedefini (≥ 30 FPS) kokpitte hiçbir yerde, dış kamerada Kızılay'da tutturamıyor.** Kızılay kokpitte en kötü %1 kare 4 FPS: belirgin takılma.
+2. **Kokpit, daha az obje çizmesine rağmen dış kameradan yaklaşık iki kat yavaş → darboğaz piksel doldurma (fill-rate).** Kokpitte ekranın tamamı yakındaki iç mekân, gösterge paneli ve üst üste binen saydam camlarla kaplı; her piksel birkaç kez gölgeli olarak çiziliyor.
+3. **Çözünürlüğü düşürmek bunu doğruladı:** render scale 0.6 + MSAA kapalı ile kokpit %40–50 hızlandı (23 → 34–39 FPS), Kızılay kokpitte en kötü kare 4 → 18 FPS'e çıktı. Kızılay dış kamerada ise kazanç küçük (29 → 33): orada piksel değil **obje/üçgen sayısı** sınırlıyor (Ölçüm 1'deki 358 draw call, 1,2 M üçgen).
+
+### Güncellenmiş optimizasyon sırası
+
+1. **Kalite kademesi (en hızlı kazanç, kod/ayar):** Zayıf GPU'larda otomatik düşük kalite: render scale ~0.6–0.7, MSAA kapalı, gölge mesafesi ve kalitesi düşük. Güçlü telefonlar (S24 FE) mevcut ayarda kalır. Kademe GPU'ya veya ilk saniyelerdeki FPS'e göre seçilir.
+2. **Kokpitin piksel maliyeti:** camları ucuzlatmak (Unlit saydam veya iç/dış iki katman yerine tek katman), kokpit kamerasında iç mekân parçalarının gölge almasını/vermesini kapatmak.
+3. **Otobüs LOD ve materyal atlası** (Ölçüm 1'deki 1. madde): dış kamerada 140 draw call / 312 bin üçgen.
+4. **Binalarda LOD, occlusion ve ışık bake'i:** Kızılay dış kamera için asıl çözüm bu.
+5. **90 Hz ekranlar için hedef FPS:** 60 hedefi 90 Hz ekranda 45'e düşüyor. Ekran 90 Hz ise hedefi 45 (kararlı) ya da 90 (güçlü telefonlarda) seçmek, 60/120 Hz ekranlarda 60 kalmak.
+
+Telefon soğukken (ısıl durum 0) ve şarjda değilken tekrar ölçmek, kısılmanın etkisini ayırmak için faydalı olur.
+
 ## Uygulanan optimizasyonlar
 
-- **Otobüs (bulut, `bmc_donustur.py`):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik `Golge_Govde` veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı: `docs/OTOBUS_BMC_PROCITY.md` → Performans. **Ölçüm 2 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.
+- **Otobüs (bulut, `bmc_donustur.py`):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik `Golge_Govde` veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı: `docs/OTOBUS_BMC_PROCITY.md` → Performans. **Ölçüm 3 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.
