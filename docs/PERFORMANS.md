@@ -56,4 +56,4 @@ Her adımdan sonra aynı APK ile tekrar ölçülür ve buraya yeni bir "Ölçüm
 
 ## Uygulanan optimizasyonlar
 
-- **Otobüs (bulut, ):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik  veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı:  → Performans. **Ölçüm 2 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.
+- **Otobüs (bulut, `bmc_donustur.py`):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik `Golge_Govde` veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı: `docs/OTOBUS_BMC_PROCITY.md` → Performans. **Ölçüm 2 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.

@@ -88,8 +88,8 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
 Mobil için dönüştürücüde yapılanlar (Y4 ölçümünden sonra):
 - **İç mekân sadeleştirildi:** Gövde kabuğunun içinde kalan parçalar (tutamaklar, tavan, kokpit iç parçaları) %45'e indirildi.
-- **Doku atlası:** Kaplama (), tavan modülü (), lambalar (), plaka ve camlar dışındaki 30 doku tek bir  (4096) dokusunda. UV'si birden fazla karede tekrar eden ~1.500 yüz eski materyalinde kaldı. Gövde 34 → 10 materyal, kapılar 3 → 2, tekerlekler 2 → 1.
-- **Gölge gövdesi:**  (170 üçgenlik dışbükey kabuk) yalnızca gölge verir; diğer parçalar gölge vermez ().
+- **Doku atlası:** Kaplama (`caroserie`), tavan modülü (`cngtank`), lambalar (`lumini`), plaka ve camlar dışındaki 30 doku tek bir `Textures/Atlas_BMC.png` (4096) dokusunda. UV'si birden fazla karede tekrar eden ~1.500 yüz eski materyalinde kaldı. Gövde 34 → 10 materyal, kapılar 3 → 2, tekerlekler 2 → 1.
+- **Gölge gövdesi:** `Golge_Govde` (170 üçgenlik dışbükey kabuk) yalnızca gölge verir; diğer parçalar gölge vermez (`OtobusKurucu.SetupShadows`).
 - Silecek animasyonunun 19 fazla karesi atıldı.
 
 | | Önce (Y4) | Şimdi (tahmini) |
@@ -97,4 +97,4 @@ Mobil için dönüştürücüde yapılanlar (Y4 ölçümünden sonra):
 | Üçgen (model) | 158 bin | 124 bin |
 | Draw call (gölge dahil) | ~140 | ~30 |
 
- için Unity'de **Max Size 2048** yeterli. Yeni ölçüm Y4 APK'sıyla yapılıp 'ye eklenmeli.
+`Atlas_BMC.png` için Unity'de **Max Size 2048** yeterli. Yeni ölçüm Y4 APK'sıyla yapılıp `docs/PERFORMANS.md`'ye eklenmeli.
