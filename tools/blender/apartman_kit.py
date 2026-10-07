@@ -45,6 +45,10 @@ PALETTE = {
     "tente_turuncu": (0.88, 0.47, 0.12), "tente_bordo": (0.45, 0.10, 0.15),
     "tabela_beyaz": (0.95, 0.95, 0.95), "tabela_kirmizi": (0.80, 0.10, 0.10), "tabela_mavi": (0.10, 0.35, 0.75),
     "tabela_sari": (0.98, 0.80, 0.10), "tabela_yesil": (0.05, 0.55, 0.35),
+    # yol kiti (yol_kit.py). Yeni renkler HER ZAMAN sona eklenmeli: sıra değişirse eski FBX'lerin UV'leri kayar.
+    "asfalt": (0.17, 0.17, 0.18), "asfalt_acik": (0.24, 0.24, 0.25), "kaldirim": (0.62, 0.60, 0.57),
+    "bordur": (0.80, 0.80, 0.77), "serit_beyaz": (0.92, 0.92, 0.90), "serit_sari": (0.95, 0.75, 0.10),
+    "cim": (0.30, 0.45, 0.20), "toprak": (0.45, 0.37, 0.28),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID
@@ -143,8 +147,9 @@ class MeshBuilder:
             for loop in f.loops:
                 loop[self.uv].uv = uv
 
-    def to_object(self, name, material):
-        bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
+    def to_object(self, name, material, recalc_normals=True):
+        if recalc_normals:
+            bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
         mesh = bpy.data.meshes.new(name)
         self.bm.to_mesh(mesh)
         self.bm.free()
