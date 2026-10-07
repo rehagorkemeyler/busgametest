@@ -1,9 +1,11 @@
 # Ankara Bus Simulator — Aksiyon Planı
 
+İlgili belgeler: [Harita tasarımı](HARITA_TASARIMI.md) · [Görev dağılımı (bulut ↔ yerel)](GOREVLER.md)
+
 **Hedef:** Unity ile Android'de akıcı çalışan, Ankara otobüsleriyle Ankara sokaklarında (binalar, yokuşlar) sürülen, modüler ve üstüne eklenebilir bir otobüs simülasyonu.
 
 **MVP tanımı (ilk elle tutulur sürüm):**
-Android telefonda açılan bir APK. İçinde bir Ankara otobüsü, Ankara'dan alınmış kısa bir harita parçası (1–2 km, en az bir yokuşlu), 4–6 duraklı bir hat. Oyuncu otobüsü dokunmatik kontrollerle sürer, durakta durup kapıları açar, hat tamamlanır. Orta seviye bir telefonda en az 30 FPS.
+Android telefonda açılan bir APK. İçinde bir Ankara otobüsü, Kızılay AVM'den Atakule'ye uzanan stilize bir harita (~2,2 km, Cinnah yokuşu dahil) ve 5 duraklı bir hat: Kızılay AVM → Meclis → Kuğulu Park → Cinnah → Atakule. Oyuncu otobüsü dokunmatik kontrollerle sürer, durakta durup kapıları açar, hat tamamlanır. Orta seviye bir telefonda en az 30 FPS.
 
 MVP'de **yok**: yolcu karakterleri, trafik, bilet/para sistemi, kariyer, gece/gündüz, hava durumu. Bunlar MVP'den sonra modül olarak eklenecek.
 
@@ -64,9 +66,9 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 
 ## Faz 2 — Ankara haritası, ilk parça (1–2 hafta)
 
-- [ ] Gerçek bir güzergâh seç (1–2 km, en az bir yokuş, ayırt edilebilir binalar).
-- [ ] Yol ağı ve bina taban izleri: **OpenStreetMap** (Blender'da Blosm eklentisi ile). Yükseklik: Copernicus/SRTM DEM verisi → arazi.
-- [ ] Blender'da yol ve kaldırım mesh'leri, kavşaklar, yokuş eğimleri.
+- [x] Güzergâh: Kızılay AVM → Atakule. OSM ve SRTM verisiyle incelendi, stilize harita tasarlandı ([HARITA_TASARIMI.md](HARITA_TASARIMI.md)). Gerçek harita birebir kopyalanmayacak.
+- [ ] Blender'da modüler yol kiti: düz, eğimli, kıvrım, kavşak, refüj, kaldırım, durak cebi.
+- [ ] Simge yapılar: Atakule, Kızılay AVM, TBMM duvarı ve kapısı, Kuğulu gölet.
 - [ ] Binalar: 3–5 tip **modüler Ankara apartmanı** (4–8 kat, balkonlu, sıva renkleri, zemin katta dükkân), her birinden renk/kat varyasyonu. Teker teker modellemek yerine kit mantığı.
 - [ ] Mobil bütçe: bina başına 1 materyal + doku atlası, LOD0/LOD1/billboard, harita parçası başına < 150 draw call, < 300k üçgen görünür alanda.
 - [ ] Unity: statik batching, ışık **bake** (gerçek zamanlı gölge sadece otobüse), occlusion culling.
@@ -93,7 +95,7 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 | Modül | Not |
 |---|---|
 | Yolcular | Durakta bekleyen / binen / inen basit karakterler, otobüs doluluk |
-| Trafik | Şerit takip eden basit AI araçlar, trafik ışıkları |
+| Trafik | Şerit takip eden basit AI araçlar, trafik ışıkları. ~%30 sarı Hyundai Accent Blue taksi, gerisi klasik Türkiye arabaları ve dolmuş |
 | İkinci otobüs | BMC Procity (doğalgazlı EGO otobüsü) |
 | Yeni hatlar ve harita parçaları | Kızılay, Ulus, Dikmen, Çankaya, Keçiören… |
 | Puanlama / kariyer | Zamanında varış, sarsıntısız sürüş, para, otobüs satın alma |
@@ -102,11 +104,9 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 
 ---
 
-## Önemli uyarı: telif ve lisans
+## Telif ve lisans
 
-`BMC Procity 12LF` (Proton Bus Simulator modu) ve `MAN SL EGO EDIT` (OMSI 2 modu) başka kişilerin ürettiği modlar. Bunları **kendi aramızda prototip** için kullanmak sorun değil. Ama oyunu Google Play'de yayınlamak, özellikle ücretli veya reklamlı yayınlamak için ya mod yazarlarından **yazılı izin** almak ya da otobüsleri **kendimiz modellemek veya lisanslı asset almak** gerekir. Ayrıca MAN ve BMC marka adları ve logoları da ticari kullanımda risk taşır.
-
-OpenStreetMap verisi kullanılabilir ama oyunda "© OpenStreetMap katkıcıları" atfı (ODbL) gösterilmeli.
+Bu proje **kişisel prototip**tir; yayınlanması planlanmıyor. Repodaki `BMC Procity 12LF` (Proton Bus Simulator modu) ve `MAN SL EGO EDIT` (OMSI 2 modu) başkalarının yaptığı modlar, marka araç modelleri (Hyundai, Tofaş vb.) de lisanslı değil. İleride yayın gündeme gelirse bunların hepsi değiştirilmeli veya izni alınmalı.
 
 ## Paralel çalışma kuralları
 
