@@ -41,3 +41,6 @@ crashlytics-build.properties
 # Her geliştirici Package Manager → My Assets üzerinden kendisi import eder.
 /[Aa]ssets/Realistic Car Controller Pro/
 /[Aa]ssets/Realistic Car Controller Pro.meta
+
+# Android build geçici dosyaları
+/.utmp/
