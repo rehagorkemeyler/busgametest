@@ -15,7 +15,13 @@
 
 ## Oyun haritası (MVP)
 
-Toplam **~2,2 km**, **+130 m**. Unity'de 1 birim = 1 metre. Başlangıç noktası (0,0,0) Kızılay AVM durağı, güzergâh +Z yönünde ilerler.
+> **Uygulandı:** `tools/blender/harita_hat1.py` bu tasarımı yerleşim dosyasına (`Maps/Hat1/Hat1_Yerlesim.json`) çevirir. Unity'de **Ankara Bus → Hat 1 Haritasını Kur** menüsü sahneyi kurar. Gerçekleşen değerler: bulvar 1,32 km + Cinnah 0,59 km ≈ **1,9 km**, **+88 m** (Kızılay 0 → Meclis 10 → Kuğulu 36 → Cinnah 60 → Atakule 88 m). Yaklaşık 190 bina, 160 ağaç ve 95 yol parçası.
+
+| Sürücü gözü (Kızılay AVM) | Cinnah yokuşu | Plan |
+|---|---|---|
+| ![](onizleme/hat1_surucu.png) | ![](onizleme/hat1_cinnah.png) | ![](onizleme/hat1_plan.png) |
+
+İlk taslak: toplam ~2,2 km, +130 m. Unity'de 1 birim = 1 metre. Başlangıç noktası (0,0,0) Kızılay AVM durağı, güzergâh +Z yönünde ilerler.
 
 | Bölüm | Uzunluk | Eğim | Yol | Karakter |
 |---|---|---|---|---|

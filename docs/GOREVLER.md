@@ -15,6 +15,7 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [ ] MAN SL: repodaki mod eksik (dış gövde yok), temel eklenti bulunursa `o3d_okuyucu.py` ile dönüştürülecek
 - [ ] EGO kaplaması (`caroserie.png` şablonu üzerine)
 - [ ] Trafik araçları: sarı Accent Blue taksi, klasik Türkiye arabaları (low-poly)
+- [x] Hat 1 yerleşimi + Unity editör kurucusu (`harita_hat1.py`, `HaritaKurucu.cs`)
 - [ ] C#: trafik AI, araç spawner (%30 taksi), yolcu sistemi
 - [ ] Dokümantasyon, plan güncellemeleri
 
@@ -39,10 +40,9 @@ Asset Store paketi senin hesabına bağlı olduğu için bunu Unity Package Mana
 **Prompt:**
 > `TestTrack` sahnesini Android APK olarak build al. Telefonuma (USB hata ayıklama açık) yükle, Unity Profiler'ı telefona bağla. FPS, draw call ve bellek değerlerini `docs/PERFORMANS.md` dosyasına yaz. Commit'le, push'la.
 
-### Y5 — Haritayı sahneye kur
-Bulut tarafı bina ve yol kitlerini hazırladıktan sonra yapılır.
+### Y5 — Haritayı sahneye kur (hazır yerleşimle)
 **Prompt:**
-> `docs/HARITA_TASARIMI.md`'ye göre `Assets/_Project/Maps/` altındaki yol, bina ve simge yapı prefablarıyla `Map_A_Kizilay`, `Map_B_Bulvar`, `Map_C_Cinnah` prefablarını kur, `Scenes/Hat1_KizilayAtakule.unity` sahnesinde birleştir. 5 `BusStop` + 1 `BusRoute` yerleştir, otobüsü başlangıca koy. Statik objeleri Static işaretle, ışığı bake et, occlusion culling'i bake et. Commit'le, push'la.
+> `docs/HARITA_TASARIMI.md`'yi oku. `Assets/_Project/Scenes/Hat1_KizilayAtakule.unity` adında yeni bir sahne oluştur ve Unity menüsünden **Ankara Bus → Hat 1 Haritasını Kur**'u çalıştır (`Scripts/Editor/HaritaKurucu.cs`). Konsolda "Model bulunamadı" uyarısı varsa nedenini bul. Bir bina ve bir yol parçasında ön yönün doğru olduğunu kontrol et (bina ön cephesi yola, yol parçaları birbirine bitişik). Hata varsa düzeltip `docs/MODEL_KITLERI.md`'deki eksen notunu güncelle. Y3'te kurulan otobüs prefabını `OtobusBaslangic` noktasına koy, `RouteTracker`'ın Route alanına `Hat_1` objesini bağla, `BusHud` ekle. Directional Light'ı ayarla, ışığı ve occlusion culling'i bake et. Play modunda Kızılay'dan Atakule'ye sür ve durakların tamamlandığını doğrula. Commit'le, push'la.
 
 ### Y6 — (İsteğe bağlı) Blender'da elle rötuş
 Bulutta üretilen modelleri senin Blender'ında Blender MCP ile beğenine göre düzeltmek istersen yerel oturum bunu yapabilir. Bulut tarafındaki üretim scriptleri `tools/blender/` altında olacak; aynı scriptleri yerelde de çalıştırabilirsin.
