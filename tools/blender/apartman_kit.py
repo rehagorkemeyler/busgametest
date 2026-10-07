@@ -49,6 +49,11 @@ PALETTE = {
     "asfalt": (0.17, 0.17, 0.18), "asfalt_acik": (0.24, 0.24, 0.25), "kaldirim": (0.62, 0.60, 0.57),
     "bordur": (0.80, 0.80, 0.77), "serit_beyaz": (0.92, 0.92, 0.90), "serit_sari": (0.95, 0.75, 0.10),
     "cim": (0.30, 0.45, 0.20), "toprak": (0.45, 0.37, 0.28),
+    # simge yapılar ve sokak objeleri (yapilar_kit.py)
+    "su": (0.22, 0.40, 0.48), "yaprak": (0.22, 0.38, 0.16), "yaprak_acik": (0.40, 0.52, 0.22),
+    "kule_beton": (0.86, 0.85, 0.81), "metal": (0.52, 0.55, 0.58), "kuğu": (0.97, 0.97, 0.95),
+    "gaga": (0.90, 0.45, 0.10), "ego_mavi": (0.05, 0.30, 0.62), "agac_govde": (0.33, 0.25, 0.18),
+    "kirmizi_bayrak": (0.85, 0.05, 0.10),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID

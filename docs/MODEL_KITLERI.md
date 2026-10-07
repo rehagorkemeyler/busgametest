@@ -1,4 +1,4 @@
-# Model Kitleri: Binalar ve Yollar
+# Model Kitleri: Binalar, Yollar, Simge Yapılar
 
 ![Yol kiti](onizleme/yol_kiti_v1.png)
 
@@ -8,6 +8,7 @@ Tüm modeller `tools/blender/` altındaki scriptlerle **üretilir**. Elle düzen
 pip install bpy matplotlib           # Python 3.13 için bpy 5.x
 python tools/blender/apartman_kit.py --out <klasör> [--render onizleme.png] [--only A1_Bulvar_6Kat_Krem ...]
 python tools/blender/yol_kit.py      --out <klasör> [--render onizleme.png]
+python tools/blender/yapilar_kit.py  --out AnkaraBusSimulator/Assets/_Project/Maps [--render onizleme.png]
 ```
 
 ## Ortak palet materyali
@@ -83,3 +84,21 @@ Notlar:
 - Durak cepleri sağ kaldırımda, 3 m derinliğinde, uçları 8 m'lik geçişle. `BusStop` objesini cebin ortasına koyun.
 - Fizik: Yol FBX'lerine **Mesh Collider** ekleyin. Kaldırım bordürleri de collider'da olduğu için otobüs bordüre çarpar.
 - Yollar araziyle birleşmez; yol kenarlarında 0,6 m aşağı inen etek var. Arazi (Terrain) bu eteğin biraz altında kalacak şekilde düzenlenmeli.
+
+## Simge yapılar ve sokak objeleri
+
+![Simge yapılar](onizleme/simge_yapilar_v1.png)
+
+| Model | Boyut (G × D × Y, m) | Üçgen | Not |
+|---|---|---|---|
+| `Landmarks/Atakule` | 28.4 × 28.4 × 125.2 | 1540 | Dönüş halkası adasının merkezine: `Atakule_DonusHalkasi` başlangıcından (0, 0, +29.75) |
+| `Landmarks/KizilayAVM` | 49.8 × 41.6 × 42.0 | 640 | Cam köşe sol önde; bulvar köşesine bakmalı |
+| `Landmarks/TBMM_Duvar_20m` | 21.1 × 1.1 × 3.6 | 1068 | X ekseni boyunca uzanır, uç uca eklenir |
+| `Landmarks/TBMM_Kapi` | 30.2 × 2.4 × 12.0 | 736 | Kapı + nöbet kulübeleri + bayraklar |
+| `Landmarks/KuguluPark_Golet` | 44.0 × 30.0 × 7.5 | 992 | Gölet, kuğular, söğütler, banklar |
+| `Props/EGO_Durak` | 7.9 × 2.5 × 3.2 | 224 | Durak ceplerinin kaldırımına |
+| `Props/Lamba_Bulvar` | 3.9 × 0.4 × 9.0 | 104 | Refüje, çift kollu |
+| `Props/Agac_Cinar_1`, `_2` | ~5 × 5 × 7–10 | 60 | Refüj ve kaldırım ağacı |
+| `Props/Agac_Kavak` | 2.5 × 2.4 × 13.2 | 40 | Uzun ince kavak |
+
+Ağaç ve lambalar çok tekrarlanacağı için Unity'de **GPU Instancing** açık bir materyal kopyası (`M_AnkaraPalet_Instanced`) ile kullanılabilir.
