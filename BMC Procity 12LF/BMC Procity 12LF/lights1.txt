@@ -1,0 +1,80 @@
+﻿WORK IN PROGRESS
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+TODO: _halo... ou _obj... ou futuros
+
+//////////////
+
+In the future there will be more lights, like for doors, warnings etc.
+Futuramente haver�o mais luzes, como para portas, avisos, etc.
+
+### CONFIGURACOES DAS LUZES
+
+[lights_settings]
+blinking_speed=0.8
+
+### FAROL BAIXO QUE ILUMINA O CHAO USANDO PROJETOR
+### LOW BEAM - FAKE LIGHT PROJECTOR
+### INTENSIDADE AINDA NAO EH ALTERAVEL
+### INTENSITY IS NOT YET CUSTOMIZABLE
+
+[low_beam_projector]
+posX=0
+posY=0.36627
+posZ=6.0757
+
+### FAROL ALTO QUE ILUMINA O CHAO USANDO PROJETOR
+### HIGH BEAM - FAKE LIGHT PROJECTOR
+
+[high_beam_projector]
+posX=0
+posY=0.36627
+posZ=6.0757
+
+
+##### INTERNAL LIGHTS
+##### LUZES INTERNAS
+
+[interior_light_1]
+posX=0.017234
+posY=1.48059
+posZ=2.91499
+range=4
+intensity=1
+
+[interior_light_2]
+posX=0.017234
+posY=1.48059
+posZ=-1.94433
+range=4
+intensity=1
+
+[interior_light_3]
+posX=0.017234
+posY=1.48059
+posZ=4.52895
+range=6
+intensity=1
+
+## HERE IS AN EXCLUSIVE LIGHT FOR LOW END DEVICES AND MOBILE
+## ESTA � A LUZ �NICA PARA APRELHOS FRACOS E MOBILE
+## TRY ON PC BY DISABLING DAY-NIGHT CYCLE AND EFFECTS
+## TESTE NO PC DESATIVANDO O CICLO DIA-NOITE E EFEITOS
+
+[interior_lights_combined]
+posX=0
+posY=1.2931
+posZ=-0.36326
+range=35
+intensity=1
+
+##### ADD _3, 4 etc TO INCREMENT THE NUMBER OF LIGHTS
+##### ADICIONE _3, 4 etc PARA INCREMENTAR QUANTIDADE DE LUZES
+
+##### ENABLED WITH BRAKES
+##### ATIVADOS COM O FREIO
