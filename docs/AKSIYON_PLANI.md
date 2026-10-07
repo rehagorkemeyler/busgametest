@@ -64,7 +64,7 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 - [x] Dokunmatik kontroller (`BusTouchControls`): sanal direksiyon, analog gaz/fren pedalı, D/N/R, el freni, kapı, kamera; üstte hız/vites/devir.
 - [x] Kamera (`BusCameraRig`): dış takip + kokpit (`SurucuGozu`).
 - [x] Test sahnesi `Scenes/TestTrack.unity`: **Ankara Bus → Test Pisti Sahnesini Kur** (düz zemin, %10 100 m rampa, düzlük, iniş).
-- [ ] **Telefonda ilk APK testi.**
+- [x] **Telefonda ilk APK testi** (Galaxy S24 FE, her yerde 60 FPS; sonuçlar ve optimizasyon sırası: [PERFORMANS.md](PERFORMANS.md)).
 
 ## Faz 2 — Ankara haritası, ilk parça (1–2 hafta)
 

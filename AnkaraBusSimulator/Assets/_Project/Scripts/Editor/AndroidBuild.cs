@@ -39,6 +39,7 @@ namespace AnkaraBus.EditorTools
                 options = BuildOptions.Development,
             };
 
+            PlayerSettings.enableFrameTimingStats = true;
             PerfMode = true;
             BuildReport report;
             try
