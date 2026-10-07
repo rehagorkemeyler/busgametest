@@ -1,0 +1,4 @@
+[skin]
+skin001=R17.png
+skin002=nr_R17.png
+skin003=cngtank.png

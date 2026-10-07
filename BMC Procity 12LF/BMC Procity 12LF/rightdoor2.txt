@@ -1,0 +1,27 @@
+//////////////////////////////////
+CONFIGURACOES DA PORTA
+DOOR SETTINGS
+//////////////////////////////////
+
+[rightdoor2]
+posX=1.2093
+posY=0.50292
+posZ=0.27944
+isEntrance=1
+isExit=1
+; tipo da animacao... 1 = pivot que gira 90 graus
+anim_type=1
+anim_rotate_1=-90
+anim_rotate_2=90
+anim_time_1=1.5
+anim_time_2=0.8
+
+[anim1_door1]
+posX=0.918499
+posY=0.478694
+posZ=0.612859
+
+[anim1_door2]
+posX=0.918499
+posY=0.478694
+posZ=-0.000315

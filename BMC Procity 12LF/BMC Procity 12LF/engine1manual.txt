@@ -1,0 +1,123 @@
+#########################################
+######## CONFIGURACOES DO MOTOR
+#########################################
+
+[engine]
+idle_rpm=800
+idle_rpm_torque=100
+idle_rpm_curve_bias=0.3
+peak_rpm=2200
+peak_rpm_torque=900
+peak_rpm_curve_bias=0.02
+max_rpm=2600
+inertia=2
+friction_torque=50
+rotational_friction=0.67
+viscous_friction=0.05
+use_rpm_limiter=1
+rpm_limiter_trigger=6000
+rpm_limiter_cutoff_time=0.075
+;Idle control: 0 = passive, 1 = active
+idle_control=1
+max_idle_throttle=1
+can_stall=1
+stall_sensitivity=0.301
+stalled_friction_torque=1000
+starter_effectiveness=1
+max_fuel_per_rev=0.7
+
+#########################################
+######## CONFIGURACOES DO CAMBIO
+#########################################
+
+## manual
+
+[clutch_disk_friction]
+max_torque_transfer=950
+
+[manual_gearbox]
+num_forward_ratios=6
+fwd_ratio_1=6.7
+fwd_ratio_2=3.81
+fwd_ratio_3=2.29
+fwd_ratio_4=1.48
+fwd_ratio_5=1
+fwd_ratio_6=0.73
+reverse_ratio=-6.27
+gear_change_time=0.5
+
+
+
+#########################################
+######## CONFIGURACOES DO DIFERENCIAL
+#########################################
+
+[differential]
+gearRatio=6.5
+//do scania era 6.5, aumentando o valor anda mais rapido
+
+## AS OPCOES ABAIXO NAO ESTAO APLICADAS AINDA
+
+type=viscous
+#opcoes: open locked viscous clutch_pack torque_bias
+
+## opcoes para viscous
+preload=100
+powerStiffness=0.2
+coastStiffness=0.2
+
+## opcoes para clutch_pack
+clutchPreload=50
+clutchPackFriction=0.4
+powerAngle=45
+coastAngle=80
+
+## opcoes para torque_bias
+torquePreload=0
+powerRatio=5
+coastRatio=5
+
+#########################################
+######## CONFIGURACOES DO GIRO DA RODA/DIREÇÃO
+#########################################
+
+[steering]
+max_steer_angle=35
+toe_angle=0
+;Ackerman: 0 = disabled, 1 = enabled
+use_ackerman=1
+
+; Generally this will be the center of the last axle
+[pos_ackerman]
+posY=0.52
+posZ=-2.88
+
+#########################################
+######## CONFIGURACOES DO FREIO
+#########################################
+
+[brakes]
+max_brake_torque=20000
+brake_bias=0.7
+handbrake_torque=10000
+;Handbrake Axle: 0 = rear only, 1 = front only, middle: both
+handbrakeAxle=0
+
+#########################################
+######## CONFIGURACOES DOS PNEUS
+#########################################
+
+## AS CONFIGURACOES DOS PNEUS NAO  ESTAO PROGRAMADAS AINDA
+## NAO ALTERE DAQUI PARA BAIXO
+
+## THESE SETTINGS ARE NOT CODED YET, DO NOT CHANGE BELOW
+
+#[tires]
+#type=pacejka
+
+#[tires_pacejka]
+#adherent_u=0.95
+#stiffness=0.8
+#shape=1.5
+#peak_u=1.1
+#curvature=-2

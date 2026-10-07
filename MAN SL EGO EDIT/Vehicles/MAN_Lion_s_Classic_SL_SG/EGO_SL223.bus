@@ -1,0 +1,597 @@
+    Programiranje,sledi: Lahko napises, kaj hoces, program prezre vse, razen, ko so na zacetku vrstice kljucne besede[mreze].
+	Kljucne besede, ki so v svoji vrstici same jih program prepozna in prebere ustrezne naslednje vrstice in najde parametre. 
+	Zatem morajo slediti vstice z ustreznimi parametri. Ko najde vse program zopet isce kljucne besede in ustrezne parametre.
+	Na splosno velja, da vsebina ni pomembna, razen za opisni niz, orodij, ali mreze.
+
+	Sedaj sledijo nastavitve za MAN SL 283:
+
+
+
+
+	[friendlyname] Proizvajalec
+	{Hersteller} in
+	{Typ} model.
+	{Anstrich} je ime standardne barve(ce reklamna tekstura ni aktivna)
+
+[friendlyname]
+MAN
+SL_223 EGO1
+Ego
+
+[description]
+Avtor: Jendomen
+Edit : Murat SOYKAN
+
+www.facebook.com/OMSI2TURK
+
+Mestni in primestni, srednje podni avtobus je MAN izdeloval v svoji Turski tovarni v Ankarani od leta 2000.
+Izdelovali so ga v izvedbi z dvakat dvojnimi vrati, ali trikrat dvojnimi vrati.
+Za pogon je skrbel Manov motor moci 220KM, 260KM, ali 280KM, za prenos moci pa seststopenski rocni menjalnik,
+oziroma stiri stopenski avtomatski menjalnik. Sedeze, notranjost in opremo avtobusa so prilagajali po zeljah narocnika,
+tako da so med avtobusi kar velike razlike. Do danes se je pokazal kot zelo vzdrzljiv in enostaven za vzdrzevanje.
+Na cestah bivse Jugoslavije ga lahko danes pogosto srecamo.
+V letu 2004 je dozivel manso prenovo in preimenovanje v Lion s Classic. Proizvodna je ugasnila v letu 2010.
+
+- Tehnicni podatki -
+
+Dolzina: 11857 mm
+Sirina: 2500 mm
+Visina: 3130 mm
+
+Motor: MAN_D0826_LOH, 220KS
+Menjalnik: Voith D854.3E
+
+Teza praznega avtobusa: 10.650 kg
+Skupna teza avtobusa: 18.000 kg
+
+Stevilo sedezev: 40+1
+Stevilo stojisc: 61
+
+Avtor: Jendomen
+Za pomoc pri izdelavi in izdelavi oblek srbskih prevoznikov se zahvaljujem  Aleksu Radiæ z foruma Balkan simulacije.
+Za pomoc pri izdelavi se zahvaljujem vsem testnim voznikom, za opazanja in nasvete.
+Za pomoc pri distribuciji se zahvaljujem ekipi in Mitju z portala VirtualBus Slovenija.
+
+[end]
+
+	[number] omogoca dodelitev stevilk
+	{colorscheme specific numbers path}	Pot do *.org-(Omsi-Registration)-Dateien, ki so odgovorni za dodelitev stevilk..
+
+	Seznam stevilk: v prvi vrstici je ime barve  (wie er auch im CTC angegeben wird), sledi poljubno dovojeno stevilo.
+	Stevilo in prva vrstica, kjer je "glavni seznam", ki velja za vse slike, za katere ni predpisana nobena stevilka. 
+
+
+	[registration_automatic] omogoca dodelitev registrske tablice v avtomatskem nacinu
+	{regPrefix}				Predpona pred grbom in registersko sevilko. Naprimer: LJ
+	{regPostfix}				Oznaka za grbom. Naprimer: "LPP".
+
+	[registration_list] odpre doloceno datoteko, z garazno ali registersko stevilko avtobusa
+
+	[registration_free] V nacinu AI, se uporablja rocna izbira registerske stevilke, ki jo izbere uporabnik.
+
+
+
+[number]
+reg_1.org
+
+	[registration_free]
+
+[registration_automatic]
+
+
+
+[kmcounter_init]
+2001
+60000
+
+
+
+[sound]
+sound\sound_SL_M.cfg
+
+
+[model]
+model\model_SL_02ego.cfg
+
+
+[paths]
+model\paths_M.cfg
+
+[passengercabin]
+model\passengercabin_M.cfg
+
+
+
+	////////////////////////////////////////////////////////
+		Scripts
+	////////////////////////////////////////////////////////
+
+[varnamelist]
+26
+script\Collision_varlist.txt
+script\antrieb_varlist.txt
+script\engine_varlist.txt
+script\elec_varlist.txt
+script\bremse_varlist.txt
+script\auspuff_varlist.txt
+script\lights_varlist.txt
+script\door_varlist.txt
+script\wiper_varlist.txt
+script\cockpit_varlist.txt
+script\klappern_varlist.txt
+script\matrix_varlist.txt
+script\heizung_varlist.txt
+script\rain_varlist.txt
+script\dirt_varlist.txt
+script\IBIS_varlist.txt
+script\wimpel_varlist.txt
+script\visual_varlist.txt
+script\cashdesk_EUR_varlist.txt
+script\almex_varlist.txt
+script\AI_varlist.txt
+script\spray_varlist.txt
+script\articulation_varlist.txt
+script\preklopi_varlist.txt
+script\Siemens VDO Panel_varlist.txt
+script\scripts_varlist.txt
+
+
+
+
+
+[stringvarnamelist]
+4
+script\IBIS_stringvarlist.txt
+script\matrix_stringvarlist.txt
+script\cockpit_stringvarlist.txt
+script\ticketprinter_stringvarlist.txt
+
+
+
+
+[script]
+28
+script\MAN_SL_main.osc
+script\MAN_SL_main_AI.osc
+script\collision.osc
+script\cockpit.osc
+script\antrieb_D854_3E.osc
+script\engine.osc
+script\elec.osc
+script\bremse.osc
+script\auspuff.osc
+script\lights.osc
+script\door.osc
+script\wiper.osc
+script\klappern.osc
+script\matrix.osc
+script\forcefeedback.osc
+script\rain.osc
+script\dirt.osc
+script\sound_volume.osc
+script\heizung_klima.osc
+script\IBIS-2.osc
+script\wimpel.osc
+script\cashdesk_EUR.osc
+script\almex.osc
+script\spray.osc
+script\articulation.osc
+script\preklopi.osc
+script\Siemens VDO Panel.osc
+script\scripts.osc
+
+
+
+
+
+
+[constfile]
+20
+script\collision_constfile.txt
+script\antrieb_D845_3E_constfile.txt
+script\engine_MAN_D0826_LOH_constfile.txt
+script\elec_constfile.txt
+script\bremse_constfile.txt
+script\lights_constfile.txt
+script\door_constfile.txt
+script\auspuff_constfile.txt
+script\cockpit_constfile.txt
+script\klappern_constfile.txt
+script\matrix_constfile.txt
+script\forcefeedback_constfile.txt
+script\wiper_constfile.txt
+script\dirt_constfile.txt
+script\heizung_klima_constfile.txt
+script\IBIS_constfile.txt
+script\AI_constfile.txt
+script\articulation_constfile.txt
+script\Siemens VDO Panel_constfile.txt
+script\scripts_constfile.txt
+
+
+
+
+
+
+	////////////////////////////////////////////////////////
+		Kamera *NEU01* 
+	////////////////////////////////////////////////////////
+
+	Naslednji ukaz dodaja kamero. Tukaj se doloci kdaj se katera kamera pojavi.
+    v katerem so ustvarjena kamere pojavijo kasneje. _fahrer pomeni, prespektiva voznika
+	Kasneje bodo dodane potnik, ki je omogocen le s temeljno spremembo perspektive.
+
+	* x (sirina)
+	* y (dolzina)
+	* z (visina)
+	* dist, d.h.kolikor je oko pred vratom; glej zunaji namen:
+        Ta razdalja je spremenljiva in ponavadi nekaj pozitivnih decimetrov od
+        sredine (oznacena z x, y, z) v obliki avtobusa vidno in osredotocen..
+		Za voznika, mora biti vrednost nekoliko negativna, kot je okoli oci, vendar se
+        tocka, okoli 6 cm zadaj zavije ;-)
+	* Vidni kot: sekcija v stopinjah, za voznika, je obicajno 52 °, normalno je 45 °.
+	* Standard jasno usmeritev v precni smeri v stopinjah °
+	* Standard jasno poravnavo v navpicni smeri v stopinjah °
+
+	0: Pogled na levo
+[add_camera_driver]
+-1.299
+4.960
+2.150
+-0.06
+52
+-160
+-5
+
+	1: Pogled diagonalno levo
+[add_camera_driver]
+-0.62
+4.800
+2.120
+-0.5
+52
+-85
+-5
+
+	2: Pogled na levem ogledalu
+[add_camera_driver]
+-0.601
+4.930
+2.150
+-0.06
+52
+-35
+-0
+
+	3: Voznikov pogled(std)
+[add_camera_driver]
+-0.705
+4.770
+1.990
+-0.06
+52
+0
+-15
+
+	4: Pred vrati
+[add_camera_driver]
+-0.72
+4.800
+2.150
+-0.06
+52
+70
+5
+
+	5: Pogled v ogledalo desno
+[add_camera_driver]
+-0.411
+5.020
+2.150
+-0.06
+48
+50
+16
+
+	6: Panel-Povecava
+[add_camera_driver]
+-0.72
+5.220
+2.150
+-0.06
+52
+0
+-50
+
+	7: Vozni red-Pogled
+[add_camera_driver]
+-0.62
+4.900
+2.020
+-0.5
+52
+-85
+-35
+[view_schedule]
+
+	8: Prodaja vstopnic-Pogled
+[add_camera_driver]
+-0.601
+4.900
+2.120
+-0.06
+52
+40
+-25
+[view_ticketselling]
+
+################
+Potnikov pogled
+################
+
+	0: Sedi na sredini
+[add_camera_pax]
+-0.5
+-1.7
+2.2
+-0.06
+45
+0
+0
+
+	1: Sedi spredaj desno
+[add_camera_pax]
+0.5
+3.7
+2.2
+-0.06
+45
+0
+0
+
+	2: Sedi zadaj
+[add_camera_pax]
+-0.3
+-5.1
+2.5
+-0.06
+45
+0
+0
+
+	3: Sedi spredaj levo
+[add_camera_pax]
+-0.5
+3.7
+2.2
+-0.06
+45
+0
+0
+
+
+
+
+	Ta ukaz nastavi privzeti gonilnik za kamero:
+
+[set_camera_std]
+3
+
+	Ta ukaz nastavi srediscno tocko zunanje kamere:
+
+[set_camera_outside_center]
+0
+0
+1.2
+
+
+
+	////////////////////////////////////////////////////////
+		Refleksije kamere (ogledala) *NEU01*
+	////////////////////////////////////////////////////////
+
+	V tem poglavju se nastavlja odboj kamere. To vozilo, vsak kot kamere opravljene prizor, 
+	nato pa v padajocem vrstnem redu glede na teksturami z imenom "reflexion0.bmp", "reflexion1.bmp" itd shranjeni
+	od koder se lahko uporabljajo za namene upravljanja dejanske strukture. 
+	1-3 pozicija ogledala,4 raztegne po sirini,5 raztegne po visini,6 levo desno,7 visina pogleda  
+	Sledijo si:
+	levo ogledalo
+	desno ogledalo
+	notranje srednje ogledalo
+	notranje zadnje ogledalo
+	notranje desno ogledalo
+	desno ogledalo nazaj
+	desno ogledalo spredaj
+
+[add_camera_reflexion_2]
+-1.331
+5.771
+2.389
+0
+52
+175
+-10
+1
+
+[add_camera_reflexion]
+1.304
+6.234
+2.389
+0
+52
+198
+-14
+
+[add_camera_reflexion]
+0.177
+5.651
+2.776
+0
+52
+195
+-17
+
+[add_camera_reflexion]
+0.904
+-0.798
+2.673
+0
+52
+160
+20
+
+[add_camera_reflexion]
+0.747
+5.640
+2.800
+0
+52
+215
+-17
+
+[add_camera_reflexion]
+1.145
+6.249
+2.581
+0
+52
+198
+300
+
+[add_camera_reflexion]
+1.351
+6.119
+2.563
+0
+52
+-155
+327
+
+	////////////////////////////////////////////////////////
+		Fizicni in geometrijski podatki
+	////////////////////////////////////////////////////////
+
+
+	Mase in teze:
+[mass]
+11.2
+
+	Vztrajnostni moment okoli x, y in z osi, kar pomeni, precna, vzdolzna in navpicna os v teziscu v tem vrstnem redu na t*m^2:
+500
+200
+500
+
+[momentofintertia]
+300
+80
+300
+
+
+	Prostorski obseg v avtobusu *NEU01*
+
+[boundingbox]
+2.5
+11.8
+3.34
+0
+0.244
+2.28
+
+
+
+
+
+	Visina d. nad tlemi:
+
+[schwerpunkt]
+1.2
+
+
+
+	Kotalni upor(konstantni, wird demnächst eventuell geändert) als Kraft in N
+[rollwiderstand]
+1000
+
+	Vzdolzna tocka nihanja avtobusa:
+[rot_pnt_long]
+-2.700
+
+	Nastavitev krmilnega mehanizma: (predvidljiva na formulo: inv_turnradius = tan (alfa) / s,
+	pri cemer je najvecji kot alfa npr. spredaj in je razdalja od tocke vrtenja v vzdolzni smeri:
+
+[inv_min_turnradius]
+0.13
+
+[ai_deltaheight]
+-0.10
+
+
+	Naslednje poglavje predstavlja nastavitve podvozja in pogonske osi. 
+	Nastavitev vozila z razlicnimi velikostmi koles, katera os je pogonska, potrebno za pravilno delovanje.
+
+	Sprednja os:
+
+
+[newachse]
+
+	Koordinate:
+
+achse_long
+3.535
+
+	Sirina sticne povrsine obeh pnevmatik, okoli avtobusne sirine
+
+achse_maxwidth
+2.25
+
+achse_minwidth
+1.76
+
+	Premer koles na tej osi
+
+achse_raddurchmesser
+0.940
+
+	Konstanta vzmetenja PRO SEITE in kN/m
+
+achse_feder
+240
+
+	Najvecja obremenitev in kN
+
+achse_maxforce
+90
+
+	Konstanta blazilnika in kNs/m
+
+achse_daempfer
+20
+	Ta os je pogonska?
+
+achse_antrieb
+0
+
+
+	Zadnja os:
+
+[newachse]
+achse_long
+-2.191
+achse_maxwidth
+2.4
+achse_minwidth
+1.2
+achse_raddurchmesser
+0.94
+achse_feder
+280
+achse_maxforce
+116
+achse_daempfer
+20
+achse_antrieb
+1
+
+
+
+

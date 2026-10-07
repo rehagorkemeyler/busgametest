@@ -1,0 +1,4 @@
+[skin]
+skin001=galatibagpulangalati.png
+skin002=nr.png
+skin003=cngtank.png

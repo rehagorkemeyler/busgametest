@@ -1,0 +1,4 @@
+[skin]
+skin001=white.png
+skin002=transit.png
+skin003=cngtank.png
