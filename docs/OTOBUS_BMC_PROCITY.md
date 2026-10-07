@@ -51,7 +51,20 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 1. **FBX import:** Scale Factor 1, Convert Units açık. Materials sekmesi: Location = **Use External Materials (Legacy)** ya da Extract Materials ile materyalleri `Materials/` klasörüne çıkar.
 2. **Saydam materyaller:** Adı `_Cam` ile bitenler (camlar, kapı camları) URP/Lit **Surface Type: Transparent** olmalı. `M_lumini` (lamba camları) da saydam olabilir.
 3. **Dokular:** 4096'lık kaplamalar mobil için ağır; **Max Size 2048** (gerekirse 1024), Format ASTC 6x6.
-4. **Kaplama:** Varsayılan kaplama **EGO**: kırmızı gövde, siyah cam bandı, arka tekerlek üstünde beyaz "EGO" paneli, filo numarası "EGO 22-352". Bu kaplamayı `tools/kaplama_ego.py` üretir (`--filo` ile filo numarası değiştirilebilir; tavan CNG modülü `cngtank.png` da kırmızı). Gövde boyası `M_caroserie` materyalinde. Diğer kaplamalar `Textures/Kaplamalar/` içinde: `caroserie_beyaz_orijinal.png` (modelin orijinali), `white.png`, `tgm.png`, `r38.png`; bunlar materyalin Base Map'i yapılarak denenebilir.
+4. **Kaplamalar** (`tools/kaplama.py` üretir; Ankara plakası "06 CUV 352" dahil):
+
+   | Kaplama | Gövde (`M_caroserie` Base Map) | Tavan modülü (`M_cngtank`) |
+   |---|---|---|
+   | **EGO kırmızı** (varsayılan) | `Textures/caroserie.png` | `Textures/cngtank.png` (kırmızı) |
+   | **EGO mavi** (MAN CNG tarzı) | `Kaplamalar/ego_mavi.png` | `Kaplamalar/cngtank_beyaz.png` |
+   | **Özel Halk Otobüsü** (açık mavi) | `Kaplamalar/ozel_halk.png` | `Kaplamalar/cngtank_beyaz.png` |
+
+   Diğerleri: `caroserie_beyaz_orijinal.png` (modelin orijinali), `white.png`, `tgm.png`, `r38.png`.
+
+   | EGO mavi | Özel Halk |
+   |---|---|
+   | ![](onizleme/bmc_procity_ego_mavi.png) | ![](onizleme/bmc_procity_ozel_halk.png) |
+
 5. **Sürüş değerleri** (Proton dosyalarından; `BusPhysicsSpec` varsayılanları bunlardan alındı, süspansiyon yayı kütleden hesaplanır):
 
 | Ayar | Değer |
