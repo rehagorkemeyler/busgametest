@@ -83,6 +83,7 @@ namespace AnkaraBus.EditorTools
                 root.AddComponent<BusInput>();
                 root.AddComponent<RouteTracker>();
                 root.tag = "Player"; // trafik (TrafficSpawner) oyuncuyu bu etiketle bulur
+                SetupShadows(root);
                 SetupLivery(root);
 
                 var so = new SerializedObject(vehicle);
@@ -99,6 +100,18 @@ namespace AnkaraBus.EditorTools
             {
                 Object.DestroyImmediate(root);
             }
+        }
+
+        /// <summary>
+        /// Gölgeyi yalnızca dışbükey gövde kabuğu (Golge_Govde) verir; asıl parçalar gölge geçişinde
+        /// tekrar çizilmez. Draw call'u yaklaşık yarıya indirir (docs/PERFORMANS.md).
+        /// </summary>
+        private static void SetupShadows(GameObject root)
+        {
+            foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))
+                r.shadowCastingMode = r.name.StartsWith("Golge_")
+                    ? UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly
+                    : UnityEngine.Rendering.ShadowCastingMode.Off;
         }
 
         private static void SetupLivery(GameObject root)

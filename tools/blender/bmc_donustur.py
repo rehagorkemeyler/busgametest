@@ -42,6 +42,150 @@ LIGHTS = {
 }
 
 
+def is_interior(o):
+    """Gövde kabuğunun tamamen içinde kalan obje mi (tutamaklar, tavan, kokpit iç parçaları)?"""
+    n = o["name"]
+    if any(k in n for k in ("skin", "transparent", "window", "wiper", "mirror", "_tex_", "wheel", "rdoor", "steering")):
+        return False
+    xs = [abs(v[0]) for v in o["verts"]]
+    ys = [v[1] for v in o["verts"]]
+    zs = [v[2] for v in o["verts"]]
+    return max(xs) < 1.17 and min(zs) > 0.30 and max(zs) < 2.92 and min(ys) > -5.55 and max(ys) < 5.80
+
+
+# Atlasa girmeyen materyaller: kaplama değişen (gövde, tavan modülü), lambalar (ışık açılınca ayrı ele alınacak),
+# plaka ve saydam camlar.
+ATLAS_HARIC = ("M_caroserie", "M_cngtank", "M_lumini", "M_registration_plates")
+ATLAS_BOYUT = 4096
+
+
+def build_atlas(objs, tex_out, name="Atlas_BMC"):
+    """Küçük ve orta dokuları tek bir atlasa toplar; yüz bazında UV'leri atlas hücresine taşır.
+    Bir yüzün UV'si tek bir doku karesini aşıyorsa (gerçek tekrar) o yüz eski materyalinde kalır."""
+    import numpy as np
+    from PIL import Image
+
+    tris = {}
+    for o in objs:
+        for p in o.data.polygons:
+            m = o.data.materials[p.material_index]
+            tris[m.name] = tris.get(m.name, 0) + 1
+    cands = {}
+    for mname in tris:
+        m = bpy.data.materials[mname]
+        if mname.startswith(ATLAS_HARIC) or mname.endswith("_Cam"):
+            continue
+        imgs = [n.image for n in m.node_tree.nodes if n.type == "TEX_IMAGE" and n.image]
+        if imgs:
+            cands[mname] = imgs[0]
+
+    def plan(scale):
+        cells = {}
+        for mname, img in cands.items():
+            w, h = img.size
+            side = (1024 if tris[mname] >= 3000 else 512) * scale
+            k = min(1.0, side / max(w, h))
+            cells[mname] = (max(16, int(w * k)), max(16, int(h * k)))
+        order = sorted(cells, key=lambda n: -cells[n][1])
+        x = y = shelf = 0
+        pos = {}
+        pad = 8
+        for n in order:
+            w, h = cells[n]
+            if x + w + pad > ATLAS_BOYUT:
+                x, y = 0, y + shelf + pad
+                shelf = 0
+            if y + h + pad > ATLAS_BOYUT:
+                return None
+            pos[n] = (x + pad // 2, y + pad // 2, w, h)
+            x += w + pad
+            shelf = max(shelf, h)
+        return pos
+
+    scale = 1.0
+    pos = plan(scale)
+    while pos is None:
+        scale *= 0.85
+        pos = plan(scale)
+
+    atlas = Image.new("RGB", (ATLAS_BOYUT, ATLAS_BOYUT), (128, 128, 128))
+    for mname, (px, py, w, h) in pos.items():
+        img = cands[mname]
+        src = Image.open(bpy.path.abspath(img.filepath)).convert("RGB").resize((w, h), Image.LANCZOS)
+        # kenar taşması için hücreyi 4 px büyütülmüş kopyasıyla çevrele
+        atlas.paste(src.resize((w + 8, h + 8)), (px - 4, py - 4))
+        atlas.paste(src, (px, py))
+    path = os.path.join(tex_out, name + ".png")
+    atlas.save(path, optimize=True)
+
+    amat = bpy.data.materials.new("M_" + name)
+    amat.use_nodes = True
+    node = amat.node_tree.nodes.new("ShaderNodeTexImage")
+    node.image = bpy.data.images.load(path)
+    amat.node_tree.links.new(node.outputs["Color"], amat.node_tree.nodes["Principled BSDF"].inputs["Base Color"])
+
+    A = float(ATLAS_BOYUT)
+    moved = kept = 0
+    for o in objs:
+        me = o.data
+        if not any(m.name in pos for m in me.materials):
+            continue
+        if amat.name not in me.materials:
+            me.materials.append(amat)
+        ai = list(me.materials).index(amat)
+        uv = me.uv_layers.active.data
+        for p in me.polygons:
+            mname = me.materials[p.material_index].name
+            if mname not in pos:
+                continue
+            us = [uv[li].uv[0] for li in p.loop_indices]
+            vs = [uv[li].uv[1] for li in p.loop_indices]
+            fu, fv = math.floor(min(us) + 1e-4), math.floor(min(vs) + 1e-4)
+            if max(us) - fu > 1.002 or max(vs) - fv > 1.002:
+                kept += 1
+                continue
+            px, py, w, h = pos[mname]
+            u0, v0 = (px + 0.5) / A, 1.0 - (py + h - 0.5) / A
+            su, sv = (w - 1.0) / A, (h - 1.0) / A
+            for li in p.loop_indices:
+                u, v = uv[li].uv
+                uv[li].uv = (u0 + min(max(u - fu, 0.0), 1.0) * su, v0 + min(max(v - fv, 0.0), 1.0) * sv)
+            p.material_index = ai
+            moved += 1
+        # kullanılmayan materyal yuvalarını at
+        used = sorted({p.material_index for p in me.polygons})
+        remap = {old: new for new, old in enumerate(used)}
+        keep = [me.materials[i] for i in used]
+        idx = [remap[p.material_index] for p in me.polygons]
+        me.materials.clear()
+        for m in keep:
+            me.materials.append(m)
+        for p, i in zip(me.polygons, idx):
+            p.material_index = i
+    print(f"atlas: {len(pos)} doku, ölçek {scale:.2f}, {moved} yüz atlasa taşındı, {kept} yüz tekrar ettiği için kaldı")
+    return pos
+
+
+def shadow_proxy(objs, name="Golge_Govde"):
+    """Otobüsün dış kabuğundan (gövde + tekerlekler) dışbükey gölge objesi."""
+    bm = bmesh.new()
+    for o in objs:
+        for v in o.data.vertices:
+            bm.verts.new(o.matrix_world @ v.co)
+    bmesh.ops.convex_hull(bm, input=bm.verts)
+    loose = [v for v in bm.verts if not v.link_faces]
+    bmesh.ops.delete(bm, geom=loose, context="VERTS")
+    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(8), verts=bm.verts, edges=bm.edges)
+    bmesh.ops.triangulate(bm, faces=bm.faces)
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    mesh.materials.append(bpy.data.materials.get("M_Golge") or bpy.data.materials.new("M_Golge"))
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    return obj
+
+
 def read_door_pivots(src):
     """rightdoorN.txt → {(kapı, kanat): (Blender x, y, z), açı}. Proton: y yukarı, z ileri."""
     piv = {}
@@ -114,6 +258,8 @@ def build(src, out, render_path):
         if tag is None:
             dropped += 1
             continue
+        if tag == "Govde" and is_interior(o):
+            tag = "Ic"
         transparent = "transparent" in o["name"]
         groups.setdefault(tag, []).append((o, transparent))
 
@@ -182,6 +328,22 @@ def build(src, out, render_path):
         bpy.context.view_layer.objects.active = o
         bpy.ops.object.modifier_apply(modifier=mod.name)
 
+    # iç mekânı sadeleştirip gövdeye kat (dışarıdan camdan görünür, ama bu kadar detay gerekmez)
+    ic = objs.pop("Ic", None)
+    if ic is not None:
+        mod = ic.modifiers.new("Decimate", "DECIMATE")
+        mod.ratio = 0.45
+        bpy.context.view_layer.objects.active = ic
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+        bpy.ops.object.select_all(action="DESELECT")
+        ic.select_set(True)
+        objs["Govde"].select_set(True)
+        bpy.context.view_layer.objects.active = objs["Govde"]
+        bpy.ops.object.join()
+
+    build_atlas([o for t, o in objs.items() if not t.startswith("Lamba_")], tex_out)
+    objs["Golge_Govde"] = shadow_proxy([objs["Govde"]] + [objs[t] for t in WHEELS])
+
     # kök: zeminde, otobüs ortası
     allpts = [o.matrix_world @ Vector(c) for o in objs.values() for c in o.bound_box]
     cx = (min(p.x for p in allpts) + max(p.x for p in allpts)) / 2
@@ -214,10 +376,11 @@ def build(src, out, render_path):
                              bake_space_transform=True, path_mode="STRIP", object_types={"MESH", "EMPTY"},
                              mesh_smooth_type="FACE")
     if render_path:
+        shown = [o for tag, o in objs.items() if not tag.startswith(("Lamba_", "Golge_"))]
         for tag, o in objs.items():
-            if tag.startswith("Lamba_"):
+            if tag.startswith(("Lamba_", "Golge_")):
                 o.hide_render = True
-        tds.render(list(objs.values()), render_path)
+        tds.render(shown, render_path)
 
 
 def main():

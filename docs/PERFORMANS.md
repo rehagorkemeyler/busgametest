@@ -53,3 +53,7 @@ Bu telefonda her yer 60 FPS, en ağır yerde (Kızılay) bile GPU'da %40 pay var
 4. Küçük sokak objelerinde (lamba, ağaç, durak) gölgeyi kapatmak ve kamera mesafesine göre katman bazlı çizim mesafesi (layer cull distance).
 
 Her adımdan sonra aynı APK ile tekrar ölçülür ve buraya yeni bir "Ölçüm N" bölümü eklenir.
+
+## Uygulanan optimizasyonlar
+
+- **Otobüs (bulut, ):** İç mekân %45'e sadeleştirildi, 30 doku tek atlasta, gölgeyi yalnızca 170 üçgenlik  veriyor. Tahmini otobüs maliyeti ~140 → ~30 draw call, 158 → 124 bin üçgen. Ayrıntı:  → Performans. **Ölçüm 2 bekleniyor:** prefab yeniden kurulduktan sonra aynı APK ile.

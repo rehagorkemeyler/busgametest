@@ -18,13 +18,14 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 | Parça | Unity yerel konum (x, y, z) | Üçgen | Materyal |
 |---|---|---|---|
 | `Direksiyon` | (-0.620, +1.441, +5.066) | 4982 | 1 |
-| `Govde` | (+0.009, +0.000, -0.215) | 123277 | 34 |
-| `Kapi_1_1` | (+0.928, +0.479, +4.953) | 942 | 3 | ±90° (Proton: -90°)
-| `Kapi_1_2` | (+0.928, +0.479, +4.312) | 942 | 3 | ±90° (Proton: +90°)
-| `Kapi_2_1` | (+0.928, +0.479, +0.398) | 952 | 3 | ±90° (Proton: -90°)
-| `Kapi_2_2` | (+0.928, +0.479, -0.215) | 942 | 3 | ±90° (Proton: +90°)
-| `Kapi_3_1` | (+0.928, +0.479, -3.999) | 952 | 3 | ±90° (Proton: -90°)
-| `Kapi_3_2` | (+0.928, +0.479, -4.614) | 942 | 3 | ±90° (Proton: +90°)
+| `Golge_Govde` | (+0.009, +0.000, -0.215) | 170 | 1 |
+| `Govde` | (+0.009, +0.000, -0.215) | 89421 | 10 |
+| `Kapi_1_1` | (+0.928, +0.479, +4.953) | 942 | 2 | ±90° (Proton: -90°)
+| `Kapi_1_2` | (+0.928, +0.479, +4.312) | 942 | 2 | ±90° (Proton: +90°)
+| `Kapi_2_1` | (+0.928, +0.479, +0.398) | 952 | 2 | ±90° (Proton: -90°)
+| `Kapi_2_2` | (+0.928, +0.479, -0.215) | 942 | 2 | ±90° (Proton: +90°)
+| `Kapi_3_1` | (+0.928, +0.479, -3.999) | 952 | 2 | ±90° (Proton: -90°)
+| `Kapi_3_2` | (+0.928, +0.479, -4.614) | 942 | 2 | ±90° (Proton: +90°)
 | `Lamba_Fren` | (+0.009, +0.000, -0.215) | 296 | 1 |
 | `Lamba_Ic1` | (+0.009, +0.000, -0.215) | 150 | 1 |
 | `Lamba_Ic2` | (+0.009, +0.000, -0.215) | 146 | 1 |
@@ -35,10 +36,10 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 | `Lamba_SinyalSag` | (+0.009, +0.000, -0.215) | 585 | 1 |
 | `Lamba_SinyalSol` | (+0.009, +0.000, -0.215) | 585 | 1 |
 | `Lamba_UzunFar` | (+0.009, +0.000, -0.215) | 432 | 1 |
-| `Teker_ArkaSag` | (+0.888, +0.481, -2.720) | 3910 | 2 |
-| `Teker_ArkaSol` | (-0.855, +0.477, -2.720) | 3909 | 2 |
-| `Teker_OnSag` | (+1.095, +0.477, +2.922) | 6306 | 2 |
-| `Teker_OnSol` | (-1.064, +0.477, +2.926) | 6306 | 2 |
+| `Teker_ArkaSag` | (+0.888, +0.481, -2.720) | 3910 | 1 |
+| `Teker_ArkaSol` | (-0.855, +0.477, -2.720) | 3909 | 1 |
+| `Teker_OnSag` | (+1.095, +0.477, +2.922) | 6306 | 1 |
+| `Teker_OnSol` | (-1.064, +0.477, +2.926) | 6306 | 1 |
 
 - **Tekerlekler** (`Teker_*`): Pivot tekerlek merkezinde, yarıçap ≈ **0,48 m**. Arka tekerlekler çift lastik ve üçgen sayısı azaltıldı.
 - **Kapılar** (`Kapi_<kapı>_<kanat>`): 3 kapı × 2 kanat, hepsi sağda. Pivot, Proton'daki dönme noktası (kanadın 0,3 m içeride, dikey eksen). Kanatlar **Y ekseninde 90°** döner: `_1` kanadı ve `_2` kanadı ters yönlere. Proton'da `_1` için −90°, `_2` için +90°; Unity'nin sol el koordinatında işaret ters çıkabilir, sahnede deneyerek doğrulayın.
@@ -83,10 +84,17 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
 6. **Çarpışma:** Gövdeye basit bir **Box Collider** (≈ 2.5 × 2.7 × 11.9 m, merkez y ≈ 1.78) yeterli; mesh collider kullanmayın.
 
-## Performans notu
+## Performans
 
-Toplam yaklaşık **158 bin üçgen** (silecek animasyonunun 19 fazla karesi atıldı; önce 196 bindi). Büyük kısmı iç mekânda: koltuklar, tutamaklar, kokpit. Oyuncunun otobüsü için ilk aşamada kabul edilebilir. Telefonda FPS düşerse:
-- Dış kamera için iç mekânı sadeleştirilmiş bir LOD,
-- Uzak/AI otobüsleri için ~15 bin üçgenlik ayrı bir LOD
+Mobil için dönüştürücüde yapılanlar (Y4 ölçümünden sonra):
+- **İç mekân sadeleştirildi:** Gövde kabuğunun içinde kalan parçalar (tutamaklar, tavan, kokpit iç parçaları) %45'e indirildi.
+- **Doku atlası:** Kaplama (), tavan modülü (), lambalar (), plaka ve camlar dışındaki 30 doku tek bir  (4096) dokusunda. UV'si birden fazla karede tekrar eden ~1.500 yüz eski materyalinde kaldı. Gövde 34 → 10 materyal, kapılar 3 → 2, tekerlekler 2 → 1.
+- **Gölge gövdesi:**  (170 üçgenlik dışbükey kabuk) yalnızca gölge verir; diğer parçalar gölge vermez ().
+- Silecek animasyonunun 19 fazla karesi atıldı.
 
-`bmc_donustur.py`'ye eklenebilir.
+| | Önce (Y4) | Şimdi (tahmini) |
+|---|---|---|
+| Üçgen (model) | 158 bin | 124 bin |
+| Draw call (gölge dahil) | ~140 | ~30 |
+
+ için Unity'de **Max Size 2048** yeterli. Yeni ölçüm Y4 APK'sıyla yapılıp 'ye eklenmeli.
