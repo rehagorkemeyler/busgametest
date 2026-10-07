@@ -1,6 +1,6 @@
 # Otobüs: BMC Procity 12LF
 
-![BMC Procity](onizleme/bmc_procity_unity.png)
+![BMC Procity EGO](onizleme/bmc_procity_ego.png)
 
 Kaynak: `BMC Procity 12LF/` (Proton Bus Simulator modu, kişisel prototip için). Dönüştürücü: `tools/blender/bmc_donustur.py`.
 Çıktı: `AnkaraBusSimulator/Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.fbx` + `Textures/`.
@@ -18,7 +18,7 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 | Parça | Unity yerel konum (x, y, z) | Üçgen | Materyal |
 |---|---|---|---|
 | `Direksiyon` | (-0.620, +1.441, +5.066) | 4982 | 1 |
-| `Govde` | (+0.009, +0.000, -0.215) | 161904 | 34 |
+| `Govde` | (+0.009, +0.000, -0.215) | 123277 | 34 |
 | `Kapi_1_1` | (+0.928, +0.479, +4.953) | 942 | 3 | ±90° (Proton: -90°)
 | `Kapi_1_2` | (+0.928, +0.479, +4.312) | 942 | 3 | ±90° (Proton: +90°)
 | `Kapi_2_1` | (+0.928, +0.479, +0.398) | 952 | 3 | ±90° (Proton: -90°)
@@ -51,7 +51,7 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 1. **FBX import:** Scale Factor 1, Convert Units açık. Materials sekmesi: Location = **Use External Materials (Legacy)** ya da Extract Materials ile materyalleri `Materials/` klasörüne çıkar.
 2. **Saydam materyaller:** Adı `_Cam` ile bitenler (camlar, kapı camları) URP/Lit **Surface Type: Transparent** olmalı. `M_lumini` (lamba camları) da saydam olabilir.
 3. **Dokular:** 4096'lık kaplamalar mobil için ağır; **Max Size 2048** (gerekirse 1024), Format ASTC 6x6.
-4. **Kaplama değiştirme:** Gövde boyası `M_caroserie` materyalinde. `Textures/Kaplamalar/` içindeki `white.png` (beyaz), `tgm.png` (beyaz + mavi), `r38.png` (mavi) bu materyalin Base Map'i yapılarak denenebilir. EGO kaplaması ileride `caroserie.png` şablonu üzerine çizilebilir.
+4. **Kaplama:** Varsayılan kaplama **EGO**: kırmızı gövde, siyah cam bandı, arka tekerlek üstünde beyaz "EGO" paneli, filo numarası "EGO 22-352". Bu kaplamayı `tools/kaplama_ego.py` üretir (`--filo` ile filo numarası değiştirilebilir; tavan CNG modülü `cngtank.png` da kırmızı). Gövde boyası `M_caroserie` materyalinde. Diğer kaplamalar `Textures/Kaplamalar/` içinde: `caroserie_beyaz_orijinal.png` (modelin orijinali), `white.png`, `tgm.png`, `r38.png`; bunlar materyalin Base Map'i yapılarak denenebilir.
 5. **RCC ayarları** (Proton dosyalarından):
 
 | Ayar | Değer |
@@ -70,7 +70,7 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
 ## Performans notu
 
-Toplam yaklaşık **196 bin üçgen**, büyük kısmı iç mekânda (koltuklar, tutamaklar, kokpit). Oyuncunun otobüsü için ilk aşamada kabul edilebilir. Telefonda FPS düşerse:
+Toplam yaklaşık **158 bin üçgen** (silecek animasyonunun 19 fazla karesi atıldı; önce 196 bindi). Büyük kısmı iç mekânda: koltuklar, tutamaklar, kokpit. Oyuncunun otobüsü için ilk aşamada kabul edilebilir. Telefonda FPS düşerse:
 - Dış kamera için iç mekânı sadeleştirilmiş bir LOD,
 - Uzak/AI otobüsleri için ~15 bin üçgenlik ayrı bir LOD
 

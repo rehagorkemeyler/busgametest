@@ -31,6 +31,7 @@ DROP = [
     r"^_autogear_", r"^_bt.*_on_", r"^_anim00[1-4]_", r"^_anim006_", r"^_anim007_", r"^_anim010_on",
     r"^_sunshade_on_", r"^_driver_window_on", r"^_passenger_windows_back_on", r"^_parking_brake_on_",
     r"^_blinkers_button_[lr]_$", r"^_mirror\d_$",
+    r"^_wipers1_\.0(0[2-9]|1\d|20)$",  # silecek animasyonunun 19 ara karesi (yalnızca .001 kalır)
 ]
 WHEELS = {"Teker_OnSol": "fl", "Teker_OnSag": "fr", "Teker_ArkaSol": "rl", "Teker_ArkaSag": "rr"}
 LIGHTS = {
