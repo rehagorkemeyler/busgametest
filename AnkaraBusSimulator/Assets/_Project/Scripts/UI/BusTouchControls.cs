@@ -89,8 +89,9 @@ namespace AnkaraBus.UI
             neutralButton = Button(root, "N", new Vector2(1f, 1f), new Vector2(-210f, -90f), new Vector2(110f, 110f), () => input.SelectNeutral());
             reverseButton = Button(root, "R", new Vector2(1f, 1f), new Vector2(-90f, -90f), new Vector2(110f, 110f), () => input.SelectReverse());
 
-            handbrakeButton = Button(root, "EL FRENİ", new Vector2(1f, 0.5f), new Vector2(-150f, 120f), new Vector2(240f, 110f), () => input.ToggleHandbrake());
-            doorButton = Button(root, "KAPILAR", new Vector2(1f, 0.5f), new Vector2(-150f, -10f), new Vector2(240f, 110f), () => input.ToggleDoors());
+            // sağ üstteki mini haritanın (MiniHarita) altında, gaz pedalının üstünde
+            handbrakeButton = Button(root, "EL FRENİ", new Vector2(1f, 0.5f), new Vector2(-150f, 55f), new Vector2(240f, 100f), () => input.ToggleHandbrake());
+            doorButton = Button(root, "KAPILAR", new Vector2(1f, 0.5f), new Vector2(-150f, -55f), new Vector2(240f, 100f), () => input.ToggleDoors());
             // KAMERA: sıradaki görünüm; düğmede o anki görünüm yazar. Boş ekranı sürükleyerek kamera çevrilir.
             cameraLabel = Button(root, "KAMERA", new Vector2(0f, 1f), new Vector2(130f, -80f), new Vector2(200f, 90f), () => { if (cameraRig != null) cameraRig.Toggle(); })
                 .GetComponentInChildren<Text>();

@@ -23,6 +23,7 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [x] Puan/bilet sistemi: Kentkart, durak hassasiyeti, konfor, kırmızı ışık, hız, çarpışma, sefer özeti → [PUANLAMA.md](PUANLAMA.md)
 - [x] Ana menü: hat/kaplama/görüntü seçimi, en iyi puanlar, döner otobüs vitrini → [ANA_MENU.md](ANA_MENU.md)
 - [x] Oyun içi kamera: sürükleyerek 360° bakış, pinch yakınlaştırma; DIŞ / KOKPİT / YOLCU / KAPI / SERBEST → [KAMERA.md](KAMERA.md)
+- [x] Yol gösterici: güzergâh şeritlerden otomatik, mini harita, kalan mesafe, dönüş uyarısı, büyük harita → [YOL_GOSTERICI.md](YOL_GOSTERICI.md)
 - [ ] Dokümantasyon, plan güncellemeleri
 
 ## Yerelde yapılacaklar (sen + yerel Claude Code)

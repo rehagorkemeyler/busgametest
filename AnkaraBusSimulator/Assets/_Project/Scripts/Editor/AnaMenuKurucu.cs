@@ -56,8 +56,9 @@ namespace AnkaraBus.EditorTools
             sun.color = new Color(1f, 0.95f, 0.87f);
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.Linear;
-            RenderSettings.fogStartDistance = 150f;
-            RenderSettings.fogEndDistance = 900f;
+            // Atakule (~650 m) sisin içinde soluk bir silüet olarak kalsın, kaybolmasın
+            RenderSettings.fogStartDistance = 300f;
+            RenderSettings.fogEndDistance = 1400f;
             RenderSettings.fogColor = new Color(0.72f, 0.78f, 0.84f);
 
             var zemin = Primitive(PrimitiveType.Plane, "Zemin", null, new Vector3(0f, 0f, 0f), new Vector3(200f, 1f, 200f),
@@ -118,8 +119,11 @@ namespace AnkaraBus.EditorTools
             Vector3 right = Vector3.Cross(Vector3.up, back);
 
             var atakule = AssetDatabase.LoadAssetAtPath<GameObject>(AtakulePath);
+            // otobüsün tam arkasında ve ekrana sığacak kadar uzakta: kule otobüsün üstünde görünür
+            Vector3 atakuleKonum = back * 650f + right * 30f;
+            float atakuleAci = Vector3.SignedAngle(back, atakuleKonum, Vector3.up);
             if (atakule != null)
-                Place(atakule, root, back * 520f + right * 140f, palette);
+                Place(atakule, root, atakuleKonum, palette);
 
             var buildings = AssetDatabase.FindAssets("t:Model", new[] { BuildingFolder })
                 .Select(g => AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(g)))
@@ -131,6 +135,8 @@ namespace AnkaraBus.EditorTools
             {
                 float angle = Mathf.Lerp(-80f, 80f, i / 13f) + (float)(random.NextDouble() * 6.0 - 3.0);
                 float radius = 70f + (float)random.NextDouble() * 45f;
+                if (Mathf.Abs(Mathf.DeltaAngle(angle, atakuleAci)) < 12f)
+                    continue; // Atakule'nin önünü kapatma
                 Vector3 dir = Quaternion.Euler(0f, angle, 0f) * back;
                 Place(buildings[i % buildings.Length], root, dir * radius, palette);
             }

@@ -11,6 +11,7 @@ namespace AnkaraBus.UI
         private static Sprite roundedRect;
         private static Sprite steeringWheel;
         private static Sprite star;
+        private static Sprite arrow;
 
         public static Sprite Circle => circle ??= Make(128, (x, y, r) => Mathf.Clamp01(r * 64f - Mathf.Sqrt(x * x + y * y) * 64f));
 
@@ -67,6 +68,17 @@ namespace AnkaraBus.UI
             if (Vector2.Dot(-o, n) < 0f)
                 n = -n; // içe (merkeze) baksın
             return Mathf.Clamp01(Vector2.Dot(p - o, n) * 64f);
+        });
+
+        /// <summary>Yukarı bakan ok ucu (haritada otobüs).</summary>
+        public static Sprite Arrow => arrow ??= Make(64, (x, y, r) =>
+        {
+            // ok: uç (0, 0.9), arka köşeler (±0.7, -0.75), arkada içe çentik (0, -0.35)
+            float px = 32f;
+            float sag = (0.9f - y) * 0.7f / 1.65f - Mathf.Abs(x);   // yan kenarlar
+            float govde = Mathf.Min(sag, y + 0.75f);
+            float centik = y - (-0.75f + 0.4f * (1f - Mathf.Clamp01(Mathf.Abs(x) / 0.7f)));
+            return Mathf.Clamp01(Mathf.Min(govde, centik) * px);
         });
 
         private static Sprite Make(int size, System.Func<float, float, float, float> alpha, Vector4 border = default)

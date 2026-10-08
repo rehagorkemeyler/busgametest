@@ -151,8 +151,9 @@ namespace AnkaraBus.UI
             basla.color = Ok;
             var cikis = Dugme(root, "ÇIKIŞ", new Vector2(1f, 0f), new Vector2(-580f, 110f), new Vector2(160f, 130f), 30, Application.Quit);
             cikis.color = Panel;
-            Label(Element(root, "Ipucu", new Vector2(1f, 1f), new Vector2(-330f, -60f), new Vector2(600f, 40f)),
-                "Otobüsü parmağınla çevirebilirsin", 24, TextAnchor.MiddleRight, Dim).fontStyle = FontStyle.Normal;
+            var ipucu = Label(Element(root, "Ipucu", new Vector2(1f, 1f), new Vector2(-330f, -60f), new Vector2(600f, 40f)),
+                "Otobüsü parmağınla çevirebilirsin", 26, TextAnchor.MiddleRight, Color.white);
+            ipucu.gameObject.AddComponent<Outline>().effectColor = new Color(0f, 0f, 0f, 0.85f); // binaların üstünde okunsun
 
             // Yükleniyor ekranı
             var perde = Element(root, "Yukleniyor", new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
