@@ -171,7 +171,7 @@ namespace AnkaraBus.Vehicle
 
             if (cameraRig == null)
                 cameraRig = FindAnyObjectByType<BusCameraRig>();
-            float targetInterior = cameraRig != null && cameraRig.CurrentMode == BusCameraRig.Mode.Cockpit ? 1f : 0f;
+            float targetInterior = cameraRig != null && cameraRig.IsInside ? 1f : 0f;
             interiorBlend = Mathf.MoveTowards(interiorBlend, targetInterior, Time.deltaTime * 3f);
 
             UpdateEngine(rpm, throttle);

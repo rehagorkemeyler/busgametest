@@ -27,6 +27,7 @@ namespace AnkaraBus.UI
         private TouchPedal brake;
         private Image driveButton, neutralButton, reverseButton, handbrakeButton, doorButton;
         private Text gauge;
+        private Text cameraLabel;
         private Text status;
         private BusDoorController doors;
         private Font font;
@@ -90,7 +91,10 @@ namespace AnkaraBus.UI
 
             handbrakeButton = Button(root, "EL FRENİ", new Vector2(1f, 0.5f), new Vector2(-150f, 120f), new Vector2(240f, 110f), () => input.ToggleHandbrake());
             doorButton = Button(root, "KAPILAR", new Vector2(1f, 0.5f), new Vector2(-150f, -10f), new Vector2(240f, 110f), () => input.ToggleDoors());
-            Button(root, "KAMERA", new Vector2(0f, 1f), new Vector2(130f, -80f), new Vector2(200f, 90f), () => { if (cameraRig != null) cameraRig.Toggle(); });
+            // KAMERA: sıradaki görünüm; düğmede o anki görünüm yazar. Boş ekranı sürükleyerek kamera çevrilir.
+            cameraLabel = Button(root, "KAMERA", new Vector2(0f, 1f), new Vector2(130f, -80f), new Vector2(200f, 90f), () => { if (cameraRig != null) cameraRig.Toggle(); })
+                .GetComponentInChildren<Text>();
+            cameraLabel.fontSize = 26;
             Button(root, "AYARLAR", new Vector2(0f, 1f), new Vector2(130f, -185f), new Vector2(200f, 90f), () => settingsPanel.SetActive(!settingsPanel.activeSelf));
 
             // Korna: basılı tutuldukça çalar
@@ -242,6 +246,8 @@ namespace AnkaraBus.UI
                 BusVehicle.GearSelector.Reverse => "R",
                 _ => "N",
             };
+            if (cameraRig != null)
+                cameraLabel.text = "KAMERA\n" + cameraRig.ModeName;
             gauge.text = $"{Mathf.RoundToInt(v.SpeedKmh)} km/s   {gear}   {Mathf.RoundToInt(v.EngineRpm / 10f) * 10} d/d";
 
             status.text = v.DoorBrakeActive ? "DURAK FRENİ"
