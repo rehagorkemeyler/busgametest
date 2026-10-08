@@ -78,8 +78,8 @@ namespace AnkaraBus.Passengers
                 yield return new WaitForSeconds(interval);
             }
 
-            // Binenler: ön kapıdan
-            var queue = new List<Passenger>(manager.WaitingAt(stop));
+            // Binenler: ön kapıdan. Son durakta (hat sonu) kimse binmez.
+            var queue = lastStop ? new List<Passenger>() : new List<Passenger>(manager.WaitingAt(stop));
             queue.Sort((a, b) => Distance(a).CompareTo(Distance(b)));
             foreach (var p in queue)
             {

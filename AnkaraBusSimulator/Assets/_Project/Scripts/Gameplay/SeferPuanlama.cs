@@ -129,7 +129,7 @@ namespace AnkaraBus.Gameplay
 
         private void Start()
         {
-            var lanes = FindObjectsByType<TrafficLane>(FindObjectsSortMode.None);
+            var lanes = FindObjectsByType<TrafficLane>();
             signalLanes = Array.FindAll(lanes, l => l.HasSignal);
             lastSide = new float[signalLanes.Length];
             for (int i = 0; i < signalLanes.Length; i++)

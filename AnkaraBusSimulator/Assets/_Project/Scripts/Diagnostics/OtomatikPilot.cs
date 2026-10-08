@@ -95,6 +95,12 @@ namespace AnkaraBus.Diagnostics
                     if (n > oncekiYolcu) binen += n - oncekiYolcu; else inen += oncekiYolcu - n;
                     oncekiYolcu = n;
                 };
+            var puanlama = bus.GetComponent<AnkaraBus.Gameplay.SeferPuanlama>();
+            if (puanlama != null)
+                puanlama.SeferBitti += o => Debug.Log(
+                    $"[Surus] PUAN puan={o.puan} yıldız={o.yildiz} kasa={o.kasa:F2} yolcu={o.yolcu} konfor={o.konfor:F0} " +
+                    $"süre={o.sure:F0}/{o.hedefSure:F0} sn atlanan_durak={o.atlananDurak} kırmızı_ışık={o.kirmiziIsik} " +
+                    $"sert_sürüş={o.sertSurus} hız_ihlali={o.hizIhlali} çarpışma={o.carpisma}");
             trafik = FindObjectsByType<TrafficCar>();
             isiklar = FindObjectsByType<TrafficSignal>();
 

@@ -311,7 +311,10 @@ GameObject:
   - component: {fileID: 2951490291052843353}
   - component: {fileID: 4131194846524566301}
   - component: {fileID: 3103105459118542619}
+  - component: {fileID: 4747146629019658239}
+  - component: {fileID: 7078710346351499608}
   - component: {fileID: 2965646006205853051}
+  - component: {fileID: 7315764167857771664}
   - component: {fileID: 7967058254390785735}
   m_Layer: 0
   m_Name: BMC_Procity_12LF
@@ -453,6 +456,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Route.RouteTracker
   route: {fileID: 0}
   requiredDwellSeconds: 4
+  skipDistance: 25
+--- !u!114 &4747146629019658239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27810979349f34a1cbc60b61e52c1993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Gameplay.SeferPuanlama
+  tamBilet: 20
+  indirimliBilet: 10
+  indirimliOrani: 0.3
+  biletPuani: 5
+  durakPuani: 20
+  hassasiyetPuani: 30
+  atlamaCezasi: 100
+  sertFren: 3
+  sertKalkis: 1.8
+  sertViraj: 2.5
+  konforCezasi: 10
+  hizSiniriKmh: 50
+  hizToleransKmh: 5
+  hizCezasi: 6
+  kirmiziCezasi: 50
+  carpismaCezasi: 15
+  hedefOrtalamaKmh: 20
+  durakBasinaSaniye: 40
+  zamanPuani: 100
+--- !u!114 &7078710346351499608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c368f774864d74fabbd3160de432d282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.UI.PuanGostergesi
 --- !u!114 &2965646006205853051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +525,93 @@ MonoBehaviour:
     body: {fileID: 2800000, guid: a90fd968e44e948788e64251f8975193, type: 3}
     roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
   selected: 0
+--- !u!114 &7315764167857771664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ef69c05696947f393b155313ae21e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusAudio
+  engine:
+  - clip: {fileID: 8300000, guid: ec28a01e36bed4ac4956d00e5252e1a0, type: 3}
+    nativeRpm: 575
+    interior: 1
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: dfb404a47d2ce404fa81c3dbb418e42d, type: 3}
+    nativeRpm: 758
+    interior: 1
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: aeee2f6ebebd5498b8e46d55ddeeba8d, type: 3}
+    nativeRpm: 1214
+    interior: 1
+    load: 0
+    volume: 0.8
+  - clip: {fileID: 8300000, guid: d5c6bf9d58dfc4b2b9302e1853a2f544, type: 3}
+    nativeRpm: 1939
+    interior: 1
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: 09ecd1b2bf1384aed929b9721ccb6485, type: 3}
+    nativeRpm: 2230
+    interior: 1
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: 33098d4ff05a34210b72fe89ff74224e, type: 3}
+    nativeRpm: 722
+    interior: 0
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: aeee2f6ebebd5498b8e46d55ddeeba8d, type: 3}
+    nativeRpm: 1214
+    interior: 0
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: a0209e3897baa41cf8e40d5bb81edea1, type: 3}
+    nativeRpm: 1653
+    interior: 0
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: 5ac459850af93499d8b5d7ead9608c5a, type: 3}
+    nativeRpm: 2296
+    interior: 0
+    load: 0
+    volume: 1
+  - clip: {fileID: 8300000, guid: 5b86d88c566b14ec5a01926f5f9b2c5a, type: 3}
+    nativeRpm: 1280
+    interior: 0
+    load: 1
+    volume: 0.7
+  enginePosition: {x: 0, y: 0.9, z: -3.4}
+  engineStart: {fileID: 8300000, guid: bd95b4475ade34a69b5f5f20879387dc, type: 3}
+  engineStop: {fileID: 8300000, guid: cf740745555804f548ccdb2c0eed072c, type: 3}
+  retarder: {fileID: 8300000, guid: 3fa4e8230e4184b99804a3cd68f26d3d, type: 3}
+  transmission: {fileID: 8300000, guid: d3811ffb6aaa443599a85832d218e11f, type: 3}
+  rattle: {fileID: 8300000, guid: a8a315879c1b9487aa87e4fb3271885f, type: 3}
+  brakeApply: {fileID: 8300000, guid: 524015a49f38e4902b1160a0864449f4, type: 3}
+  brakeRelease: {fileID: 8300000, guid: 83b9f648575534b5eaa77707f79d6503, type: 3}
+  handbrakeOn: {fileID: 8300000, guid: ef91db29d45fc4b42b85e9de508f64b5, type: 3}
+  handbrakeOff: {fileID: 8300000, guid: a7a44b932331b42cebfc3ee6b89a74ba, type: 3}
+  gearButton: {fileID: 8300000, guid: 63358d0dbfbd243b1bf89d8f365d9440, type: 3}
+  reverseBeep: {fileID: 8300000, guid: bcd432d3c2ac74a5fa0038ea4961abc5, type: 3}
+  horn: {fileID: 8300000, guid: af46b416ae3264bf7bf6e4e8b65da005, type: 3}
+  doorOpen:
+  - {fileID: 8300000, guid: 4cac5fb7111e14fbd93931049d3762b6, type: 3}
+  - {fileID: 8300000, guid: ba1ed96abd59641e1b869a8bbe1efb1f, type: 3}
+  - {fileID: 8300000, guid: ad15bef0f199146b0b0a467289538a40, type: 3}
+  doorClose:
+  - {fileID: 8300000, guid: 575b2207109f548059e2aa832d2ebd70, type: 3}
+  - {fileID: 8300000, guid: 0566d57f930f14cd4a9322fd64fbd73f, type: 3}
+  - {fileID: 8300000, guid: 008cd39874296478283ef2c5e8df5fbe, type: 3}
+  validatorBeep: {fileID: 8300000, guid: a8b868269a1e64bb6b74359df719e3be, type: 3}
+  stopRequest: {fileID: 8300000, guid: f13b29a5a2dd7440bb1cfeae6bd56748, type: 3}
+  masterVolume: 1
 --- !u!114 &7967058254390785735
 MonoBehaviour:
   m_ObjectHideFlags: 0

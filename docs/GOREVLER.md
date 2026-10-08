@@ -64,7 +64,16 @@ Eski prompt (referans):
 ### Y6 — (İsteğe bağlı) Blender'da elle rötuş
 Bulutta üretilen modelleri senin Blender'ında Blender MCP ile beğenine göre düzeltmek istersen yerel oturum bunu yapabilir. Bulut tarafındaki üretim scriptleri `tools/blender/` altında olacak; aynı scriptleri yerelde de çalıştırabilirsin.
 
-### Y7 — Hat 1'i güncelle ve Hat 2 sahnesini kur
+### Y7 — Hat 1'i güncelle ve Hat 2 sahnesini kur ✅
+Yapıldı (8 Ekim 2026):
+- Sahneler **Ankara Bus → Hat 1 / Hat 2 Sahnesini Kur** (`HatSahneKurucu`) ile sıfırdan kuruldu (yolcular, kavşak dönüşleri ve ışıklar dahil), **Hat 1 / Hat 2 Işık ve Occlusion Bake** (`HatIsikBake`) ile bake edildi. Hat 2 Build Settings'te. HUD'da yolcu sayısı.
+- Otobüs prefabı yeniden kuruldu (sesler, puanlama, puan göstergesi); sürüş testi değerleri değişmedi.
+- Sürüş doğrulaması (**Ankara Bus → Hat 1 / Hat 2 Sürüş Testi**, otomatik pilot):
+  - **Hat 1:** 333 sn, 5 durak, sorun yok. Yolcular her durakta bekliyor, iniyor ve biniyor (toplam 31 binen). Kuğulu ışığı 49 kez değişti, kırmızıda bekleyen araçlar görüldü; dönüşler: bulvardan Cinnah'a sağa 5, Cinnah'tan Kızılay'a sola 2. Puan 437, 4 yıldız, kırmızı ışık/durak atlama/çarpışma yok.
+  - **Hat 2:** 216 sn, 4 durak, sorun yok. 19 binen, 19 inen; Ulus'ta herkes indi. Puan 276, 3 yıldız (1 çarpışma: pilot yalnızca kendi güzergâhındaki araçlara bakıyor).
+- Düzeltilenler: son durakta yolcular biniyordu (hat sonunda otobüs dolu kalıyordu) → son durakta biniş yok. Otomatik pilot Kuğulu kavşağında karşı şeritte bekleyen araçlarla kilitleniyordu → yalnızca kendi güzergâhındaki araçlar için yavaşlıyor. Unity 6'da eskimiş `Find*` çağrıları güncellendi.
+
+Eski prompt (referans):
 **Prompt:**
 > `git pull origin Ozan` yap. Bulut tarafı yolcuları (`docs/YOLCULAR.md`), Kuğulu kavşağında dönüşleri ve trafik ışıklarını (`docs/TRAFIK.md`) ve Hat 2'yi (`docs/HAT2_KIZILAY_ULUS.md`) ekledi. (1) Hat 1 sahnesinde haritayı **Ankara Bus → Hat 1 Haritasını Kur** ile yeniden kur (eski `Hat1_KizilayAtakule` objesini sil); otobüsü yeniden bağla, ışıkları yeniden bake et. Kızılay'dan Atakule'ye sür: yolcular duraklarda bekliyor ve biniyor mu, Kuğulu kavşağında ışıklar dönüyor ve araçlar kırmızıda duruyor mu, sağa/sola dönen araçlar var mı kontrol et. Derleme hatası varsa düzelt. (2) Yeni `Hat2_KizilayUlus.unity` sahnesinde **Ankara Bus → Hat 2 Haritasını Kur**'u çalıştır, otobüsü bağla (`RouteTracker` → `Hat_2`), bake et, Build Settings'e ekle ve Kızılay'dan Ulus'a sür. Sorunları düzeltip commit'le, push'la.
 

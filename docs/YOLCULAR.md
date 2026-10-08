@@ -17,7 +17,7 @@ Hiyerarşi: kök + `Govde` + `Bacak_Sol/Sag` (pivot kalçada) + `Kol_Sol/Sag` (p
   - Oyuncunun otobüsüne `BusPassengers` yoksa ekler.
 - **`BusPassengers`** (otobüste): Sıradaki durakta otobüs durup kapıları açınca iniş-biniş başlar.
   1. **İniş:** Önce inenler **arka kapılardan** iner. Sayısı rastgeledir; son durakta herkes iner.
-  2. **Biniş:** Sonra bekleyenler **ön kapıdan** biner. Ön kapı kapalıysa kimse binmez.
+  2. **Biniş:** Sonra bekleyenler **ön kapıdan** biner. Ön kapı kapalıysa ya da son duraktaysa (hat sonu) kimse binmez.
   3. **Durak tamamlanması:** İniş-biniş sürerken (`IsBusy`) `RouteTracker` durağı tamamlamaz; bitince her zamanki bekleme süresi işler.
   4. **Doluluk:** Kapasite `BusDefinition.passengerCapacity` (90). Yolcu sayısı `Onboard`, değişince `OnboardChanged` olayı.
 - **`BusHud`:** İsteğe bağlı `passengerText` alanı "Yolcu 24/90" gösterir. Dokunmatik arayüze (`BusTouchControls`) eklemek için `BusPassengers.Onboard` okunabilir.
