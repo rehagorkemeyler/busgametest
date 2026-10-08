@@ -34,6 +34,9 @@ namespace AnkaraBus.Traffic
         public float SpeedLimitKmh => speedLimitKmh;
         public Exit[] Exits => exits;
         public float StopLine => stopLine;
+        public bool HasSignal => signal != null && stopLine >= 0f;
+        /// <summary>Işık şu an kırmızı mı (sarı sayılmaz)? Oyuncunun kırmızıda geçişini saymak için.</summary>
+        public bool IsRed => HasSignal && signal.State(signalGroup) == TrafficSignal.SignalState.Red;
 
         /// <summary>Durma çizgisinde durulmalı mı (kırmızı ya da sarı)? Sarı için 'canStop' araç durabiliyorsa.</summary>
         public bool MustStop(bool canStop) => signal != null && stopLine >= 0f && signal.MustStop(signalGroup, canStop);

@@ -11,6 +11,15 @@ namespace AnkaraBus.Route
         [SerializeField] private float radius = 6f;
 
         public string StopName => stopName;
+        public float Radius => radius;
+
+        /// <summary>Yatay (y'siz) uzaklık.</summary>
+        public float HorizontalDistance(Vector3 worldPosition)
+        {
+            Vector3 offset = worldPosition - transform.position;
+            offset.y = 0f;
+            return offset.magnitude;
+        }
 
         public bool Contains(Vector3 worldPosition)
         {

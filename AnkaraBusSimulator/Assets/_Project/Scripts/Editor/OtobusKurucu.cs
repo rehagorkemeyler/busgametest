@@ -87,6 +87,8 @@ namespace AnkaraBus.EditorTools
 
                 root.AddComponent<BusInput>();
                 root.AddComponent<RouteTracker>();
+                root.AddComponent<AnkaraBus.Gameplay.SeferPuanlama>();
+                root.AddComponent<AnkaraBus.UI.PuanGostergesi>();
                 root.tag = "Player"; // trafik (TrafficSpawner) oyuncuyu bu etiketle bulur
                 SetupShadows(root);
                 SetupLivery(root);

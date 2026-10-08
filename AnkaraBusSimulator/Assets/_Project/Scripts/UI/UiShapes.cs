@@ -10,6 +10,7 @@ namespace AnkaraBus.UI
         private static Sprite circle;
         private static Sprite roundedRect;
         private static Sprite steeringWheel;
+        private static Sprite star;
 
         public static Sprite Circle => circle ??= Make(128, (x, y, r) => Mathf.Clamp01(r * 64f - Mathf.Sqrt(x * x + y * y) * 64f));
 
@@ -47,6 +48,25 @@ namespace AnkaraBus.UI
                     spokes = Mathf.Max(spokes, Mathf.Clamp01((0.06f - Mathf.Abs(x)) * px));
             }
             return Mathf.Max(rim, Mathf.Max(hub, spokes));
+        });
+
+        /// <summary>Beş köşeli yıldız (sefer özeti).</summary>
+        public static Sprite Star => star ??= Make(128, (x, y, r) =>
+        {
+            const float outer = 0.95f, inner = 0.4f;
+            float sector = Mathf.PI * 2f / 5f;
+            float t = Mathf.Repeat(Mathf.Atan2(x, y), sector);
+            if (t > sector * 0.5f)
+                t = sector - t;
+            float d = Mathf.Sqrt(x * x + y * y);
+            var p = new Vector2(d * Mathf.Cos(t), d * Mathf.Sin(t));
+            var o = new Vector2(outer, 0f);
+            var i = new Vector2(inner * Mathf.Cos(sector * 0.5f), inner * Mathf.Sin(sector * 0.5f));
+            var u = (i - o).normalized;
+            var n = new Vector2(-u.y, u.x);
+            if (Vector2.Dot(-o, n) < 0f)
+                n = -n; // içe (merkeze) baksın
+            return Mathf.Clamp01(Vector2.Dot(p - o, n) * 64f);
         });
 
         private static Sprite Make(int size, System.Func<float, float, float, float> alpha, Vector4 border = default)
