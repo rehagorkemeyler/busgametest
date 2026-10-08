@@ -158,3 +158,19 @@ A32 ilk açılışta **Düşük** seçti. Optimize otobüsle, ısıl durum 1 (Ö
 | Atakule | 45,0 (44,6) | 41,7 (30,0) |
 
 Düşük ayarda A32 her yerde ≥ 30 FPS, yalnızca Kızılay kokpit 28,7 (bina LOD'u ve occlusion ile çözülecek).
+
+### Ölçüm 5 — Galaxy S24 FE, otomatik seçilen Yüksek + tam kalite otobüs
+
+S24 FE ilk açılışta **Yüksek** seçti, `BusKaliteModeli` tam kalite modeli yükledi (`tam_kalite_model=True`). Telefon soğuk (ısıl durum 0, pil %100, 30 °C).
+
+| Yer | Kamera | FPS (%1) | CPU ms | GPU ms | Draw call | Üçgen |
+|---|---|---|---|---|---|---|
+| TestTrack | dış | 60 (58,7) | 6,5 | 6,6 | 141 | 312 bin |
+| TestTrack | kokpit | 60 (58,7) | 6,4 | 7,8 | 99 | 262 bin |
+| Kızılay AVM | dış | 60 (58,9) | 6,3 | 9,9 | 362 | 1,23 M |
+| Kızılay AVM | kokpit | 60 (59,4) | 7,7 | 10,4 | 303 | 1,18 M |
+| Meclis | dış | 60 (59,2) | 8,1 | 8,8 | 328 | 824 bin |
+| Cinnah | dış | 60 (58,9) | 7,6 | 7,5 | 208 | 544 bin |
+| Atakule | dış | 60 (59,0) | 7,1 | 6,5 | 129 | 396 bin |
+
+Ölçüm 1 ile aynı (beklenen: aynı ayar ve aynı tam kalite otobüs). En ağır yerde GPU 10,4 ms; 16,7 ms sınırına göre ~%40 pay var. Bellek 327 MB.
