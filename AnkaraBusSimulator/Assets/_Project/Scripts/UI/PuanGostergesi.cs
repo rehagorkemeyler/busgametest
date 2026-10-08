@@ -74,7 +74,8 @@ namespace AnkaraBus.UI
             var barRect = Box(root, "PuanSeridi", new Vector2(0.5f, 1f), new Vector2(0f, -160f), new Vector2(620f, 56f), Panel);
             bar = Label(barRect, "", 28, TextAnchor.MiddleCenter, Color.white);
 
-            messageRoot = Element(root, "Mesajlar", new Vector2(0.5f, 1f), new Vector2(0f, -215f), new Vector2(620f, 0f));
+            // BusTouchControls'un durum yazısının (y -215) altında
+            messageRoot = Element(root, "Mesajlar", new Vector2(0.5f, 1f), new Vector2(0f, -260f), new Vector2(620f, 0f));
         }
 
         private void OnDestroy()

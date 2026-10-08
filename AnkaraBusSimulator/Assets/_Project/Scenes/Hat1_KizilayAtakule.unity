@@ -4996,18 +4996,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusCameraRig
   target: {fileID: 369962918}
   mode: 0
-  chaseOffset: {x: 0, y: 4.5, z: -14}
+  chaseDistance: 14.3
+  chasePitch: 11
   lookHeight: 1.8
   lookAhead: 4
   followSharpness: 6
   yawSharpness: 2.5
   chaseFov: 55
+  distanceRange: {x: 7, y: 40}
+  orbitPitchRange: {x: -2, y: 70}
+  returnDelay: 2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
   cockpitFov: 65
   cockpitFallback: {x: -0.62, y: 2.05, z: 4.45}
   cockpitPitch: 8
+  interiorPosition: {x: 0.45, y: 2, z: -1.2}
+  interiorFov: 70
+  doorPosition: {x: 3.4, y: 2.2, z: 6.2}
+  doorLookAt: {x: 1.27, y: 0.9, z: -1}
+  doorFov: 60
+  dragDegrees: 200
+  lookYawRange: {x: -160, y: 160}
+  lookPitchRange: {x: -40, y: 55}
 --- !u!81 &193818934
 AudioListener:
   m_ObjectHideFlags: 0
@@ -39312,7 +39324,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30, y: -250}
+  m_AnchoredPosition: {x: 30, y: -355}
   m_SizeDelta: {x: 560, y: 210}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1841776758

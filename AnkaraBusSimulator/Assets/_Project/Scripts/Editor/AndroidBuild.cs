@@ -20,7 +20,13 @@ namespace AnkaraBus.EditorTools
         public const string PerfApkPath = "Builds/AnkaraBus_perf.apk";
         public const string DriveTestApkPath = "Builds/AnkaraBus_surus_testi.apk";
 
-        private enum Mode { None, Perf, DriveTest, SesPuan }
+        private enum Mode { None, Perf, DriveTest, SesPuan, MenuKamera }
+
+        public const string MenuKameraApkPath = "Builds/AnkaraBus_menu_kamera_testi.apk";
+
+        /// <summary>Oyun APK'sı + menüde MenuKameraTesti; sonuçlar logcat'te "[MenuTest]".</summary>
+        [MenuItem("Ankara Bus/Android/Menü ve Kamera Testi APK'sı")]
+        public static void MenuKameraBuild() => Build(Mode.MenuKamera, OyunSahneleri, MenuKameraApkPath);
 
         public const string OyunApkPath = "Builds/AnkaraBus.apk";
         private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath };
@@ -85,7 +91,8 @@ namespace AnkaraBus.EditorTools
                 locationPathName = apkPath,
                 target = BuildTarget.Android,
                 targetGroup = BuildTargetGroup.Android,
-                options = BuildOptions.Development,
+                // ölçüm ve test build'leri Development (profiler sayaçları); oyun APK'sı normal build
+                options = buildMode == Mode.None ? BuildOptions.None : BuildOptions.Development,
             };
 
             PlayerSettings.enableFrameTimingStats = true;
@@ -117,6 +124,17 @@ namespace AnkaraBus.EditorTools
             {
                 if (mode == Mode.None || report == null)
                     return;
+
+                if (mode == Mode.MenuKamera)
+                {
+                    if (scene.path == AnaMenuKurucu.ScenePath)
+                    {
+                        var test = new GameObject("MenuKameraTesti");
+                        SceneManager.MoveGameObjectToScene(test, scene);
+                        test.AddComponent<MenuKameraTesti>();
+                    }
+                    return;
+                }
 
                 if (mode == Mode.SesPuan)
                 {

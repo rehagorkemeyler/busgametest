@@ -67,6 +67,17 @@ namespace AnkaraBus.UI
             scaler.matchWidthOrHeight = 1f;
             var root = (RectTransform)canvasGo.transform;
 
+            // Menünün arkası: arka plandaki renkli apartmanların üstünde yazılar okunsun
+            var arka = new GameObject("MenuArkasi", typeof(RectTransform), typeof(Image)).GetComponent<RectTransform>();
+            arka.SetParent(root, false);
+            arka.anchorMin = new Vector2(0f, 0f);
+            arka.anchorMax = new Vector2(0f, 1f);
+            arka.pivot = new Vector2(0f, 0.5f);
+            arka.sizeDelta = new Vector2(940f, 0f);
+            var arkaImage = arka.GetComponent<Image>();
+            arkaImage.color = new Color(0.04f, 0.05f, 0.07f, 0.55f);
+            arkaImage.raycastTarget = false;
+
             // Başlık
             var baslik = Label(Element(root, "Baslik", new Vector2(0f, 1f), new Vector2(470f, -80f), new Vector2(860f, 90f)),
                 "ANKARA OTOBÜS", 76, TextAnchor.MiddleLeft, Color.white);

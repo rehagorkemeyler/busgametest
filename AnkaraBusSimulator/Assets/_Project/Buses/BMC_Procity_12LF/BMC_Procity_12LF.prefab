@@ -477,6 +477,7 @@ MonoBehaviour:
   hassasiyetPuani: 30
   atlamaCezasi: 100
   sertFren: 3
+  sertFrenMinHizKmh: 10
   sertKalkis: 1.8
   sertViraj: 2.5
   konforCezasi: 10
@@ -525,6 +526,7 @@ MonoBehaviour:
     body: {fileID: 2800000, guid: a90fd968e44e948788e64251f8975193, type: 3}
     roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
   selected: 0
+  useMenuChoice: 1
 --- !u!114 &7315764167857771664
 MonoBehaviour:
   m_ObjectHideFlags: 0

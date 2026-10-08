@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Linq;
 using AnkaraBus.UI;
@@ -215,10 +216,18 @@ namespace AnkaraBus.EditorTools
             return material;
         }
 
+        /// <summary>Build sırası: ana menü, OyunSecimi.Hatlar sırasıyla hat sahneleri, en sonda diğerleri (TestTrack).</summary>
         private static void PutFirstInBuild(string path)
         {
-            var scenes = EditorBuildSettings.scenes.Where(s => s.path != path).ToList();
-            scenes.Insert(0, new EditorBuildSettingsScene(path, true));
+            var others = EditorBuildSettings.scenes.Where(s => s.path != path).ToList();
+            int Rank(EditorBuildSettingsScene s)
+            {
+                string name = System.IO.Path.GetFileNameWithoutExtension(s.path);
+                int i = System.Array.FindIndex(AnkaraBus.Gameplay.OyunSecimi.Hatlar, h => h.sahne == name);
+                return i >= 0 ? i : 1000;
+            }
+            var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(path, true) };
+            scenes.AddRange(others.OrderBy(Rank));
             EditorBuildSettings.scenes = scenes.ToArray();
         }
     }

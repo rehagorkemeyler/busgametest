@@ -53,10 +53,10 @@ namespace AnkaraBus.Vehicle
         [Tooltip("Ayakta yolcunun göz hizası (yerel).")]
         [SerializeField] private Vector3 interiorPosition = new Vector3(0.45f, 2.0f, -1.2f);
         [SerializeField] private float interiorFov = 70f;
-        [Tooltip("Sağ ön köşe, aynanın biraz dışı (yerel).")]
-        [SerializeField] private Vector3 doorPosition = new Vector3(1.85f, 2.4f, 6.6f);
+        [Tooltip("Sağ ön köşe, gövdeden ~2 m dışarıda (yerel): kapılar, ön tekerlek, bordür ve kaldırım görünür.")]
+        [SerializeField] private Vector3 doorPosition = new Vector3(3.4f, 2.2f, 6.2f);
         [Tooltip("Kapı kamerasının baktığı nokta (yerel): sağ yan ve kaldırım.")]
-        [SerializeField] private Vector3 doorLookAt = new Vector3(1.6f, 0.6f, -4f);
+        [SerializeField] private Vector3 doorLookAt = new Vector3(1.27f, 0.9f, -1f);
         [SerializeField] private float doorFov = 60f;
 
         [Header("Dokunmatik")]
@@ -74,6 +74,7 @@ namespace AnkaraBus.Vehicle
         // içeriden bakış (kokpit, yolcu, kapı)
         private float lookYaw, lookPitch, insideFov;
         private float idleTime = 99f;
+        private float movingTime;
 
         // girdi
         private readonly List<int> freeTouches = new List<int>();
@@ -154,6 +155,8 @@ namespace AnkaraBus.Vehicle
             else
                 idleTime += dt;
             float degPerPixel = dragDegrees / Mathf.Max(Screen.height, 1);
+            // dururken fizik titreşimi hızı bir anlık 3 km/s'yi geçebilir; "gidiyor" sayılması için yarım saniye sürmeli
+            movingTime = target.SpeedKmh > 3f ? movingTime + dt : 0f;
 
             switch (mode)
             {
@@ -163,7 +166,7 @@ namespace AnkaraBus.Vehicle
                     orbitPitch = Mathf.Clamp(orbitPitch - drag.y * degPerPixel, orbitPitchRange.x, orbitPitchRange.y);
                     distance = Mathf.Clamp(distance * (1f - zoom), distanceRange.x, distanceRange.y);
                     // dış takip: otobüs giderken ve parmak bırakılmışken kamera arkaya döner
-                    if (mode == Mode.Chase && idleTime > returnDelay && target.SpeedKmh > 3f)
+                    if (mode == Mode.Chase && idleTime > returnDelay && movingTime > 0.5f)
                     {
                         float k = 1f - Mathf.Exp(-1.5f * dt);
                         orbitYaw = Mathf.LerpAngle(orbitYaw, 0f, k);

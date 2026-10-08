@@ -1,6 +1,8 @@
 # Ana Menü
 
-Ana menü sahnesi `Scenes/AnaMenu.unity`'dir ve **Ankara Bus → Ana Menü Sahnesini Kur** ile kurulur (`Editor/AnaMenuKurucu.cs`). Kurucu sahneyi Build Settings'te ilk sıraya koyar, yani oyun bu sahneyle açılır.
+![Ana menü (Galaxy S24 FE)](gorseller/ana_menu.png)
+
+Ana menü sahnesi `Scenes/AnaMenu.unity`'dir ve **Ankara Bus → Ana Menü Sahnesini Kur** ile kurulur (`Editor/AnaMenuKurucu.cs`). Kurucu Build Settings sırasını ana menü, `OyunSecimi.Hatlar` sırasıyla hat sahneleri, en sonda diğerleri (TestTrack) olarak yazar; oyun ana menüyle açılır.
 
 ## Ekran
 
@@ -40,4 +42,8 @@ Menü sahnesi build'de değilse MENÜ düğmeleri görünmez (örneğin ölçüm
 
 ## Build
 
-**Ankara Bus → Android → Oyun APK'sı** ana menü + Hat 1 + Hat 2 ile `Builds/AnkaraBus.apk` üretir. Ölçüm ve otomatik pilot eklenmez.
+**Ankara Bus → Android → Oyun APK'sı** ana menü + Hat 1 + Hat 2 ile `Builds/AnkaraBus.apk` üretir (normal build; ölçüm ve test build'leri Development). Ölçüm ve otomatik pilot eklenmez.
+
+## Test
+
+**Ankara Bus → Menü ve Kamera Testi** (Editor) ya da **Ankara Bus → Android → Menü ve Kamera Testi APK'sı** (telefon, `adb logcat -s Unity | grep MenuTest`). `MenuKameraTesti` menüden başlar, sanal dokunmatik ekranla gerçek parmak hareketleri gönderir: vitrin yerleşimi (16:9, 20:9), dönme ve parmakla çevirme, kaplama ve kalite düğmeleri, bina cepheleri, en iyi puan, SEFERE BAŞLA + kaplama, KAMERA sırası, 360° sürükleme, giderken arkaya dönüş, direksiyon + kamera iki parmak, pinch, çift dokunuş, kokpit, fare, AYARLAR → ANA MENÜ, hat sonu MENÜ. Dokunmatik kısımlar Editor'ün batch modunda çalışmaz; telefonda çalıştırılmalı.

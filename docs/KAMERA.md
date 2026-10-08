@@ -21,7 +21,8 @@ Görünümler arasında **KAMERA** düğmesiyle (klavyede **C**) sırayla geçil
 
 ## Ayarlar
 
-- **Konumlar:** `interiorPosition` (yolcu), `doorPosition`/`doorLookAt` (kapı) ve `cockpitFallback` (prefabda `SurucuGozu` yoksa kokpit) otobüsün yerel koordinatlarıdır.
+- **Konumlar:** `interiorPosition` (yolcu), `doorPosition`/`doorLookAt` (kapı) ve `cockpitFallback` (prefabda `SurucuGozu` yoksa kokpit) otobüsün yerel koordinatlarıdır. Kapı kamerası (3,4, 2,2, 6,2) → (1,27, 0,9, −1): sağ ön köşeden ~2 m dışarıda; kapılar, ön tekerlek, bordür ve kaldırım görünür (önceki konum gövdeye çok yakındı, ayna/durak tabelası kapatıyordu).
+- **Arkaya dönüş:** Otobüs yarım saniyeden uzun süre 3 km/s üstündeyse başlar; dururken fizik titreşimi kamerayı kaydırmaz.
 - **Hassasiyet:** `dragDegrees`: ekran yüksekliği kadar sürükleme kaç derece döndürür.
 - **Geri dönüş:** `returnDelay`: bırakıldıktan kaç saniye sonra kamera arkaya ya da yola döner.
 

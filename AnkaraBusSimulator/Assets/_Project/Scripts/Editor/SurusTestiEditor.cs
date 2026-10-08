@@ -48,6 +48,15 @@ namespace AnkaraBus.EditorTools
 
         public static void RunSesPuanBatch() => Start(Hat1SahneKurucu.ScenePath, batch: true, sesPuan: true);
 
+        [MenuItem("Ankara Bus/Menü ve Kamera Testi")]
+        public static void RunMenuKameraMenu()
+        {
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                Start(AnaMenuKurucu.ScenePath, batch: false, menuKamera: true);
+        }
+
+        public static void RunMenuKameraBatch() => Start(AnaMenuKurucu.ScenePath, batch: true, menuKamera: true);
+
         private static void RunMenu(string scenePath)
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -55,16 +64,18 @@ namespace AnkaraBus.EditorTools
             Start(scenePath, batch: false);
         }
 
-        private static void Start(string scenePath, bool batch, bool sesPuan = false)
+        private static void Start(string scenePath, bool batch, bool sesPuan = false, bool menuKamera = false)
         {
             EditorSceneManager.OpenScene(scenePath);
-            if (sesPuan)
+            if (menuKamera)
+                new GameObject("MenuKameraTesti").AddComponent<MenuKameraTesti>();
+            else if (sesPuan)
                 new GameObject("SesPuanSenaryosu").AddComponent<SesPuanSenaryosu>();
             else
                 new GameObject("OtomatikPilot").AddComponent<OtomatikPilot>();
             SessionState.SetBool(ActiveKey, true);
             SessionState.SetBool(BatchKey, batch);
-            SessionState.SetString(EndKey, sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
+            SessionState.SetString(EndKey, menuKamera ? "[MenuTest] BITTI" : sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
             Hook();
             EditorApplication.EnterPlaymode();
         }

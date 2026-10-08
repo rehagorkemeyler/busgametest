@@ -90,7 +90,8 @@ namespace AnkaraBus.EditorTools
             var panel = new GameObject("Panel", typeof(RectTransform), typeof(Image)).GetComponent<RectTransform>();
             panel.SetParent(canvasGo.transform, false);
             panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0f, 1f);
-            panel.anchoredPosition = new Vector2(30f, -250f);
+            // sol sütundaki KAMERA / AYARLAR / KORNA düğmelerinin altında
+            panel.anchoredPosition = new Vector2(30f, -355f);
             panel.sizeDelta = new Vector2(560f, 210f);
             var image = panel.GetComponent<Image>();
             image.color = new Color(0.08f, 0.09f, 0.11f, 0.55f);

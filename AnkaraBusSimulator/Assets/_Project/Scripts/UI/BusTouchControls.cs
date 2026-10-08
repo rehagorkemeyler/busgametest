@@ -110,7 +110,8 @@ namespace AnkaraBus.UI
             gaugeRect.GetComponent<Image>().type = Image.Type.Sliced;
             gaugeRect.GetComponent<Image>().color = Panel;
             gauge = Label(gaugeRect, "", 54, TextAnchor.MiddleCenter);
-            var statusRect = Element(root, "Durum", new Vector2(0.5f, 1f), new Vector2(0f, -150f), new Vector2(700f, 50f));
+            // puan şeridinin (PuanGostergesi, y -160) altında
+            var statusRect = Element(root, "Durum", new Vector2(0.5f, 1f), new Vector2(0f, -215f), new Vector2(700f, 50f));
             status = Label(statusRect, "", 30, TextAnchor.MiddleCenter);
 
             BuildSettingsPanel(root);
