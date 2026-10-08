@@ -10,4 +10,5 @@ Desktop.ini
 # Python
 __pycache__/
 *.pyc
-.venv-skp/   # tools/skp/skp_to_glb.py için openskp ortamı
+# tools/skp/skp_to_glb.py için openskp ortamı (git satır sonu yorumu desteklemez)
+.venv-skp/

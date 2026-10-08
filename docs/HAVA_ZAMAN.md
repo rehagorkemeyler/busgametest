@@ -40,6 +40,8 @@ Set bake edilmemişse uyarı yazılır ve binalar gündüz ışığında kalır.
 - Lamba parlama malzemesi.
 - Yağmur damlası dokusu ve malzemesi, Yagmur prefabı.
 
+Malzemeler yoksa Unity açılınca ve her build'den önce kendiliğinden kurulur (`HavaZamanKurucu.EksikseKur`), menüyü unutmak gece ve yağmuru bozmaz. Oluşan `Resources/Hava` klasörü commit'lenmelidir.
+
 Bu malzemeler hazır durur, çünkü oyunda shader anahtar kelimesi açmak build'de çıkarılmış varyanta takılır. Araç ayrıca sis shader varyantlarının build'de kalmasını sağlar.
 
 ## Bilinen eksikler

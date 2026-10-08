@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using AnkaraBus.Gameplay;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -19,8 +21,29 @@ namespace AnkaraBus.EditorTools
     /// bake'ini (HatIsikBake) yeniden yapar. Sahne yeniden kurulup gündüz bake edilince bu da tekrarlanmalı.</item>
     /// </list>
     /// </summary>
+    [InitializeOnLoad]
     public static class HavaZamanKurucu
     {
+        // Malzemeler ve yağmur prefabı yoksa Unity açılınca kendiliğinden üretilir (menüyü unutmak gece/yağmuru bozmasın)
+        static HavaZamanKurucu()
+        {
+            EditorApplication.delayCall += () =>
+            {
+                if (!EditorApplication.isPlayingOrWillChangePlaymode)
+                    EksikseKur();
+            };
+        }
+
+        /// <summary>Resources/Hava eksikse kurar; build öncesi de çağrılır (HavaMalzemeleriBuildKontrolu).</summary>
+        public static void EksikseKur()
+        {
+            if (AssetDatabase.LoadAssetAtPath<Material>(HavaKlasoru + "M_AnkaraPalet_Gece.mat") != null
+                && AssetDatabase.LoadAssetAtPath<GameObject>(HavaKlasoru + "Yagmur.prefab") != null)
+                return;
+            Debug.Log("[HavaZaman] Resources/Hava eksik, kuruluyor.");
+            MalzemeleriKur();
+        }
+
         private const string HavaKlasoru = "Assets/_Project/Resources/Hava/";
         private const string IsikKlasoru = "Assets/_Project/Resources/IsikSetleri/";
 
@@ -387,5 +410,13 @@ namespace AnkaraBus.EditorTools
             KlasorHazirla(ust);
             AssetDatabase.CreateFolder(ust, Path.GetFileName(yol));
         }
+    }
+
+    /// <summary>Her build'den önce gece/yağmur malzemeleri yerinde mi (yoksa build'e girmez, gece ve yağmur bozuk görünür).</summary>
+    public class HavaMalzemeleriBuildKontrolu : IPreprocessBuildWithReport
+    {
+        public int callbackOrder => -100;
+
+        public void OnPreprocessBuild(BuildReport report) => HavaZamanKurucu.EksikseKur();
     }
 }

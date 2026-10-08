@@ -129,6 +129,6 @@ Blender -b --factory-startup -P tools/blender/skp_donustur.py -- --glb <glb> --m
 | `SKP/Props/Lamba_Nostaljik` | 1.7 × 0.5 × 4.7 | 42 478 / 3 999 / 2 392 (LOD0/1/2) | 7 | Refüj lambaları, iki hatta da (eski `Props/Lamba_Bulvar` yerine) |
 | `SKP/Buildings/KizilayBloklari/Blok_01..33` | 13–132 m, 25–37 m yüksek | toplam 2 850 | bina başına 1–4 | Kızılay–Meclis ve Kızılay–Sıhhiye arası **ikinci sıra** (≤ 50 × 40 m olanlar) |
 
-- Lamba 1,4 kat büyütüldü (kaynak 3,3 m). Unity `_LOD0/1/2` adlarından LODGroup kurar. Gece parlaması ve bake ışıkları üç fenere göre: `ZamanAyarlari.LambaBaslari`, `LambaParlamaBoyu`.
+- Lamba 1,4 kat büyütüldü (kaynak 3,3 m). Unity `_LOD0/1/2` adlarından LODGroup kurar. LOD geçişleri ekran yüksekliğinin %60 / %15 / %1'i: 42 bin üçgenlik LOD0 yalnızca lamba ekranı neredeyse dolduracak kadar yakınken (kokpitten yanından geçerken) görünür, normalde 4 bin üçgenlik LOD1 (A32 doluluk sınırında; önceki %25'te birkaç lamba aynı anda LOD0'daydı). Gece parlaması ve bake ışıkları üç fenere göre: `ZamanAyarlari.LambaBaslari`, `LambaParlamaBoyu`.
 - Kızılay blokları Google Earth binaları: ayrık parçalar binalara ayrılır, taban dikdörtgeni eksene hizalanır, ölçüler `Bloklar.json`'da. Binalar zeminin ~10 m altına uzanır (eğimde boşluk kalmaz).
 - **Lisans:** 3D Warehouse modelleri (General Model License) ve Google Earth kaynaklı fotoğraflar, otobüs ve araç modelleri gibi yalnızca **kişisel prototip** içindir.

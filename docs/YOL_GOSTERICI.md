@@ -2,7 +2,7 @@
 
 ## Güzergâh: `Route/RotaRehberi.cs`
 
-Otobüs prefabında durur. Oyun açılınca hattın güzergâhını sahnedeki trafik şeritlerinden kendisi bulur, bu yüzden sahne dosyasına ya da yerleşim JSON'una ek veri gerekmez:
+Otobüs prefabında durur. Prefab yeniden kurulmamışsa, rotası olan otobüse sahne yüklenince `RotaRehberi` ve `MiniHarita` kendiliğinden eklenir. Oyun açılınca hattın güzergâhını sahnedeki trafik şeritlerinden kendisi bulur, bu yüzden sahne dosyasına ya da yerleşim JSON'una ek veri gerekmez:
 - **Grafik:** Şeritler 5 m aralıkla örneklenir. Bağlantılar şunlardır: şerit boyunca ilerleme, kavşak çıkışları (`TrafficLane.Exits`) ve aynı yöndeki yan şeride geçiş (küçük cezayla).
 - **Yol bulma:** Otobüsün başlangıcından 1. durağa, oradan 2. durağa... her ayak için en kısa yol bulunur (Dijkstra). Uç noktalar, yönü uyan en yakın şerit noktasıdır (durağın yönü `BusStop` dönüşünden alınır). Duraklar güzergâha nokta olarak eklenir, yani çizgi durak cebine girip çıkar.
 

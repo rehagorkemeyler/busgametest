@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AnkaraBus.Traffic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace AnkaraBus.Route
 {
@@ -44,6 +45,30 @@ namespace AnkaraBus.Route
         public Donus SiradakiDonus { get; private set; }
         public float DonuseKalan { get; private set; }
         public RouteTracker Tracker => tracker;
+
+        /// <summary>
+        /// Otobüs prefabı yeniden kurulmamış olsa da (OtobusKurucu ekler) yol gösterici çalışsın: rotası olan otobüse
+        /// sahne yüklenince RotaRehberi ve MiniHarita eklenir.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void Baslat()
+        {
+            SceneManager.sceneLoaded -= SahneYuklendi;
+            SceneManager.sceneLoaded += SahneYuklendi;
+            SahneYuklendi(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        }
+
+        private static void SahneYuklendi(Scene sahne, LoadSceneMode mod)
+        {
+            foreach (var t in FindObjectsByType<RouteTracker>())
+            {
+                if (t.Route == null || t.GetComponent<RotaRehberi>() != null)
+                    continue;
+                t.gameObject.AddComponent<RotaRehberi>();
+                if (t.GetComponent<AnkaraBus.UI.MiniHarita>() == null)
+                    t.gameObject.AddComponent<AnkaraBus.UI.MiniHarita>();
+            }
+        }
 
         private void Awake() => tracker = GetComponent<RouteTracker>();
 
