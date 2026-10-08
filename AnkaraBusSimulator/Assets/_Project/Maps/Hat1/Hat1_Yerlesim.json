@@ -1009,7 +1009,7 @@
    "group": "Duraklar"
   },
   {
-   "model": "Landmarks/KizilayAVM",
+   "model": "SKP/Landmarks/KizilayAVM",
    "pos": [
     17.0,
     0.0,
@@ -1017,6 +1017,266 @@
    ],
    "rotY": 270.0,
    "group": "SimgeYapilar"
+  },
+  {
+   "model": "SKP/Landmarks/EmekIshani",
+   "pos": [
+    -17.0,
+    0.0,
+    -28.0
+   ],
+   "rotY": 90.0,
+   "group": "SimgeYapilar"
+  },
+  {
+   "model": "SKP/Landmarks/GuvenlikAniti",
+   "pos": [
+    32.5,
+    0.8,
+    80.0
+   ],
+   "rotY": 270.0,
+   "group": "SimgeYapilar"
+  },
+  {
+   "model": "Props/Agac_Cinar_1",
+   "pos": [
+    64.996,
+    1.214,
+    100.712
+   ],
+   "rotY": 12.15,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    61.075,
+    1.068,
+    93.392
+   ],
+   "rotY": 36.58,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_1",
+   "pos": [
+    66.246,
+    1.295,
+    104.727
+   ],
+   "rotY": 212.99,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    48.156,
+    0.562,
+    68.119
+   ],
+   "rotY": 328.71,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    24.122,
+    0.488,
+    64.404
+   ],
+   "rotY": 261.37,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_1",
+   "pos": [
+    74.84,
+    0.818,
+    80.918
+   ],
+   "rotY": 169.58,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    68.522,
+    0.422,
+    61.076
+   ],
+   "rotY": 131.58,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    51.45,
+    1.112,
+    95.615
+   ],
+   "rotY": 10.8,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    27.701,
+    0.222,
+    51.085
+   ],
+   "rotY": 174.41,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    55.834,
+    0.34,
+    57.007
+   ],
+   "rotY": 198.48,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    55.449,
+    0.425,
+    61.242
+   ],
+   "rotY": 250.02,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    36.929,
+    0.373,
+    58.669
+   ],
+   "rotY": 54.66,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    55.007,
+    1.266,
+    103.324
+   ],
+   "rotY": 111.26,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    36.442,
+    0.307,
+    55.345
+   ],
+   "rotY": 77.7,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    46.114,
+    0.236,
+    51.794
+   ],
+   "rotY": 96.74,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_1",
+   "pos": [
+    35.521,
+    0.412,
+    60.603
+   ],
+   "rotY": 185.4,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    69.45,
+    0.528,
+    66.387
+   ],
+   "rotY": 166.48,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    56.309,
+    0.386,
+    59.319
+   ],
+   "rotY": 126.64,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    48.851,
+    0.632,
+    71.619
+   ],
+   "rotY": 51.97,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_2",
+   "pos": [
+    60.058,
+    1.386,
+    109.309
+   ],
+   "rotY": 319.92,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    55.603,
+    0.994,
+    89.713
+   ],
+   "rotY": 151.51,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    48.262,
+    0.938,
+    86.892
+   ],
+   "rotY": 318.69,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    46.327,
+    0.487,
+    64.355
+   ],
+   "rotY": 343.66,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
+    27.415,
+    0.514,
+    65.699
+   ],
+   "rotY": 278.66,
+   "group": "Agaclar"
   },
   {
    "model": "Landmarks/TBMM_Duvar_20m",
@@ -2009,11 +2269,21 @@
    "group": "Agaclar"
   },
   {
-   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
    "pos": [
     16.5,
-    0.0,
-    49.41
+    1.52,
+    125.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    1.884,
+    141.5
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2022,8 +2292,28 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
    "pos": [
     16.5,
-    0.376,
-    67.92
+    2.176,
+    157.9
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    2.54,
+    174.3
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    2.832,
+    188.9
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2032,38 +2322,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     16.5,
-    0.74,
-    87.82
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    1.172,
-    105.92
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    1.464,
-    120.52
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    1.756,
-    135.12
+    3.124,
+    207.0
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2072,8 +2332,158 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     16.5,
-    2.048,
-    149.72
+    3.556,
+    225.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    3.848,
+    239.7
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    16.5,
+    4.14,
+    256.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    16.5,
+    4.504,
+    274.3
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    16.5,
+    4.868,
+    292.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    5.232,
+    310.9
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    5.604,
+    327.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    5.896,
+    342.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    6.188,
+    358.7
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    16.5,
+    6.56,
+    377.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    6.924,
+    393.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    16.5,
+    7.216,
+    409.9
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    7.58,
+    426.3
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    7.872,
+    440.9
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    8.164,
+    455.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    16.5,
+    8.456,
+    470.1
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2082,8 +2492,8 @@
    "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
    "pos": [
     16.5,
-    2.34,
-    166.43
+    8.748,
+    486.81
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2092,8 +2502,18 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
    "pos": [
     16.5,
-    2.717,
-    183.14
+    9.124,
+    503.52
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    16.5,
+    9.416,
+    518.12
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2102,38 +2522,8 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     16.5,
-    3.009,
-    197.74
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    3.301,
-    212.34
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    3.593,
-    226.94
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    3.885,
-    241.54
+    9.708,
+    532.72
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2142,198 +2532,18 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
    "pos": [
     16.5,
-    4.177,
-    257.94
+    10.0,
+    549.12
    ],
    "rotY": 270.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    4.541,
-    276.14
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    4.905,
-    294.34
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    5.269,
-    312.54
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    5.633,
-    330.74
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    5.997,
-    348.94
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    6.361,
-    367.14
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    6.725,
-    383.54
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    7.017,
-    399.94
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    7.381,
-    416.34
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    7.673,
-    430.94
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    16.5,
-    7.965,
-    449.04
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    8.397,
-    467.14
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    8.689,
-    481.74
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    8.981,
-    498.14
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    9.345,
-    516.34
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    16.5,
-    9.709,
-    534.54
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
    "pos": [
     -16.5,
     0.0,
-    -32.7
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    0.0,
-    -18.1
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    0.0,
-    -3.5
+    13.41
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -2343,7 +2553,317 @@
    "pos": [
     -16.5,
     0.0,
-    12.9
+    31.92
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    0.02,
+    50.12
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    0.384,
+    66.52
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    0.676,
+    81.12
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    0.968,
+    97.52
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    1.332,
+    115.72
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    1.696,
+    132.12
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    1.988,
+    148.52
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    2.352,
+    166.72
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    2.716,
+    183.12
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    3.008,
+    197.72
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
+   "pos": [
+    -16.5,
+    3.3,
+    214.43
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    3.677,
+    231.14
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    3.969,
+    247.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    4.333,
+    265.74
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    4.697,
+    282.14
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    4.989,
+    296.74
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    5.281,
+    311.34
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    5.573,
+    327.74
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    5.937,
+    345.94
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    6.301,
+    362.34
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    6.593,
+    378.74
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    6.957,
+    395.14
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    7.249,
+    411.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    7.613,
+    427.94
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    7.905,
+    442.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
+   "pos": [
+    -16.5,
+    8.197,
+    459.25
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    8.573,
+    477.76
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    8.937,
+    494.16
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
+   "pos": [
+    -16.5,
+    9.229,
+    510.56
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    9.593,
+    526.96
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "pos": [
+    -16.5,
+    9.885,
+    541.56
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -2352,368 +2872,28 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     -16.5,
-    0.0,
-    31.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    0.012,
-    47.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    0.304,
-    62.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    0.596,
-    80.6
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    1.028,
-    98.7
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    1.32,
-    113.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    1.612,
-    127.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    1.904,
-    142.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    2.196,
-    158.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    2.56,
-    175.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    2.852,
-    189.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    3.144,
-    204.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    3.436,
-    219.1
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    3.728,
-    233.7
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    4.02,
-    250.1
+    10.177,
+    558.16
    ],
    "rotY": 90.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
-   "pos": [
-    -16.5,
-    4.384,
-    268.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    4.756,
-    286.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    5.12,
-    303.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    5.412,
-    317.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
-   "pos": [
-    -16.5,
-    5.704,
-    334.61
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    6.08,
-    353.12
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    6.444,
-    371.32
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    6.808,
-    387.72
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    7.1,
-    402.32
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    7.392,
-    418.72
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    7.756,
-    436.92
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    8.12,
-    453.32
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    8.412,
-    469.72
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    8.776,
-    487.92
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    9.14,
-    504.32
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    9.432,
-    518.92
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A2_Kose_7Kat_Gri",
-   "pos": [
-    -16.5,
-    9.724,
-    535.63
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    10.101,
-    552.34
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
-   "pos": [
-    -16.5,
-    10.393,
-    568.74
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_7Kat_Somon",
    "pos": [
     -16.5,
     10.4,
-    586.94
+    576.76
    ],
    "rotY": 90.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     16.5,
     22.4,
-    905.9
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    16.5,
-    22.952,
-    919.7
+    909.3
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2722,28 +2902,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     16.5,
-    23.504,
-    936.9
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
-   "pos": [
-    16.5,
-    24.328,
-    957.5
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    16.5,
-    25.152,
-    979.6
+    23.224,
+    929.9
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2752,8 +2912,18 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     16.5,
-    26.096,
-    999.7
+    24.048,
+    948.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    16.5,
+    24.712,
+    963.7
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2762,8 +2932,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     16.5,
-    26.76,
-    1018.3
+    25.264,
+    980.9
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2772,38 +2942,8 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
    "pos": [
     16.5,
-    27.584,
-    1036.9
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    28.248,
-    1053.5
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
-   "pos": [
-    16.5,
-    28.912,
-    1070.41
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    16.5,
-    29.601,
-    1087.32
+    26.088,
+    999.5
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2812,18 +2952,8 @@
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
     16.5,
-    30.265,
-    1102.52
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    30.817,
-    1117.72
+    26.752,
+    1014.7
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2832,8 +2962,8 @@
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
     16.5,
-    31.481,
-    1132.92
+    27.304,
+    1028.5
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2842,8 +2972,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     16.5,
-    32.033,
-    1151.62
+    27.856,
+    1047.2
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2852,18 +2982,8 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     16.5,
-    32.977,
-    1171.72
-   ],
-   "rotY": 270.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    16.5,
-    33.641,
-    1188.32
+    28.8,
+    1067.3
    ],
    "rotY": 270.0,
    "group": "Binalar"
@@ -2872,38 +2992,98 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     16.5,
-    34.305,
-    1208.42
+    29.464,
+    1087.4
    ],
    "rotY": 270.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    30.408,
+    1109.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    31.232,
+    1130.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    16.5,
+    32.056,
+    1147.3
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    32.608,
+    1164.5
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    16.5,
+    33.432,
+    1185.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "pos": [
+    16.5,
+    34.256,
+    1207.2
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     16.5,
     36.8,
-    1268.52
+    1270.8
    ],
    "rotY": 270.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
     -16.5,
     10.4,
-    610.8
+    605.9
    ],
    "rotY": 90.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     -16.5,
-    11.344,
-    629.5
+    10.952,
+    624.6
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -2939,81 +3119,11 @@
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     -16.5,
     13.944,
-    699.4
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    14.888,
-    719.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    15.552,
-    736.1
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
-   "pos": [
-    -16.5,
-    16.216,
-    752.7
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    16.88,
-    769.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    17.544,
-    785.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    18.208,
-    806.0
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    19.152,
-    826.1
+    697.9
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3022,8 +3132,8 @@
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
     -16.5,
-    19.816,
-    841.3
+    14.768,
+    715.1
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3032,98 +3142,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     -16.5,
-    20.368,
-    860.0
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    21.312,
-    880.1
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    -16.5,
-    21.976,
-    896.7
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    -16.5,
-    22.64,
-    911.9
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    23.192,
-    930.6
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    -16.5,
-    24.136,
-    949.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    24.688,
-    968.0
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    25.632,
-    991.6
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    -16.5,
-    26.576,
-    1010.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    -16.5,
-    27.128,
-    1024.1
+    15.32,
+    733.8
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3132,8 +3152,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     -16.5,
-    27.68,
-    1041.3
+    16.264,
+    755.9
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3142,18 +3162,8 @@
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
     -16.5,
-    28.504,
-    1058.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
-   "pos": [
-    -16.5,
-    29.056,
-    1077.2
+    17.088,
+    773.1
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3162,28 +3172,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     -16.5,
-    30.0,
-    1099.3
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    -16.5,
-    30.824,
-    1116.5
-   ],
-   "rotY": 90.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
-   "pos": [
-    -16.5,
-    31.376,
-    1133.7
+    17.64,
+    790.3
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3192,8 +3182,8 @@
    "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
    "pos": [
     -16.5,
-    32.2,
-    1152.61
+    18.464,
+    809.21
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3202,8 +3192,8 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
    "pos": [
     -16.5,
-    32.889,
-    1173.02
+    19.153,
+    829.62
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3212,8 +3202,28 @@
    "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
    "pos": [
     -16.5,
-    33.833,
-    1193.43
+    20.097,
+    850.03
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    20.786,
+    865.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    21.338,
+    879.34
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3222,8 +3232,148 @@
    "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
    "pos": [
     -16.5,
-    36.8,
-    1276.34
+    21.89,
+    896.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    22.714,
+    913.74
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    23.266,
+    927.54
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
+   "pos": [
+    -16.5,
+    23.818,
+    943.05
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "pos": [
+    -16.5,
+    24.506,
+    963.46
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    -16.5,
+    25.45,
+    985.56
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    26.274,
+    1002.76
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
+    26.826,
+    1017.96
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "pos": [
+    -16.5,
+    27.49,
+    1038.06
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "pos": [
+    -16.5,
+    28.434,
+    1061.66
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
+   "pos": [
+    -16.5,
+    29.378,
+    1082.07
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A2_Kose_6Kat_Somon",
+   "pos": [
+    -16.5,
+    30.067,
+    1099.29
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    -16.5,
+    30.756,
+    1118.2
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    31.58,
+    1135.4
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "pos": [
+    -16.5,
+    32.132,
+    1152.6
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3232,8 +3382,38 @@
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     -16.5,
+    32.956,
+    1171.2
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A5_Ofis_10Kat_Mavi",
+   "pos": [
+    -16.5,
+    33.62,
+    1191.3
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A1_Bulvar_8Kat_Bej",
+   "pos": [
+    -16.5,
     36.8,
-    1294.94
+    1275.4
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    -16.5,
+    36.8,
+    1290.6
    ],
    "rotY": 90.0,
    "group": "Binalar"
@@ -3243,37 +3423,347 @@
    "pos": [
     -16.5,
     36.8,
-    1315.04
+    1309.3
    ],
    "rotY": 90.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A5_Ofis_8Kat_Yesil",
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
     -16.5,
     36.8,
-    1337.14
+    1329.4
    ],
    "rotY": 90.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "model": "SKP/Buildings/KizilayBloklari/Blok_31",
    "pos": [
-    54.0,
+    49.025,
+    1.02,
+    140.005
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_32",
+   "pos": [
+    41.14,
+    2.02,
+    177.325
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_07",
+   "pos": [
+    43.38,
+    2.513,
+    203.1
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_09",
+   "pos": [
+    41.055,
+    3.051,
+    230.365
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_16",
+   "pos": [
+    47.435,
+    3.603,
+    265.555
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_06",
+   "pos": [
+    40.37,
+    4.459,
+    301.34
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_23",
+   "pos": [
+    46.575,
+    5.035,
+    331.92
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_12",
+   "pos": [
+    46.615,
+    5.682,
+    361.84
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_08",
+   "pos": [
+    40.79,
+    6.232,
+    389.855
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_01",
+   "pos": [
+    41.635,
+    6.803,
+    418.06
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_25",
+   "pos": [
+    43.93,
+    7.36,
+    444.78
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_19",
+   "pos": [
+    44.705,
+    7.871,
+    469.115
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_18",
+   "pos": [
+    42.315,
+    8.333,
+    494.94
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_19",
+   "pos": [
+    44.705,
+    8.904,
+    520.765
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_14",
+   "pos": [
+    41.53,
+    9.366,
+    545.335
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_33",
+   "pos": [
+    -53.36,
+    -0.5,
+    23.99
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_24",
+   "pos": [
+    -43.065,
+    -0.34,
+    60.33
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_12",
+   "pos": [
+    -46.615,
+    0.194,
+    87.42
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_27",
+   "pos": [
+    -41.085,
+    0.743,
+    116.68
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_31",
+   "pos": [
+    -49.025,
+    1.364,
+    157.205
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_05",
+   "pos": [
+    -41.78,
+    2.364,
+    196.96
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_13",
+   "pos": [
+    -40.025,
+    2.954,
+    225.245
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_14",
+   "pos": [
+    -41.53,
+    3.496,
+    251.805
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_20",
+   "pos": [
+    -50.83,
+    4.017,
+    288.87
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_30",
+   "pos": [
+    -41.145,
+    4.978,
+    326.785
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_01",
+   "pos": [
+    -41.635,
+    5.533,
+    354.59
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_29",
+   "pos": [
+    -41.77,
+    6.09,
+    384.465
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_32",
+   "pos": [
+    -41.14,
+    6.728,
+    412.725
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_26",
+   "pos": [
+    -42.125,
+    7.221,
+    438.735
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_27",
+   "pos": [
+    -41.085,
+    7.769,
+    467.95
+   ],
+   "rotY": 270.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_06",
+   "pos": [
+    -40.37,
+    8.389,
+    497.87
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "SKP/Buildings/KizilayBloklari/Blok_15",
+   "pos": [
+    -47.355,
+    8.965,
+    532.34
+   ],
+   "rotY": 90.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    54.4,
     36.8,
-    1287.3
-   ],
-   "rotY": 0.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
-   "pos": [
-    70.2,
-    37.92,
-    1287.3
+    1290.5
    ],
    "rotY": 0.0,
    "group": "Binalar"
@@ -3281,18 +3771,8 @@
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    86.8,
-    39.392,
-    1290.5
-   ],
-   "rotY": 0.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
-   "pos": [
-    103.0,
-    40.576,
+    69.2,
+    37.984,
     1290.5
    ],
    "rotY": 0.0,
@@ -3301,8 +3781,28 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    121.0,
-    41.984,
+    85.8,
+    39.168,
+    1287.3
+   ],
+   "rotY": 0.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    102.0,
+    40.64,
+    1287.3
+   ],
+   "rotY": 0.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    116.0,
+    41.76,
     1287.3
    ],
    "rotY": 0.0,
@@ -3311,39 +3811,59 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    139.4,
-    43.456,
+    132.2,
+    42.88,
     1287.3
    ],
    "rotY": 0.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    159.812,
-    44.928,
-    1288.22
+    150.482,
+    44.352,
+    1290.529
    ],
-   "rotY": 350.7,
+   "rotY": 358.3,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    169.03,
+    45.76,
+    1293.733
+   ],
+   "rotY": 342.1,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    178.634,
-    46.4,
-    1294.119
+    185.49,
+    46.944,
+    1297.828
    ],
-   "rotY": 334.5,
+   "rotY": 330.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    193.63,
-    47.6,
-    1302.528
+    196.361,
+    48.28,
+    1307.799
+   ],
+   "rotY": 330.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    209.178,
+    49.76,
+    1315.199
    ],
    "rotY": 330.0,
    "group": "Binalar"
@@ -3351,19 +3871,9 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    209.565,
-    49.44,
-    1311.728
-   ],
-   "rotY": 330.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    223.595,
-    51.28,
-    1319.828
+    225.154,
+    51.24,
+    1320.728
    ],
    "rotY": 330.0,
    "group": "Binalar"
@@ -3371,79 +3881,39 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    237.624,
-    52.68,
-    1327.928
+    241.089,
+    53.08,
+    1329.928
    ],
    "rotY": 330.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
-   "pos": [
-    253.559,
-    54.52,
-    1337.128
-   ],
-   "rotY": 330.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    267.589,
-    56.36,
-    1345.228
-   ],
-   "rotY": 330.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    278.423,
-    57.76,
-    1350.707
-   ],
-   "rotY": 338.32,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    321.298,
-    61.76,
-    1362.643
-   ],
-   "rotY": 345.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
-   "pos": [
-    336.946,
-    63.16,
-    1366.836
-   ],
-   "rotY": 345.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    353.505,
-    65.0,
-    1374.586
+    255.077,
+    54.92,
+    1341.699
    ],
-   "rotY": 345.0,
+   "rotY": 330.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    369.153,
-    66.76,
-    1378.778
+    271.922,
+    56.68,
+    1347.69
+   ],
+   "rotY": 331.88,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    322.844,
+    61.92,
+    1363.057
    ],
    "rotY": 345.0,
    "group": "Binalar"
@@ -3451,9 +3921,19 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    383.89,
-    68.24,
-    1379.414
+    336.367,
+    63.32,
+    1366.681
+   ],
+   "rotY": 345.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    349.89,
+    64.72,
+    1370.304
    ],
    "rotY": 345.0,
    "group": "Binalar"
@@ -3461,38 +3941,48 @@
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    396.267,
-    69.64,
-    1385.808
+    362.971,
+    66.12,
+    1377.122
    ],
-   "rotY": 349.72,
+   "rotY": 345.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    409.299,
-    71.12,
-    1386.881
+    377.266,
+    67.6,
+    1380.952
    ],
-   "rotY": 0.0,
+   "rotY": 345.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    425.899,
-    72.8,
-    1383.681
+    391.956,
+    69.08,
+    1381.575
    ],
-   "rotY": 0.0,
+   "rotY": 345.23,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    444.299,
-    75.008,
+    403.451,
+    70.48,
+    1383.504
+   ],
+   "rotY": 355.73,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    416.499,
+    71.936,
     1383.681
    ],
    "rotY": 0.0,
@@ -3501,18 +3991,18 @@
   {
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    462.299,
-    77.216,
+    432.299,
+    73.616,
     1386.881
    ],
    "rotY": 0.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    480.299,
-    79.328,
+    448.099,
+    75.728,
     1383.681
    ],
    "rotY": 0.0,
@@ -3521,39 +4011,39 @@
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    497.96,
-    81.48,
-    1387.438
+    462.499,
+    77.408,
+    1386.881
    ],
-   "rotY": 353.48,
+   "rotY": 0.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    516.378,
-    82.96,
-    1388.089
+    479.099,
+    79.184,
+    1383.681
    ],
-   "rotY": 345.0,
+   "rotY": 0.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    534.151,
-    84.48,
-    1392.851
+    499.019,
+    81.36,
+    1384.341
    ],
-   "rotY": 345.0,
+   "rotY": 353.02,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    549.357,
-    85.952,
-    1400.238
+    516.571,
+    83.2,
+    1388.141
    ],
    "rotY": 345.0,
    "group": "Binalar"
@@ -3561,7 +4051,27 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    74.0,
+    530.094,
+    84.32,
+    1391.764
+   ],
+   "rotY": 345.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    543.617,
+    85.44,
+    1395.387
+   ],
+   "rotY": 345.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "pos": [
+    76.2,
     38.4,
     1312.7
    ],
@@ -3571,28 +4081,8 @@
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    88.4,
-    39.52,
-    1309.5
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    103.2,
-    40.704,
-    1309.5
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    118.0,
-    41.888,
+    92.8,
+    39.872,
     1309.5
    ],
    "rotY": 180.0,
@@ -3601,8 +4091,8 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    132.4,
-    43.072,
+    107.2,
+    41.056,
     1312.7
    ],
    "rotY": 180.0,
@@ -3611,59 +4101,49 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    146.4,
-    44.192,
+    121.2,
+    42.176,
     1312.7
    ],
    "rotY": 180.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    157.696,
-    45.312,
-    1313.658
+    135.6,
+    43.296,
+    1309.5
    ],
-   "rotY": 168.1,
+   "rotY": 180.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    167.98,
-    46.432,
-    1317.179
+    151.378,
+    44.48,
+    1312.793
    ],
-   "rotY": 154.1,
+   "rotY": 176.3,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    181.318,
-    47.64,
-    1321.053
+    165.082,
+    45.952,
+    1312.469
    ],
-   "rotY": 150.0,
+   "rotY": 159.7,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    194.135,
-    49.12,
-    1328.453
-   ],
-   "rotY": 150.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    205.006,
-    50.6,
-    1338.425
+    176.773,
+    47.136,
+    1322.125
    ],
    "rotY": 150.0,
    "group": "Binalar"
@@ -3671,19 +4151,9 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    217.13,
-    52.0,
-    1345.425
-   ],
-   "rotY": 150.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    229.255,
-    53.4,
-    1352.425
+    190.803,
+    48.96,
+    1330.225
    ],
    "rotY": 150.0,
    "group": "Binalar"
@@ -3691,9 +4161,9 @@
   {
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    244.538,
-    54.8,
-    1357.553
+    206.086,
+    50.36,
+    1335.353
    ],
    "rotY": 150.0,
    "group": "Binalar"
@@ -3701,9 +4171,29 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    256.621,
-    56.56,
-    1368.225
+    218.169,
+    52.12,
+    1346.025
+   ],
+   "rotY": 150.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "pos": [
+    232.199,
+    53.52,
+    1354.125
+   ],
+   "rotY": 150.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    246.229,
+    55.36,
+    1362.225
    ],
    "rotY": 150.0,
    "group": "Binalar"
@@ -3711,19 +4201,49 @@
   {
    "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    272.746,
-    57.96,
-    1372.295
+    260.469,
+    56.76,
+    1366.732
    ],
-   "rotY": 160.13,
+   "rotY": 151.12,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    288.644,
-    59.392,
-    1380.189
+    276.755,
+    58.24,
+    1376.975
+   ],
+   "rotY": 163.57,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    293.916,
+    59.904,
+    1378.289
+   ],
+   "rotY": 165.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    308.211,
+    61.088,
+    1382.119
+   ],
+   "rotY": 165.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    322.507,
+    62.44,
+    1385.95
    ],
    "rotY": 165.0,
    "group": "Binalar"
@@ -3731,49 +4251,19 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    306.417,
-    60.864,
-    1384.952
-   ],
-   "rotY": 165.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    322.065,
-    62.52,
-    1389.144
-   ],
-   "rotY": 165.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    335.588,
+    337.713,
     63.92,
-    1392.768
+    1393.337
    ],
    "rotY": 165.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    349.111,
-    65.32,
-    1396.391
-   ],
-   "rotY": 165.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    363.849,
-    66.72,
-    1397.027
+    355.928,
+    65.76,
+    1394.905
    ],
    "rotY": 165.0,
    "group": "Binalar"
@@ -3781,115 +4271,125 @@
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
    "pos": [
-    379.055,
-    68.2,
-    1404.415
+    372.487,
+    67.52,
+    1402.655
    ],
    "rotY": 165.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    397.322,
-    70.04,
-    1405.19
+    388.65,
+    69.36,
+    1406.91
    ],
-   "rotY": 172.73,
+   "rotY": 167.32,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    412.899,
-    71.52,
-    1409.081
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
-   "pos": [
-    426.899,
-    73.184,
-    1409.081
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    441.299,
-    74.864,
-    1405.881
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
-   "pos": [
-    457.899,
-    76.64,
-    1409.081
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
-   "pos": [
-    474.499,
-    78.848,
-    1405.881
-   ],
-   "rotY": 180.0,
-   "group": "Binalar"
-  },
-  {
-   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
-   "pos": [
-    490.617,
-    80.624,
-    1409.127
+    404.818,
+    70.76,
+    1409.017
    ],
    "rotY": 177.82,
    "group": "Binalar"
   },
   {
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "pos": [
+    421.499,
+    72.272,
+    1409.081
+   ],
+   "rotY": 180.0,
+   "group": "Binalar"
+  },
+  {
    "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
    "pos": [
-    503.959,
-    82.56,
-    1411.062
+    437.699,
+    74.48,
+    1409.081
    ],
-   "rotY": 165.67,
+   "rotY": 180.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_4Kat_BeyazKirma",
+   "pos": [
+    453.899,
+    76.16,
+    1409.081
+   ],
+   "rotY": 180.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    470.499,
+    78.368,
+    1405.881
+   ],
+   "rotY": 180.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    484.899,
+    80.144,
+    1409.081
+   ],
+   "rotY": 180.0,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
+   "pos": [
+    497.885,
+    81.72,
+    1406.586
+   ],
+   "rotY": 171.68,
+   "group": "Binalar"
+  },
+  {
+   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "pos": [
+    509.997,
+    83.2,
+    1412.675
+   ],
+   "rotY": 165.0,
    "group": "Binalar"
   },
   {
    "model": "Buildings/Apartmanlar/A1_Bulvar_6Kat_Krem",
    "pos": [
-    519.905,
-    83.808,
-    1412.017
+    526.087,
+    84.32,
+    1413.673
    ],
    "rotY": 165.0,
    "group": "Binalar"
   },
   {
-   "model": "Buildings/Apartmanlar/A4_Yamac_5Kat_Yesil",
+   "model": "Buildings/Apartmanlar/A3_Cankaya_5Kat_SariKirma",
    "pos": [
-    534.339,
-    85.216,
-    1419.197
+    541.735,
+    85.728,
+    1417.866
    ],
    "rotY": 165.0,
    "group": "Binalar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     0.2,
@@ -3905,11 +4405,11 @@
     0.2,
     -16.0
    ],
-   "rotY": 103.43,
+   "rotY": 178.93,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     0.2,
@@ -3919,17 +4419,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     0.2,
     24.0
    ],
-   "rotY": 310.62,
+   "rotY": 324.23,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     0.28,
@@ -3945,11 +4445,11 @@
     0.68,
     64.0
    ],
-   "rotY": 223.61,
+   "rotY": 356.29,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     1.08,
@@ -3965,11 +4465,11 @@
     1.48,
     104.0
    ],
-   "rotY": 143.1,
+   "rotY": 98.59,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     1.88,
@@ -3985,11 +4485,11 @@
     2.28,
     144.0
    ],
-   "rotY": 271.26,
+   "rotY": 160.76,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     2.68,
@@ -4005,11 +4505,11 @@
     3.08,
     184.0
    ],
-   "rotY": 138.7,
+   "rotY": 225.88,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     3.48,
@@ -4025,11 +4525,11 @@
     3.88,
     224.0
    ],
-   "rotY": 66.33,
+   "rotY": 206.75,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     4.28,
@@ -4045,11 +4545,11 @@
     4.68,
     264.0
    ],
-   "rotY": 107.97,
+   "rotY": 192.39,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     5.08,
@@ -4059,17 +4559,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     5.48,
     304.0
    ],
-   "rotY": 251.04,
+   "rotY": 91.32,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     5.88,
@@ -4079,17 +4579,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     6.28,
     344.0
    ],
-   "rotY": 178.93,
+   "rotY": 185.89,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     6.68,
@@ -4099,17 +4599,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     7.08,
     384.0
    ],
-   "rotY": 324.23,
+   "rotY": 227.88,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     7.48,
@@ -4119,17 +4619,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     7.88,
     424.0
    ],
-   "rotY": 356.29,
+   "rotY": 19.64,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     8.28,
@@ -4145,11 +4645,11 @@
     8.68,
     464.0
    ],
-   "rotY": 98.59,
+   "rotY": 162.36,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     9.08,
@@ -4165,11 +4665,11 @@
     9.48,
     504.0
    ],
-   "rotY": 160.76,
+   "rotY": 114.93,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     9.88,
@@ -4179,17 +4679,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     10.28,
     544.0
    ],
-   "rotY": 225.88,
+   "rotY": 22.5,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     10.6,
@@ -4205,11 +4705,11 @@
     10.6,
     584.0
    ],
-   "rotY": 206.75,
+   "rotY": 113.15,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     10.76,
@@ -4219,17 +4719,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     11.56,
     624.0
    ],
-   "rotY": 192.39,
+   "rotY": 275.44,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     12.36,
@@ -4239,17 +4739,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     13.16,
     664.0
    ],
-   "rotY": 91.32,
+   "rotY": 294.92,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     13.96,
@@ -4259,17 +4759,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     14.76,
     704.0
    ],
-   "rotY": 185.89,
+   "rotY": 200.91,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     15.56,
@@ -4279,17 +4779,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     16.36,
     744.0
    ],
-   "rotY": 227.88,
+   "rotY": 179.03,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     17.16,
@@ -4299,17 +4799,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     17.96,
     784.0
    ],
-   "rotY": 19.64,
+   "rotY": 6.21,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     18.76,
@@ -4325,11 +4825,11 @@
     19.56,
     824.0
    ],
-   "rotY": 162.36,
+   "rotY": 245.19,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     20.36,
@@ -4345,11 +4845,11 @@
     21.16,
     864.0
    ],
-   "rotY": 114.93,
+   "rotY": 49.86,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     21.96,
@@ -4365,11 +4865,11 @@
     22.76,
     904.0
    ],
-   "rotY": 22.5,
+   "rotY": 316.42,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     23.56,
@@ -4379,17 +4879,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     24.36,
     944.0
    ],
-   "rotY": 113.15,
+   "rotY": 216.03,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     25.16,
@@ -4399,17 +4899,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     25.96,
     984.0
    ],
-   "rotY": 275.44,
+   "rotY": 80.77,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     26.76,
@@ -4419,17 +4919,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Cinar_2",
    "pos": [
     0.0,
     27.56,
     1024.0
    ],
-   "rotY": 294.92,
+   "rotY": 48.69,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     28.36,
@@ -4445,11 +4945,11 @@
     29.16,
     1064.0
    ],
-   "rotY": 200.91,
+   "rotY": 173.06,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     29.96,
@@ -4465,11 +4965,11 @@
     30.76,
     1104.0
    ],
-   "rotY": 179.03,
+   "rotY": 151.65,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     31.56,
@@ -4485,11 +4985,11 @@
     32.36,
     1144.0
    ],
-   "rotY": 6.21,
+   "rotY": 5.1,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     33.16,
@@ -4505,11 +5005,11 @@
     33.96,
     1184.0
    ],
-   "rotY": 245.19,
+   "rotY": 176.64,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     34.76,
@@ -4519,17 +5019,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     35.56,
     1224.0
    ],
-   "rotY": 49.86,
+   "rotY": 314.08,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     36.36,
@@ -4539,17 +5039,17 @@
    "group": "Lambalar"
   },
   {
-   "model": "Props/Agac_Cinar_2",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     0.0,
     37.0,
     1264.0
    ],
-   "rotY": 316.42,
+   "rotY": 220.75,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     37.0,
@@ -4565,11 +5065,11 @@
     37.0,
     1304.0
    ],
-   "rotY": 216.03,
+   "rotY": 65.36,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Lamba_Bulvar",
+   "model": "SKP/Props/Lamba_Nostaljik",
    "pos": [
     0.0,
     37.0,
@@ -4585,17 +5085,17 @@
     37.0,
     1344.0
    ],
-   "rotY": 80.77,
+   "rotY": 266.86,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Kavak",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     38.5,
     36.95,
     1291.3
    ],
-   "rotY": 48.69,
+   "rotY": 35.17,
    "group": "Agaclar"
   },
   {
@@ -4605,37 +5105,37 @@
     38.23,
     1291.3
    ],
-   "rotY": 173.06,
+   "rotY": 176.06,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Kavak",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     90.5,
     40.31,
     1291.3
    ],
-   "rotY": 151.65,
+   "rotY": 289.35,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     116.5,
     42.39,
     1291.3
    ],
-   "rotY": 5.1,
+   "rotY": 278.66,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     142.5,
     44.47,
     1291.3
    ],
-   "rotY": 176.64,
+   "rotY": 218.2,
    "group": "Agaclar"
   },
   {
@@ -4645,7 +5145,7 @@
     46.55,
     1295.28
    ],
-   "rotY": 314.08,
+   "rotY": 275.54,
    "group": "Agaclar"
   },
   {
@@ -4655,27 +5155,27 @@
     48.95,
     1308.142
    ],
-   "rotY": 220.75,
-   "group": "Agaclar"
-  },
-  {
-   "model": "Props/Agac_Kavak",
-   "pos": [
-    217.871,
-    51.55,
-    1321.142
-   ],
-   "rotY": 65.36,
+   "rotY": 193.83,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Cinar_1",
    "pos": [
+    217.871,
+    51.55,
+    1321.142
+   ],
+   "rotY": 205.62,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
     240.388,
     54.15,
     1334.142
    ],
-   "rotY": 266.86,
+   "rotY": 25.79,
    "group": "Agaclar"
   },
   {
@@ -4685,7 +5185,7 @@
     56.75,
     1347.142
    ],
-   "rotY": 35.17,
+   "rotY": 123.66,
    "group": "Agaclar"
   },
   {
@@ -4695,27 +5195,27 @@
     63.95,
     1370.363
    ],
-   "rotY": 176.06,
-   "group": "Agaclar"
-  },
-  {
-   "model": "Props/Agac_Cinar_1",
-   "pos": [
-    359.769,
-    66.55,
-    1377.092
-   ],
-   "rotY": 289.35,
+   "rotY": 35.09,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Kavak",
    "pos": [
+    359.769,
+    66.55,
+    1377.092
+   ],
+   "rotY": 91.87,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Cinar_1",
+   "pos": [
     384.883,
     69.15,
     1383.822
    ],
-   "rotY": 278.66,
+   "rotY": 237.84,
    "group": "Agaclar"
   },
   {
@@ -4725,7 +5225,7 @@
     71.75,
     1387.681
    ],
-   "rotY": 218.2,
+   "rotY": 181.43,
    "group": "Agaclar"
   },
   {
@@ -4735,17 +5235,17 @@
     74.87,
     1387.681
    ],
-   "rotY": 275.54,
+   "rotY": 321.04,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     460.199,
     77.99,
     1387.681
    ],
-   "rotY": 193.83,
+   "rotY": 357.37,
    "group": "Agaclar"
   },
   {
@@ -4755,27 +5255,27 @@
     81.11,
     1387.681
    ],
-   "rotY": 205.62,
-   "group": "Agaclar"
-  },
-  {
-   "model": "Props/Agac_Kavak",
-   "pos": [
-    514.087,
-    83.67,
-    1391.616
-   ],
-   "rotY": 25.79,
+   "rotY": 137.37,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Cinar_1",
    "pos": [
+    514.087,
+    83.67,
+    1391.616
+   ],
+   "rotY": 68.11,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
     539.201,
     85.75,
     1398.345
    ],
-   "rotY": 123.66,
+   "rotY": 63.29,
    "group": "Agaclar"
   },
   {
@@ -4785,47 +5285,47 @@
     36.95,
     1308.7
    ],
-   "rotY": 35.09,
+   "rotY": 72.59,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Kavak",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     64.5,
     38.23,
     1308.7
    ],
-   "rotY": 91.87,
-   "group": "Agaclar"
-  },
-  {
-   "model": "Props/Agac_Cinar_1",
-   "pos": [
-    90.5,
-    40.31,
-    1308.7
-   ],
-   "rotY": 237.84,
+   "rotY": 17.21,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Kavak",
    "pos": [
-    116.5,
-    42.39,
+    90.5,
+    40.31,
     1308.7
    ],
-   "rotY": 181.43,
+   "rotY": 141.75,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Cinar_1",
    "pos": [
+    116.5,
+    42.39,
+    1308.7
+   ],
+   "rotY": 313.62,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
     142.5,
     44.47,
     1308.7
    ],
-   "rotY": 321.04,
+   "rotY": 266.01,
    "group": "Agaclar"
   },
   {
@@ -4835,7 +5335,7 @@
     46.55,
     1311.631
    ],
-   "rotY": 357.37,
+   "rotY": 301.3,
    "group": "Agaclar"
   },
   {
@@ -4845,7 +5345,7 @@
     48.95,
     1323.211
    ],
-   "rotY": 137.37,
+   "rotY": 306.11,
    "group": "Agaclar"
   },
   {
@@ -4855,7 +5355,7 @@
     51.55,
     1336.211
    ],
-   "rotY": 68.11,
+   "rotY": 338.57,
    "group": "Agaclar"
   },
   {
@@ -4865,17 +5365,17 @@
     54.15,
     1349.211
    ],
-   "rotY": 63.29,
+   "rotY": 310.53,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     254.204,
     56.75,
     1362.211
    ],
-   "rotY": 72.59,
+   "rotY": 78.26,
    "group": "Agaclar"
   },
   {
@@ -4885,27 +5385,27 @@
     59.35,
     1373.712
    ],
-   "rotY": 17.21,
-   "group": "Agaclar"
-  },
-  {
-   "model": "Props/Agac_Kavak",
-   "pos": [
-    305.038,
-    61.43,
-    1380.441
-   ],
-   "rotY": 141.75,
+   "rotY": 45.34,
    "group": "Agaclar"
   },
   {
    "model": "Props/Agac_Cinar_1",
    "pos": [
+    305.038,
+    61.43,
+    1380.441
+   ],
+   "rotY": 221.26,
+   "group": "Agaclar"
+  },
+  {
+   "model": "Props/Agac_Kavak",
+   "pos": [
     330.152,
     63.95,
     1387.17
    ],
-   "rotY": 313.62,
+   "rotY": 78.02,
    "group": "Agaclar"
   },
   {
@@ -4915,17 +5415,17 @@
     66.55,
     1393.899
    ],
-   "rotY": 266.01,
+   "rotY": 75.15,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Kavak",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     380.38,
     69.15,
     1400.629
    ],
-   "rotY": 301.3,
+   "rotY": 174.6,
    "group": "Agaclar"
   },
   {
@@ -4935,7 +5435,7 @@
     71.75,
     1405.081
    ],
-   "rotY": 306.11,
+   "rotY": 270.86,
    "group": "Agaclar"
   },
   {
@@ -4945,17 +5445,17 @@
     74.87,
     1405.081
    ],
-   "rotY": 338.57,
+   "rotY": 37.37,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Kavak",
+   "model": "Props/Agac_Cinar_1",
    "pos": [
     460.199,
     77.99,
     1405.081
    ],
-   "rotY": 310.53,
+   "rotY": 245.24,
    "group": "Agaclar"
   },
   {
@@ -4965,27 +5465,27 @@
     81.11,
     1405.081
    ],
-   "rotY": 78.26,
+   "rotY": 86.87,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     509.584,
     83.67,
     1408.423
    ],
-   "rotY": 45.34,
+   "rotY": 154.65,
    "group": "Agaclar"
   },
   {
-   "model": "Props/Agac_Cinar_1",
+   "model": "Props/Agac_Kavak",
    "pos": [
     534.698,
     85.75,
     1415.152
    ],
-   "rotY": 221.26,
+   "rotY": 285.62,
    "group": "Agaclar"
   },
   {

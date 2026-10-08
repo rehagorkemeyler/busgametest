@@ -150,7 +150,7 @@ namespace AnkaraBus.EditorTools
                         foreach (var bas in ZamanAyarlari.LambaBaslari)
                         {
                             var l = new GameObject("BakeLamba").AddComponent<Light>();
-                            l.transform.position = lamba.TransformPoint(bas + Vector3.down * 0.35f);
+                            l.transform.position = lamba.TransformPoint(bas + Vector3.down * 0.5f); // fenerin hemen altı
                             l.type = LightType.Point;
                             l.lightmapBakeType = LightmapBakeType.Baked;
                             l.color = ZamanAyarlari.LambaRengi;

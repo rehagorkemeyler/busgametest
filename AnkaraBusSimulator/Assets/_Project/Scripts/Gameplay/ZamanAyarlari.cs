@@ -88,8 +88,14 @@ namespace AnkaraBus.Gameplay
             if (gok.HasProperty("_SunSize")) gok.SetFloat("_SunSize", yagmur ? 0f : a.gunesBoyu);
         }
 
-        /// <summary>Sokak lambasının (Props/Lamba_Bulvar) iki başının yerel konumu.</summary>
-        public static readonly Vector3[] LambaBaslari = { new Vector3(-1.6f, 8.7f, 0f), new Vector3(1.6f, 8.7f, 0f) };
+        /// <summary>Refüj lambasının (SKP/Props/Lamba_Nostaljik, 4,7 m, üç fener) fenerlerinin yerel konumu.
+        /// Eski 9 m'lik Props/Lamba_Bulvar'a dönülürse: (±1,6; 8,7; 0), parlama boyu (0,75; 0,22; 0,32).</summary>
+        public static readonly Vector3[] LambaBaslari =
+        {
+            new Vector3(-0.63f, 3.78f, 0f), new Vector3(0f, 4.08f, 0f), new Vector3(0.63f, 3.78f, 0f),
+        };
+        /// <summary>Gece fener camlarını kaplayan parlama küresinin boyu.</summary>
+        public static readonly Vector3 LambaParlamaBoyu = new Vector3(0.3f, 0.5f, 0.3f);
         public static readonly Color LambaRengi = new Color(1f, 0.72f, 0.42f); // sodyum buharlı
     }
 }

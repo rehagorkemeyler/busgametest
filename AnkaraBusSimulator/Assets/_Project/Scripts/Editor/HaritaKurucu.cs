@@ -16,6 +16,7 @@ namespace AnkaraBus.EditorTools
     public static class HaritaKurucu
     {
         private const string MapsRoot = "Assets/_Project/Maps/";
+        private const string SkpPrefix = "SKP/"; // tools/blender/skp_donustur.py çıktıları
         private const string Hat1Path = MapsRoot + "Hat1/Hat1_Yerlesim.json";
         private const string Hat2Path = MapsRoot + "Hat2/Hat2_Yerlesim.json";
         private static string label = "Hat 1";
@@ -143,7 +144,9 @@ namespace AnkaraBus.EditorTools
 
                     var go = (GameObject)PrefabUtility.InstantiatePrefab(asset, GroupFor(root.transform, groups, item.group));
                     go.transform.SetPositionAndRotation(ToVector(item.pos), Quaternion.Euler(0f, item.rotY, 0f));
-                    Prepare(go, material, item.group == "Yol" || item.group == "Zemin");
+                    // SketchUp'tan dönüştürülen modeller (Maps/SKP) kendi dokulu malzemeleriyle gelir
+                    bool kendiMalzemesi = item.model.StartsWith(SkpPrefix);
+                    Prepare(go, kendiMalzemesi ? null : material, item.group == "Yol" || item.group == "Zemin");
                     placed++;
                 }
             }

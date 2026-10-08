@@ -168,7 +168,7 @@ namespace AnkaraBus.Gameplay
                         parcalar.Add(new CombineInstance
                         {
                             mesh = kure,
-                            transform = lamba.localToWorldMatrix * Matrix4x4.TRS(bas, Quaternion.identity, new Vector3(0.75f, 0.22f, 0.32f)),
+                            transform = lamba.localToWorldMatrix * Matrix4x4.TRS(bas, Quaternion.identity, ZamanAyarlari.LambaParlamaBoyu),
                         });
             if (parcalar.Count == 0)
                 return;

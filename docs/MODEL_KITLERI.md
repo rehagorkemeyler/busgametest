@@ -102,3 +102,33 @@ Notlar:
 | `Props/Agac_Kavak` | 2.5 × 2.4 × 13.2 | 40 | Uzun ince kavak |
 
 Ağaç ve lambalar çok tekrarlanacağı için Unity'de **GPU Instancing** açık bir materyal kopyası (`M_AnkaraPalet_Instanced`) ile kullanılabilir.
+
+
+## SketchUp modelleri (Maps/SKP)
+
+![SketchUp modelleri](onizleme/skp_modeller_v1.png)
+
+3D Warehouse'tan gelen gerçek Kızılay modelleri. Elle değil, iki scriptle dönüştürülür; kaynak `.skp` dosyaları repoda değil.
+
+```bash
+python3 -m venv .venv-skp && .venv-skp/bin/pip install openskp pillow     # bir kere
+.venv-skp/bin/python tools/skp/skp_to_glb.py --out <glb> --as kizi.skp=kizi --as gokdelen.skp=gokdelen \
+    --as "GÃ¼ven+Park+...skp=guvenpark" --as Street+lamp.skp=lamba --as Adsız.skp=adsiz <skp dosyaları>
+Blender -b --factory-startup -P tools/blender/skp_donustur.py -- --glb <glb> --maps AnkaraBusSimulator/Assets/_Project/Maps
+```
+
+- **`skp_to_glb.py`** SketchUp ya da SDK olmadan okur (`openskp`, SketchUp 2021+ dahil). openskp yalnızca PNG/JPEG dokuları taşıyor; SketchUp'a sürüklenmiş **.psd/.bmp/.tif** fotoğrafları (Emek İşhanı'nın cephe ve tabela fotoğrafları bunlar) PNG'ye çevrilir.
+- **`skp_donustur.py`** Google Earth zemin fotoğraflarını ve 2D insan figürlerini atar; geometri ve dokular olduğu gibi kalır (sadeleştirme yok). SketchUp'ın iki taraflı yüzleri Unity'de görünsün diye tek taraflı yüzler ters kopyalanır; duvarın üstüne yapıştırılmış fotoğraf düzlemleri (SketchUp "Image") duvarı örter, çakışan kalırsa 1–2 cm öne alınır. Aynı görünen malzemeler birleştirilir. Ön cephe +Z, pivot ön cephe ortası (bina kuralı).
+- Dokular `Maps/SKP/**/Textures/` altında; FBX'ler bunlara bağlı. Unity URP Lit malzemelerini FBX'ten kendisi kurar. `HaritaKurucu`, `SKP/` ile başlayan modellere palet malzemesini **basmaz**.
+
+| Model | Boyut (G × D × Y, m) | Üçgen | Malzeme | Nerede |
+|---|---|---|---|---|
+| `SKP/Landmarks/KizilayAVM` | 72.9 × 86.4 × 76.8 | 12 378 | 7 | Hat 1 sağ / Hat 2 sol, Kızılay durağının gerisi (eski `Landmarks/KizilayAVM` yerine) |
+| `SKP/Landmarks/EmekIshani` | 54.7 × 50.7 × 81.4 | 31 154 | 34 | Hat 1 sol, AVM'nin karşısı; Hat 2 sağ, Kızılay durağından sonra |
+| `SKP/Landmarks/GuvenlikAniti` | 16.2 × 5.8 × 7.8 | 184 | 4 | Hat 1 sağ, Kızılay durağından sonra Güvenpark (ağaçlı, binasız 72 m) |
+| `SKP/Props/Lamba_Nostaljik` | 1.7 × 0.5 × 4.7 | 42 478 / 3 999 / 2 392 (LOD0/1/2) | 7 | Refüj lambaları, iki hatta da (eski `Props/Lamba_Bulvar` yerine) |
+| `SKP/Buildings/KizilayBloklari/Blok_01..33` | 13–132 m, 25–37 m yüksek | toplam 2 850 | bina başına 1–4 | Kızılay–Meclis ve Kızılay–Sıhhiye arası **ikinci sıra** (≤ 50 × 40 m olanlar) |
+
+- Lamba 1,4 kat büyütüldü (kaynak 3,3 m). Unity `_LOD0/1/2` adlarından LODGroup kurar. Gece parlaması ve bake ışıkları üç fenere göre: `ZamanAyarlari.LambaBaslari`, `LambaParlamaBoyu`.
+- Kızılay blokları Google Earth binaları: ayrık parçalar binalara ayrılır, taban dikdörtgeni eksene hizalanır, ölçüler `Bloklar.json`'da. Binalar zeminin ~10 m altına uzanır (eğimde boşluk kalmaz).
+- **Lisans:** 3D Warehouse modelleri (General Model License) ve Google Earth kaynaklı fotoğraflar, otobüs ve araç modelleri gibi yalnızca **kişisel prototip** içindir.

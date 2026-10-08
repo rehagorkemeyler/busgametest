@@ -26,6 +26,7 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [x] Yol gösterici: güzergâh şeritlerden otomatik, mini harita, kalan mesafe, dönüş uyarısı, büyük harita → [YOL_GOSTERICI.md](YOL_GOSTERICI.md)
 - [x] Gündüz/akşam/gece (ayrı bake, yanan pencereler ve lambalar, otobüs farları) ve yağmur → [HAVA_ZAMAN.md](HAVA_ZAMAN.md)
 - [x] Trafik: sollama, korna, duraklarda dolmuş; yaya geçitleri ve karşıya geçen yayalar → [TRAFIK.md](TRAFIK.md)
+- [x] SketchUp modelleri: gerçek Kızılay AVM, Emek İşhanı, Güvenlik Anıtı (Güvenpark), nostaljik refüj lambası, Kızılay blokları (ikinci sıra) → `Maps/SKP/` ([MODEL_KITLERI.md](MODEL_KITLERI.md#sketchup-modelleri-mapsskp))
 - [ ] Dokümantasyon, plan güncellemeleri
 
 ## Yerelde yapılacaklar (sen + yerel Claude Code)

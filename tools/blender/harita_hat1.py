@@ -134,7 +134,46 @@ def line_buildings(lay, chain, side, s_from, s_to, pool, widths, rng, *, offset,
         s += w + gap
 
 
-def build_layout(widths, seed=2024):
+# SketchUp'tan dönüştürülen modeller (tools/blender/skp_donustur.py → Maps/SKP); ölçüler o scriptin çıktısından
+SKP_AVM = ("SKP/Landmarks/KizilayAVM", 72.9)       # (model, ön cephe genişliği m)
+SKP_EMEK = ("SKP/Landmarks/EmekIshani", 54.7)
+SKP_ANIT = "SKP/Landmarks/GuvenlikAniti"
+SKP_LAMBA = "SKP/Props/Lamba_Nostaljik"
+BLOKLAR_JSON = os.path.join("SKP", "Buildings", "KizilayBloklari", "Bloklar.json")
+
+
+def load_blocks(maps):
+    """Kızılay blokları (Google Earth binaları): ikinci sıraya sığanlar (yola paralel ≤ 50 m, derinlik ≤ 40 m)."""
+    path = os.path.join(maps, BLOKLAR_JSON)
+    if not os.path.exists(path):
+        print("uyarı: Kızılay blokları yok (skp_donustur.py çalıştırılmadı):", path)
+        return []
+    with open(path, encoding="utf-8") as fh:
+        info = json.load(fh)
+    return [(n, v) for n, v in sorted(info.items()) if v["w"] <= 50 and v["d"] <= 40]
+
+
+def back_row(lay, chain, side, s_from, s_to, blocks, rng, *, offset, exclude=(), front_depth=16.0, gap=2.0):
+    """Ön sıradaki apartmanların arkasına Kızılay bloklarını dizer (silüet: 25–37 m'lik eski Kızılay binaları)."""
+    if not blocks:
+        return
+    s = s_from
+    while s < s_to:
+        name, b = rng.choice(blocks)
+        w = b["w"]
+        if s + w > s_to:
+            break
+        if any(a < s + w and s < e for a, e in exclude):
+            s += 6.0
+            continue
+        f, r, _, th = chain.frame(s + w / 2, side * (offset + front_depth + gap + b["d"] / 2))
+        z = min(chain.frame(s)[2], chain.frame(s + w)[2]) - 0.5  # bloklar zeminin altına iniyor; eğimde boşluk kalmasın
+        rot = math.degrees(th) + (-90 if side > 0 else 90) + rng.choice((0, 180))
+        lay.add(f"SKP/Buildings/KizilayBloklari/{name}", f, r, z, rot, "Binalar")
+        s += w + gap
+
+
+def build_layout(widths, seed=2024, blocks=()):
     rng = random.Random(seed)
     lay = Layout()
     bul = Chain(BULVAR_CHAIN, start=(-40.0, 0.0, 0.0, 0.0), s0=-40.0)
@@ -180,8 +219,28 @@ def build_layout(widths, seed=2024):
     spawn = {"pos": unity(f, r, z + 0.3), "rotY": math.degrees(th)}
 
     # --- simge yapılar ---------------------------------------------------
-    f, r, z, th = bul.frame(-22.0, HB + WB + 0.5)
-    lay.add("Landmarks/KizilayAVM", f, r, z, math.degrees(th) - 90, "SimgeYapilar")
+    # Kızılay meydanı: sağda Kızılay AVM, solda Emek İşhanı; duraktan sonra sağda Güvenpark ve Güvenlik Anıtı
+    avm_s = -22.0
+    f, r, z, th = bul.frame(avm_s, HB + WB + 0.5)
+    lay.add(SKP_AVM[0], f, r, z, math.degrees(th) - 90, "SimgeYapilar")
+    avm_range = (avm_s - SKP_AVM[1] / 2 - 2, avm_s + SKP_AVM[1] / 2 + 2)
+    emek_s = -28.0
+    f, r, z, th = bul.frame(emek_s, -(HB + WB + 0.5))
+    lay.add(SKP_EMEK[0], f, r, z, math.degrees(th) + 90, "SimgeYapilar")
+    emek_range = (emek_s - SKP_EMEK[1] / 2 - 2, emek_s + SKP_EMEK[1] / 2 + 2)
+    park = (stops_bul[0][1] + 44.0, stops_bul[0][1] + 116.0)  # Kızılay durak cebinin bittiği yerden
+    park_rng = random.Random(seed + 11)  # ayrı rastgele dizi: diğer yerleşimler değişmesin
+    anit_s = (park[0] + park[1]) / 2
+    f, r, z, th = bul.frame(anit_s, HB + WB + 16.0)
+    lay.add(SKP_ANIT, f, r, z, math.degrees(th) - 90, "SimgeYapilar")
+    for k in range(26):
+        sk = park_rng.uniform(park[0] + 3, park[1] - 3)
+        depth = park_rng.uniform(4.0, 60.0)
+        if abs(sk - anit_s) < 14 and depth < 30:
+            continue  # anıtın önü ve çevresi açık meydan
+        f, r, z, th = bul.frame(sk, HB + WB + depth)
+        lay.add(f"Props/{park_rng.choice(['Agac_Cinar_1', 'Agac_Cinar_2', 'Agac_Kavak'])}", f, r, z,
+                park_rng.uniform(0, 360), "Agaclar")
     s_meclis = stops_bul[1][1] + 40.0
     tbmm_end = s_meclis + 300.0
     s = s_meclis
@@ -225,12 +284,17 @@ def build_layout(widths, seed=2024):
               ("A1_Bulvar_6Kat_Krem", 1)]
     s_b = stops_bul[1][1] + 40.0
     mouth = HC + 2.0
-    bul_excl_r = bay_ranges + [(-40.0, 10.0), (s_meclis, tbmm_end), (s_mid - mouth - 4, bul.s_end)]
-    bul_excl_l = [(kugulu_s - 26, kugulu_s + 26)]
+    bul_excl_r = bay_ranges + [avm_range, park, (s_meclis, tbmm_end), (s_mid - mouth - 4, bul.s_end)]
+    bul_excl_l = [emek_range, (kugulu_s - 26, kugulu_s + 26)]
     line_buildings(lay, bul, +1, -40.0, s_b, pool_a, widths, rng, offset=HB + WB, gap=0.0, exclude=bul_excl_r)
     line_buildings(lay, bul, -1, -40.0, s_b, pool_a, widths, rng, offset=HB + WB, gap=0.0, exclude=bul_excl_l)
     line_buildings(lay, bul, +1, s_b, bul.s_end, pool_b, widths, rng, offset=HB + WB, gap=2.0, exclude=bul_excl_r)
     line_buildings(lay, bul, -1, s_b, bul.s_end, pool_b, widths, rng, offset=HB + WB, gap=2.0, exclude=bul_excl_l)
+    # Kızılay–Meclis arası ikinci sıra: Google Earth'ten Kızılay blokları
+    block_rng = random.Random(seed + 12)
+    s_a_end = stops_bul[1][1]
+    back_row(lay, bul, +1, -40.0, s_a_end, blocks, block_rng, offset=HB + WB, exclude=[avm_range, park])
+    back_row(lay, bul, -1, -40.0, s_a_end, blocks, block_rng, offset=HB + WB, exclude=[emek_range])
     cin_end = s_ring - 28.0
     line_buildings(lay, cin, +1, 20.0, cin_end, pool_c, widths, rng, offset=HC + WC, gap=3.0, exclude=[cin_bay])
     line_buildings(lay, cin, -1, 40.0, cin_end, pool_c, widths, rng, offset=HC + WC, gap=3.0)
@@ -241,7 +305,7 @@ def build_layout(widths, seed=2024):
     while s < bul.s_end - 4:
         f, r, z, th = bul.frame(s)
         if k % 2 == 0:
-            lay.add("Props/Lamba_Bulvar", f, r, z + 0.2, math.degrees(th), "Lambalar")
+            lay.add(SKP_LAMBA, f, r, z + 0.2, math.degrees(th), "Lambalar")
         else:
             lay.add(f"Props/{rng.choice(['Agac_Cinar_1', 'Agac_Cinar_2'])}", f, r, z + 0.2, rng.uniform(0, 360), "Agaclar")
         s += 20.0
@@ -453,7 +517,7 @@ def main():
         o.hide_render = True
         o.hide_viewport = True
 
-    lay, bul, cin, spawn = build_layout(widths)
+    lay, bul, cin, spawn = build_layout(widths, blocks=load_blocks(args.maps))
     verts, faces = build_ground(bul, cin)
     mesh = bpy.data.meshes.new("Zemin_Hat1")
     mesh.from_pydata(verts, [], faces)

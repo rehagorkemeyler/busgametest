@@ -44,7 +44,7 @@ HAT2_CHAIN = (
 RING_RADIUS = 14.0 + (2 * B["lane"] + 1.0) / 2   # ada + halka yarısı (yol_kit.piece_roundabout)
 
 
-def build_layout(widths, seed=2025):
+def build_layout(widths, seed=2025, blocks=()):
     rng = random.Random(seed)
     lay = h1.Layout()
     bul = h1.Chain(HAT2_CHAIN, start=(-40.0, 0.0, 0.0, 0.0), s0=-40.0)
@@ -77,7 +77,14 @@ def build_layout(widths, seed=2025):
         f, r, z, th = bul.frame(s, -(side_out + extra))
         lay.add(model, f, r, z, math.degrees(th) + 90, group)
 
-    left(-22.0, 0.5, "Landmarks/KizilayAVM")
+    # Kızılay meydanı: solda Kızılay AVM, durak cebinden sonra sağda Emek İşhanı
+    avm_s = -22.0
+    left(avm_s, 0.5, h1.SKP_AVM[0])
+    avm_range = (avm_s - h1.SKP_AVM[1] / 2 - 2, avm_s + h1.SKP_AVM[1] / 2 + 2)
+    emek_s = bays[0][1] + 40.0 + 4.0 + h1.SKP_EMEK[1] / 2
+    f, r, z, th = bul.frame(emek_s, side_out + 0.5)
+    lay.add(h1.SKP_EMEK[0], f, r, z, math.degrees(th) - 90, "SimgeYapilar")
+    emek_range = (emek_s - h1.SKP_EMEK[1] / 2 - 2, emek_s + h1.SKP_EMEK[1] / 2 + 2)
     s_sih = bays[1][1]
     left(s_sih + 20.0, 7.0, "Landmarks/HititGunesKursu")
     s_opera = bays[2][1]
@@ -104,12 +111,16 @@ def build_layout(widths, seed=2025):
                 ("A2_Kose_6Kat_Somon", 1)]
     pool_ulus = [("A3_Cankaya_5Kat_SariKirma", 3), ("A1_Bulvar_6Kat_Krem", 2), ("A1_Bulvar_7Kat_Somon", 2),
                  ("A2_Kose_6Kat_Somon", 1)]
-    excl_r = bay_ranges + [(s_ring - 30.0, bul.s_end + 60.0)]
-    excl_l = [(-50.0, 12.0), (s_sih + 2.0, s_sih + 38.0), (s_opera - 20.0, s_park + 50.0), (s_ring - 30.0, bul.s_end + 60.0)]
+    excl_r = bay_ranges + [emek_range, (s_ring - 30.0, bul.s_end + 60.0)]
+    excl_l = [avm_range, (s_sih + 2.0, s_sih + 38.0), (s_opera - 20.0, s_park + 50.0), (s_ring - 30.0, bul.s_end + 60.0)]
     segs = [(-40.0, s_sih, pool_kiz, 0.0), (s_sih, s_opera + 40.0, pool_sih, 2.0), (s_opera + 40.0, bul.s_end, pool_ulus, 1.0)]
     for s0, s1, pool, gap in segs:
         h1.line_buildings(lay, bul, +1, s0, s1, pool, widths, rng, offset=side_out, gap=gap, exclude=excl_r)
         h1.line_buildings(lay, bul, -1, s0, s1, pool, widths, rng, offset=side_out, gap=gap, exclude=excl_l)
+    # Kızılay–Sıhhiye arası ikinci sıra: Google Earth'ten Kızılay blokları
+    block_rng = random.Random(seed + 12)
+    h1.back_row(lay, bul, +1, -40.0, s_sih, blocks, block_rng, offset=side_out, exclude=[emek_range])
+    h1.back_row(lay, bul, -1, -40.0, s_sih, blocks, block_rng, offset=side_out, exclude=[avm_range])
 
     # --- refüj: lamba ve ağaç ---
     s = -36.0
@@ -117,7 +128,7 @@ def build_layout(widths, seed=2025):
     while s < s_ring - 4:
         f, r, z, th = bul.frame(s)
         if k % 2 == 0:
-            lay.add("Props/Lamba_Bulvar", f, r, z + 0.2, math.degrees(th), "Lambalar")
+            lay.add(h1.SKP_LAMBA, f, r, z + 0.2, math.degrees(th), "Lambalar")
         else:
             lay.add(f"Props/{rng.choice(['Agac_Cinar_1', 'Agac_Cinar_2'])}", f, r, z + 0.2, rng.uniform(0, 360), "Agaclar")
         s += 20.0
@@ -179,7 +190,7 @@ def main():
         o.hide_render = True
         o.hide_viewport = True
 
-    lay, bul, spawn = build_layout(widths)
+    lay, bul, spawn = build_layout(widths, blocks=h1.load_blocks(args.maps))
     verts, faces = h1.build_ground(bul, bul)
     mesh = bpy.data.meshes.new("Zemin_Hat2")
     mesh.from_pydata(verts, [], faces)
