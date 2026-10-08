@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AnkaraBus.Traffic
@@ -29,6 +30,54 @@ namespace AnkaraBus.Traffic
         [SerializeField] private int signalGroup;
 
         private float[] cumulative;
+        private readonly List<(float at, IGecit gecit)> gecitler = new List<(float, IGecit)>();
+
+        /// <summary>Sahnedeki etkin şeritler (yan şeride geçiş için).</summary>
+        public static readonly List<TrafficLane> Hepsi = new List<TrafficLane>();
+
+        /// <summary>Şeridi kesen yaya geçidi: doluyken araçlar önünde durur.</summary>
+        public interface IGecit
+        {
+            bool Dolu { get; }
+            /// <summary>Geçidin şerit boyunca yarı genişliği (m).</summary>
+            float YariGenislik { get; }
+        }
+
+        /// <summary>Şerit üzerindeki yaya geçitleri (şerit başından metre).</summary>
+        public IReadOnlyList<(float at, IGecit gecit)> Gecitler => gecitler;
+
+        public void GecitEkle(float at, IGecit gecit)
+        {
+            gecitler.Add((at, gecit));
+            gecitler.Sort((a, b) => a.at.CompareTo(b.at));
+        }
+
+        /// <summary>Şeritte p noktasına en yakın yer (şerit başından metre) ve yatay uzaklık.</summary>
+        public float EnYakinKonum(Vector3 p, out float uzaklik)
+        {
+            uzaklik = float.MaxValue;
+            if (points == null || points.Length < 2)
+                return 0f;
+            if (cumulative == null)
+                Build();
+            float enIyi = 0f;
+            for (int i = 1; i < points.Length; i++)
+            {
+                Vector3 a = points[i - 1], b = points[i];
+                Vector3 ab = b - a;
+                ab.y = 0f;
+                Vector3 ap = p - a;
+                ap.y = 0f;
+                float t = ab.sqrMagnitude > 1e-4f ? Mathf.Clamp01(Vector3.Dot(ap, ab) / ab.sqrMagnitude) : 0f;
+                float d = (ap - ab * t).magnitude;
+                if (d < uzaklik)
+                {
+                    uzaklik = d;
+                    enIyi = Mathf.Lerp(cumulative[i - 1], cumulative[i], t);
+                }
+            }
+            return enIyi;
+        }
 
         public float Length { get; private set; }
         public float SpeedLimitKmh => speedLimitKmh;
@@ -62,6 +111,10 @@ namespace AnkaraBus.Traffic
         }
 
         private void Awake() => Build();
+
+        private void OnEnable() => Hepsi.Add(this);
+
+        private void OnDisable() => Hepsi.Remove(this);
 
         private void Build()
         {

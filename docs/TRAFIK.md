@@ -54,3 +54,29 @@ Harita kurucusu ışıkları, bağlantı şeritlerini ve durma çizgilerini `Hat
 
 - Şerit değiştirme ve sollama yok. Durak cebinde duran otobüsün arkasındaki araç, otobüs kalkana kadar bekler.
 - Atakule dönüş halkasında trafik yok; Cinnah şeritleri halka girişinde biter.
+
+## Sollama, korna ve dolmuş (`TrafficCar`)
+
+- **Yana kayma:** Araç şerit çizgisinden yana kayabilir (`lateral`, + sağ). Kayarken burnu kayma yönüne döner. Dönüşler yalnızca araç şeridin ortasındayken alınır.
+- **Sollama:** Duran bir engelin (ör. şeritte duran otobüs, bozulmuş gibi duran araç) arkasında 2,5 sn bekleyen araç, aynı yönde 2,5–4,5 m yandaki şeride geçmeyi dener:
+  - Şerit 12 m geride ve 14 m ileride boş olmalı; otobüs de orada olmamalı.
+  - Arama en çok saniyede bir yapılır.
+  - Işığa 80 m ve yaya geçidine 30 m kala sollama yapılmaz, kuyrukta şerit değiştirilmez.
+- **Korna:** Otobüs önünü kapatınca 4 sn sonra korna çalar. 4–8 sn arayla en çok 3 kez; üç farklı korna sesi var (oyunda üretilir, 3B ses).
+- **Dolmuş:** Adında "Dolmus" geçen araçlar, şeridinin 1,5–5 m sağındaki aynı yöne bakan durağa yanaşır:
+  - Durak 25–70 m önündeyken karar verir. Otobüs durağın 28 m içindeyse ya da orada başka dolmuş varsa yanaşmaz.
+  - Cebin başında yana kayar ve 4–9 sn bekler, sonra yola döner.
+  - Aynı durağa en erken 20 sn sonra yeniden bakar.
+
+## Yayalar (`YayaGecitleri`)
+
+Sahneye eklenmez: rota ve şerit olan her sahnede kendiliğinden kurulur.
+- **Geçit:** Her durağın 26 m ilerisine bütün yolu kesen zebra çizgisi çizilir (palet `serit_beyaz`, yalnızca şerit olan yerlerde, refüjde yok). Dik şerit yakınsa (kavşak) ya da şerit bitiyorsa geçit konmaz.
+- **Yayalar:**
+  - Otobüs 170 m içindeyken 7–20 sn'de bir 1–2 yaya, yolcu havuzundan (`PassengerManager`) çıkar.
+  - Geçide 30 m içinde 4 m/sn'den hızlı yaklaşan araç ya da otobüs yoksa karşıya yürür, karşıda 4–8 m yürüyüp kaybolur.
+- **Araçlar:** Geçit doluyken (yolda yaya varken) trafik araçları önünde durur (`TrafficLane.IGecit`, durma çizgisi gibi).
+- **Otobüs cezaları:**
+  - Yayaya çarpmak: −150. Yaya düşer, 4 sn yerde kalır. Fizik yok; yayanın otobüs gövde kutusunun içine girmesine bakılır.
+  - Üzerinde (otobüsün 7 m yakınında) yaya varken geçidi geçmek: "yol vermedin", −40.
+  - İkisi de yıldızdan 1 düşürür ve hat sonu özetinde "Yaya ihlali" olarak görünür.

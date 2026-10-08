@@ -143,7 +143,7 @@ namespace AnkaraBus.UI
                 return;
             EnsureEventSystem();
             var root = (RectTransform)canvasGo.transform;
-            var panel = Box(root, "SeferOzeti", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 720f), PanelDark);
+            var panel = Box(root, "SeferOzeti", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 760f), PanelDark);
 
             var title = Element(panel, "Baslik", new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(700f, 70f));
             Label(title, string.IsNullOrEmpty(o.hat) ? "SEFER TAMAMLANDI" : $"HAT {o.hat} TAMAMLANDI", 44, TextAnchor.MiddleCenter, Color.white);
@@ -167,8 +167,9 @@ namespace AnkaraBus.UI
                 $"Konfor\t%{Mathf.RoundToInt(o.konfor)} ({o.sertSurus} sert hareket)\n" +
                 $"Kırmızı ışık\t{o.kirmiziIsik}\n" +
                 $"Hız ihlali\t{o.hizIhlali}\n" +
-                $"Çarpışma\t{o.carpisma}";
-            var body = Element(panel, "Ayrinti", new Vector2(0.5f, 0.5f), new Vector2(0f, -10f), new Vector2(620f, 380f));
+                $"Çarpışma\t{o.carpisma}\n" +
+                $"Yaya ihlali\t{o.yaya}";
+            var body = Element(panel, "Ayrinti", new Vector2(0.5f, 0.5f), new Vector2(0f, -10f), new Vector2(620f, 420f));
             var text = Label(body, details.Replace("\t", ":  "), 30, TextAnchor.UpperLeft, Color.white);
             text.fontStyle = FontStyle.Normal;
             text.lineSpacing = 1.15f;

@@ -32,6 +32,7 @@ namespace AnkaraBus.Gameplay
             public int sertSurus;
             public int hizIhlali;
             public int carpisma;
+            public int yaya;
             public float konfor;
             public int yildiz;
             public int enIyiPuan;
@@ -213,6 +214,15 @@ namespace AnkaraBus.Gameplay
             Add("Çarpışma", -Mathf.Min(100, carpismaCezasi + Mathf.RoundToInt(speed * 5f)));
         }
 
+        /// <summary>Yaya geçidinde: yayaya çarpmak ya da geçide yol vermemek (Traffic/YayaGecitleri).</summary>
+        public void YayaIhlali(bool carpti)
+        {
+            if (finished)
+                return;
+            ozet.yaya++;
+            Add(carpti ? "Yayaya çarptın" : "Yayaya yol vermedin", carpti ? -150 : -40);
+        }
+
         private void Comfort(string reason, float weight)
         {
             // ayakta yolcu çoksa sarsıntı daha çok şikâyet getirir
@@ -324,6 +334,7 @@ namespace AnkaraBus.Gameplay
             stars -= ozet.atlananDurak * 2;
             stars -= ozet.kirmiziIsik;
             stars -= ozet.carpisma;
+            stars -= ozet.yaya;
             if (ozet.konfor < 80f) stars--;
             if (ozet.konfor < 50f) stars--;
             if (ozet.sure > ozet.hedefSure * 1.3f) stars--;
