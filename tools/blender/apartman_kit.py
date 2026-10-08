@@ -70,6 +70,9 @@ PALETTE = {
     # trafik ışığı lambaları (parlak)
     "isik_kirmizi": (1.0, 0.08, 0.05), "isik_sari": (1.0, 0.75, 0.05), "isik_yesil": (0.10, 1.0, 0.35),
     "lens_koyu": (0.06, 0.06, 0.07),
+    # Hat 2 simge yapıları
+    "bronz": (0.30, 0.26, 0.18), "bronz_yesil": (0.28, 0.36, 0.30), "kesme_tas": (0.78, 0.72, 0.60),
+    "mermer": (0.88, 0.87, 0.84),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID

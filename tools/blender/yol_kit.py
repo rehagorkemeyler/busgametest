@@ -330,6 +330,10 @@ PIECES = {
     "Cinnah_Viraj_Sol30_Egim8": lambda: piece_straight(CINNAH, 30.0, 0.08, -30.0),
     "Cinnah_DurakCebi_Egim8_30m": lambda: piece_bus_bay(CINNAH, 30.0, 0.08, 3.0),
     "Atakule_DonusHalkasi": lambda: piece_roundabout(CINNAH),
+    # Hat 2 (Kızılay → Ulus): inişler ve bulvar genişliğinde dönüş halkası
+    "Bulvar_Inis2_20m": lambda: piece_straight(BULVAR, 20.0, -0.02),
+    "Bulvar_Inis4_20m": lambda: piece_straight(BULVAR, 20.0, -0.04),
+    "Ulus_DonusHalkasi": lambda: piece_roundabout(BULVAR, island=14.0),
 }
 
 

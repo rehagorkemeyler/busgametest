@@ -17,6 +17,8 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [x] Hat 1 yerleşimi + Unity editör kurucusu (`harita_hat1.py`, `HaritaKurucu.cs`)
 - [x] Trafik araçları (taksi, klasikler, dolmuş) + C# trafik (şerit, araç, spawner %30 taksi) → [TRAFIK.md](TRAFIK.md)
 - [x] Yolcular: 10 low-poly model + iniş/biniş sistemi → [YOLCULAR.md](YOLCULAR.md)
+- [x] Trafik: Kuğulu kavşağında dönüşler ve trafik ışıkları → [TRAFIK.md](TRAFIK.md)
+- [x] Hat 2: Kızılay → Sıhhiye → Opera → Ulus (yerleşim, 4 yeni simge yapı) → [HAT2_KIZILAY_ULUS.md](HAT2_KIZILAY_ULUS.md)
 - [ ] Dokümantasyon, plan güncellemeleri
 
 ## Yerelde yapılacaklar (sen + yerel Claude Code)
@@ -52,3 +54,8 @@ Eski prompt (referans):
 
 ### Y6 — (İsteğe bağlı) Blender'da elle rötuş
 Bulutta üretilen modelleri senin Blender'ında Blender MCP ile beğenine göre düzeltmek istersen yerel oturum bunu yapabilir. Bulut tarafındaki üretim scriptleri `tools/blender/` altında olacak; aynı scriptleri yerelde de çalıştırabilirsin.
+
+### Y7 — Hat 1'i güncelle ve Hat 2 sahnesini kur
+**Prompt:**
+> `git pull origin Ozan` yap. Bulut tarafı yolcuları (`docs/YOLCULAR.md`), Kuğulu kavşağında dönüşleri ve trafik ışıklarını (`docs/TRAFIK.md`) ve Hat 2'yi (`docs/HAT2_KIZILAY_ULUS.md`) ekledi. (1) Hat 1 sahnesinde haritayı **Ankara Bus → Hat 1 Haritasını Kur** ile yeniden kur (eski `Hat1_KizilayAtakule` objesini sil); otobüsü yeniden bağla, ışıkları yeniden bake et. Kızılay'dan Atakule'ye sür: yolcular duraklarda bekliyor ve biniyor mu, Kuğulu kavşağında ışıklar dönüyor ve araçlar kırmızıda duruyor mu, sağa/sola dönen araçlar var mı kontrol et. Derleme hatası varsa düzelt. (2) Yeni `Hat2_KizilayUlus.unity` sahnesinde **Ankara Bus → Hat 2 Haritasını Kur**'u çalıştır, otobüsü bağla (`RouteTracker` → `Hat_2`), bake et, Build Settings'e ekle ve Kızılay'dan Ulus'a sür. Sorunları düzeltip commit'le, push'la.
+

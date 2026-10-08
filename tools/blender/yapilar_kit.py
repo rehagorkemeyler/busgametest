@@ -306,6 +306,135 @@ def build_street_lamp(name, material):
     return pb.to_object(name, material)
 
 
+def build_zafer_aniti(name, material):
+    """Ulus Zafer Anıtı: basamaklı kaide, yüksek mermer gövde, üstte atlı Atatürk heykeli (stilize).
+    Dönüş halkası adasının ortasına konur. Toplam ~14 m."""
+    pb = PropBuilder()
+    pb.cylinder(0, 0, 0.0, 0.5, 9.0, "kesme_tas", segments=16)
+    pb.cylinder(0, 0, 0.5, 0.65, 8.2, "mermer", segments=16)
+    pb.box(-3.2, 3.2, -4.2, 4.2, 0.65, 1.3, "kesme_tas")
+    pb.box(-2.6, 2.6, -3.6, 3.6, 1.3, 6.8, "mermer")
+    pb.box(-2.9, 2.9, -3.9, 3.9, 6.8, 7.3, "kesme_tas")
+    # kaidedeki kabartma panoları ve yan figürler (bronz)
+    for sx in (-1, 1):
+        pb.box(sx * 2.6 - 0.05, sx * 2.6 + 0.05, -2.8, 2.8, 2.2, 5.6, "bronz_yesil")
+    pb.box(-1.8, 1.8, -3.65, -3.55, 2.2, 5.6, "bronz_yesil")
+    for sx in (-1, 1):
+        pb.box(sx * 1.6 - 0.35, sx * 1.6 + 0.35, -4.6, -3.9, 1.3, 3.4, "bronz")  # ön köşelerde asker figürleri
+        pb.sphere(sx * 1.6, -4.25, 3.65, 0.25, 0.25, 0.28, "bronz")
+    # at: gövde, boyun, baş, bacaklar
+    z0 = 7.3
+    pb.box(-0.55, 0.55, -1.6, 1.4, z0 + 1.7, z0 + 2.9, "bronz")
+    m = Matrix.Translation((0, -1.6, z0 + 2.7)) @ Matrix.Rotation(math.radians(-35), 4, "X") @ Matrix.Translation((0, 1.6, -(z0 + 2.7)))
+    pb.box(-0.35, 0.35, -2.4, -1.4, z0 + 2.5, z0 + 3.9, "bronz", matrix=m)
+    pb.box(-0.3, 0.3, -2.9, -2.0, z0 + 3.7, z0 + 4.2, "bronz")
+    for x in (-0.35, 0.35):
+        for y in (-1.3, 1.1):
+            pb.box(x - 0.14, x + 0.14, y - 0.14, y + 0.14, z0, z0 + 1.8, "bronz")
+    pb.box(-0.08, 0.08, 1.35, 1.5, z0 + 1.2, z0 + 2.6, "bronz")  # kuyruk
+    # süvari
+    pb.box(-0.4, 0.4, -0.5, 0.3, z0 + 2.9, z0 + 4.2, "bronz")
+    pb.sphere(0, -0.15, z0 + 4.5, 0.25, 0.25, 0.3, "bronz")
+    for sx in (-1, 1):
+        pb.box(sx * 0.45 - 0.1, sx * 0.45 + 0.1, -0.4, 0.1, z0 + 2.2, z0 + 3.1, "bronz")
+    return pb.to_object(name, material)
+
+
+def build_opera(name, material):
+    """Ankara Opera binası (eski Sergi Evi, 1930'lar): uzun, düz çatılı kesme taş kütle, dikey pencere
+    şeritleri, yüksek giriş bölümü ve sütunlu saçak. 64 × 26 × 16 m. Ön cephe yola bakar."""
+    pb = PropBuilder()
+    W, D, H = 64.0, 26.0, 12.0
+    pb.box(-W / 2, W / 2, 0.0, D, 0.0, H, "kesme_tas")
+    pb.box(-W / 2 - 0.3, W / 2 + 0.3, -0.3, D + 0.3, H, H + 0.6, "mermer")
+    # yüksek orta blok (sahne kulesi)
+    pb.box(-12.0, 12.0, 6.0, D - 2.0, H, H + 6.0, "kesme_tas")
+    pb.box(-12.3, 12.3, 5.7, D - 1.7, H + 6.0, H + 6.5, "mermer")
+    # dikey pencere şeritleri
+    x = -W / 2 + 3.0
+    while x < W / 2 - 2.0:
+        if abs(x) > 9.0:
+            pb.box(x - 0.6, x + 0.6, -0.05, 0.0, 2.5, H - 1.5, "cam")
+        x += 3.2
+    # giriş: sütunlu saçak ve basamaklar
+    pb.box(-9.0, 9.0, -5.0, 0.0, H - 2.0, H - 1.2, "mermer")
+    for i in range(7):
+        cx = -8.0 + i * (16.0 / 6)
+        pb.cylinder(cx, -4.5, 0.6, H - 2.0, 0.35, "mermer", segments=10)
+    pb.box(-8.5, 8.5, -0.05, 0.0, 0.6, H - 2.5, "dukkan_cam")
+    for k in range(3):
+        pb.box(-10.0 + k * 0.5, 10.0 - k * 0.5, -6.5 + k * 0.5, -4.6, 0.0, 0.2 * (k + 1), "kesme_tas")
+    # cephe yazısı bandı
+    pb.box(-7.0, 7.0, -5.05, -5.0, H - 1.9, H - 1.3, "bronz")
+    return pb.to_object(name, material)
+
+
+def build_genclik_parki(name, material):
+    """Gençlik Parkı parçası: büyük süs havuzu, havuz ortasında adacık, ağaçlar ve kemerli giriş kapısı.
+    90 × 60 m. Pivot ön kenarın ortası (yol tarafı)."""
+    pb = PropBuilder()
+    rng = random.Random(11)
+    W, D = 90.0, 60.0
+    pb.box(-W / 2, W / 2, 0.0, D, -0.3, 0.12, "cim")
+    pb.box(-W / 2, W / 2, 0.0, 3.0, 0.12, 0.16, "kaldirim")
+    # kemerli giriş kapısı
+    for sx in (-1, 1):
+        pb.box(sx * 4.0 - 0.6, sx * 4.0 + 0.6, 1.0, 2.2, 0.0, 6.0, "kesme_tas")
+    pb.box(-4.6, 4.6, 1.0, 2.2, 6.0, 7.2, "kesme_tas")
+    pb.box(-3.4, 3.4, 0.95, 1.0, 6.2, 7.0, "bronz")
+    # yürüyüş yolu ve havuz
+    pb.box(-2.5, 2.5, 3.0, 14.0, 0.12, 0.16, "kaldirim")
+    cx, cy, rx, ry = 0.0, 34.0, 30.0, 16.0
+    seg = 32
+    ring = [(cx + (rx + 1.2) * math.cos(2 * math.pi * i / seg), cy + (ry + 1.2) * math.sin(2 * math.pi * i / seg)) for i in range(seg)]
+    pb.prism(ring, 0.12, 0.5, "kesme_tas")
+    water = [(cx + rx * math.cos(2 * math.pi * i / seg), cy + ry * math.sin(2 * math.pi * i / seg)) for i in range(seg)]
+    pb.prism(water, 0.12, 0.52, "su")
+    isle = [(cx + 6 * math.cos(2 * math.pi * i / 16), cy + 4 * math.sin(2 * math.pi * i / 16)) for i in range(16)]
+    pb.prism(isle, 0.12, 0.9, "cim")
+    tree_plane(pb, cx, cy, rng, h=8.0)
+    # havuz çevresinde ağaçlar ve banklar
+    for i in range(18):
+        a = 2 * math.pi * i / 18
+        tx, ty = cx + (rx + 6) * math.cos(a), cy + (ry + 6) * math.sin(a)
+        if ty < 8.0 or abs(tx) > W / 2 - 2 or ty > D - 2:
+            continue
+        (tree_poplar if i % 3 == 0 else tree_plane)(pb, tx, ty, rng)
+    return pb.to_object(name, material)
+
+
+def build_hitit_gunes_kursu(name, material):
+    """Sıhhiye'deki Hitit Güneş Kursu anıtı (stilize): yükseltilmiş kaide üzerinde, ışınlı halka biçiminde
+    bronz disk ve çevresinde geyik/boğa figürleri. ~11 m."""
+    pb = PropBuilder()
+    pb.cylinder(0, 0, 0.0, 0.6, 6.0, "kesme_tas", segments=16)
+    pb.cylinder(0, 0, 0.6, 3.6, 2.2, "mermer", segments=12, radius_top=1.8)
+    disk_c = 7.5
+    # halka: dikey düzlemde (yerel XZ), ışınlar ve iç ızgara
+    n = 20
+    for i in range(n):
+        a = 2 * math.pi * i / n
+        x, z = 2.8 * math.cos(a), disk_c + 2.8 * math.sin(a)
+        m = Matrix.Translation((x, 0, z)) @ Matrix.Rotation(-a, 4, "Y")
+        pb.box(-0.12, 0.12, -0.12, 0.12, -0.6, 0.6, "bronz", matrix=m)
+        m2 = Matrix.Translation((3.3 * math.cos(a), 0, disk_c + 3.3 * math.sin(a))) @ Matrix.Rotation(-a, 4, "Y")
+        pb.box(-0.05, 0.05, -0.05, 0.05, -0.35, 0.35, "bronz", matrix=m2)
+    for zz in (-1.4, 0.0, 1.4):
+        pb.box(-2.4, 2.4, -0.06, 0.06, disk_c + zz - 0.06, disk_c + zz + 0.06, "bronz")
+    for xx in (-1.4, 0.0, 1.4):
+        pb.box(xx - 0.06, xx + 0.06, -0.06, 0.06, disk_c - 2.4, disk_c + 2.4, "bronz")
+    pb.box(-0.15, 0.15, -0.15, 0.15, 3.6, disk_c - 2.8, "bronz")  # sap
+    # yanlarda iki geyik
+    for sx in (-1, 1):
+        x = sx * 3.6
+        pb.box(x - 0.3, x + 0.3, -0.9, 0.9, 1.9, 2.5, "bronz")
+        for yy in (-0.7, 0.7):
+            pb.box(x - 0.08, x + 0.08, yy - 0.08, yy + 0.08, 0.6, 1.9, "bronz")
+        pb.box(x - 0.1, x + 0.1, -1.2, -0.8, 2.4, 3.1, "bronz")
+        pb.box(x - 0.4, x + 0.4, -1.15, -1.05, 3.1, 3.7, "bronz")  # boynuzlar
+    return pb.to_object(name, material)
+
+
 def build_traffic_light(name, material):
     """Kavşak trafik ışığı: 3,6 m direk, yola uzanan kol, üç lambalı kafa.
     Lambalar ayrı objeler ("Lamba_Kirmizi", "Lamba_Sari", "Lamba_Yesil"); TrafficSignal yanan lambayı açar,
@@ -346,6 +475,10 @@ ITEMS = {
     "EGO_Durak": ("Props", build_ego_stop),
     "Lamba_Bulvar": ("Props", build_street_lamp),
     "Trafik_Lambasi": ("Props", build_traffic_light),
+    "ZaferAniti": ("Landmarks", build_zafer_aniti),
+    "OperaBinasi": ("Landmarks", build_opera),
+    "GenclikParki": ("Landmarks", build_genclik_parki),
+    "HititGunesKursu": ("Landmarks", build_hitit_gunes_kursu),
     "Agac_Cinar_1": ("Props", lambda n, m: build_tree(n, m, "cinar", 1)),
     "Agac_Cinar_2": ("Props", lambda n, m: build_tree(n, m, "cinar", 2)),
     "Agac_Kavak": ("Props", lambda n, m: build_tree(n, m, "kavak", 3)),

@@ -483,7 +483,7 @@ def main():
         render(models, lay, ground, spawn, args.render_dir)
 
 
-def render(models, lay, ground, spawn, out_dir):
+def render(models, lay, ground, spawn, out_dir, prefix="hat1"):
     os.makedirs(out_dir, exist_ok=True)
     scene = bpy.context.scene
     for it in lay.items:
@@ -526,7 +526,7 @@ def render(models, lay, ground, spawn, out_dir):
     target = Vector((-cx, -cz, 30))
     co.location = target + Vector((520, 420, 620))
     co.rotation_euler = (target - co.location).to_track_quat("-Z", "Y").to_euler()
-    scene.render.filepath = os.path.join(out_dir, "hat1_kusbakisi.png")
+    scene.render.filepath = os.path.join(out_dir, f"{prefix}_kusbakisi.png")
     bpy.ops.render.render(write_still=True)
     # 2) sürücü gözü: Kızılay AVM durağından ileri bakış
     cam.lens = 26
@@ -535,17 +535,17 @@ def render(models, lay, ground, spawn, out_dir):
     th = math.radians(spawn["rotY"])
     fwd = Vector((-math.sin(th), -math.cos(th), 0))
     co.rotation_euler = (fwd + Vector((0, 0, 0.04))).to_track_quat("-Z", "Y").to_euler()
-    scene.render.filepath = os.path.join(out_dir, "hat1_surucu.png")
+    scene.render.filepath = os.path.join(out_dir, f"{prefix}_surucu.png")
     bpy.ops.render.render(write_still=True)
-    # 3) Cinnah yokuşundan Atakule'ye bakış
-    stops = {s["name"]: s for s in lay.stops}
-    x, y, z = stops["Cinnah"]["pos"]
-    th = math.radians(stops["Cinnah"]["rotY"])
+    # 3) sondan bir önceki duraktan son durağa (Hat 1: Cinnah → Atakule) bakış
+    prev, last = lay.stops[-2], lay.stops[-1]
+    x, y, z = prev["pos"]
+    th = math.radians(prev["rotY"])
     co.location = (-(x - 4.0 * math.sin(th)), -(z - 4.0 * math.cos(th)), y + 2.5)
-    ax, ay, az = stops["Atakule"]["pos"]
+    ax, ay, az = last["pos"]
     target = Vector((-ax, -az, ay + 60))
     co.rotation_euler = (target - co.location).to_track_quat("-Z", "Y").to_euler()
-    scene.render.filepath = os.path.join(out_dir, "hat1_cinnah.png")
+    scene.render.filepath = os.path.join(out_dir, f"{prefix}_son_durak.png")
     bpy.ops.render.render(write_still=True)
 
 

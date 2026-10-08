@@ -16,7 +16,9 @@ namespace AnkaraBus.EditorTools
     public static class HaritaKurucu
     {
         private const string MapsRoot = "Assets/_Project/Maps/";
-        private const string LayoutPath = MapsRoot + "Hat1/Hat1_Yerlesim.json";
+        private const string Hat1Path = MapsRoot + "Hat1/Hat1_Yerlesim.json";
+        private const string Hat2Path = MapsRoot + "Hat2/Hat2_Yerlesim.json";
+        private static string label = "Hat 1";
         private const string PalettePath = "Assets/_Project/Materials/T_AnkaraPalet.png";
         private const string MaterialPath = "Assets/_Project/Materials/M_AnkaraPalet.mat";
         private const string VehiclesFolder = "Assets/_Project/Traffic/Vehicles";
@@ -101,18 +103,25 @@ namespace AnkaraBus.EditorTools
         }
 
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
-        public static void Build()
+        public static void Build() => BuildFrom(Hat1Path, "Hat1_KizilayAtakule", "Hat 1");
+
+        [MenuItem("Ankara Bus/Hat 2 Haritasını Kur")]
+        public static void BuildHat2() => BuildFrom(Hat2Path, "Hat2_KizilayUlus", "Hat 2");
+
+        /// <summary>Bir hattın yerleşim dosyasından haritayı açık sahneye kurar.</summary>
+        public static void BuildFrom(string layoutPath, string rootName, string hatLabel)
         {
-            if (!File.Exists(LayoutPath))
+            label = hatLabel;
+            if (!File.Exists(layoutPath))
             {
-                EditorUtility.DisplayDialog("Hat 1", "Yerleşim dosyası bulunamadı:\n" + LayoutPath, "Tamam");
+                EditorUtility.DisplayDialog(label, "Yerleşim dosyası bulunamadı:\n" + layoutPath, "Tamam");
                 return;
             }
 
-            var layout = JsonUtility.FromJson<Layout>(File.ReadAllText(LayoutPath));
+            var layout = JsonUtility.FromJson<Layout>(File.ReadAllText(layoutPath));
             var material = EnsurePaletteMaterial();
-            var root = new GameObject("Hat1_KizilayAtakule");
-            Undo.RegisterCreatedObjectUndo(root, "Hat 1 Haritasını Kur");
+            var root = new GameObject(rootName);
+            Undo.RegisterCreatedObjectUndo(root, label + " Haritasını Kur");
 
             var groups = new Dictionary<string, Transform>();
             var missing = new HashSet<string>();
@@ -123,7 +132,7 @@ namespace AnkaraBus.EditorTools
                 {
                     var item = layout.items[i];
                     if (i % 50 == 0)
-                        EditorUtility.DisplayProgressBar("Hat 1", item.model, (float)i / layout.items.Length);
+                        EditorUtility.DisplayProgressBar(label, item.model, (float)i / layout.items.Length);
 
                     var asset = AssetDatabase.LoadAssetAtPath<GameObject>(MapsRoot + item.model + ".fbx");
                     if (asset == null)
@@ -153,8 +162,8 @@ namespace AnkaraBus.EditorTools
 
             Selection.activeGameObject = root;
             foreach (var model in missing)
-                Debug.LogWarning($"[Hat 1] Model bulunamadı: {MapsRoot}{model}.fbx");
-            Debug.Log($"[Hat 1] {placed} obje ve {layout.stops.Length} durak yerleştirildi. " +
+                Debug.LogWarning($"[{label}] Model bulunamadı: {MapsRoot}{model}.fbx");
+            Debug.Log($"[{label}] {placed} obje ve {layout.stops.Length} durak yerleştirildi. " +
                       "Otobüsü 'OtobusBaslangic' noktasına koyup RouteTracker'a 'Hat_" + layout.lineNumber + "' objesini bağlayın; " +
                       "trafik için otobüsün etiketini 'Player' yapın.");
         }
@@ -230,7 +239,7 @@ namespace AnkaraBus.EditorTools
                     models.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid)));
             if (models.Count == 0)
             {
-                Debug.LogWarning("[Hat 1] Yolcu modeli bulunamadı: " + PassengersFolder);
+                Debug.LogWarning($"[{label}] Yolcu modeli bulunamadı: " + PassengersFolder);
                 return;
             }
 
@@ -267,7 +276,7 @@ namespace AnkaraBus.EditorTools
                     var asset = AssetDatabase.LoadAssetAtPath<GameObject>(MapsRoot + h.model + ".fbx");
                     if (asset == null)
                     {
-                        Debug.LogWarning($"[Hat 1] Trafik ışığı modeli bulunamadı: {MapsRoot}{h.model}.fbx");
+                        Debug.LogWarning($"[{label}] Trafik ışığı modeli bulunamadı: {MapsRoot}{h.model}.fbx");
                         continue;
                     }
                     var head = (GameObject)PrefabUtility.InstantiatePrefab(asset, sgo.transform);
@@ -336,7 +345,7 @@ namespace AnkaraBus.EditorTools
             }
             so.ApplyModifiedPropertiesWithoutUndo();
             if (models.Count == 0)
-                Debug.LogWarning("[Hat 1] Trafik aracı bulunamadı: " + VehiclesFolder);
+                Debug.LogWarning($"[{label}] Trafik aracı bulunamadı: " + VehiclesFolder);
         }
 
         /// <summary>Tüm harita modellerinin paylaştığı palet materyali; yoksa oluşturur.</summary>
