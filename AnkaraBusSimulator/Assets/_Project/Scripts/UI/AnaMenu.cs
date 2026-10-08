@@ -32,6 +32,8 @@ namespace AnkaraBus.UI
         private Font font;
         private readonly List<Image> hatKartlari = new List<Image>();
         private readonly List<Image> kaplamaDugmeleri = new List<Image>();
+        private readonly Image[] zamanDugmeleri = new Image[OyunSecimi.ZamanAdlari.Length];
+        private readonly Image[] havaDugmeleri = new Image[2];
         private readonly Image[] kaliteDugmeleri = new Image[GrafikAyarlari.SeviyeAdlari.Length];
         private GameObject yukleniyor;
         private Text yukleniyorYazi;
@@ -93,7 +95,7 @@ namespace AnkaraBus.UI
                 int index = i;
                 var hat = OyunSecimi.Hatlar[i];
                 bool mevcut = Application.CanStreamedLevelBeLoaded(hat.sahne);
-                var kart = Box(root, "Hat_" + hat.numara, new Vector2(0f, 1f), new Vector2(470f, -305f - i * 165f), new Vector2(860f, 150f), Card);
+                var kart = Box(root, "Hat_" + hat.numara, new Vector2(0f, 1f), new Vector2(470f, -290f - i * 140f), new Vector2(860f, 130f), Card);
                 var image = kart.GetComponent<Image>();
                 hatKartlari.Add(image);
                 var button = kart.gameObject.AddComponent<Button>();
@@ -101,22 +103,22 @@ namespace AnkaraBus.UI
                 button.interactable = mevcut;
                 button.onClick.AddListener(() => { OyunSecimi.SeciliHat = index; Yenile(); });
 
-                var numara = Box(kart, "Numara", new Vector2(0f, 0.5f), new Vector2(75f, 0f), new Vector2(110f, 110f), Active);
+                var numara = Box(kart, "Numara", new Vector2(0f, 0.5f), new Vector2(70f, 0f), new Vector2(100f, 100f), Active);
                 Label(numara, hat.numara, 64, TextAnchor.MiddleCenter, new Color(0.1f, 0.1f, 0.1f, 1f));
-                Label(Element(kart, "Ad", new Vector2(0f, 1f), new Vector2(480f, -42f), new Vector2(680f, 50f)),
-                    hat.ad, 38, TextAnchor.MiddleLeft, Color.white);
-                var duraklar = Label(Element(kart, "Duraklar", new Vector2(0f, 1f), new Vector2(480f, -85f), new Vector2(680f, 36f)),
+                Label(Element(kart, "Ad", new Vector2(0f, 1f), new Vector2(480f, -34f), new Vector2(680f, 46f)),
+                    hat.ad, 36, TextAnchor.MiddleLeft, Color.white);
+                var duraklar = Label(Element(kart, "Duraklar", new Vector2(0f, 1f), new Vector2(480f, -72f), new Vector2(680f, 32f)),
                     hat.duraklar, 24, TextAnchor.MiddleLeft, Dim);
                 duraklar.fontStyle = FontStyle.Normal;
                 int? enIyi = OyunSecimi.EnIyiPuan(hat.numara);
-                var puan = Label(Element(kart, "EnIyi", new Vector2(0f, 1f), new Vector2(480f, -120f), new Vector2(680f, 34f)),
+                var puan = Label(Element(kart, "EnIyi", new Vector2(0f, 1f), new Vector2(480f, -104f), new Vector2(680f, 30f)),
                     !mevcut ? "Sahne build'de yok" : enIyi.HasValue ? $"En iyi puan: {enIyi.Value}" : "Henüz oynanmadı",
                     24, TextAnchor.MiddleLeft, enIyi.HasValue ? Active : Dim);
                 puan.fontStyle = FontStyle.Normal;
             }
 
             // Kaplama
-            float kaplamaY = -305f - OyunSecimi.Hatlar.Length * 165f - 30f;
+            float kaplamaY = -290f - OyunSecimi.Hatlar.Length * 140f + 30f;
             Bolum(root, "KAPLAMA", kaplamaY);
             int adet = vitrinKaplamasi != null && vitrinKaplamasi.Count > 0 ? vitrinKaplamasi.Count : 3;
             string[] varsayilan = { "EGO kırmızı", "EGO mavi", "Özel Halk" };
@@ -127,22 +129,38 @@ namespace AnkaraBus.UI
                     : vitrinKaplamasi != null && vitrinKaplamasi.NameAt(i) != null ? vitrinKaplamasi.NameAt(i)
                     : i < varsayilan.Length ? varsayilan[i] : $"Kaplama {i + 1}";
                 float genislik = 860f / (adet + 1) - 10f;
-                var dugme = Dugme(root, ad, new Vector2(0f, 1f), new Vector2(40f + genislik * 0.5f + (i + 1) * (genislik + 10f), kaplamaY - 75f),
-                    new Vector2(genislik, 80f), 26, () => { OyunSecimi.Kaplama = index; Yenile(); KaplamayiOnizle(); });
+                var dugme = Dugme(root, ad, new Vector2(0f, 1f), new Vector2(40f + genislik * 0.5f + (i + 1) * (genislik + 10f), kaplamaY - 60f),
+                    new Vector2(genislik, 70f), 26, () => { OyunSecimi.Kaplama = index; Yenile(); KaplamayiOnizle(); });
                 kaplamaDugmeleri.Add(dugme);
             }
 
+            // Zaman ve hava (HavaVeZaman uygular)
+            float zamanY = kaplamaY - 130f;
+            Bolum(root, "ZAMAN · HAVA", zamanY);
+            for (int i = 0; i < zamanDugmeleri.Length; i++)
+            {
+                var z = (OyunSecimi.Zaman)i;
+                zamanDugmeleri[i] = Dugme(root, OyunSecimi.ZamanAdlari[i], new Vector2(0f, 1f), new Vector2(120f + i * 170f, zamanY - 60f),
+                    new Vector2(160f, 70f), 26, () => { OyunSecimi.SeciliZaman = z; Yenile(); });
+            }
+            for (int i = 0; i < havaDugmeleri.Length; i++)
+            {
+                bool yagmur = i == 1;
+                havaDugmeleri[i] = Dugme(root, yagmur ? "Yağmurlu" : "Açık", new Vector2(0f, 1f), new Vector2(650f + i * 170f, zamanY - 60f),
+                    new Vector2(160f, 70f), 26, () => { OyunSecimi.Yagmur = yagmur; Yenile(); });
+            }
+
             // Görüntü kalitesi
-            float kaliteY = kaplamaY - 155f;
+            float kaliteY = zamanY - 130f;
             Bolum(root, "GÖRÜNTÜ", kaliteY);
             for (int i = 0; i < kaliteDugmeleri.Length; i++)
             {
                 var seviye = (KaliteSeviyesi)i;
                 kaliteDugmeleri[i] = Dugme(root, GrafikAyarlari.SeviyeAdlari[i], new Vector2(0f, 1f),
-                    new Vector2(40f + 140f + i * 290f, kaliteY - 75f), new Vector2(280f, 80f), 28,
+                    new Vector2(40f + 140f + i * 290f, kaliteY - 60f), new Vector2(280f, 70f), 28,
                     () => { GrafikAyarlari.Uygula(seviye); Yenile(); });
             }
-            var oneri = Label(Element(root, "Oneri", new Vector2(0f, 1f), new Vector2(470f, kaliteY - 140f), new Vector2(860f, 34f)),
+            var oneri = Label(Element(root, "Oneri", new Vector2(0f, 1f), new Vector2(470f, kaliteY - 122f), new Vector2(860f, 34f)),
                 $"Bu telefon için önerilen: {GrafikAyarlari.SeviyeAdlari[(int)GrafikAyarlari.Onerilen]}", 24, TextAnchor.MiddleLeft, Dim);
             oneri.fontStyle = FontStyle.Normal;
 
@@ -175,6 +193,10 @@ namespace AnkaraBus.UI
                 kaplama = 0; // kayıt yoksa prefabın kaplaması (EGO kırmızı)
             for (int i = 0; i < kaplamaDugmeleri.Count; i++)
                 kaplamaDugmeleri[i].color = i - 1 == kaplama ? Active : Panel;
+            for (int i = 0; i < zamanDugmeleri.Length; i++)
+                zamanDugmeleri[i].color = (int)OyunSecimi.SeciliZaman == i ? Active : Panel;
+            for (int i = 0; i < havaDugmeleri.Length; i++)
+                havaDugmeleri[i].color = (i == 1) == OyunSecimi.Yagmur ? Active : Panel;
             for (int i = 0; i < kaliteDugmeleri.Length; i++)
                 kaliteDugmeleri[i].color = (int)GrafikAyarlari.Mevcut == i ? Active : Panel;
         }

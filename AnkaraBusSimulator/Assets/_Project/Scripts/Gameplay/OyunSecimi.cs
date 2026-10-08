@@ -42,6 +42,23 @@ namespace AnkaraBus.Gameplay
             set { PlayerPrefs.SetInt(KaplamaKey, value); PlayerPrefs.Save(); }
         }
 
+        public enum Zaman { Gunduz, Aksam, Gece }
+
+        public static readonly string[] ZamanAdlari = { "Gündüz", "Akşam", "Gece" };
+
+        /// <summary>Günün saati (ışık, lambalar). Hat sahnesinde HavaVeZaman uygular.</summary>
+        public static Zaman SeciliZaman
+        {
+            get => (Zaman)Mathf.Clamp(PlayerPrefs.GetInt("Zaman", 0), 0, ZamanAdlari.Length - 1);
+            set { PlayerPrefs.SetInt("Zaman", (int)value); PlayerPrefs.Save(); }
+        }
+
+        public static bool Yagmur
+        {
+            get => PlayerPrefs.GetInt("Yagmur", 0) == 1;
+            set { PlayerPrefs.SetInt("Yagmur", value ? 1 : 0); PlayerPrefs.Save(); }
+        }
+
         public static string EnIyiPuanAnahtari(string hatNumarasi) =>
             "EnIyiPuan_" + (string.IsNullOrEmpty(hatNumarasi) ? "Hat" : hatNumarasi);
 
