@@ -349,7 +349,7 @@ namespace AnkaraBus.EditorTools
         }
 
         /// <summary>Tüm harita modellerinin paylaştığı palet materyali; yoksa oluşturur.</summary>
-        private static Material EnsurePaletteMaterial()
+        internal static Material EnsurePaletteMaterial()
         {
             var material = AssetDatabase.LoadAssetAtPath<Material>(MaterialPath);
             if (material != null)

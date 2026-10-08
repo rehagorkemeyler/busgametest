@@ -22,6 +22,13 @@ namespace AnkaraBus.EditorTools
 
         private enum Mode { None, Perf, DriveTest, SesPuan }
 
+        public const string OyunApkPath = "Builds/AnkaraBus.apk";
+        private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath };
+
+        /// <summary>Oynanabilir build: ana menü + Hat 1 + Hat 2, ölçüm ya da otomatik pilot eklenmez.</summary>
+        [MenuItem("Ankara Bus/Android/Oyun APK'sı")]
+        public static void OyunBuild() => Build(Mode.None, OyunSahneleri, OyunApkPath);
+
         public const string SesPuanApkPath = "Builds/AnkaraBus_ses_puan_testi.apk";
 
         /// <summary>Ses ve puan senaryosu (SesPuanSenaryosu) Hat 1'de; sonuçlar logcat'te "[SesPuan]".</summary>

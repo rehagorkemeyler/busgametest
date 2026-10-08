@@ -27,9 +27,12 @@ namespace AnkaraBus.Vehicle
         [SerializeField] private string roofMaterialName = "cngtank";
         [SerializeField] private Livery[] liveries;
         [SerializeField] private int selected;
+        [Tooltip("Oyunda ana menüde seçilen kaplamayı uygula (Gameplay.OyunSecimi.Kaplama).")]
+        [SerializeField] private bool useMenuChoice = true;
 
         public int Count => liveries?.Length ?? 0;
         public int Selected => selected;
+        public string NameAt(int index) => index >= 0 && index < Count ? liveries[index].name : null;
         public string SelectedName => Count > 0 ? liveries[Mathf.Clamp(selected, 0, Count - 1)].name : null;
 
         public void Select(int index)
@@ -43,6 +46,17 @@ namespace AnkaraBus.Vehicle
         public void SelectRandom() => Select(UnityEngine.Random.Range(0, Count));
 
         private void OnEnable() => Apply();
+
+        private void Start()
+        {
+            if (!Application.isPlaying || !useMenuChoice)
+                return;
+            int choice = AnkaraBus.Gameplay.OyunSecimi.Kaplama;
+            if (choice == -1)
+                SelectRandom();
+            else if (choice >= 0)
+                Select(choice);
+        }
 
         private void OnValidate() => Apply();
 

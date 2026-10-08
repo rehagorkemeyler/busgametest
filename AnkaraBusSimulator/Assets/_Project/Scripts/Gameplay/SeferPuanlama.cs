@@ -305,7 +305,7 @@ namespace AnkaraBus.Gameplay
             ozet.puan += Mathf.RoundToInt(ozet.konfor); // konfor puanı (en çok 100)
             ozet.yildiz = Stars();
 
-            string key = "EnIyiPuan_" + (string.IsNullOrEmpty(ozet.hat) ? "Hat" : ozet.hat);
+            string key = OyunSecimi.EnIyiPuanAnahtari(ozet.hat);
             ozet.enIyiPuan = PlayerPrefs.GetInt(key, int.MinValue);
             ozet.rekor = ozet.puan > ozet.enIyiPuan;
             if (ozet.rekor)

@@ -142,7 +142,7 @@ namespace AnkaraBus.UI
                 return;
             EnsureEventSystem();
             var root = (RectTransform)canvasGo.transform;
-            var panel = Box(root, "SeferOzeti", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(760f, 720f), PanelDark);
+            var panel = Box(root, "SeferOzeti", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 720f), PanelDark);
 
             var title = Element(panel, "Baslik", new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(700f, 70f));
             Label(title, string.IsNullOrEmpty(o.hat) ? "SEFER TAMAMLANDI" : $"HAT {o.hat} TAMAMLANDI", 44, TextAnchor.MiddleCenter, Color.white);
@@ -172,13 +172,17 @@ namespace AnkaraBus.UI
             text.fontStyle = FontStyle.Normal;
             text.lineSpacing = 1.15f;
 
-            Button(panel, "TEKRAR", new Vector2(-150f, 70f), () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex));
-            Button(panel, "KAPAT", new Vector2(150f, 70f), () => Destroy(panel.gameObject));
+            bool menu = OyunSecimi.MenuVar;
+            float x = menu ? 240f : 150f;
+            Button(panel, "TEKRAR", new Vector2(-x, 70f), () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex));
+            if (menu)
+                Button(panel, "MENÜ", new Vector2(0f, 70f), OyunSecimi.AnaMenuyeDon);
+            Button(panel, "KAPAT", new Vector2(x, 70f), () => Destroy(panel.gameObject));
         }
 
         private void Button(RectTransform panel, string label, Vector2 position, UnityEngine.Events.UnityAction onClick)
         {
-            var rect = Box(panel, label, new Vector2(0.5f, 0f), position, new Vector2(260f, 90f), Panel);
+            var rect = Box(panel, label, new Vector2(0.5f, 0f), position, new Vector2(220f, 90f), Panel);
             var button = rect.gameObject.AddComponent<Button>();
             button.targetGraphic = rect.GetComponent<Image>();
             button.onClick.AddListener(onClick);

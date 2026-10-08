@@ -143,7 +143,13 @@ namespace AnkaraBus.UI
             hint.fontStyle = FontStyle.Normal;
             hint.color = Idle;
 
-            Button(box, "KAPAT", new Vector2(0.5f, 0f), new Vector2(0f, 75f), new Vector2(260f, 90f), () => settingsPanel.SetActive(false));
+            if (AnkaraBus.Gameplay.OyunSecimi.MenuVar)
+            {
+                Button(box, "ANA MENÜ", new Vector2(0.5f, 0f), new Vector2(-150f, 75f), new Vector2(260f, 90f), AnkaraBus.Gameplay.OyunSecimi.AnaMenuyeDon);
+                Button(box, "KAPAT", new Vector2(0.5f, 0f), new Vector2(150f, 75f), new Vector2(260f, 90f), () => settingsPanel.SetActive(false));
+            }
+            else
+                Button(box, "KAPAT", new Vector2(0.5f, 0f), new Vector2(0f, 75f), new Vector2(260f, 90f), () => settingsPanel.SetActive(false));
             settingsPanel.SetActive(false);
         }
 
