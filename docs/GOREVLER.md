@@ -77,6 +77,12 @@ Eski prompt (referans):
 **Prompt:**
 > `git pull origin Ozan` yap. Bulut tarafı yolcuları (`docs/YOLCULAR.md`), Kuğulu kavşağında dönüşleri ve trafik ışıklarını (`docs/TRAFIK.md`) ve Hat 2'yi (`docs/HAT2_KIZILAY_ULUS.md`) ekledi. (1) Hat 1 sahnesinde haritayı **Ankara Bus → Hat 1 Haritasını Kur** ile yeniden kur (eski `Hat1_KizilayAtakule` objesini sil); otobüsü yeniden bağla, ışıkları yeniden bake et. Kızılay'dan Atakule'ye sür: yolcular duraklarda bekliyor ve biniyor mu, Kuğulu kavşağında ışıklar dönüyor ve araçlar kırmızıda duruyor mu, sağa/sola dönen araçlar var mı kontrol et. Derleme hatası varsa düzelt. (2) Yeni `Hat2_KizilayUlus.unity` sahnesinde **Ankara Bus → Hat 2 Haritasını Kur**'u çalıştır, otobüsü bağla (`RouteTracker` → `Hat_2`), bake et, Build Settings'e ekle ve Kızılay'dan Ulus'a sür. Sorunları düzeltip commit'le, push'la.
 
-### Y8 — Sesleri ve puan sistemini dene
+### Y8 — Sesleri ve puan sistemini dene ✅
+Yapıldı (8 Ekim 2026):
+- Ses düzeyleri ölçülerek dengelendi, fren bırakma sesi düzeltildi ([SESLER.md](SESLER.md)).
+- Puanlama: duruşun son anındaki süspansiyon sıçraması sert fren sayılmıyor (10 km/s altı); yan yana şeritlerde kırmızı ışık cezası bir kez ([PUANLAMA.md](PUANLAMA.md)).
+- Maliyet: S24 FE Düşük ayarda sesler ve puan arayüzü FPS'i düşürmüyor ([PERFORMANS.md](PERFORMANS.md) Ölçüm 6). A32 ölçümü bekliyor.
+
+Eski prompt (referans):
 **Prompt:**
 > `git pull origin Ozan` yap. Bulut tarafı otobüs seslerini (`docs/SESLER.md`) ve puan/bilet sistemini (`docs/PUANLAMA.md`) ekledi. Derleme hatası varsa düzelt. **Ankara Bus → BMC Procity Prefabını Kur** çalıştır (sesleri, puanlamayı ve puan arayüzünü de ekler). Hat 1 sahnesinde Play'e bas ve şunları kontrol et: motor sesi rölantide ve gaz verince devirle birlikte yükseliyor mu, kokpit/dış kamera geçişinde ses değişiyor mu, kapı açılınca/kapanınca, fren bırakılınca, el freninde, R'de ve H (korna) ile ses geliyor mu, yolcu binince bip sesi duyuluyor mu. Puan: yolcu binince "+5 Tam bilet" görünüyor mu, sert frende ceza geliyor mu (normal sürüşte gelmemeli; geliyorsa `SeferPuanlama` eşiklerini yükselt), Kuğulu'da kırmızıda geçince −50 alınıyor mu, bir durağı atlayınca hat ilerliyor mu, Atakule'de özet paneli açılıyor mu, TEKRAR çalışıyor mu (sahne Build Settings'te olmalı). Ses düzeyleri birbirine göre kötüyse `OtobusSesKurucu.EngineLayers` ve `BusAudio` içindeki çarpanları ayarla. Telefonda (A32, Düşük ayar) sesler ve puan arayüzü eklenince FPS düşüyor mu ölç, `docs/PERFORMANS.md`'ye not düş. Commit'le, push'la.
