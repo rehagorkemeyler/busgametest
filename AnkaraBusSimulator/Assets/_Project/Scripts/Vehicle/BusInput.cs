@@ -25,8 +25,10 @@ namespace AnkaraBus.Vehicle
         public float TouchBrake { get; set; }
         /// <summary>Sanal direksiyon: -1 sol, +1 sağ. Dokunulmuyorsa null.</summary>
         public float? TouchSteer { get; set; }
-        /// <summary>Otomatik sürüş için gaz (performans ölçümü, testler).</summary>
+        /// <summary>Otomatik sürüş için gaz, fren ve direksiyon (performans ölçümü, otomatik pilot).</summary>
         public float AutoThrottle { get; set; }
+        public float AutoBrake { get; set; }
+        public float? AutoSteer { get; set; }
 
         public BusVehicle Vehicle => vehicle;
 
@@ -39,7 +41,7 @@ namespace AnkaraBus.Vehicle
         private void Update()
         {
             float throttle = Mathf.Max(TouchThrottle, AutoThrottle);
-            float brake = TouchBrake;
+            float brake = Mathf.Max(TouchBrake, AutoBrake);
             float steerKeys = 0f;
 
             var kb = Keyboard.current;
@@ -61,7 +63,7 @@ namespace AnkaraBus.Vehicle
 
             vehicle.Throttle = throttle;
             vehicle.Brake = brake;
-            vehicle.Steer = TouchSteer ?? keyboardSteer;
+            vehicle.Steer = TouchSteer ?? AutoSteer ?? keyboardSteer;
 
             if (autoReleaseHandbrake && vehicle.Handbrake && throttle > 0.1f && brake < 0.1f)
                 vehicle.Handbrake = false;

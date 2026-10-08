@@ -12,6 +12,34 @@ namespace AnkaraBus.EditorTools
     public static class ProjectSetup
     {
 
+        /// <summary>
+        /// TextMeshPro'nun varsayılan font ve ayarları (BusHud bunları kullanır). Bir kez içe aktarılır.
+        /// İçe aktarma eşzamansızdır; içe aktarma başladıysa true döner.
+        /// </summary>
+        public static bool ImportTmpEssentials()
+        {
+            if (AssetDatabase.LoadAssetAtPath<Object>("Assets/TextMesh Pro/Resources/TMP Settings.asset") != null)
+                return false;
+            var ugui = UnityEditor.PackageManager.PackageInfo.FindForAssetPath("Packages/com.unity.ugui");
+            string package = ugui != null ? ugui.resolvedPath + "/Package Resources/TMP Essential Resources.unitypackage" : null;
+            if (package == null || !System.IO.File.Exists(package))
+            {
+                Debug.LogWarning("[ProjectSetup] TMP Essential Resources paketi bulunamadı.");
+                return false;
+            }
+            UnityEditor.AssetPackage.Package.Import(package, false);
+            return true;
+        }
+
+        /// <summary>Komut satırı: içe aktarma bitene kadar bekler.</summary>
+        public static void ImportTmpEssentialsBatch()
+        {
+            AssetDatabase.importPackageCompleted += _ => EditorApplication.Exit(0);
+            AssetDatabase.importPackageFailed += (_, error) => { Debug.LogError(error); EditorApplication.Exit(1); };
+            if (!ImportTmpEssentials())
+                EditorApplication.Exit(0);
+        }
+
         [MenuItem("Ankara Bus/Proje Ayarlarını Uygula")]
         public static void Apply()
         {
@@ -42,6 +70,8 @@ namespace AnkaraBus.EditorTools
 
             // Düşük / Normal / Yüksek kalite seviyeleri
             KaliteKurulumu.Kur();
+
+            ImportTmpEssentials();
 
             AssetDatabase.SaveAssets();
 

@@ -73,12 +73,12 @@ Script'ler şu an hazır (`Assets/_Project/Scripts`). Unity bunları ilk açıl�
 - [ ] Simge yapılar: Atakule, Kızılay AVM, TBMM duvarı ve kapısı, Kuğulu gölet.
 - [ ] Binalar: 3–5 tip **modüler Ankara apartmanı** (4–8 kat, balkonlu, sıva renkleri, zemin katta dükkân), her birinden renk/kat varyasyonu. Teker teker modellemek yerine kit mantığı.
 - [ ] Mobil bütçe: bina başına 1 materyal + doku atlası, LOD0/LOD1/billboard, harita parçası başına < 150 draw call, < 300k üçgen görünür alanda.
-- [ ] Unity: statik batching, ışık **bake** (gerçek zamanlı gölge sadece otobüse), occlusion culling.
+- [x] Unity: statik batching, ışık **bake** (gerçek zamanlı gölge sadece otobüse), occlusion culling (Y5, `Hat1IsikBake`).
 
 ## Faz 3 — Oynanış döngüsü (3–5 gün)
 
-- [ ] Haritaya 4–6 `BusStop` + bir `BusRoute` yerleştir.
-- [ ] `BusHud`: hız, hat, sıradaki durak.
+- [x] Haritaya 4–6 `BusStop` + bir `BusRoute` yerleştir (5 durak, otomatik pilotla doğrulandı).
+- [x] `BusHud`: hız, hat, sıradaki durak.
 - [ ] Hat başlangıcı → duraklar → bitiş ekranı.
 - [ ] Basit ana menü: otobüs seç, hat seç, başla.
 - [ ] Ses: motor, kapı, fren, sinyal (mevcut `.wav` dosyalarından).

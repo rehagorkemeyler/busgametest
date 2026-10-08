@@ -27,7 +27,7 @@ Palete yeni renk eklenecekse `apartman_kit.py` içindeki `PALETTE` sözlüğün�
 
 ## Eksen ve pivot kuralları (Unity)
 
-> Blender → FBX → Unity dönüşümü hesapla belirlendi. Unity'de ilk açılışta bir bina ve bir yol parçasını sahneye koyup kontrol edin. Yön tersse bu belgeyi düzeltin.
+> **Unity'de doğrulandı (8 Ekim 2026, Hat 1 sahnesi):** Bulvar binalarında dükkân, tente ve balkonlu ön cephe yola, sade arka cephe dışa bakıyor; Cinnah'ın iki yanındaki binalar da yola dönük. Bulvar parçaları, T kavşağı (Cinnah ağzı) ve Cinnah virajları boşluksuz birleşiyor. Aşağıdaki kurallar doğru, düzeltme gerekmedi.
 
 | | Pivot | Yön |
 |---|---|---|

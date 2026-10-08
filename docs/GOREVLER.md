@@ -48,7 +48,14 @@ Eski prompt (referans):
 **Prompt:**
 > `TestTrack` sahnesini Android APK olarak build al. Telefonuma (USB hata ayıklama açık) yükle, Unity Profiler'ı telefona bağla. FPS, draw call ve bellek değerlerini `docs/PERFORMANS.md` dosyasına yaz. Commit'le, push'la.
 
-### Y5 — Haritayı sahneye kur (hazır yerleşimle)
+### Y5 — Haritayı sahneye kur (hazır yerleşimle) ✅
+Yapıldı (8 Ekim 2026):
+- Sahne: **Ankara Bus → Hat 1 Sahnesini Kur** (`Hat1SahneKurucu`): harita (499 obje, eksik model yok), otobüs `OtobusBaslangic`'ta, `Player` etiketi, `RouteTracker` → `Hat_1`, sol üstte `BusHud` (TextMeshPro).
+- Yön kontrolü: bina cepheleri yola bakıyor, yol parçaları boşluksuz; `MODEL_KITLERI.md` notu güncellendi.
+- Işık ve occlusion: **Ankara Bus → Hat 1 Işık ve Occlusion Bake** (`Hat1IsikBake`): Mixed güneş, Subtractive (bina/yol gölgeleri lightmap'te, gerçek zamanlı gölgeyi yalnızca otobüs ve trafik verir), 2 lightmap (2048), yol boyunca ışık probları, occlusion (örtücü: binalar ve simge yapılar). Sahne yeniden kurulursa bake tekrar çalıştırılmalı.
+- Sürüş doğrulaması: **Ankara Bus → Hat 1 Sürüş Testi (otomatik pilot)** (`SurusTestiEditor` + `OtomatikPilot`). Editor'de 264 sn, Galaxy S24 FE'de 265 sn: 5 durağın hepsi tamamlandı, takılma yok. Trafik: 24 araç, otobüsün 80 m çevresinde 2–13 hareketli araç, pilot öndeki araç için yavaşladı. Telefon için **Ankara Bus → Android → Sürüş Testi APK'sı**.
+
+Eski prompt (referans):
 **Prompt:**
 > `docs/HARITA_TASARIMI.md`'yi oku. `Assets/_Project/Scenes/Hat1_KizilayAtakule.unity` adında yeni bir sahne oluştur ve Unity menüsünden **Ankara Bus → Hat 1 Haritasını Kur**'u çalıştır (`Scripts/Editor/HaritaKurucu.cs`). Konsolda "Model bulunamadı" uyarısı varsa nedenini bul. Bir bina ve bir yol parçasında ön yönün doğru olduğunu kontrol et (bina ön cephesi yola, yol parçaları birbirine bitişik). Hata varsa düzeltip `docs/MODEL_KITLERI.md`'deki eksen notunu güncelle. Y3'te kurulan otobüs prefabını `OtobusBaslangic` noktasına koy, etiketini `Player` yap, `RouteTracker`'ın Route alanına `Hat_1` objesini bağla, `BusHud` ekle. Trafiğin (`Trafik` objesi, bkz. `docs/TRAFIK.md`) çalıştığını kontrol et. Directional Light'ı ayarla, ışığı ve occlusion culling'i bake et. Play modunda Kızılay'dan Atakule'ye sür ve durakların tamamlandığını doğrula. Commit'le, push'la.
 

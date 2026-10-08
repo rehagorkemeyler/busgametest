@@ -27,3 +27,7 @@
 *.ttf  filter=lfs diff=lfs merge=lfs -text
 *.otf  filter=lfs diff=lfs merge=lfs -text
 *.raw  filter=lfs diff=lfs merge=lfs -text
+
+# Işık bake çıktısı (ikili)
+LightingData.asset filter=lfs diff=lfs merge=lfs -text
+OcclusionCullingData.asset filter=lfs diff=lfs merge=lfs -text
