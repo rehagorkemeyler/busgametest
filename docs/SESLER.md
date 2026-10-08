@@ -39,4 +39,13 @@ Motor çalışınca `D_2566UH_ein` sesi bir kez çalar. `D_2566UH_aus` (stop) ş
 - **Yükleme:** 2 sn'den kısa sesler belleğe açık (Decompress On Load), uzun döngüler sıkıştırılmış halde bellekte (Compressed In Memory).
 - **Kanal:** 3B konumlandırılan ve döngüsel sesler mono. Yalnızca motor çalıştırma/durdurma, kentkart ve "dur" zili stereo kalır.
 
+## Düzey dengesi (8 Ekim 2026)
+
+Kayıtların RMS düzeyleri ölçülerek dengelendi (kulakla değil, ölçümle; telefonda dinleyip ince ayar yapılabilir):
+
+- **Motor katmanları** (`OtobusSesKurucu.EngineLayers`): Komşu devir kayıtları arasında 10 dB'ye varan fark vardı (devir yükselirken ses kabarıp sönüyordu). Çarpanlar, düzey devirle hafifçe (~6 dB) yükselecek şekilde ayarlandı; en yüksek çarpan 1 (AudioSource düzeyi 1'i geçemez).
+- **Çok kısık kayıtlar dosyada yükseltildi** (tepe −1 dBFS'yi aşmadan): `IBIS_piep` +15,6 dB (motorun 18 dB altındaydı, duyulmuyordu), `D_bremse_treten` +11,3, `D_bremse_loesen` +7,3, `D_Retarder_257` +10,1, `DoorOpen2` +8,8, `DoorClose2/3` +9,6 (orta/arka kapı ön kapıdan 13 dB kısıktı), `D_2566UH_ein` +6,2, `PBrake_On/Off` +1,7 / +4.
+- **`BusAudio` çarpanları:** şanzıman uğultusu 0,45 → 0,25, kabin tıkırtısı 0,35 → 0,15, "dur" zili 0,4–1 → 0,15–0,4 (motorun üstünde baskındı), geri vites uyarısı 0,7 → 1.
+- **Düzeltme:** fren bırakma sesi hiç çalmıyordu (basınç birkaç karede düştüğü için koşul tutmuyordu); artık "basıldı" durumu izleniyor.
+
 Seviye ayarı için `BusAudio` bileşenindeki katman `volume` değerleri ve `masterVolume` kullanılır. Kurucuyu tekrar çalıştırmak bu değerleri sıfırlar; kalıcı bir değişiklik `OtobusSesKurucu.EngineLayers` içinde yapılmalı.

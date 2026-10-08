@@ -53,6 +53,8 @@ namespace AnkaraBus.Gameplay
 
         [Header("Sürüş konforu (m/sn²)")]
         [SerializeField] private float sertFren = 3f;
+        [Tooltip("Bu hızın altında sert fren sayılmaz: duruşun son anında süspansiyon geri yaylanınca ölçülen kısa sıçrama.")]
+        [SerializeField] private float sertFrenMinHizKmh = 10f;
         [SerializeField] private float sertKalkis = 1.8f;
         [SerializeField] private float sertViraj = 2.5f;
         [SerializeField] private int konforCezasi = 10;
@@ -82,6 +84,7 @@ namespace AnkaraBus.Gameplay
         private Vector3 lastVelocity;
         private Vector3 smoothAccel;
         private float ignoreAccelUntil;
+        private float lastRedPenalty = -10f;
         private float nextBrake, nextLaunch, nextCorner;
         private float speedingTime;
         private float lastCollision = -10f;
@@ -173,7 +176,7 @@ namespace AnkaraBus.Gameplay
             float along = Vector3.Dot(smoothAccel, transform.forward);
             float side = Mathf.Abs(Vector3.Dot(smoothAccel, transform.right));
             bool movingForward = Vector3.Dot(v, transform.forward) > 0.5f;
-            if (movingForward && along < -sertFren && Time.time >= nextBrake)
+            if (movingForward && along < -sertFren && vehicle.SpeedKmh > sertFrenMinHizKmh && Time.time >= nextBrake)
             {
                 Comfort("Sert fren", 1f);
                 nextBrake = Time.time + 2.5f;
@@ -251,8 +254,10 @@ namespace AnkaraBus.Gameplay
                 bool relevant = Mathf.Abs(lateral) < 7f && Mathf.Abs(ahead) < 15f
                                 && Vector3.Dot(transform.forward, lineFwd) > 0.7f;
                 float side = relevant ? Mathf.Sign(ahead) : float.NaN;
-                if (lastSide[i] < 0f && side > 0f && lane.IsRed)
+                // Yan yana şeritlerin durma çizgileri aynı geçişte birden çok kez sayılmasın
+                if (lastSide[i] < 0f && side > 0f && lane.IsRed && Time.time - lastRedPenalty > 3f)
                 {
+                    lastRedPenalty = Time.time;
                     ozet.kirmiziIsik++;
                     Add("Kırmızı ışık", -kirmiziCezasi);
                 }

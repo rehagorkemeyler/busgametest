@@ -69,10 +69,25 @@ namespace AnkaraBus.Vehicle
         private AudioSource retarderSource, transmissionSource, rattleSource, reverseSource, hornSource, cabSource;
         private readonly List<AudioSource> doorSources = new List<AudioSource>();
         private float interiorBlend;
-        private float lastBrake;
+        private bool brakeApplied;
         private bool lastHandbrake;
         private int lastOnboard;
         private float stopRequestTimer = -1f;
+
+        /// <summary>Tek seferlik ses çalındı: (klip adı, ses düzeyi). Testler ve hata ayıklama için.</summary>
+        public event Action<string, float> OneShotPlayed;
+
+        public bool HornPlaying => hornSource != null && hornSource.isPlaying;
+        public bool ReverseBeepPlaying => reverseSource != null && reverseSource.isPlaying;
+        public float InteriorBlend => interiorBlend;
+
+        /// <summary>Motor katmanlarının o anki durumu: (klip, iç set mi, ses düzeyi, perde).</summary>
+        public IEnumerable<(string clip, bool interior, float volume, float pitch)> EngineState()
+        {
+            foreach (var l in engine)
+                if (l.source != null)
+                    yield return (l.clip.name, l.interior, l.source.volume, l.source.pitch);
+        }
 
         public void Horn(bool on)
         {
@@ -145,7 +160,7 @@ namespace AnkaraBus.Vehicle
 
             lastHandbrake = vehicle.Handbrake;
             if (engineStart != null)
-                cabSource.PlayOneShot(engineStart, masterVolume);
+                OneShot(cabSource, engineStart, masterVolume);
         }
 
         private void Update()
@@ -169,25 +184,33 @@ namespace AnkaraBus.Vehicle
             }
             if (transmissionSource != null)
             {
-                transmissionSource.volume = masterVolume * speed01 * 0.45f;
+                transmissionSource.volume = masterVolume * speed01 * 0.25f;
                 transmissionSource.pitch = 0.6f + 0.8f * speed01;
             }
             if (rattleSource != null)
-                rattleSource.volume = masterVolume * Mathf.Clamp01(speedKmh / 45f) * 0.35f * interiorBlend;
+                rattleSource.volume = masterVolume * Mathf.Clamp01(speedKmh / 45f) * 0.15f * interiorBlend;
 
             // fren havası: basınç artınca "tıs", bırakılınca hava boşaltma
+            // (basınç bırakınca birkaç karede düşer; bu yüzden "basıldı" durumu tutulur)
             float brake = vehicle.BrakePressure;
-            if (brake > 0.25f && lastBrake <= 0.25f && brakeApply != null)
-                cabSource.PlayOneShot(brakeApply, masterVolume * 0.6f);
-            if (brake < 0.05f && lastBrake >= 0.3f && brakeRelease != null)
-                cabSource.PlayOneShot(brakeRelease, masterVolume * 0.8f);
-            lastBrake = brake;
+            if (brake > 0.25f && !brakeApplied)
+            {
+                brakeApplied = true;
+                if (brakeApply != null)
+                    OneShot(cabSource, brakeApply, masterVolume * 0.6f);
+            }
+            else if (brake < 0.05f && brakeApplied)
+            {
+                brakeApplied = false;
+                if (brakeRelease != null)
+                    OneShot(cabSource, brakeRelease, masterVolume * 0.8f);
+            }
 
             if (vehicle.Handbrake != lastHandbrake)
             {
                 var clip = vehicle.Handbrake ? handbrakeOn : handbrakeOff;
                 if (clip != null)
-                    cabSource.PlayOneShot(clip, masterVolume);
+                    OneShot(cabSource, clip, masterVolume);
                 lastHandbrake = vehicle.Handbrake;
             }
 
@@ -198,7 +221,7 @@ namespace AnkaraBus.Vehicle
                     reverseSource.Play();
                 else if (!reversing && reverseSource.isPlaying)
                     reverseSource.Stop();
-                reverseSource.volume = masterVolume * 0.7f;
+                reverseSource.volume = masterVolume;
             }
 
             // kentkart: her binen yolcu için ön kapıda bip
@@ -207,7 +230,7 @@ namespace AnkaraBus.Vehicle
             if (passengers != null)
             {
                 if (passengers.Onboard > lastOnboard && validatorBeep != null && doorSources.Count > 0)
-                    doorSources[0].PlayOneShot(validatorBeep, masterVolume * 0.8f);
+                    OneShot(doorSources[0], validatorBeep, masterVolume * 0.8f);
                 lastOnboard = passengers.Onboard;
             }
 
@@ -216,7 +239,7 @@ namespace AnkaraBus.Vehicle
             {
                 stopRequestTimer -= Time.deltaTime;
                 if (stopRequestTimer <= 0f && stopRequest != null && (passengers == null || passengers.Onboard > 0))
-                    cabSource.PlayOneShot(stopRequest, masterVolume * (0.4f + 0.6f * interiorBlend));
+                    OneShot(cabSource, stopRequest, masterVolume * (0.15f + 0.25f * interiorBlend));
             }
         }
 
@@ -268,7 +291,7 @@ namespace AnkaraBus.Vehicle
         private void OnSelector(BusVehicle.GearSelector selector)
         {
             if (gearButton != null && cabSource != null)
-                cabSource.PlayOneShot(gearButton, masterVolume * 0.7f);
+                OneShot(cabSource, gearButton, masterVolume * 0.7f);
         }
 
         private void OnDoor(int index, bool open)
@@ -277,12 +300,18 @@ namespace AnkaraBus.Vehicle
                 return;
             var clips = open ? doorOpen : doorClose;
             if (index < clips.Length && clips[index] != null)
-                doorSources[index].PlayOneShot(clips[index], masterVolume);
+                OneShot(doorSources[index], clips[index], masterVolume);
         }
 
         private void OnStopServed(BusStop stop)
         {
             stopRequestTimer = UnityEngine.Random.Range(8f, 20f);
+        }
+
+        private void OneShot(AudioSource source, AudioClip clip, float volume)
+        {
+            source.PlayOneShot(clip, volume);
+            OneShotPlayed?.Invoke(clip.name, volume);
         }
 
         private AudioSource MakeLoop(Transform parent, AudioClip clip, float spatial)

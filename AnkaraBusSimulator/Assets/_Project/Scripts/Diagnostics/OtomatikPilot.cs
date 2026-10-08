@@ -29,6 +29,15 @@ namespace AnkaraBus.Diagnostics
         [Tooltip("Hat bitince yüklenecek sahne (boşsa durur).")]
         [SerializeField] private string sonrakiSahne;
 
+        [Header("Senaryo (testler)")]
+        [Tooltip("Gaz pedalının en fazla basılacağı oran (1 = tam gaz).")]
+        [SerializeField] private float maxGaz = 1f;
+        [Tooltip("Bu sıradaki durakta durmadan geç (-1: hiçbiri).")]
+        [SerializeField] private int atlanacakDurak = -1;
+        [Tooltip("Kırmızı ışıkta bilerek geç (yeşilse çizgide kırmızıyı bekler).")]
+        [SerializeField] private bool kirmizidaGec;
+        [SerializeField] private float baslamaGecikmesi = 3f;
+
         private const float OnUzunluk = 6f;
 
         private readonly List<Vector3> yol = new List<Vector3>();
@@ -65,6 +74,14 @@ namespace AnkaraBus.Diagnostics
         // Yolcu gözlemi
         private int binen, inen;
 
+        public void Senaryo(float gaz, int atla, bool kirmizi, float gecikme)
+        {
+            maxGaz = gaz;
+            atlanacakDurak = atla;
+            kirmizidaGec = kirmizi;
+            baslamaGecikmesi = gecikme;
+        }
+
         public void Configure(string[] seritSirasi, string sonraki)
         {
             if (seritSirasi != null && seritSirasi.Length > 0)
@@ -86,7 +103,7 @@ namespace AnkaraBus.Diagnostics
             tracker.RouteCompleted += () => Debug.Log($"[Surus] HAT TAMAMLANDI, süre {Time.time - baslangic:F0} sn");
 
             // BusPassengers'ı PassengerManager ekler; birkaç kare bekle
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(baslamaGecikmesi);
             passengers = bus.GetComponent<BusPassengers>();
             int oncekiYolcu = passengers != null ? passengers.Onboard : 0;
             if (passengers != null)
@@ -115,9 +132,10 @@ namespace AnkaraBus.Diagnostics
             {
                 TrafigiGozle();
                 var stop = tracker.NextStop;
-                float stopMesafe = MesafeYolBoyunca(stop.transform.position);
+                bool atla = tracker.NextStopIndex == atlanacakDurak;
+                float stopMesafe = atla ? float.MaxValue : MesafeYolBoyunca(stop.transform.position);
 
-                if (stop.Contains(bus.transform.position) && stopMesafe - ilerleme < 1.5f)
+                if (!atla && stop.Contains(bus.transform.position) && stopMesafe - ilerleme < 1.5f)
                 {
                     yield return DuraktaBekle(stop);
                     sonIlerlemeZamani = Time.time;
@@ -282,6 +300,16 @@ namespace AnkaraBus.Diagnostics
                 if (kalan < -1f || kalan > 80f)
                     continue;
                 bool durabilir = v * v / (2f * 3f) < kalan;
+                if (kirmizidaGec)
+                {
+                    // Test: kırmızıda geç. Işık yeşilse çizgide kırmızıyı bekle, kırmızıysa dur(ma).
+                    if (kalan < 40f && !serit.IsRed)
+                    {
+                        hedefHiz = Mathf.Min(hedefHiz, Mathf.Sqrt(2f * 1.8f * Mathf.Max(0f, kalan - 1f)));
+                        kirmizidaBekliyor = kalan < 15f;
+                    }
+                    continue;
+                }
                 if (serit.MustStop(durabilir))
                 {
                     hedefHiz = Mathf.Min(hedefHiz, Mathf.Sqrt(2f * 1.8f * Mathf.Max(0f, kalan - 1f)));
@@ -312,8 +340,8 @@ namespace AnkaraBus.Diagnostics
             }
 
             float fark = hedefHiz - v;
-            input.AutoThrottle = fark > 0.3f ? Mathf.Clamp01(fark * 0.35f + 0.15f) : 0f;
-            input.AutoBrake = fark < -0.5f ? Mathf.Clamp01(-fark * 0.25f) : (hedefHiz < 0.2f ? 0.6f : 0f);
+            input.AutoThrottle = fark > 0.3f ? Mathf.Min(maxGaz, Mathf.Clamp01(fark * 0.35f + 0.15f)) : 0f;
+            input.AutoBrake = fark < -0.5f ? Mathf.Clamp01(-fark * 0.25f) : (hedefHiz < 0.2f ? (bus.IsStopped ? 0.6f : 0.3f) : 0f);
         }
 
         private int EnYakin(Vector3 p)
@@ -369,10 +397,12 @@ namespace AnkaraBus.Diagnostics
 
         private IEnumerator DuraktaBekle(BusStop stop)
         {
+            // Normal sürücü gibi: duruşa kadar hafif fren, durunca tam frenle tut
             input.AutoThrottle = 0f;
-            input.AutoBrake = 1f;
+            input.AutoBrake = 0.3f;
             while (!bus.IsStopped)
                 yield return null;
+            input.AutoBrake = 1f;
             yield return new WaitForSeconds(0.5f);
 
             int bekleyen = PassengerManager.Instance != null ? PassengerManager.Instance.WaitingAt(stop).Count : -1;

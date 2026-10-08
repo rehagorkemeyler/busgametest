@@ -16,16 +16,17 @@ namespace AnkaraBus.EditorTools
         // (dosya, kaydedildiği devir, kokpit seti mi, yük katmanı mı, ses düzeyi)
         private static readonly (string file, float rpm, bool interior, bool load, float volume)[] EngineLayers =
         {
-            ("D_2566UH@575", 575f, true, false, 1f),
-            ("D_2566UH@758", 758f, true, false, 1f),
-            ("D_2566UHx@1214", 1214f, true, false, 0.8f),
-            ("D_2566UH@1939", 1939f, true, false, 1f),
-            ("D_2566UH@2230", 2230f, true, false, 1f),
+            // Düzeyler kayıtların RMS'ine göre eşitlendi: devirle hafifçe (~6 dB) yükselen düzgün bir eğri
+            ("D_2566UH@575", 575f, true, false, 0.4f),
+            ("D_2566UH@758", 758f, true, false, 0.73f),
+            ("D_2566UHx@1214", 1214f, true, false, 0.23f),
+            ("D_2566UH@1939", 1939f, true, false, 0.83f),
+            ("D_2566UH@2230", 2230f, true, false, 0.31f),
             ("D_2566UHx@722", 722f, false, false, 1f),
-            ("D_2566UHx@1214", 1214f, false, false, 1f),
-            ("D_2566UHx@1653", 1653f, false, false, 1f),
-            ("D_2566UHx@2296", 2296f, false, false, 1f),
-            ("D_2566UHx@1280_Last", 1280f, false, true, 0.7f),
+            ("D_2566UHx@1214", 1214f, false, false, 0.23f),
+            ("D_2566UHx@1653", 1653f, false, false, 0.81f),
+            ("D_2566UHx@2296", 2296f, false, false, 0.36f),
+            ("D_2566UHx@1280_Last", 1280f, false, true, 0.45f),
         };
 
         // döngüsel ya da 3B çalınan sesler mono yapılır (3B konumlandırma tek kanal ister, bellek de yarıya iner)

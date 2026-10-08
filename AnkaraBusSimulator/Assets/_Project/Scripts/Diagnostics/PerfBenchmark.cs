@@ -19,6 +19,8 @@ namespace AnkaraBus.Diagnostics
         [SerializeField] private float segmentSeconds = 10f;
         [Tooltip("Bitince yüklenecek sahne. Boşsa tur biter.")]
         [SerializeField] private string nextScene;
+        [Tooltip("0/1/2: ölçüm Düşük/Normal/Yüksek kalitede yapılır (-1: cihazın kendi seçimi).")]
+        [SerializeField] private int zorlaKalite = -1;
 
         private PerfProbe probe;
         private bool measuring;
@@ -40,9 +42,11 @@ namespace AnkaraBus.Diagnostics
                 yield break;
             }
 
+            if (zorlaKalite >= 0)
+                GrafikAyarlari.Uygula((KaliteSeviyesi)zorlaKalite, kaydet: false);
             probe = new PerfProbe();
             Debug.Log($"[Perf] BASLA {label} cihaz={SystemInfo.deviceModel} gpu={SystemInfo.graphicsDeviceName} " +
-                      $"api={SystemInfo.graphicsDeviceType} kalite={GrafikAyarlari.Mevcut} tam_kalite_model={(bus.GetComponent<BusKaliteModeli>()?.TamKaliteAktif ?? false)} ram_mb={SystemInfo.systemMemorySize} ekran={Screen.width}x{Screen.height}");
+                      $"api={SystemInfo.graphicsDeviceType} kalite={GrafikAyarlari.Mevcut} ses={(bus.GetComponent<BusAudio>() != null ? "açık" : "kapalı")} puan={(bus.GetComponent<AnkaraBus.Gameplay.SeferPuanlama>() != null ? "açık" : "kapalı")} tam_kalite_model={(bus.GetComponent<BusKaliteModeli>()?.TamKaliteAktif ?? false)} ram_mb={SystemInfo.systemMemorySize} ekran={Screen.width}x{Screen.height}");
             yield return new WaitForSeconds(warmupSeconds);
 
             var route = FindAnyObjectByType<BusRoute>();

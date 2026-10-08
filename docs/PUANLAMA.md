@@ -12,11 +12,11 @@ Puanlama diğer sistemleri yalnızca okur: `BusVehicle`, `RouteTracker`, `BusPas
 | Durağa yanaşma | +20 | |
 | Yanaşma hassasiyeti | +0…30 | otobüs durak merkezine ne kadar yakınsa o kadar |
 | Durak atlama | −100 | durağın yanından geçip 25 m uzaklaşınca; hat sıradaki durağa geçer |
-| Sert fren | −10 × yük | yavaşlama > 3 m/sn² |
+| Sert fren | −10 × yük | yavaşlama > 3 m/sn², 10 km/s üstünde (duruşun son anındaki süspansiyon sıçraması sayılmaz) |
 | Sert kalkış | −5 × yük | hızlanma > 1.8 m/sn² |
 | Sert viraj | −8 × yük | yanal ivme > 2.5 m/sn² |
 | Hız sınırı | −6 / 3 sn | 55 km/s üstü (sınır 50, tolerans 5) |
-| Kırmızıda geçme | −50 | otobüsün önü, kırmızı ışıklı şeridin durma çizgisini aynı yönde geçerse (sarı sayılmaz) |
+| Kırmızıda geçme | −50 | otobüsün önü, kırmızı ışıklı şeridin durma çizgisini aynı yönde geçerse (sarı sayılmaz); yan yana şeritler aynı geçişte tek ceza |
 | Çarpışma | −(15 + 5 × hız), en çok −100 | zemin/kaldırım temasları sayılmaz |
 | Zamanında bitiş | +100 | gecikilen her 3 sn için −1 |
 | Konfor | +0…100 | hat sonunda eklenir |

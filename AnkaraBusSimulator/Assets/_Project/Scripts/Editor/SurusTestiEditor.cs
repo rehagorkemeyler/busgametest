@@ -7,7 +7,7 @@ namespace AnkaraBus.EditorTools
 {
     /// <summary>
     /// Bir hattı Play modunda otomatik pilotla baştan sona sürer ve durakların tamamlandığını doğrular.
-    /// Menü: Ankara Bus > Hat 1 / Hat 2 Sürüş Testi (otomatik pilot)
+    /// Menü: Ankara Bus > Hat 1 / Hat 2 Sürüş Testi (otomatik pilot), Ses ve Puan Testi (Hat 1)
     /// Komut satırı: -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1Batch (veya RunHat2Batch);
     /// bitince Unity kapanır
     /// </summary>
@@ -16,6 +16,7 @@ namespace AnkaraBus.EditorTools
     {
         private const string ActiveKey = "AnkaraBus.SurusTesti.Aktif";
         private const string BatchKey = "AnkaraBus.SurusTesti.Batch";
+        private const string EndKey = "AnkaraBus.SurusTesti.Bitis";
         private const double TimeoutSeconds = 1200d;
 
         private static double startTime;
@@ -38,6 +39,15 @@ namespace AnkaraBus.EditorTools
 
         public static void RunHat2Batch() => Start(Hat2SahneKurucu.ScenePath, batch: true);
 
+        [MenuItem("Ankara Bus/Ses ve Puan Testi (Hat 1)")]
+        public static void RunSesPuanMenu()
+        {
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                Start(Hat1SahneKurucu.ScenePath, batch: false, sesPuan: true);
+        }
+
+        public static void RunSesPuanBatch() => Start(Hat1SahneKurucu.ScenePath, batch: true, sesPuan: true);
+
         private static void RunMenu(string scenePath)
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -45,12 +55,16 @@ namespace AnkaraBus.EditorTools
             Start(scenePath, batch: false);
         }
 
-        private static void Start(string scenePath, bool batch)
+        private static void Start(string scenePath, bool batch, bool sesPuan = false)
         {
             EditorSceneManager.OpenScene(scenePath);
-            new GameObject("OtomatikPilot").AddComponent<OtomatikPilot>();
+            if (sesPuan)
+                new GameObject("SesPuanSenaryosu").AddComponent<SesPuanSenaryosu>();
+            else
+                new GameObject("OtomatikPilot").AddComponent<OtomatikPilot>();
             SessionState.SetBool(ActiveKey, true);
             SessionState.SetBool(BatchKey, batch);
+            SessionState.SetString(EndKey, sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
             Hook();
             EditorApplication.EnterPlaymode();
         }
@@ -67,6 +81,12 @@ namespace AnkaraBus.EditorTools
 
         private static void OnLog(string message, string stack, LogType type)
         {
+            string end = SessionState.GetString(EndKey, "[Surus] BITTI");
+            if (message.StartsWith(end))
+            {
+                Finish(problems == 0, message);
+                return;
+            }
             if (!message.StartsWith("[Surus]"))
             {
                 if (type == LogType.Exception)
@@ -75,9 +95,6 @@ namespace AnkaraBus.EditorTools
             }
             if (message.Contains("TAKILDI") || message.Contains("tamamlanmadı"))
                 problems++;
-            // Pilot, hat bitince yolcu ve trafik özetini yazıp "[Surus] BITTI" der
-            if (message.StartsWith("[Surus] BITTI"))
-                Finish(problems == 0, message);
         }
 
         private static void OnUpdate()
@@ -93,6 +110,7 @@ namespace AnkaraBus.EditorTools
             bool batch = SessionState.GetBool(BatchKey, false);
             SessionState.EraseBool(ActiveKey);
             SessionState.EraseBool(BatchKey);
+            SessionState.EraseString(EndKey);
             Debug.Log($"[SurusTesti] {(ok ? "BAŞARILI" : "BAŞARISIZ")}: {message}, sorun sayısı {problems}");
 
             if (batch)

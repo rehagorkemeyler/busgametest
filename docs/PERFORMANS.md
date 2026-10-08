@@ -174,3 +174,24 @@ S24 FE ilk açılışta **Yüksek** seçti, `BusKaliteModeli` tam kalite modeli 
 | Atakule | dış | 60 (59,0) | 7,1 | 6,5 | 129 | 396 bin |
 
 Ölçüm 1 ile aynı (beklenen: aynı ayar ve aynı tam kalite otobüs). En ağır yerde GPU 10,4 ms; 16,7 ms sınırına göre ~%40 pay var. Bellek 327 MB.
+
+## Ölçüm 6 — Ses ve puan sisteminin maliyeti (Galaxy S24 FE, Düşük ayar)
+
+A32 yanımızda olmadığı için S24 FE'de, kalite **Düşük**'e zorlanarak ölçüldü (Wi‑Fi hata ayıklama, şarjda değil, ısıl durum 0, pil %37, 34 °C). Aynı tur iki APK ile: sesler + puanlama + puan arayüzü **açık** ve build sırasında bu üç bileşen çıkarılmış (**kapalı**). Ölçüm: **Ankara Bus → Android** altındaki `AndroidBuild.PerfBuildDusukSesli` / `PerfBuildDusukSessiz`.
+
+| Yer | CPU ms açık / kapalı | GPU ms açık / kapalı | FPS açık / kapalı |
+|---|---|---|---|
+| TestTrack, duran, dış | 6,6 / 31,6 | 3,0 / 3,5 | 60 / **24** (yalnızca ilk dilim) |
+| TestTrack, kokpit | 6,7 / 5,8 | 3,6 / 4,1 | 60 / 60 |
+| Kızılay AVM, dış | 8,4 / 11,0 | 5,8 / 5,8 | 60 / 60 |
+| Kızılay AVM, kokpit | 8,6 / 10,5 | 6,5 / 6,4 | 60 / 60 |
+| Meclis, dış | 8,5 / 10,8 | 4,7 / 4,7 | 60 / 60 |
+| Cinnah, dış | 8,5 / 10,0 | 3,2 / 3,0 | 60 / 60 |
+| Atakule, dış | 6,8 / 7,7 | 2,8 / 2,5 | 60 / 60 |
+| **Ortalama** | **7,5 / 10,7** | **4,0 / 3,9** | |
+
+Bellek: 230 / 229 MB.
+
+**Sonuç:** Sesler ve puan arayüzü FPS'i düşürmüyor. GPU ve bellek farkı ölçülemeyecek kadar küçük. CPU süresi kapalı build'de daha yüksek çıktı; bu, sistemlerin maliyetinin ölçüm gürültüsünden (telefon işlemci saatini yüke göre değiştiriyor, ±2–3 ms) küçük olduğunu gösterir. Kapalı build'deki tek 24 FPS dilimi uygulamanın ilk açılışındaki bir takılma; sonraki dilimlerde tekrarlanmadı.
+
+**Bekliyor:** A32 (Düşük) ölçümü. Telefon bağlanınca aynı iki APK ile yapılacak.

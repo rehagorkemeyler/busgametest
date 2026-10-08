@@ -20,7 +20,13 @@ namespace AnkaraBus.EditorTools
         public const string PerfApkPath = "Builds/AnkaraBus_perf.apk";
         public const string DriveTestApkPath = "Builds/AnkaraBus_surus_testi.apk";
 
-        private enum Mode { None, Perf, DriveTest }
+        private enum Mode { None, Perf, DriveTest, SesPuan }
+
+        public const string SesPuanApkPath = "Builds/AnkaraBus_ses_puan_testi.apk";
+
+        /// <summary>Ses ve puan senaryosu (SesPuanSenaryosu) Hat 1'de; sonuçlar logcat'te "[SesPuan]".</summary>
+        [MenuItem("Ankara Bus/Android/Ses ve Puan Testi APK'sı")]
+        public static void SesPuanBuild() => Build(Mode.SesPuan, new[] { Hat1SahneKurucu.ScenePath }, SesPuanApkPath);
 
         private static readonly string[] PerfScenes = { TestPistiKurucu.ScenePath, Hat1SahneKurucu.ScenePath };
 
@@ -30,6 +36,29 @@ namespace AnkaraBus.EditorTools
         public static void PerfBuildMenu() => PerfBuild();
 
         public static void PerfBuild() => Build(Mode.Perf, PerfScenes, PerfApkPath);
+
+        // Ses ve puan sisteminin maliyeti: Düşük kalitede, sistemler açık / kapalı iki APK
+        private static int forceQuality = -1;
+        private static bool stripAudioAndScore;
+
+        public static void PerfBuildDusukSesli() => BuildPerfVariant(false, "Builds/AnkaraBus_perf_dusuk_sesli.apk");
+
+        public static void PerfBuildDusukSessiz() => BuildPerfVariant(true, "Builds/AnkaraBus_perf_dusuk_sessiz.apk");
+
+        private static void BuildPerfVariant(bool strip, string apkPath)
+        {
+            forceQuality = (int)KaliteSeviyesi.Dusuk;
+            stripAudioAndScore = strip;
+            try
+            {
+                Build(Mode.Perf, PerfScenes, apkPath);
+            }
+            finally
+            {
+                forceQuality = -1;
+                stripAudioAndScore = false;
+            }
+        }
 
         [MenuItem("Ankara Bus/Android/Sürüş Testi APK'sı")]
         public static void DriveTestBuildMenu() => DriveTestBuild();
@@ -82,6 +111,14 @@ namespace AnkaraBus.EditorTools
                 if (mode == Mode.None || report == null)
                     return;
 
+                if (mode == Mode.SesPuan)
+                {
+                    var senaryo = new GameObject("SesPuanSenaryosu");
+                    SceneManager.MoveGameObjectToScene(senaryo, scene);
+                    senaryo.AddComponent<SesPuanSenaryosu>();
+                    return;
+                }
+
                 if (mode == Mode.DriveTest)
                 {
                     var pilot = new GameObject("OtomatikPilot");
@@ -97,11 +134,20 @@ namespace AnkaraBus.EditorTools
                 if (index < 0)
                     return;
 
+                if (stripAudioAndScore)
+                    foreach (var root in scene.GetRootGameObjects())
+                    {
+                        foreach (var c in root.GetComponentsInChildren<AnkaraBus.UI.PuanGostergesi>(true)) Object.DestroyImmediate(c);
+                        foreach (var c in root.GetComponentsInChildren<AnkaraBus.Gameplay.SeferPuanlama>(true)) Object.DestroyImmediate(c);
+                        foreach (var c in root.GetComponentsInChildren<AnkaraBus.Vehicle.BusAudio>(true)) Object.DestroyImmediate(c);
+                    }
+
                 var go = new GameObject("PerfBenchmark");
                 SceneManager.MoveGameObjectToScene(go, scene);
                 var benchmark = go.AddComponent<PerfBenchmark>();
                 var so = new SerializedObject(benchmark);
                 so.FindProperty("label").stringValue = scene.name;
+                so.FindProperty("zorlaKalite").intValue = forceQuality;
                 so.FindProperty("nextScene").stringValue =
                     index + 1 < PerfScenes.Length ? Path.GetFileNameWithoutExtension(PerfScenes[index + 1]) : "";
                 so.ApplyModifiedPropertiesWithoutUndo();
