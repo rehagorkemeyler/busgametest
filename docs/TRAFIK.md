@@ -52,7 +52,7 @@ Harita kurucusu ışıkları, bağlantı şeritlerini ve durma çizgilerini `Hat
 
 ## Bilinen sınırlar (MVP)
 
-- Şerit değiştirme ve sollama yok. Durak cebinde duran otobüsün arkasındaki araç, otobüs kalkana kadar bekler.
+- Sollama yalnızca duran engelin arkasında yapılır (aşağıda); hareketli yavaş aracı sollama yok.
 - Atakule dönüş halkasında trafik yok; Cinnah şeritleri halka girişinde biter.
 
 ## Sollama, korna ve dolmuş (`TrafficCar`)
