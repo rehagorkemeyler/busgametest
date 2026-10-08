@@ -54,7 +54,7 @@ Eski prompt (referans):
 Yapıldı (8 Ekim 2026):
 - Sahne: **Ankara Bus → Hat 1 Sahnesini Kur** (`Hat1SahneKurucu`): harita (499 obje, eksik model yok), otobüs `OtobusBaslangic`'ta, `Player` etiketi, `RouteTracker` → `Hat_1`, sol üstte `BusHud` (TextMeshPro).
 - Yön kontrolü: bina cepheleri yola bakıyor, yol parçaları boşluksuz; `MODEL_KITLERI.md` notu güncellendi.
-- Işık ve occlusion: **Ankara Bus → Hat 1 Işık ve Occlusion Bake** (`Hat1IsikBake`): Mixed güneş, Subtractive (bina/yol gölgeleri lightmap'te, gerçek zamanlı gölgeyi yalnızca otobüs ve trafik verir), 2 lightmap (2048), yol boyunca ışık probları, occlusion (örtücü: binalar ve simge yapılar). Sahne yeniden kurulursa bake tekrar çalıştırılmalı.
+- Işık ve occlusion: **Ankara Bus → Hat 1 Işık ve Occlusion Bake** (`HatIsikBake`): Mixed güneş, Subtractive (bina/yol gölgeleri lightmap'te, gerçek zamanlı gölgeyi yalnızca otobüs ve trafik verir), 2 lightmap (2048), yol boyunca ışık probları, occlusion (örtücü: binalar ve simge yapılar). Sahne yeniden kurulursa bake tekrar çalıştırılmalı.
 - Sürüş doğrulaması: **Ankara Bus → Hat 1 Sürüş Testi (otomatik pilot)** (`SurusTestiEditor` + `OtomatikPilot`). Editor'de 264 sn, Galaxy S24 FE'de 265 sn: 5 durağın hepsi tamamlandı, takılma yok. Trafik: 24 araç, otobüsün 80 m çevresinde 2–13 hareketli araç, pilot öndeki araç için yavaşladı. Telefon için **Ankara Bus → Android → Sürüş Testi APK'sı**.
 
 Eski prompt (referans):

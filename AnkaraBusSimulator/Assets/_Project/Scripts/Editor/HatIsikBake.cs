@@ -6,35 +6,40 @@ using UnityEngine;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// Hat 1 sahnesinin ışığını ve occlusion culling'ini bake eder.
+    /// Hat sahnelerinin (Hat 1, Hat 2) ışığını ve occlusion culling'ini bake eder.
     /// Işık: Mixed güneş, Subtractive mod. Bina ve yol gölgeleri lightmap'e işlenir; gerçek zamanlı gölgeyi
     /// yalnızca hareketli objeler (otobüs, trafik) verir. Mobilde gölge maliyetini otobüse indirir.
-    /// Menü: Ankara Bus > Hat 1 Işık ve Occlusion Bake
+    /// Menü: Ankara Bus > Hat 1 / Hat 2 Işık ve Occlusion Bake
+    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.HatIsikBake.BakeHat1Batch (veya BakeHat2Batch)
     /// </summary>
-    public static class Hat1IsikBake
+    public static class HatIsikBake
     {
         private const string MapsFolder = "Assets/_Project/Maps";
+        // İki hat aynı ışık ayarını paylaşır
         private const string LightingSettingsPath = "Assets/_Project/Scenes/Hat1_Isik.lighting";
 
         [MenuItem("Ankara Bus/Hat 1 Işık ve Occlusion Bake")]
-        public static void BakeMenu()
+        public static void BakeHat1Menu() => BakeMenu(Hat1SahneKurucu.ScenePath);
+
+        [MenuItem("Ankara Bus/Hat 2 Işık ve Occlusion Bake")]
+        public static void BakeHat2Menu() => BakeMenu(Hat2SahneKurucu.ScenePath);
+
+        public static void BakeHat1Batch() => EditorApplication.Exit(Bake(Hat1SahneKurucu.ScenePath) ? 0 : 1);
+
+        public static void BakeHat2Batch() => EditorApplication.Exit(Bake(Hat2SahneKurucu.ScenePath) ? 0 : 1);
+
+        private static void BakeMenu(string scenePath)
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
-            Bake();
+            Bake(scenePath);
         }
 
-        public static void BakeBatch()
-        {
-            bool ok = Bake();
-            EditorApplication.Exit(ok ? 0 : 1);
-        }
-
-        public static bool Bake()
+        public static bool Bake(string scenePath)
         {
             EnableLightmapUVs();
 
-            var scene = EditorSceneManager.OpenScene(Hat1SahneKurucu.ScenePath);
+            var scene = EditorSceneManager.OpenScene(scenePath);
             SetupSun();
             SetupLightmapScales();
             SetupLightProbes();
@@ -42,7 +47,7 @@ namespace AnkaraBus.EditorTools
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
             bool baked = Lightmapping.Bake();
-            Debug.Log($"[Hat1Bake] Işık bake {(baked ? "tamam" : "BAŞARISIZ")}, {watch.Elapsed.TotalMinutes:F1} dk, " +
+            Debug.Log($"[HatBake] {scene.name}: ışık bake {(baked ? "tamam" : "BAŞARISIZ")}, {watch.Elapsed.TotalMinutes:F1} dk, " +
                       $"{LightmapSettings.lightmaps.Length} lightmap");
 
             // Occlusion: yalnızca binalar ve simge yapılar örter; ağaç, lamba, yol yalnızca örtülür
@@ -60,7 +65,7 @@ namespace AnkaraBus.EditorTools
             StaticOcclusionCulling.backfaceThreshold = 100f;
             watch.Restart();
             bool occlusion = StaticOcclusionCulling.Compute();
-            Debug.Log($"[Hat1Bake] Occlusion bake {(occlusion ? "tamam" : "BAŞARISIZ")}, {watch.Elapsed.TotalMinutes:F1} dk");
+            Debug.Log($"[HatBake] Occlusion bake {(occlusion ? "tamam" : "BAŞARISIZ")}, {watch.Elapsed.TotalMinutes:F1} dk");
 
             EditorSceneManager.SaveScene(scene);
             return baked && occlusion;
@@ -93,7 +98,7 @@ namespace AnkaraBus.EditorTools
             {
                 AssetDatabase.StopAssetEditing();
             }
-            Debug.Log($"[Hat1Bake] {changed.Count} modelde lightmap UV açıldı");
+            Debug.Log($"[HatBake] {changed.Count} modelde lightmap UV açıldı");
         }
 
         private static void SetupSun()

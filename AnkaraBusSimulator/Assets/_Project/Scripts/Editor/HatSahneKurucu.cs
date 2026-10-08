@@ -9,8 +9,7 @@ using UnityEngine.UI;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// Hat 1 haritasını yeni bir sahneye kurar, otobüsü başlangıç noktasına koyar, hattı bağlar.
-    /// Işık ve occlusion bake'i: Ankara Bus > Hat 1 Işık ve Occlusion Bake (Hat1IsikBake).
+    /// Hat 1 sahnesi. Işık ve occlusion bake'i: Ankara Bus > Hat 1 Işık ve Occlusion Bake (HatIsikBake).
     /// Menü: Ankara Bus > Hat 1 Sahnesini Kur
     /// </summary>
     public static class Hat1SahneKurucu
@@ -18,7 +17,29 @@ namespace AnkaraBus.EditorTools
         public const string ScenePath = "Assets/_Project/Scenes/Hat1_KizilayAtakule.unity";
 
         [MenuItem("Ankara Bus/Hat 1 Sahnesini Kur")]
-        public static void Build()
+        public static void Build() => HatSahneKurucu.Kur(ScenePath, HaritaKurucu.Build, "Hat 1");
+    }
+
+    /// <summary>
+    /// Hat 2 sahnesi (Kızılay → Ulus). Işık ve occlusion bake'i: Ankara Bus > Hat 2 Işık ve Occlusion Bake.
+    /// Menü: Ankara Bus > Hat 2 Sahnesini Kur
+    /// </summary>
+    public static class Hat2SahneKurucu
+    {
+        public const string ScenePath = "Assets/_Project/Scenes/Hat2_KizilayUlus.unity";
+
+        [MenuItem("Ankara Bus/Hat 2 Sahnesini Kur")]
+        public static void Build() => HatSahneKurucu.Kur(ScenePath, HaritaKurucu.BuildHat2, "Hat 2");
+    }
+
+    /// <summary>
+    /// Bir hattın sahnesini sıfırdan kurar: harita (HaritaKurucu), otobüs başlangıç noktasında, kamera,
+    /// dokunmatik arayüz, RouteTracker → hattın rotası, BusHud. Sahneyi Build Settings'e ekler.
+    /// Sahne yeniden kurulunca ışık bake'i silinir; ardından HatIsikBake çalıştırılmalı.
+    /// </summary>
+    public static class HatSahneKurucu
+    {
+        public static void Kur(string scenePath, System.Action haritayiKur, string etiket)
         {
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
@@ -26,31 +47,32 @@ namespace AnkaraBus.EditorTools
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(OtobusKurucu.PrefabPath);
             if (prefab == null)
             {
-                Debug.LogError("[Hat1Sahne] Önce Ankara Bus > BMC Procity Prefabını Kur.");
+                Debug.LogError($"[{etiket} Sahne] Önce Ankara Bus > BMC Procity Prefabını Kur.");
                 return;
             }
 
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-            HaritaKurucu.Build();
+            haritayiKur();
 
             var spawn = GameObject.Find("OtobusBaslangic");
             if (spawn == null)
             {
-                Debug.LogError("[Hat1Sahne] Harita kurulamadı (OtobusBaslangic yok).");
+                Debug.LogError($"[{etiket} Sahne] Harita kurulamadı (OtobusBaslangic yok).");
                 return;
             }
 
             var vehicle = TestPistiKurucu.AddPlayer(prefab, spawn.transform.position + Vector3.up * 0.05f, spawn.transform.rotation);
             Camera.main.farClipPlane = 2000f;
 
+            var route = Object.FindAnyObjectByType<BusRoute>();
             var tracker = vehicle.GetComponent<RouteTracker>();
             var so = new SerializedObject(tracker);
-            so.FindProperty("route").objectReferenceValue = Object.FindAnyObjectByType<BusRoute>();
+            so.FindProperty("route").objectReferenceValue = route;
             so.ApplyModifiedPropertiesWithoutUndo();
             AddHud(tracker);
 
-            if (TestPistiKurucu.SaveScene(scene, ScenePath))
-                Debug.Log("[Hat1Sahne] Sahne kuruldu: " + ScenePath);
+            if (TestPistiKurucu.SaveScene(scene, scenePath))
+                Debug.Log($"[{etiket} Sahne] Sahne kuruldu: {scenePath}, rota {route?.name}");
         }
 
         /// <summary>Sol üstte hat, sıradaki durak ve hız (BusHud).</summary>
@@ -69,7 +91,7 @@ namespace AnkaraBus.EditorTools
             panel.SetParent(canvasGo.transform, false);
             panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0f, 1f);
             panel.anchoredPosition = new Vector2(30f, -250f);
-            panel.sizeDelta = new Vector2(560f, 170f);
+            panel.sizeDelta = new Vector2(560f, 210f);
             var image = panel.GetComponent<Image>();
             image.color = new Color(0.08f, 0.09f, 0.11f, 0.55f);
             image.raycastTarget = false;
@@ -80,6 +102,7 @@ namespace AnkaraBus.EditorTools
             so.FindProperty("lineText").objectReferenceValue = Text(panel, "Hat", -20f, 40, FontStyles.Bold);
             so.FindProperty("nextStopText").objectReferenceValue = Text(panel, "SiradakiDurak", -75f, 32, FontStyles.Normal);
             so.FindProperty("speedText").objectReferenceValue = Text(panel, "Hiz", -122f, 28, FontStyles.Normal);
+            so.FindProperty("passengerText").objectReferenceValue = Text(panel, "Yolcu", -162f, 28, FontStyles.Normal);
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 

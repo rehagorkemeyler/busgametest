@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Hat1_KizilayAtakule.unity
     guid: ef3ba4601030240f6adbfeafc20f51c3
+  - enabled: 1
+    path: Assets/_Project/Scenes/Hat2_KizilayUlus.unity
+    guid: 31f49a57a705f4ea2ad9c7e8ac8a0c54
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

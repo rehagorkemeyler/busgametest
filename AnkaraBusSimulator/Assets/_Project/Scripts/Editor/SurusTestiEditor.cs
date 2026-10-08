@@ -6,9 +6,10 @@ using UnityEngine;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// Hat 1'i Play modunda otomatik pilotla baştan sona sürer ve durakların tamamlandığını doğrular.
-    /// Menü: Ankara Bus > Hat 1 Sürüş Testi (otomatik pilot)
-    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunBatch (bitince Unity kapanır)
+    /// Bir hattı Play modunda otomatik pilotla baştan sona sürer ve durakların tamamlandığını doğrular.
+    /// Menü: Ankara Bus > Hat 1 / Hat 2 Sürüş Testi (otomatik pilot)
+    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1Batch (veya RunHat2Batch);
+    /// bitince Unity kapanır
     /// </summary>
     [InitializeOnLoad]
     public static class SurusTestiEditor
@@ -28,18 +29,25 @@ namespace AnkaraBus.EditorTools
         }
 
         [MenuItem("Ankara Bus/Hat 1 Sürüş Testi (otomatik pilot)")]
-        public static void RunMenu()
+        public static void RunHat1Menu() => RunMenu(Hat1SahneKurucu.ScenePath);
+
+        [MenuItem("Ankara Bus/Hat 2 Sürüş Testi (otomatik pilot)")]
+        public static void RunHat2Menu() => RunMenu(Hat2SahneKurucu.ScenePath);
+
+        public static void RunHat1Batch() => Start(Hat1SahneKurucu.ScenePath, batch: true);
+
+        public static void RunHat2Batch() => Start(Hat2SahneKurucu.ScenePath, batch: true);
+
+        private static void RunMenu(string scenePath)
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
-            Start(batch: false);
+            Start(scenePath, batch: false);
         }
 
-        public static void RunBatch() => Start(batch: true);
-
-        private static void Start(bool batch)
+        private static void Start(string scenePath, bool batch)
         {
-            EditorSceneManager.OpenScene(Hat1SahneKurucu.ScenePath);
+            EditorSceneManager.OpenScene(scenePath);
             new GameObject("OtomatikPilot").AddComponent<OtomatikPilot>();
             SessionState.SetBool(ActiveKey, true);
             SessionState.SetBool(BatchKey, batch);
@@ -67,7 +75,8 @@ namespace AnkaraBus.EditorTools
             }
             if (message.Contains("TAKILDI") || message.Contains("tamamlanmadı"))
                 problems++;
-            if (message.Contains("HAT TAMAMLANDI"))
+            // Pilot, hat bitince yolcu ve trafik özetini yazıp "[Surus] BITTI" der
+            if (message.StartsWith("[Surus] BITTI"))
                 Finish(problems == 0, message);
         }
 

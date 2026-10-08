@@ -45,7 +45,7 @@ namespace AnkaraBus.Traffic
             }
             if (player == null)
             {
-                var bus = FindFirstObjectByType<AnkaraBus.Vehicle.BusVehicle>();
+                var bus = FindAnyObjectByType<AnkaraBus.Vehicle.BusVehicle>();
                 if (bus != null)
                     player = bus.transform;
             }

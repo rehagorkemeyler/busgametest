@@ -11,7 +11,7 @@ namespace AnkaraBus.EditorTools
     /// <summary>
     /// Android APK build'leri. Performans build'i Development modunda alınır ve her sahneye
     /// build sırasında PerfBenchmark eklenir (sahne dosyaları değişmez): TestTrack bitince Hat 1 yüklenir.
-    /// Sürüş testi build'i yalnızca Hat 1'i içerir; OtomatikPilot eklenir ve hattı baştan sona sürer.
+    /// Sürüş testi build'i Hat 1 ve Hat 2'yi içerir; OtomatikPilot eklenir, Hat 1 bitince Hat 2'ye geçer.
     /// Menü: Ankara Bus > Android > Performans APK'sı / Sürüş Testi APK'sı
     /// Komut satırı: -executeMethod AnkaraBus.EditorTools.AndroidBuild.PerfBuild (veya DriveTestBuild)
     /// </summary>
@@ -34,7 +34,9 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Android/Sürüş Testi APK'sı")]
         public static void DriveTestBuildMenu() => DriveTestBuild();
 
-        public static void DriveTestBuild() => Build(Mode.DriveTest, new[] { Hat1SahneKurucu.ScenePath }, DriveTestApkPath);
+        private static readonly string[] DriveTestScenes = { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath };
+
+        public static void DriveTestBuild() => Build(Mode.DriveTest, DriveTestScenes, DriveTestApkPath);
 
         private static void Build(Mode buildMode, string[] scenes, string apkPath)
         {
@@ -84,7 +86,10 @@ namespace AnkaraBus.EditorTools
                 {
                     var pilot = new GameObject("OtomatikPilot");
                     SceneManager.MoveGameObjectToScene(pilot, scene);
-                    pilot.AddComponent<OtomatikPilot>();
+                    int i = System.Array.IndexOf(DriveTestScenes, scene.path);
+                    string next = i >= 0 && i + 1 < DriveTestScenes.Length
+                        ? Path.GetFileNameWithoutExtension(DriveTestScenes[i + 1]) : null;
+                    pilot.AddComponent<OtomatikPilot>().Configure(null, next);
                     return;
                 }
 

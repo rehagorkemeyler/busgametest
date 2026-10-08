@@ -55,14 +55,14 @@ namespace AnkaraBus.Passengers
             }
             if (player == null)
             {
-                var bus = FindFirstObjectByType<AnkaraBus.Vehicle.BusVehicle>();
+                var bus = FindAnyObjectByType<AnkaraBus.Vehicle.BusVehicle>();
                 if (bus != null)
                     player = bus.transform;
             }
             if (player != null && player.GetComponent<BusPassengers>() == null)
                 player.gameObject.AddComponent<BusPassengers>();
 
-            foreach (var stop in FindObjectsByType<BusStop>(FindObjectsSortMode.None))
+            foreach (var stop in FindObjectsByType<BusStop>())
                 stops.Add(Measure(stop));
         }
 
