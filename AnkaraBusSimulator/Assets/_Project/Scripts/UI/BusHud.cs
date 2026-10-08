@@ -14,8 +14,11 @@ namespace AnkaraBus.UI
         [SerializeField] private TMP_Text speedText;
         [SerializeField] private TMP_Text lineText;
         [SerializeField] private TMP_Text nextStopText;
+        [Tooltip("İsteğe bağlı: yolcu sayısı (ör. 'Yolcu 24/90').")]
+        [SerializeField] private TMP_Text passengerText;
 
         private IVehicleTelemetry telemetry;
+        private AnkaraBus.Passengers.BusPassengers passengers;
 
         private void Start()
         {
@@ -29,6 +32,13 @@ namespace AnkaraBus.UI
 
             if (tracker.Route != null)
                 lineText.text = $"{tracker.Route.LineNumber}  {tracker.Route.LineName}";
+
+            if (passengerText != null)
+            {
+                if (passengers == null)
+                    passengers = tracker.GetComponent<AnkaraBus.Passengers.BusPassengers>();
+                passengerText.text = passengers != null ? $"Yolcu {passengers.Onboard}/{passengers.Capacity}" : "";
+            }
 
             nextStopText.text = tracker.Completed
                 ? "Hat tamamlandı"

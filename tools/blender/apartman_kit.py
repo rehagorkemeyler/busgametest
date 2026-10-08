@@ -60,6 +60,13 @@ PALETTE = {
     "araba_yesil": (0.15, 0.35, 0.22), "araba_mavi": (0.20, 0.40, 0.70), "araba_turuncu": (0.85, 0.40, 0.08),
     "lastik": (0.08, 0.08, 0.08), "jant": (0.70, 0.71, 0.73), "far": (0.98, 0.97, 0.85), "stop": (0.75, 0.05, 0.05),
     "arac_cam": (0.12, 0.16, 0.20), "plaka": (0.95, 0.95, 0.95), "krom": (0.80, 0.81, 0.83),
+    # yolcular (yolcu_kit.py)
+    "cilt_acik": (0.93, 0.78, 0.66), "cilt_orta": (0.80, 0.60, 0.45), "cilt_esmer": (0.58, 0.40, 0.28),
+    "sac_siyah": (0.08, 0.07, 0.06), "sac_kahve": (0.30, 0.18, 0.10), "sac_gri": (0.62, 0.62, 0.60),
+    "kiyafet_kot": (0.18, 0.26, 0.42), "kiyafet_siyah": (0.12, 0.12, 0.13), "kiyafet_bej": (0.72, 0.64, 0.50),
+    "kiyafet_bordo": (0.48, 0.10, 0.14), "kiyafet_haki": (0.40, 0.42, 0.28), "kiyafet_lacivert": (0.12, 0.16, 0.30),
+    "kiyafet_beyaz": (0.90, 0.90, 0.88), "kiyafet_gri": (0.45, 0.46, 0.48), "ayakkabi": (0.10, 0.08, 0.07),
+    "basortusu_mavi": (0.30, 0.45, 0.65), "basortusu_bej": (0.80, 0.70, 0.58),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID

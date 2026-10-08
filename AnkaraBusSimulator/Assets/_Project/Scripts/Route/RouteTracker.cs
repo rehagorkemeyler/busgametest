@@ -17,6 +17,7 @@ namespace AnkaraBus.Route
         private IVehicleTelemetry telemetry;
         private BusDoorController doors;
         private float dwellTimer;
+        private AnkaraBus.Passengers.BusPassengers passengers;
 
         public BusRoute Route => route;
         public int NextStopIndex { get; private set; }
@@ -48,6 +49,15 @@ namespace AnkaraBus.Route
             bool serving = NextStop.Contains(transform.position)
                            && telemetry != null && telemetry.IsStopped
                            && doors != null && doors.AnyOpen;
+            // yolcu inip binerken durak tamamlanmaz (BusPassengers sahnede yolcu sistemi varsa eklenir)
+            if (passengers == null)
+                passengers = GetComponent<AnkaraBus.Passengers.BusPassengers>();
+            bool exchanging = passengers != null && passengers.IsBusy;
+            if (exchanging)
+            {
+                dwellTimer = Mathf.Min(dwellTimer, requiredDwellSeconds * 0.5f);
+                return;
+            }
 
             dwellTimer = serving ? dwellTimer + Time.deltaTime : 0f;
             if (dwellTimer < requiredDwellSeconds)

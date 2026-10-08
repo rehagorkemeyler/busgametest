@@ -16,7 +16,7 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [ ] EGO kaplaması (`caroserie.png` şablonu üzerine)
 - [x] Hat 1 yerleşimi + Unity editör kurucusu (`harita_hat1.py`, `HaritaKurucu.cs`)
 - [x] Trafik araçları (taksi, klasikler, dolmuş) + C# trafik (şerit, araç, spawner %30 taksi) → [TRAFIK.md](TRAFIK.md)
-- [ ] C#: yolcu sistemi
+- [x] Yolcular: 10 low-poly model + iniş/biniş sistemi → [YOLCULAR.md](YOLCULAR.md)
 - [ ] Dokümantasyon, plan güncellemeleri
 
 ## Yerelde yapılacaklar (sen + yerel Claude Code)

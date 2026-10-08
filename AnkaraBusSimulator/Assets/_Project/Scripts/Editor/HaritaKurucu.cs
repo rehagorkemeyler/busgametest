@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using AnkaraBus.Passengers;
 using AnkaraBus.Route;
 using AnkaraBus.Traffic;
 using UnityEditor;
@@ -19,6 +20,7 @@ namespace AnkaraBus.EditorTools
         private const string PalettePath = "Assets/_Project/Materials/T_AnkaraPalet.png";
         private const string MaterialPath = "Assets/_Project/Materials/M_AnkaraPalet.mat";
         private const string VehiclesFolder = "Assets/_Project/Traffic/Vehicles";
+        private const string PassengersFolder = "Assets/_Project/Passengers/Models";
 
         [Serializable]
         private class Item
@@ -103,6 +105,7 @@ namespace AnkaraBus.EditorTools
 
             BuildRoute(root.transform, layout);
             BuildTraffic(root.transform, layout, material);
+            BuildPassengers(root.transform, material);
 
             var spawn = new GameObject("OtobusBaslangic");
             spawn.transform.SetParent(root.transform, false);
@@ -177,6 +180,30 @@ namespace AnkaraBus.EditorTools
             for (int i = 0; i < stops.Count; i++)
                 array.GetArrayElementAtIndex(i).objectReferenceValue = stops[i];
             rso.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static void BuildPassengers(Transform root, Material material)
+        {
+            var models = new List<GameObject>();
+            if (AssetDatabase.IsValidFolder(PassengersFolder))
+                foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { PassengersFolder }))
+                    models.Add(AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid)));
+            if (models.Count == 0)
+            {
+                Debug.LogWarning("[Hat 1] Yolcu modeli bulunamadı: " + PassengersFolder);
+                return;
+            }
+
+            var go = new GameObject("Yolcular");
+            go.transform.SetParent(root, false);
+            var manager = go.AddComponent<PassengerManager>();
+            var so = new SerializedObject(manager);
+            so.FindProperty("paletteMaterial").objectReferenceValue = material;
+            var array = so.FindProperty("models");
+            array.arraySize = models.Count;
+            for (int i = 0; i < models.Count; i++)
+                array.GetArrayElementAtIndex(i).objectReferenceValue = models[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void BuildTraffic(Transform root, Layout layout, Material material)

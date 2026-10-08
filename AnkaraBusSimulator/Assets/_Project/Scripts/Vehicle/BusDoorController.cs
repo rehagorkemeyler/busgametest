@@ -42,6 +42,18 @@ namespace AnkaraBus.Vehicle
             telemetry = GetComponentInParent<IVehicleTelemetry>();
         }
 
+        public bool IsDoorOpen(int index) => index >= 0 && index < doors.Length && doors[index].open;
+
+        /// <summary>Kapı kanatlarının ortası (dünya koordinatı).</summary>
+        public Vector3 DoorCenter(int index)
+        {
+            var leaves = doors[index].leaves;
+            var sum = Vector3.zero;
+            foreach (var leaf in leaves)
+                sum += leaf.transform.position;
+            return leaves.Length > 0 ? sum / leaves.Length : transform.position;
+        }
+
         public void ToggleDoor(int index) => SetDoor(index, !doors[index].open);
 
         public void ToggleAll()
