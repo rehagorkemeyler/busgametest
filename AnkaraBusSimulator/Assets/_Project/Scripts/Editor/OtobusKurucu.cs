@@ -18,6 +18,10 @@ namespace AnkaraBus.EditorTools
         public const string PrefabPath = Folder + "BMC_Procity_12LF.prefab";
         private const string DefinitionPath = Folder + "BMC_Procity_12LF.asset";
         private const string MaterialFolder = Folder + "Materials";
+        // Yüksek görüntü kalitesi için tam kalite model (docs/OTOBUS_BMC_PROCITY.md → Grafik ayarları için iki model)
+        private const string TamKaliteModelPath = Folder + "BMC_Procity_12LF_TamKalite.fbx";
+        private const string TamKaliteKaynak = "BMC_Procity_12LF_TamKalite";
+        private const string TamKaliteGorselPath = Folder + "Resources/" + TamKaliteKaynak + ".prefab";
         private static readonly Color GlassColor = new Color(0.1f, 0.13f, 0.15f, 0.35f);
 
         private static readonly (string name, bool front, bool left)[] WheelParts =
@@ -46,6 +50,7 @@ namespace AnkaraBus.EditorTools
             }
 
             PrepareMaterials();
+            bool tamKaliteVar = BuildTamKaliteGorsel();
 
             var definition = AssetDatabase.LoadAssetAtPath<BusDefinition>(DefinitionPath);
             if (definition == null)
@@ -85,6 +90,8 @@ namespace AnkaraBus.EditorTools
                 root.tag = "Player"; // trafik (TrafficSpawner) oyuncuyu bu etiketle bulur
                 SetupShadows(root);
                 SetupLivery(root);
+                if (tamKaliteVar)
+                    SetupKaliteModeli(root, modelInstance.transform);
 
                 var so = new SerializedObject(vehicle);
                 so.FindProperty("definition").objectReferenceValue = definition;
@@ -108,10 +115,57 @@ namespace AnkaraBus.EditorTools
         /// </summary>
         private static void SetupShadows(GameObject root)
         {
-            foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))
+            // Gölge kabuğu olmayan modelde (tam kalite) her parça kendi gölgesini verir; dokunma
+            var renderers = root.GetComponentsInChildren<MeshRenderer>(true);
+            if (!System.Array.Exists(renderers, r => r.name.StartsWith("Golge_")))
+                return;
+            foreach (var r in renderers)
                 r.shadowCastingMode = r.name.StartsWith("Golge_")
                     ? UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly
                     : UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        /// <summary>
+        /// Tam kalite FBX'in materyallerini Materials/ klasöründeki aynı adlı materyallere bağlar ve
+        /// Resources altına görsel prefabını kaydeder (BusKaliteModeli yalnızca Yüksek ayarda yükler).
+        /// </summary>
+        private static bool BuildTamKaliteGorsel()
+        {
+            var importer = AssetImporter.GetAtPath(TamKaliteModelPath) as ModelImporter;
+            if (importer == null)
+                return false;
+
+            importer.SearchAndRemapMaterials(ModelImporterMaterialName.BasedOnMaterialName, ModelImporterMaterialSearch.Local);
+            importer.SaveAndReimport();
+            foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(TamKaliteModelPath))
+                if (asset is Material embedded)
+                    Debug.LogWarning($"[OtobusKurucu] Tam kalite materyali eşleşmedi: {embedded.name}");
+
+            string resources = Folder + "Resources";
+            if (!AssetDatabase.IsValidFolder(resources))
+                AssetDatabase.CreateFolder(Folder.TrimEnd('/'), "Resources");
+
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(TamKaliteModelPath);
+            var visual = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            try
+            {
+                SetupShadows(visual);
+                PrefabUtility.SaveAsPrefabAsset(visual, TamKaliteGorselPath);
+            }
+            finally
+            {
+                Object.DestroyImmediate(visual);
+            }
+            return true;
+        }
+
+        private static void SetupKaliteModeli(GameObject root, Transform model)
+        {
+            var kalite = root.AddComponent<BusKaliteModeli>();
+            var so = new SerializedObject(kalite);
+            so.FindProperty("model").objectReferenceValue = model;
+            so.FindProperty("tamKaliteKaynak").stringValue = TamKaliteKaynak;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void SetupLivery(GameObject root)

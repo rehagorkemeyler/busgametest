@@ -93,6 +93,8 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
 İkisinde parça adları ve pivotlar aynı. Tam kalite modelde `Golge_Govde` yok, bu yüzden gölgeleri değiştirme: yüksek ayarda tüm parçalar normal gölge vermeli. `OtobusKurucu.SetupShadows` şu an her zaman `Golge_` dışındakilerin gölgesini kapatıyor; tam kalite prefabda bu adım atlanmalı ya da `Golge_Govde` yoksa hiçbir şey yapmamalı.
 
+**Unity'de (uygulandı):** Tek prefab, ayara göre model değiştirme. `OtobusKurucu` tam kalite FBX'in materyallerini `Materials/` klasöründeki aynı adlı materyallere bağlar ve `Resources/BMC_Procity_12LF_TamKalite.prefab` görselini kurar. Otobüsteki `BusKaliteModeli`, Yüksek seçilince her parçanın mesh'ini, materyallerini ve gölge ayarını tam kalite modelinkiyle değiştirir, `Golge_Govde`'yi gizler; Düşük/Normal'e dönünce geri alır. Kapı, tekerlek, direksiyon objeleri aynı kaldığı için sürüş sırasında ayar değişebilir. Tam kalite model yalnızca Yüksek'te yüklenir. `SetupShadows`, `Golge_` parçası olmayan modelde hiçbir şey yapmaz.
+
 Üretim: `bmc_donustur.py --mobil` → `BMC_Procity_12LF.fbx`; `bmc_donustur.py` (seçeneksiz) → çıktıyı `BMC_Procity_12LF_TamKalite.fbx` adıyla kaydet. A32 ölçümü (Ölçüm 3) düşük ayardaki modelin dış kamerada takılmayı giderdiğini gösterdi.
 
 ## Performans

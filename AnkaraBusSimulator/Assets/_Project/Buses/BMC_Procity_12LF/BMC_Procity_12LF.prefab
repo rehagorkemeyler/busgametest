@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 4131194846524566301}
   - component: {fileID: 3103105459118542619}
   - component: {fileID: 2965646006205853051}
+  - component: {fileID: 7967058254390785735}
   m_Layer: 0
   m_Name: BMC_Procity_12LF
   m_TagString: Player
@@ -477,6 +478,21 @@ MonoBehaviour:
     body: {fileID: 2800000, guid: a90fd968e44e948788e64251f8975193, type: 3}
     roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
   selected: 0
+--- !u!114 &7967058254390785735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcecacac9b6524e978945070f4262a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusKaliteModeli
+  model: {fileID: 3031791776908157179}
+  tamKaliteKaynak: BMC_Procity_12LF_TamKalite
+  tamKaliteSeviyesi: 2
 --- !u!1 &6901407252809486938
 GameObject:
   m_ObjectHideFlags: 0
