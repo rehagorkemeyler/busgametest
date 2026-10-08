@@ -90,6 +90,8 @@ namespace AnkaraBus.EditorTools
                 root.tag = "Player"; // trafik (TrafficSpawner) oyuncuyu bu etiketle bulur
                 SetupShadows(root);
                 SetupLivery(root);
+                OtobusSesKurucu.ConfigureImporters();
+                OtobusSesKurucu.Setup(root);
                 if (tamKaliteVar)
                     SetupKaliteModeli(root, modelInstance.transform);
 

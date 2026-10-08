@@ -93,6 +93,13 @@ namespace AnkaraBus.UI
             Button(root, "KAMERA", new Vector2(0f, 1f), new Vector2(130f, -80f), new Vector2(200f, 90f), () => { if (cameraRig != null) cameraRig.Toggle(); });
             Button(root, "AYARLAR", new Vector2(0f, 1f), new Vector2(130f, -185f), new Vector2(200f, 90f), () => settingsPanel.SetActive(!settingsPanel.activeSelf));
 
+            // Korna: basılı tutuldukça çalar
+            var horn = Button(root, "KORNA", new Vector2(0f, 1f), new Vector2(130f, -290f), new Vector2(200f, 90f), () => { });
+            var hornTrigger = horn.gameObject.AddComponent<EventTrigger>();
+            AddTrigger(hornTrigger, EventTriggerType.PointerDown, () => input.TouchHorn = true);
+            AddTrigger(hornTrigger, EventTriggerType.PointerUp, () => input.TouchHorn = false);
+            AddTrigger(hornTrigger, EventTriggerType.PointerExit, () => input.TouchHorn = false);
+
             // Gösterge
             var gaugeRect = Element(root, "Gosterge", new Vector2(0.5f, 1f), new Vector2(0f, -70f), new Vector2(520f, 110f));
             gaugeRect.gameObject.AddComponent<Image>().sprite = UiShapes.RoundedRect;
@@ -177,6 +184,13 @@ namespace AnkaraBus.UI
             button.onClick.AddListener(onClick);
             Label(rect, label, size.y > 100f ? 40 : 30, TextAnchor.MiddleCenter);
             return image;
+        }
+
+        private static void AddTrigger(EventTrigger trigger, EventTriggerType type, System.Action action)
+        {
+            var entry = new EventTrigger.Entry { eventID = type };
+            entry.callback.AddListener(_ => action());
+            trigger.triggers.Add(entry);
         }
 
         private static RectTransform Element(RectTransform parent, string name, Vector2 anchor, Vector2 position, Vector2 size)

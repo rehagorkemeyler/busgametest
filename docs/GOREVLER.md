@@ -19,6 +19,7 @@ Her iki taraf da işini kendi branch'ında commit'leyip push'lar. Aynı dosyaya 
 - [x] Yolcular: 10 low-poly model + iniş/biniş sistemi → [YOLCULAR.md](YOLCULAR.md)
 - [x] Trafik: Kuğulu kavşağında dönüşler ve trafik ışıkları → [TRAFIK.md](TRAFIK.md)
 - [x] Hat 2: Kızılay → Sıhhiye → Opera → Ulus (yerleşim, 4 yeni simge yapı) → [HAT2_KIZILAY_ULUS.md](HAT2_KIZILAY_ULUS.md)
+- [x] Otobüs sesleri: motor (devir katmanları, iç/dış), retarder, fren, kapılar, korna, kentkart → [SESLER.md](SESLER.md)
 - [ ] Dokümantasyon, plan güncellemeleri
 
 ## Yerelde yapılacaklar (sen + yerel Claude Code)
@@ -66,3 +67,6 @@ Bulutta üretilen modelleri senin Blender'ında Blender MCP ile beğenine göre 
 **Prompt:**
 > `git pull origin Ozan` yap. Bulut tarafı yolcuları (`docs/YOLCULAR.md`), Kuğulu kavşağında dönüşleri ve trafik ışıklarını (`docs/TRAFIK.md`) ve Hat 2'yi (`docs/HAT2_KIZILAY_ULUS.md`) ekledi. (1) Hat 1 sahnesinde haritayı **Ankara Bus → Hat 1 Haritasını Kur** ile yeniden kur (eski `Hat1_KizilayAtakule` objesini sil); otobüsü yeniden bağla, ışıkları yeniden bake et. Kızılay'dan Atakule'ye sür: yolcular duraklarda bekliyor ve biniyor mu, Kuğulu kavşağında ışıklar dönüyor ve araçlar kırmızıda duruyor mu, sağa/sola dönen araçlar var mı kontrol et. Derleme hatası varsa düzelt. (2) Yeni `Hat2_KizilayUlus.unity` sahnesinde **Ankara Bus → Hat 2 Haritasını Kur**'u çalıştır, otobüsü bağla (`RouteTracker` → `Hat_2`), bake et, Build Settings'e ekle ve Kızılay'dan Ulus'a sür. Sorunları düzeltip commit'le, push'la.
 
+### Y8 — Sesleri dene
+**Prompt:**
+> `git pull origin Ozan` yap. Bulut tarafı otobüs seslerini ekledi (`docs/SESLER.md`, `Scripts/Vehicle/BusAudio.cs`, `Scripts/Editor/OtobusSesKurucu.cs`). Derleme hatası varsa düzelt. **Ankara Bus → BMC Procity Prefabını Kur** çalıştır (sesleri de bağlar). Hat 1 sahnesinde Play'e bas ve şunları kontrol et: motor sesi rölantide ve gaz verince devirle birlikte yükseliyor mu, kokpit/dış kamera geçişinde ses değişiyor mu, kapı açılınca/kapanınca, fren bırakılınca, el freninde, R'de ve H (korna) ile ses geliyor mu, yolcu binince bip sesi duyuluyor mu. Ses düzeyleri birbirine göre kötüyse `OtobusSesKurucu.EngineLayers` ve `BusAudio` içindeki çarpanları ayarla. Telefonda (A32, Düşük ayar) sesler eklenince FPS düşüyor mu ölç, `docs/PERFORMANS.md`'ye not düş. Commit'le, push'la.

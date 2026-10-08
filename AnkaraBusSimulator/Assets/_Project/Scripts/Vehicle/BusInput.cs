@@ -7,7 +7,7 @@ namespace AnkaraBus.Vehicle
     /// Klavye ve dokunmatik girdiyi birleştirip BusVehicle'a yazar.
     /// Dokunmatik arayüz Touch* özelliklerini ve buton metotlarını kullanır.
     /// Klavye: W/S veya oklar gaz/fren, A/D direksiyon, Space el freni,
-    /// 1/2/3 = D/N/R, K kapılar.
+    /// 1/2/3 = D/N/R, K kapılar, H korna.
     /// </summary>
     [RequireComponent(typeof(BusVehicle))]
     public class BusInput : MonoBehaviour
@@ -19,12 +19,15 @@ namespace AnkaraBus.Vehicle
 
         private BusVehicle vehicle;
         private BusDoorController doors;
+        private BusAudio busAudio;
         private float keyboardSteer;
 
         public float TouchThrottle { get; set; }
         public float TouchBrake { get; set; }
         /// <summary>Sanal direksiyon: -1 sol, +1 sağ. Dokunulmuyorsa null.</summary>
         public float? TouchSteer { get; set; }
+        /// <summary>Korna butonu basılı tutuluyor mu?</summary>
+        public bool TouchHorn { get; set; }
         /// <summary>Otomatik sürüş için gaz, fren ve direksiyon (performans ölçümü, otomatik pilot).</summary>
         public float AutoThrottle { get; set; }
         public float AutoBrake { get; set; }
@@ -36,6 +39,7 @@ namespace AnkaraBus.Vehicle
         {
             vehicle = GetComponent<BusVehicle>();
             doors = GetComponentInChildren<BusDoorController>();
+            busAudio = GetComponent<BusAudio>();
         }
 
         private void Update()
@@ -43,6 +47,7 @@ namespace AnkaraBus.Vehicle
             float throttle = Mathf.Max(TouchThrottle, AutoThrottle);
             float brake = Mathf.Max(TouchBrake, AutoBrake);
             float steerKeys = 0f;
+            bool horn = TouchHorn;
 
             var kb = Keyboard.current;
             if (kb != null)
@@ -57,6 +62,7 @@ namespace AnkaraBus.Vehicle
                 if (kb.digit2Key.wasPressedThisFrame) SelectNeutral();
                 if (kb.digit3Key.wasPressedThisFrame) SelectReverse();
                 if (kb.kKey.wasPressedThisFrame) ToggleDoors();
+                if (kb.hKey.isPressed) horn = true;
             }
 
             keyboardSteer = Mathf.MoveTowards(keyboardSteer, steerKeys, keyboardSteerSpeed * Time.deltaTime);
@@ -64,6 +70,8 @@ namespace AnkaraBus.Vehicle
             vehicle.Throttle = throttle;
             vehicle.Brake = brake;
             vehicle.Steer = TouchSteer ?? AutoSteer ?? keyboardSteer;
+            if (busAudio != null)
+                busAudio.Horn(horn);
 
             if (autoReleaseHandbrake && vehicle.Handbrake && throttle > 0.1f && brake < 0.1f)
                 vehicle.Handbrake = false;
