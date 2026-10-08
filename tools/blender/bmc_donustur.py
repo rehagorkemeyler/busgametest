@@ -10,7 +10,11 @@ Yaptıkları:
   - Modeli 180° döndürür: Unity'de ön +Z, sağ +X olur. Kök pivot: zeminde, otobüsün tam ortası.
 
 Kullanım:
-    python bmc_donustur.py --src "BMC Procity 12LF/BMC Procity 12LF" --out <klasör> [--render önizleme.png]
+    python bmc_donustur.py --src "BMC Procity 12LF/BMC Procity 12LF" --out <klasör> [--render önizleme.png] [--mobil]
+
+İki çıktı repoda:
+    BMC_Procity_12LF.fbx            --mobil ile (düşük/orta grafik ayarı): iç mekân sadeleştirilmiş, doku atlası, gölge kabuğu
+    BMC_Procity_12LF_TamKalite.fbx  seçeneksiz (yüksek grafik ayarı); üretildikten sonra bu adla kaydedilir
 """
 import argparse
 import math
@@ -216,7 +220,7 @@ def classify(name):
     return "Govde"
 
 
-def build(src, out, render_path):
+def build(src, out, render_path, mobil=False):
     model = tds.TDS(os.path.join(src, "models", "BMC Procity 12LF.3ds"))
     tex_dirs = [os.path.join(src, "textures"), os.path.join(src, "skins")]
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -258,7 +262,7 @@ def build(src, out, render_path):
         if tag is None:
             dropped += 1
             continue
-        if tag == "Govde" and is_interior(o):
+        if mobil and tag == "Govde" and is_interior(o):
             tag = "Ic"
         transparent = "transparent" in o["name"]
         groups.setdefault(tag, []).append((o, transparent))
@@ -341,8 +345,9 @@ def build(src, out, render_path):
         bpy.context.view_layer.objects.active = objs["Govde"]
         bpy.ops.object.join()
 
-    build_atlas([o for t, o in objs.items() if not t.startswith("Lamba_")], tex_out)
-    objs["Golge_Govde"] = shadow_proxy([objs["Govde"]] + [objs[t] for t in WHEELS])
+    if mobil:
+        build_atlas([o for t, o in objs.items() if not t.startswith("Lamba_")], tex_out)
+        objs["Golge_Govde"] = shadow_proxy([objs["Govde"]] + [objs[t] for t in WHEELS])
 
     # kök: zeminde, otobüs ortası
     allpts = [o.matrix_world @ Vector(c) for o in objs.values() for c in o.bound_box]
@@ -389,9 +394,12 @@ def main():
     ap.add_argument("--src", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--render", default=None)
+    ap.add_argument("--mobil", action="store_true",
+                    help="Düşük seviye cihazlar için: iç mekânı sadeleştir, dokuları atlasa topla (küçülterek), "
+                         "gölgeyi basit kabuğa ver. Görsel kaliteyi düşürür; varsayılan kapalı.")
     args = ap.parse_args(argv)
     os.makedirs(args.out, exist_ok=True)
-    build(args.src, args.out, args.render)
+    build(args.src, args.out, args.render, args.mobil)
 
 
 if __name__ == "__main__":

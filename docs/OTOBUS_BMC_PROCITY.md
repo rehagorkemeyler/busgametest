@@ -84,6 +84,17 @@ Kök obje `BMC_Procity_12LF`: zeminde, otobüsün tam ortasında. **Ön +Z, sağ
 
 6. **Çarpışma:** Gövdeye basit bir **Box Collider** (≈ 2.5 × 2.7 × 11.9 m, merkez y ≈ 1.78) yeterli; mesh collider kullanmayın.
 
+## Grafik ayarları için iki model
+
+| Dosya | Grafik ayarı | Üçgen | Gövde materyali | Gölge |
+|---|---|---|---|---|
+| `BMC_Procity_12LF.fbx` | Düşük / orta | 124 bin | 10 (atlas) | `Golge_Govde` kabuğu |
+| `BMC_Procity_12LF_TamKalite.fbx` | Yüksek | 158 bin | 34 (orijinal dokular) | Her parça kendi gölgesi |
+
+İkisinde parça adları ve pivotlar aynı. Tam kalite modelde `Golge_Govde` yok, bu yüzden gölgeleri değiştirme: yüksek ayarda tüm parçalar normal gölge vermeli. `OtobusKurucu.SetupShadows` şu an her zaman `Golge_` dışındakilerin gölgesini kapatıyor; tam kalite prefabda bu adım atlanmalı ya da `Golge_Govde` yoksa hiçbir şey yapmamalı.
+
+Üretim: `bmc_donustur.py --mobil` → `BMC_Procity_12LF.fbx`; `bmc_donustur.py` (seçeneksiz) → çıktıyı `BMC_Procity_12LF_TamKalite.fbx` adıyla kaydet. A32 ölçümü (Ölçüm 3) düşük ayardaki modelin dış kamerada takılmayı giderdiğini gösterdi.
+
 ## Performans
 
 Mobil için dönüştürücüde yapılanlar (Y4 ölçümünden sonra):
