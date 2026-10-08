@@ -101,7 +101,7 @@ def unity(f, r, z):
 
 class Layout:
     def __init__(self):
-        self.items, self.stops, self.lanes = [], [], []
+        self.items, self.stops, self.lanes, self.signals = [], [], [], []
 
     def add(self, model, f, r, z, rot_deg, group):
         self.items.append({"model": model, "pos": unity(f, r, z), "rotY": round(rot_deg % 360, 2), "group": group})
@@ -254,39 +254,145 @@ def build_layout(widths, seed=2024):
                 lay.add(f"Props/{rng.choice(['Agac_Cinar_1', 'Agac_Kavak'])}", f, r, z + 0.15, rng.uniform(0, 360), "Agaclar")
             s += 26.0
 
-    lay.lanes = build_lanes(bul, cin)
+    lay.lanes, lay.signals = build_lanes(bul, cin, s_mid, mouth)
     return lay, bul, cin, spawn
 
 
-def build_lanes(bul, cin, step=5.0):
-    """Trafik şeritleri: her şerit tek yönlü nokta dizisi (Unity koordinatı, düz liste x,y,z,...).
-    Ters yön şeritleri aynı ofsetin solunda, noktaları ters sırada."""
-    lanes = []
+def build_lanes(bul, cin, s_mid, mouth, step=5.0):
+    """Trafik şeritleri, Kuğulu kavşağındaki dönüş bağlantıları, durma çizgileri ve trafik ışığı.
+    Her şerit tek yönlü nokta dizisi (Unity koordinatı, düz liste x,y,z,...). Ters yön şeritleri aynı ofsetin
+    solunda, noktaları ters sırada. Mesafeler şerit başından metre."""
+    lanes = {}
+
+    def polyline_length(pts):
+        n = len(pts) // 3
+        total = 0.0
+        for i in range(1, n):
+            a, b = pts[(i - 1) * 3:i * 3], pts[i * 3:i * 3 + 3]
+            total += math.dist(a, b)
+        return total
 
     def lane(chain, offset, s0, s1, name, limit):
-        pts = []
+        svals, pts = [], []
         s = s0
         while s < s1:
-            f, r, z, _ = chain.frame(s, offset)
-            pts += unity(f, r, z)
+            svals.append(s)
             s += step
-        f, r, z, _ = chain.frame(s1, offset)
-        pts += unity(f, r, z)
-        if offset < 0:
+        svals.append(s1)
+        for sv in svals:
+            f, r, z, _ = chain.frame(sv, offset)
+            pts += unity(f, r, z)
+        cum = [0.0]
+        for i in range(1, len(svals)):
+            cum.append(cum[-1] + math.dist(pts[(i - 1) * 3:i * 3], pts[i * 3:i * 3 + 3]))
+        reverse = offset < 0
+        if reverse:
             pts = [c for i in range(len(pts) // 3 - 1, -1, -1) for c in pts[i * 3:i * 3 + 3]]
-        lanes.append({"name": name, "limitKmh": limit, "points": pts})
+        total = cum[-1]
+
+        def dist_at(sq):
+            # zincir mesafesi -> şerit başından mesafe
+            for i in range(1, len(svals)):
+                if sq <= svals[i]:
+                    t = (sq - svals[i - 1]) / max(svals[i] - svals[i - 1], 1e-6)
+                    d = cum[i - 1] + t * (cum[i] - cum[i - 1])
+                    return round(total - d if reverse else d, 2)
+            return round(0.0 if reverse else total, 2)
+
+        lanes[name] = {"name": name, "limitKmh": limit, "points": pts, "exits": [], "stopLine": -1.0,
+                       "group": 0, "signal": "", "_dist": dist_at, "_len": total}
 
     m, w = B["median"], B["lane"]
     for k in range(3):
         off = m + w * (k + 0.5)
         lane(bul, off, bul.s_start, bul.s_end, f"Bulvar_Gidis_{k + 1}", 50)
         lane(bul, -off, bul.s_start, bul.s_end, f"Bulvar_Donus_{k + 1}", 50)
-    w = C["lane"]
+    wc = C["lane"]
     for k in range(2):
-        off = w * (k + 0.5)
+        off = wc * (k + 0.5)
         lane(cin, off, 2.0, cin.s_end, f"Cinnah_Gidis_{k + 1}", 40)
         lane(cin, -off, 2.0, cin.s_end, f"Cinnah_Donus_{k + 1}", 40)
-    return lanes
+
+    def bezier(name, p0, d0, p2, d2, limit=25):
+        """İki şeridi bağlayan ikinci dereceden eğri. p: (f, r, z), d: hareket yönü (f, r)."""
+        # kontrol noktası: p0'dan d0 yönündeki doğru ile p2'ye d2 yönünde gelen doğrunun kesişimi
+        den = d0[0] * d2[1] - d0[1] * d2[0]
+        t = ((p2[0] - p0[0]) * d2[1] - (p2[1] - p0[1]) * d2[0]) / den
+        c = (p0[0] + d0[0] * t, p0[1] + d0[1] * t)
+        pts = []
+        for i in range(13):
+            u = i / 12
+            f = (1 - u) ** 2 * p0[0] + 2 * (1 - u) * u * c[0] + u ** 2 * p2[0]
+            r = (1 - u) ** 2 * p0[1] + 2 * (1 - u) * u * c[1] + u ** 2 * p2[1]
+            z = p0[2] + (p2[2] - p0[2]) * u
+            pts += unity(f, r, z)
+        lanes[name] = {"name": name, "limitKmh": limit, "points": pts, "exits": [], "stopLine": -1.0,
+                       "group": 0, "signal": "", "_len": polyline_length(pts)}
+
+    def exit_(src, at, dst, dst_at, p):
+        lanes[src]["exits"].append({"target": dst, "at": round(at, 2), "targetAt": round(dst_at, 2), "probability": p})
+
+    def pt(chain, sv, off):
+        f, r, z, th = chain.frame(sv, off)
+        return (f, r, z), th
+
+    HBl = B["half_road"]
+    HCl = C["half_road"]
+    # 1) bulvardan Cinnah'a sağa dönüş (en sağ şeritten)
+    s_a = s_mid - mouth
+    p0, th0 = pt(bul, s_a, m + w * 2.5)
+    p2, th2 = pt(cin, 2.0, wc * 1.5)
+    bezier("Baglanti_Bulvar_Cinnah", p0, (math.cos(th0), math.sin(th0)), p2, (math.cos(th2), math.sin(th2)))
+    exit_("Bulvar_Gidis_3", lanes["Bulvar_Gidis_3"]["_dist"](s_a), "Baglanti_Bulvar_Cinnah", 0.0, 0.35)
+    exit_("Baglanti_Bulvar_Cinnah", lanes["Baglanti_Bulvar_Cinnah"]["_len"] - 0.05, "Cinnah_Gidis_2", 0.0, 1.0)
+    # 2) Cinnah'tan Kızılay yönüne sola dönüş (iç şeritten)
+    p0, th0 = pt(cin, 2.0, -wc * 0.5)
+    s_b = s_mid - mouth - 4.0
+    p2, th2 = pt(bul, s_b, -(m + w * 0.5))
+    back0 = (-math.cos(th0), -math.sin(th0))
+    back2 = (-math.cos(th2), -math.sin(th2))
+    bezier("Baglanti_Cinnah_Kizilay", p0, back0, p2, back2)
+    L = lanes["Cinnah_Donus_1"]["_len"]
+    exit_("Cinnah_Donus_1", L - 0.3, "Baglanti_Cinnah_Kizilay", 0.0, 1.0)
+    exit_("Baglanti_Cinnah_Kizilay", lanes["Baglanti_Cinnah_Kizilay"]["_len"] - 0.05, "Bulvar_Donus_1",
+          lanes["Bulvar_Donus_1"]["_dist"](s_b), 1.0)
+    # 3) Cinnah'tan bulvarın kuzey koluna sağa dönüş (dış şeritten)
+    p0, th0 = pt(cin, 2.0, -wc * 1.5)
+    s_c = s_mid + mouth + 2.0
+    p2, th2 = pt(bul, s_c, m + w * 2.5)
+    bezier("Baglanti_Cinnah_Kuzey", p0, (-math.cos(th0), -math.sin(th0)), p2, (math.cos(th2), math.sin(th2)))
+    L = lanes["Cinnah_Donus_2"]["_len"]
+    exit_("Cinnah_Donus_2", L - 0.3, "Baglanti_Cinnah_Kuzey", 0.0, 1.0)
+    exit_("Baglanti_Cinnah_Kuzey", lanes["Baglanti_Cinnah_Kuzey"]["_len"] - 0.05, "Bulvar_Gidis_3",
+          lanes["Bulvar_Gidis_3"]["_dist"](s_c), 1.0)
+
+    # durma çizgileri ve trafik ışığı (grup 0: bulvar, grup 1: Cinnah'tan çıkış)
+    signal = "Kavsak_Kugulu"
+    s_line_g = s_mid - mouth - 7.0
+    s_line_d = s_mid + mouth + 7.0
+    for k in range(1, 4):
+        for nm, sl in ((f"Bulvar_Gidis_{k}", s_line_g), (f"Bulvar_Donus_{k}", s_line_d)):
+            lanes[nm].update(stopLine=lanes[nm]["_dist"](sl), group=0, signal=signal)
+    for k in range(1, 3):
+        nm = f"Cinnah_Donus_{k}"
+        lanes[nm].update(stopLine=round(lanes[nm]["_len"] - 1.5, 2), group=1, signal=signal)
+
+    heads = []
+    f, r, z, th = bul.frame(s_line_g - 1.0, HBl + 0.8)
+    heads.append({"model": "Props/Trafik_Lambasi", "pos": unity(f, r, z + 0.15), "rotY": round((math.degrees(th) + 180) % 360, 2), "group": 0})
+    f, r, z, th = bul.frame(s_line_d + 1.0, -(HBl + 0.8))
+    heads.append({"model": "Props/Trafik_Lambasi", "pos": unity(f, r, z + 0.15), "rotY": round(math.degrees(th) % 360, 2), "group": 0})
+    f, r, z, th = cin.frame(4.0, -(HCl + 0.8))
+    heads.append({"model": "Props/Trafik_Lambasi", "pos": unity(f, r, z + 0.15), "rotY": round(math.degrees(th) % 360, 2), "group": 1})
+    signals = [{"name": signal,
+                "phases": [{"greenGroups": [0], "green": 20.0, "yellow": 3.0, "allRed": 1.5},
+                           {"greenGroups": [1], "green": 10.0, "yellow": 3.0, "allRed": 1.5}],
+                "heads": heads}]
+
+    out = []
+    for ln in lanes.values():
+        out.append({k: v for k, v in ln.items() if not k.startswith("_")})
+    return out, signals
 
 
 def build_ground(bul, cin, cell=8.0, margin=90.0):
@@ -362,7 +468,7 @@ def main():
 
     data = {"lineNumber": "1", "lineName": "Kızılay AVM - Atakule", "spawnPos": spawn["pos"],
             "spawnRotY": round(spawn["rotY"], 2), "items": lay.items, "stops": lay.stops,
-            "lanes": lay.lanes}
+            "lanes": lay.lanes, "signals": lay.signals}
     with open(os.path.join(out, "Hat1_Yerlesim.json"), "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=1)
     counts = {}

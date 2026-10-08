@@ -9,13 +9,47 @@ namespace AnkaraBus.Traffic
     /// </summary>
     public class TrafficLane : MonoBehaviour
     {
+        /// <summary>Şeritten başka bir şeride geçiş (ör. kavşakta dönüş). Araç 'at' mesafesine gelince
+        /// 'probability' olasılıkla 'target' şeridinin 'targetAt' noktasına geçer.</summary>
+        [Serializable]
+        public struct Exit
+        {
+            public float at;
+            public TrafficLane target;
+            public float targetAt;
+            [Range(0f, 1f)] public float probability;
+        }
+
         [SerializeField] private Vector3[] points;
         [SerializeField] private float speedLimitKmh = 50f;
+        [SerializeField] private Exit[] exits = Array.Empty<Exit>();
+        [Tooltip("Durma çizgisi (şerit başından metre); < 0 ise yok.")]
+        [SerializeField] private float stopLine = -1f;
+        [SerializeField] private TrafficSignal signal;
+        [SerializeField] private int signalGroup;
 
         private float[] cumulative;
 
         public float Length { get; private set; }
         public float SpeedLimitKmh => speedLimitKmh;
+        public Exit[] Exits => exits;
+        public float StopLine => stopLine;
+
+        /// <summary>Durma çizgisinde durulmalı mı (kırmızı ya da sarı)? Sarı için 'canStop' araç durabiliyorsa.</summary>
+        public bool MustStop(bool canStop) => signal != null && stopLine >= 0f && signal.MustStop(signalGroup, canStop);
+
+        public void SetExits(Exit[] newExits)
+        {
+            exits = newExits ?? Array.Empty<Exit>();
+            Array.Sort(exits, (a, b) => a.at.CompareTo(b.at));
+        }
+
+        public void SetSignal(TrafficSignal newSignal, int group, float line)
+        {
+            signal = newSignal;
+            signalGroup = group;
+            stopLine = line;
+        }
 
         public void SetPoints(Vector3[] newPoints, float limitKmh)
         {
@@ -62,6 +96,13 @@ namespace AnkaraBus.Traffic
             Gizmos.color = Color.cyan;
             for (int i = 1; i < points.Length; i++)
                 Gizmos.DrawLine(points[i - 1] + Vector3.up * 0.3f, points[i] + Vector3.up * 0.3f);
+            if (stopLine >= 0f)
+            {
+                Sample(stopLine, out var p, out var f);
+                var side = Vector3.Cross(Vector3.up, f) * 1.6f;
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(p - side + Vector3.up * 0.3f, p + side + Vector3.up * 0.3f);
+            }
         }
     }
 }

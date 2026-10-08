@@ -5899,7 +5899,11 @@
     3.25,
     36.8,
     1360.0
-   ]
+   ],
+   "exits": [],
+   "stopLine": 1325.13,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Bulvar_Donus_1",
@@ -6748,7 +6752,11 @@
     -3.25,
     0.0,
     -40.0
-   ]
+   ],
+   "exits": [],
+   "stopLine": 44.5,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Bulvar_Gidis_2",
@@ -7597,7 +7605,11 @@
     6.75,
     36.8,
     1360.0
-   ]
+   ],
+   "exits": [],
+   "stopLine": 1325.13,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Bulvar_Donus_2",
@@ -8446,7 +8458,11 @@
     -6.75,
     0.0,
     -40.0
-   ]
+   ],
+   "exits": [],
+   "stopLine": 44.5,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Bulvar_Gidis_3",
@@ -9295,7 +9311,18 @@
     10.25,
     36.8,
     1360.0
-   ]
+   ],
+   "exits": [
+    {
+     "target": "Baglanti_Bulvar_Cinnah",
+     "at": 1332.13,
+     "targetAt": 0.0,
+     "probability": 0.35
+    }
+   ],
+   "stopLine": 1325.13,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Bulvar_Donus_3",
@@ -10144,7 +10171,11 @@
     -10.25,
     0.0,
     -40.0
-   ]
+   ],
+   "exits": [],
+   "stopLine": 44.5,
+   "group": 0,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Cinnah_Gidis_1",
@@ -10510,7 +10541,11 @@
     599.189,
     88.0,
     1421.744
-   ]
+   ],
+   "exits": [],
+   "stopLine": -1.0,
+   "group": 0,
+   "signal": ""
   },
   {
    "name": "Cinnah_Donus_1",
@@ -10876,7 +10911,18 @@
     30.5,
     36.8,
     1301.625
-   ]
+   ],
+   "exits": [
+    {
+     "target": "Baglanti_Cinnah_Kizilay",
+     "at": 593.72,
+     "targetAt": 0.0,
+     "probability": 1.0
+    }
+   ],
+   "stopLine": 592.52,
+   "group": 1,
+   "signal": "Kavsak_Kugulu"
   },
   {
    "name": "Cinnah_Gidis_2",
@@ -11242,7 +11288,11 @@
     600.031,
     88.0,
     1418.604
-   ]
+   ],
+   "exits": [],
+   "stopLine": -1.0,
+   "group": 0,
+   "signal": ""
   },
   {
    "name": "Cinnah_Donus_2",
@@ -11608,6 +11658,240 @@
     30.5,
     36.8,
     1304.875
+   ],
+   "exits": [
+    {
+     "target": "Baglanti_Cinnah_Kuzey",
+     "at": 592.87,
+     "targetAt": 0.0,
+     "probability": 1.0
+    }
+   ],
+   "stopLine": 591.67,
+   "group": 1,
+   "signal": "Kavsak_Kugulu"
+  },
+  {
+   "name": "Baglanti_Bulvar_Cinnah",
+   "limitKmh": 25,
+   "points": [
+    10.25,
+    36.8,
+    1291.5,
+    10.391,
+    36.8,
+    1292.079,
+    10.812,
+    36.8,
+    1292.608,
+    11.516,
+    36.8,
+    1293.086,
+    12.5,
+    36.8,
+    1293.514,
+    13.766,
+    36.8,
+    1293.891,
+    15.312,
+    36.8,
+    1294.219,
+    17.141,
+    36.8,
+    1294.496,
+    19.25,
+    36.8,
+    1294.722,
+    21.641,
+    36.8,
+    1294.898,
+    24.312,
+    36.8,
+    1295.024,
+    27.266,
+    36.8,
+    1295.1,
+    30.5,
+    36.8,
+    1295.125
+   ],
+   "exits": [
+    {
+     "target": "Cinnah_Gidis_2",
+     "at": 21.28,
+     "targetAt": 0.0,
+     "probability": 1.0
+    }
+   ],
+   "stopLine": -1.0,
+   "group": 0,
+   "signal": ""
+  },
+  {
+   "name": "Baglanti_Cinnah_Kizilay",
+   "limitKmh": 25,
+   "points": [
+    30.5,
+    36.8,
+    1301.625,
+    25.109,
+    36.8,
+    1301.527,
+    20.188,
+    36.8,
+    1301.233,
+    15.734,
+    36.8,
+    1300.742,
+    11.75,
+    36.8,
+    1300.056,
+    8.234,
+    36.8,
+    1299.173,
+    5.188,
+    36.8,
+    1298.094,
+    2.609,
+    36.8,
+    1296.819,
+    0.5,
+    36.8,
+    1295.347,
+    -1.141,
+    36.8,
+    1293.68,
+    -2.313,
+    36.8,
+    1291.816,
+    -3.016,
+    36.8,
+    1289.756,
+    -3.25,
+    36.8,
+    1287.5
+   ],
+   "exits": [
+    {
+     "target": "Bulvar_Donus_1",
+     "at": 40.09,
+     "targetAt": 72.5,
+     "probability": 1.0
+    }
+   ],
+   "stopLine": -1.0,
+   "group": 0,
+   "signal": ""
+  },
+  {
+   "name": "Baglanti_Cinnah_Kuzey",
+   "limitKmh": 25,
+   "points": [
+    30.5,
+    36.8,
+    1304.875,
+    27.266,
+    36.8,
+    1304.914,
+    24.312,
+    36.8,
+    1305.031,
+    21.641,
+    36.8,
+    1305.227,
+    19.25,
+    36.8,
+    1305.5,
+    17.141,
+    36.8,
+    1305.852,
+    15.312,
+    36.8,
+    1306.281,
+    13.766,
+    36.8,
+    1306.789,
+    12.5,
+    36.8,
+    1307.375,
+    11.516,
+    36.8,
+    1308.039,
+    10.812,
+    36.8,
+    1308.781,
+    10.391,
+    36.8,
+    1309.602,
+    10.25,
+    36.8,
+    1310.5
+   ],
+   "exits": [
+    {
+     "target": "Bulvar_Gidis_3",
+     "at": 22.31,
+     "targetAt": 1351.13,
+     "probability": 1.0
+    }
+   ],
+   "stopLine": -1.0,
+   "group": 0,
+   "signal": ""
+  }
+ ],
+ "signals": [
+  {
+   "name": "Kavsak_Kugulu",
+   "phases": [
+    {
+     "greenGroups": [
+      0
+     ],
+     "green": 20.0,
+     "yellow": 3.0,
+     "allRed": 1.5
+    },
+    {
+     "greenGroups": [
+      1
+     ],
+     "green": 10.0,
+     "yellow": 3.0,
+     "allRed": 1.5
+    }
+   ],
+   "heads": [
+    {
+     "model": "Props/Trafik_Lambasi",
+     "pos": [
+      12.8,
+      36.95,
+      1283.5
+     ],
+     "rotY": 180.0,
+     "group": 0
+    },
+    {
+     "model": "Props/Trafik_Lambasi",
+     "pos": [
+      -12.8,
+      36.95,
+      1316.5
+     ],
+     "rotY": 0.0,
+     "group": 0
+    },
+    {
+     "model": "Props/Trafik_Lambasi",
+     "pos": [
+      32.5,
+      36.95,
+      1307.3
+     ],
+     "rotY": 90.0,
+     "group": 1
+    }
    ]
   }
  ]

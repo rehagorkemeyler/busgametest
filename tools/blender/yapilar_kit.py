@@ -306,6 +306,37 @@ def build_street_lamp(name, material):
     return pb.to_object(name, material)
 
 
+def build_traffic_light(name, material):
+    """Kavşak trafik ışığı: 3,6 m direk, yola uzanan kol, üç lambalı kafa.
+    Lambalar ayrı objeler ("Lamba_Kirmizi", "Lamba_Sari", "Lamba_Yesil"); TrafficSignal yanan lambayı açar,
+    sönükken arkadaki koyu lens görünür. Kafa yerel +Z'ye (Unity) bakar; araçlara dönük yerleştirilir."""
+    root = bpy.data.objects.new(name, None)
+    bpy.context.scene.collection.objects.link(root)
+    pb = PropBuilder()
+    pb.cylinder(0, 0, 0.0, 0.3, 0.16, "metal", segments=8)
+    pb.cylinder(0, 0, 0.3, 4.6, 0.08, "metal", segments=8)
+    # kol: yerel +X (Unity) yönüne uzanır. Işık sağ kaldırımda araçlara dönük konunca (Y açısı = yön + 180°)
+    # kol yolun ortasına doğru uzanır. Blender'da Unity +X = -X.
+    pb.box(-2.2, 0.0, -0.05, 0.05, 4.5, 4.6, "metal")
+    hx = -2.1
+    pb.box(hx - 0.2, hx + 0.2, -0.12, 0.12, 3.55, 4.5, "lastik")          # kafa gövdesi
+    pb.box(hx - 0.24, hx + 0.24, -0.16, -0.12, 3.5, 4.55, "lastik")        # arka plaka
+    lamps = (("Lamba_Kirmizi", 4.25, "isik_kirmizi"), ("Lamba_Sari", 4.02, "isik_sari"), ("Lamba_Yesil", 3.79, "isik_yesil"))
+    for _, z, _ in lamps:
+        pb.box(hx - 0.1, hx + 0.1, -0.135, -0.12, z - 0.1, z + 0.1, "lens_koyu")
+        pb.box(hx - 0.13, hx + 0.13, -0.24, -0.12, z + 0.1, z + 0.12, "lastik")  # siperlik
+    # direkte yayalar için küçük ikinci kafa
+    pb.box(-0.1, 0.1, -0.2, -0.08, 2.3, 2.9, "lastik")
+    body = pb.to_object("Direk", material)
+    body.parent = root
+    for lname, z, color in lamps:
+        lb = PropBuilder()
+        lb.box(hx - 0.095, hx + 0.095, -0.15, -0.135, z - 0.095, z + 0.095, color)
+        lo = lb.to_object(lname, material)
+        lo.parent = root
+    return root
+
+
 ITEMS = {
     "Atakule": ("Landmarks", build_atakule),
     "KizilayAVM": ("Landmarks", build_kizilay_avm),
@@ -314,6 +345,7 @@ ITEMS = {
     "KuguluPark_Golet": ("Landmarks", build_kugulu_park),
     "EGO_Durak": ("Props", build_ego_stop),
     "Lamba_Bulvar": ("Props", build_street_lamp),
+    "Trafik_Lambasi": ("Props", build_traffic_light),
     "Agac_Cinar_1": ("Props", lambda n, m: build_tree(n, m, "cinar", 1)),
     "Agac_Cinar_2": ("Props", lambda n, m: build_tree(n, m, "cinar", 2)),
     "Agac_Kavak": ("Props", lambda n, m: build_tree(n, m, "kavak", 3)),
@@ -390,8 +422,19 @@ def main():
         d = os.path.join(args.out, folder)
         os.makedirs(d, exist_ok=True)
         obj = make(name, mat)
-        kit.export_fbx(obj, os.path.join(d, name + ".fbx"))
-        tris = sum(len(p.vertices) - 2 for p in obj.data.polygons)
+        if obj.type == "EMPTY":
+            # çok parçalı obje (ör. trafik ışığı): kök ve çocukları birlikte
+            bpy.ops.object.select_all(action="DESELECT")
+            for o in [obj] + list(obj.children):
+                o.select_set(True)
+            bpy.ops.export_scene.fbx(filepath=os.path.join(d, name + ".fbx"), use_selection=True,
+                                     apply_scale_options="FBX_SCALE_ALL", axis_forward="-Z", axis_up="Y",
+                                     bake_space_transform=True, path_mode="STRIP", object_types={"MESH", "EMPTY"},
+                                     mesh_smooth_type="FACE")
+            tris = sum(len(p.vertices) - 2 for c in obj.children for p in c.data.polygons)
+        else:
+            kit.export_fbx(obj, os.path.join(d, name + ".fbx"))
+            tris = sum(len(p.vertices) - 2 for p in obj.data.polygons)
         print(f"| `{folder}/{name}` | {obj.dimensions.x:.1f} × {obj.dimensions.y:.1f} × {obj.dimensions.z:.1f} | {tris} |")
         objs[name] = obj
     if args.render:

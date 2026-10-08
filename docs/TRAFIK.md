@@ -32,8 +32,25 @@ Harita kurucusu (**Ankara Bus → Hat 1 Haritasını Kur**) `Trafik` objesini ot
 
 **Yapılması gereken tek şey:** Otobüsün etiketini (Tag) **`Player`** yapmak. Spawner oyuncuyu bu etiketle bulur.
 
+## Kuğulu kavşağı: dönüşler ve trafik ışığı
+
+![Kavşak](onizleme/kavsak_kugulu.png)
+
+Kırmızı çizgiler bağlantı şeritleri, siyah çizgiler durma çizgileri, turuncu noktalar trafik ışıkları.
+
+- **Dönüşler** (`TrafficLane.Exit`): Şerit, belli bir mesafede başka bir şeride bağlanır; araç oraya gelince olasılığa göre geçer.
+  - Bulvarın en sağ şeridinden Cinnah'a sağa dönüş (%35).
+  - Cinnah'tan inenler: iç şeritten Kızılay yönüne sola, dış şeritten bulvarın kuzey koluna sağa.
+- **Trafik ışığı** (`TrafficSignal`): İki faz.
+  1. Bulvar (iki yön ve sağa dönüş): 20 sn yeşil, 3 sn sarı, 1,5 sn tüm-kırmızı.
+  2. Cinnah'tan çıkış: 10 sn yeşil, 3 sn sarı, 1,5 sn tüm-kırmızı.
+- **Araçların uyması:** Kırmızıda durma çizgisinde durur. Sarıda yalnızca güvenle durabiliyorsa durur, duramıyorsa geçer.
+- **Işık modeli** `Props/Trafik_Lambasi`: Direk, yola uzanan kol ve üç lambalı kafa. `Lamba_Kirmizi`, `Lamba_Sari` ve `Lamba_Yesil` ayrı objeler; yanan açılır, sönükken koyu lens görünür.
+- Oyuncunun otobüsü ışığa uymak zorunda değil. Kırmızıda geçme cezası sonraki adım olabilir.
+
+Harita kurucusu ışıkları, bağlantı şeritlerini ve durma çizgilerini `Hat1_Yerlesim.json`'dan kurar. Mevcut sahnede görmek için **Ankara Bus → Hat 1 Haritasını Kur** ile harita yeniden kurulmalı.
+
 ## Bilinen sınırlar (MVP)
 
-- Kavşakta dönüş yok. Bulvardaki araçlar Cinnah'a girmez; şerit sonuna gelen araç başka yere taşınır.
 - Şerit değiştirme ve sollama yok. Durak cebinde duran otobüsün arkasındaki araç, otobüs kalkana kadar bekler.
-- Trafik ışıkları yok.
+- Atakule dönüş halkasında trafik yok; Cinnah şeritleri halka girişinde biter.

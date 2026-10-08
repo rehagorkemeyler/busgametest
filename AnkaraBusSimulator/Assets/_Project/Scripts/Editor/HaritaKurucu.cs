@@ -41,11 +41,50 @@ namespace AnkaraBus.EditorTools
         }
 
         [Serializable]
+        private class LaneExit
+        {
+            public string target;
+            public float at;
+            public float targetAt;
+            public float probability;
+        }
+
+        [Serializable]
         private class Lane
         {
             public string name;
             public float limitKmh;
             public float[] points;
+            public LaneExit[] exits;
+            public float stopLine = -1f;
+            public int group;
+            public string signal;
+        }
+
+        [Serializable]
+        private class SignalPhase
+        {
+            public int[] greenGroups;
+            public float green;
+            public float yellow;
+            public float allRed;
+        }
+
+        [Serializable]
+        private class SignalHead
+        {
+            public string model;
+            public float[] pos;
+            public float rotY;
+            public int group;
+        }
+
+        [Serializable]
+        private class Signal
+        {
+            public string name;
+            public SignalPhase[] phases;
+            public SignalHead[] heads;
         }
 
         [Serializable]
@@ -58,6 +97,7 @@ namespace AnkaraBus.EditorTools
             public Item[] items;
             public Stop[] stops;
             public Lane[] lanes;
+            public Signal[] signals;
         }
 
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
@@ -213,6 +253,39 @@ namespace AnkaraBus.EditorTools
 
             var trafficGo = new GameObject("Trafik");
             trafficGo.transform.SetParent(root, false);
+
+            // trafik ışıkları
+            var signals = new Dictionary<string, TrafficSignal>();
+            foreach (var sg in layout.signals ?? Array.Empty<Signal>())
+            {
+                var sgo = new GameObject("Isik_" + sg.name);
+                sgo.transform.SetParent(trafficGo.transform, false);
+                var signal = sgo.AddComponent<TrafficSignal>();
+                var heads = new List<TrafficSignal.Head>();
+                foreach (var h in sg.heads ?? Array.Empty<SignalHead>())
+                {
+                    var asset = AssetDatabase.LoadAssetAtPath<GameObject>(MapsRoot + h.model + ".fbx");
+                    if (asset == null)
+                    {
+                        Debug.LogWarning($"[Hat 1] Trafik ışığı modeli bulunamadı: {MapsRoot}{h.model}.fbx");
+                        continue;
+                    }
+                    var head = (GameObject)PrefabUtility.InstantiatePrefab(asset, sgo.transform);
+                    head.transform.SetPositionAndRotation(ToVector(h.pos), Quaternion.Euler(0f, h.rotY, 0f));
+                    foreach (var r in head.GetComponentsInChildren<MeshRenderer>(true))
+                        r.sharedMaterial = material;
+                    heads.Add(new TrafficSignal.Head { head = head.transform, group = h.group });
+                }
+                var phases = new List<TrafficSignal.Phase>();
+                foreach (var ph in sg.phases ?? Array.Empty<SignalPhase>())
+                    phases.Add(new TrafficSignal.Phase { greenGroups = ph.greenGroups, green = ph.green, yellow = ph.yellow, allRed = ph.allRed });
+                signal.Configure(phases.ToArray(), heads.ToArray());
+                EditorUtility.SetDirty(signal);
+                signals[sg.name] = signal;
+            }
+
+            // şeritler, ardından çıkışlar (dönüşler) ve durma çizgileri
+            var lanes = new Dictionary<string, TrafficLane>();
             foreach (var l in layout.lanes)
             {
                 var go = new GameObject("Serit_" + l.name);
@@ -222,6 +295,18 @@ namespace AnkaraBus.EditorTools
                     points[i] = new Vector3(l.points[i * 3], l.points[i * 3 + 1], l.points[i * 3 + 2]);
                 var lane = go.AddComponent<TrafficLane>();
                 lane.SetPoints(points, l.limitKmh);
+                lanes[l.name] = lane;
+            }
+            foreach (var l in layout.lanes)
+            {
+                var lane = lanes[l.name];
+                var exits = new List<TrafficLane.Exit>();
+                foreach (var e in l.exits ?? Array.Empty<LaneExit>())
+                    if (lanes.TryGetValue(e.target, out var target))
+                        exits.Add(new TrafficLane.Exit { at = e.at, target = target, targetAt = e.targetAt, probability = e.probability });
+                lane.SetExits(exits.ToArray());
+                if (!string.IsNullOrEmpty(l.signal) && signals.TryGetValue(l.signal, out var sig))
+                    lane.SetSignal(sig, l.group, l.stopLine);
                 EditorUtility.SetDirty(lane);
             }
 

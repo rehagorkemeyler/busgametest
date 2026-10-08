@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AnkaraBus.Traffic
 {
@@ -23,6 +24,7 @@ namespace AnkaraBus.Traffic
         private Transform[] wheels;
         private float speed;
         private float frontOffset = 2.2f;
+        private int nextExit;
         private Vector3 castHalfExtents = new Vector3(0.8f, 0.4f, 0.1f);
 
         public TrafficLane Lane { get; private set; }
@@ -53,6 +55,7 @@ namespace AnkaraBus.Traffic
         {
             Lane = lane;
             Distance = distance;
+            nextExit = FirstExitAfter(distance);
             maxSpeedKmh = maxSpeed;
             speed = maxSpeed / 3.6f * 0.7f;
             lane.Sample(distance, out var position, out var forward);
@@ -70,8 +73,21 @@ namespace AnkaraBus.Traffic
             if (free < float.MaxValue)
                 target = Mathf.Min(target, Mathf.Sqrt(2f * braking * Mathf.Max(0f, free - safeGap)));
 
+            // trafik ışığı: önü durma çizgisine gelmeden dur
+            if (Lane.StopLine >= 0f)
+            {
+                float toLine = Lane.StopLine - (Distance + frontOffset);
+                if (toLine > -0.5f)
+                {
+                    bool canStop = toLine > speed * speed / (2f * braking * 1.2f);
+                    if (Lane.MustStop(canStop))
+                        target = Mathf.Min(target, Mathf.Sqrt(2f * braking * Mathf.Max(0f, toLine - 0.5f)));
+                }
+            }
+
             speed = Mathf.MoveTowards(speed, target, (target > speed ? acceleration : braking) * dt);
             Distance += speed * dt;
+            TakeExits();
 
             Lane.Sample(Distance, out var position, out var forward);
             body.MovePosition(position);
@@ -80,6 +96,33 @@ namespace AnkaraBus.Traffic
             float degrees = speed * dt / wheelRadius * Mathf.Rad2Deg;
             foreach (var w in wheels)
                 w.Rotate(Vector3.right, degrees, Space.Self);
+        }
+
+        /// <summary>Geçilen çıkış noktalarında olasılığa göre başka şeride geçer (kavşakta dönüş).</summary>
+        private void TakeExits()
+        {
+            var exits = Lane.Exits;
+            while (nextExit < exits.Length && Distance >= exits[nextExit].at)
+            {
+                var exit = exits[nextExit];
+                nextExit++;
+                if (exit.target != null && Random.value < exit.probability)
+                {
+                    Distance = exit.targetAt + (Distance - exit.at);
+                    Lane = exit.target;
+                    nextExit = FirstExitAfter(Distance);
+                    return;
+                }
+            }
+        }
+
+        private int FirstExitAfter(float distance)
+        {
+            var exits = Lane.Exits;
+            int i = 0;
+            while (i < exits.Length && exits[i].at <= distance)
+                i++;
+            return i;
         }
 
         /// <summary>Öndeki en yakın hareketli cisme (araç, otobüs) mesafe. Yol ve binalar yok sayılır.</summary>

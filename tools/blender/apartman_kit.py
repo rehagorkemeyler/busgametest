@@ -67,6 +67,9 @@ PALETTE = {
     "kiyafet_bordo": (0.48, 0.10, 0.14), "kiyafet_haki": (0.40, 0.42, 0.28), "kiyafet_lacivert": (0.12, 0.16, 0.30),
     "kiyafet_beyaz": (0.90, 0.90, 0.88), "kiyafet_gri": (0.45, 0.46, 0.48), "ayakkabi": (0.10, 0.08, 0.07),
     "basortusu_mavi": (0.30, 0.45, 0.65), "basortusu_bej": (0.80, 0.70, 0.58),
+    # trafik ışığı lambaları (parlak)
+    "isik_kirmizi": (1.0, 0.08, 0.05), "isik_sari": (1.0, 0.75, 0.05), "isik_yesil": (0.10, 1.0, 0.35),
+    "lens_koyu": (0.06, 0.06, 0.07),
 }
 PALETTE_INDEX = {name: i for i, name in enumerate(PALETTE)}
 assert len(PALETTE) <= GRID * GRID
