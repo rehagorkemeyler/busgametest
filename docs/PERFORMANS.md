@@ -131,3 +131,30 @@ Bulutun otobüs optimizasyonu (iç mekân sadeleştirme, doku atlası, `Golge_Go
 - **Kokpit neredeyse değişmedi (22–28 FPS)**: obje sayısı yarıya inse de piksel maliyeti aynı. Ölçüm 2'deki teşhisi doğruluyor. Kokpit için çözüm kalite kademesi (render scale 0.6, MSAA kapalı → Ölçüm 2'de 34–39 FPS) ve ucuz cam.
 
 **Sıradaki adımlar:** (1) zayıf GPU'lar için otomatik düşük kalite kademesi + kokpit camı, (2) bina LOD'u, (3) occlusion ve ışık bake'i (Y5).
+
+## Görüntü kalitesi seviyeleri
+
+Oyunda **AYARLAR → Görüntü Kalitesi** ile seçilir, cihazda saklanır. İlk açılışta GPU'ya göre öneri seçilir (`GrafikAyarlari.CihazaGoreOner`): Xclipse, Immortalis, Adreno 7xx/8xx, Mali-G710+ → Yüksek; Mali-G3x/G5x, Adreno 6xx'in alt serisi ve altı, PowerVR, < 3,5 GB RAM → Düşük; diğerleri → Normal. Kurulum: **Ankara Bus → Proje Ayarlarını Uygula** (`KaliteKurulumu`).
+
+| Seviye | Render scale | MSAA | Kaynak |
+|---|---|---|---|
+| Yüksek | 0.8 | 2x | Ölçüm 1'deki ayar (Galaxy S24 FE) |
+| Normal | 0.7 | kapalı | ikisinin arası (henüz ölçülmedi) |
+| Düşük | 0.6 | kapalı | Ölçüm 2'de A32'de denenen ayar |
+
+Ortak: gölge 60 m, 1024, tek kademe, HDR kapalı.
+
+### Ölçüm 4 — Galaxy A32, otomatik seçilen Düşük
+
+A32 ilk açılışta **Düşük** seçti. Optimize otobüsle, ısıl durum 1 (Ölçüm 2–3'te 2 idi, yani telefon biraz daha serindi).
+
+| Yer | Dış FPS (%1) | Kokpit FPS (%1) |
+|---|---|---|
+| TestTrack | 45,0 (44,7) | 36,2 (30,0) |
+| Kızılay AVM | 38,2 (30,0) | 28,7 (22,5) |
+| Meclis | 45,0 (44,6) | 35,8 (30,0) |
+| Kuğulu Park | 45,0 (44,6) | 38,9 (30,0) |
+| Cinnah | 45,0 (44,7) | 37,2 (30,0) |
+| Atakule | 45,0 (44,6) | 41,7 (30,0) |
+
+Düşük ayarda A32 her yerde ≥ 30 FPS, yalnızca Kızılay kokpit 28,7 (bina LOD'u ve occlusion ile çözülecek).

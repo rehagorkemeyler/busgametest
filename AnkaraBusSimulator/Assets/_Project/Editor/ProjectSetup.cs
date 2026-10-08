@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 namespace AnkaraBus.EditorTools
 {
@@ -12,7 +11,6 @@ namespace AnkaraBus.EditorTools
     /// </summary>
     public static class ProjectSetup
     {
-        private const string MobileRpAssetPath = "Assets/Settings/Mobile_RPAsset.asset";
 
         [MenuItem("Ankara Bus/Proje Ayarlarını Uygula")]
         public static void Apply()
@@ -42,19 +40,8 @@ namespace AnkaraBus.EditorTools
             PlayerSettings.allowedAutorotateToLandscapeLeft = true;
             PlayerSettings.allowedAutorotateToLandscapeRight = true;
 
-            // Mobil URP: gölge ~60 m, MSAA 2x, HDR kapalı
-            var mobileRp = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(MobileRpAssetPath);
-            if (mobileRp != null)
-            {
-                mobileRp.shadowDistance = 60f;
-                mobileRp.msaaSampleCount = 2;
-                mobileRp.supportsHDR = false;
-                EditorUtility.SetDirty(mobileRp);
-            }
-            else
-            {
-                Debug.LogWarning($"[ProjectSetup] {MobileRpAssetPath} bulunamadı.");
-            }
+            // Düşük / Normal / Yüksek kalite seviyeleri
+            KaliteKurulumu.Kur();
 
             AssetDatabase.SaveAssets();
 

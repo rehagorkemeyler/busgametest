@@ -30,6 +30,8 @@ namespace AnkaraBus.UI
         private Text status;
         private BusDoorController doors;
         private Font font;
+        private GameObject settingsPanel;
+        private readonly Image[] qualityButtons = new Image[GrafikAyarlari.SeviyeAdlari.Length];
 
         public void Bind(BusInput busInput, BusCameraRig rig)
         {
@@ -89,6 +91,7 @@ namespace AnkaraBus.UI
             handbrakeButton = Button(root, "EL FRENİ", new Vector2(1f, 0.5f), new Vector2(-150f, 120f), new Vector2(240f, 110f), () => input.ToggleHandbrake());
             doorButton = Button(root, "KAPILAR", new Vector2(1f, 0.5f), new Vector2(-150f, -10f), new Vector2(240f, 110f), () => input.ToggleDoors());
             Button(root, "KAMERA", new Vector2(0f, 1f), new Vector2(130f, -80f), new Vector2(200f, 90f), () => { if (cameraRig != null) cameraRig.Toggle(); });
+            Button(root, "AYARLAR", new Vector2(0f, 1f), new Vector2(130f, -185f), new Vector2(200f, 90f), () => settingsPanel.SetActive(!settingsPanel.activeSelf));
 
             // Gösterge
             var gaugeRect = Element(root, "Gosterge", new Vector2(0.5f, 1f), new Vector2(0f, -70f), new Vector2(520f, 110f));
@@ -98,6 +101,43 @@ namespace AnkaraBus.UI
             gauge = Label(gaugeRect, "", 54, TextAnchor.MiddleCenter);
             var statusRect = Element(root, "Durum", new Vector2(0.5f, 1f), new Vector2(0f, -150f), new Vector2(700f, 50f));
             status = Label(statusRect, "", 30, TextAnchor.MiddleCenter);
+
+            BuildSettingsPanel(root);
+        }
+
+        /// <summary>Görüntü kalitesi seçimi: Düşük / Normal / Yüksek.</summary>
+        private void BuildSettingsPanel(RectTransform root)
+        {
+            // Arkadaki kontrollere dokunulmasın diye ekranı kaplayan yarı saydam zemin
+            var blocker = Element(root, "AyarlarPaneli", new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+            blocker.anchorMin = Vector2.zero;
+            blocker.anchorMax = Vector2.one;
+            blocker.gameObject.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.55f);
+            settingsPanel = blocker.gameObject;
+
+            var box = Element(blocker, "Kutu", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(960f, 500f));
+            var boxImage = box.gameObject.AddComponent<Image>();
+            boxImage.sprite = UiShapes.RoundedRect;
+            boxImage.type = Image.Type.Sliced;
+            boxImage.color = new Color(0.1f, 0.11f, 0.13f, 0.96f);
+
+            Label(Element(box, "Baslik", new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(900f, 70f)),
+                "GÖRÜNTÜ KALİTESİ", 46, TextAnchor.MiddleCenter);
+
+            for (int i = 0; i < qualityButtons.Length; i++)
+            {
+                var level = (KaliteSeviyesi)i;
+                qualityButtons[i] = Button(box, GrafikAyarlari.SeviyeAdlari[i], new Vector2(0.5f, 0.5f),
+                    new Vector2((i - 1) * 290f, 20f), new Vector2(260f, 140f), () => GrafikAyarlari.Uygula(level));
+            }
+
+            var hint = Label(Element(box, "Oneri", new Vector2(0.5f, 0.5f), new Vector2(0f, -100f), new Vector2(900f, 50f)),
+                $"Bu telefon için önerilen: {GrafikAyarlari.SeviyeAdlari[(int)GrafikAyarlari.Onerilen]}", 30, TextAnchor.MiddleCenter);
+            hint.fontStyle = FontStyle.Normal;
+            hint.color = Idle;
+
+            Button(box, "KAPAT", new Vector2(0.5f, 0f), new Vector2(0f, 75f), new Vector2(260f, 90f), () => settingsPanel.SetActive(false));
+            settingsPanel.SetActive(false);
         }
 
         private TouchPedal Pedal(RectTransform root, string label, Vector2 position, Vector2 size, Color color)
@@ -195,6 +235,10 @@ namespace AnkaraBus.UI
             reverseButton.color = v.Selector == BusVehicle.GearSelector.Reverse ? Active : Panel;
             handbrakeButton.color = v.Handbrake ? Warning : Panel;
             doorButton.color = doors != null && doors.AnyOpen ? Ok : Panel;
+
+            if (settingsPanel.activeSelf)
+                for (int i = 0; i < qualityButtons.Length; i++)
+                    qualityButtons[i].color = (int)GrafikAyarlari.Mevcut == i ? Active : Panel;
         }
     }
 }

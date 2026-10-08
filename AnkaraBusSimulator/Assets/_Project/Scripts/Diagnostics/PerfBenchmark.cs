@@ -42,7 +42,7 @@ namespace AnkaraBus.Diagnostics
 
             probe = new PerfProbe();
             Debug.Log($"[Perf] BASLA {label} cihaz={SystemInfo.deviceModel} gpu={SystemInfo.graphicsDeviceName} " +
-                      $"api={SystemInfo.graphicsDeviceType} ram_mb={SystemInfo.systemMemorySize} ekran={Screen.width}x{Screen.height}");
+                      $"api={SystemInfo.graphicsDeviceType} kalite={GrafikAyarlari.Mevcut} ram_mb={SystemInfo.systemMemorySize} ekran={Screen.width}x{Screen.height}");
             yield return new WaitForSeconds(warmupSeconds);
 
             var route = FindAnyObjectByType<BusRoute>();

@@ -13,6 +13,7 @@ namespace AnkaraBus
             // Mobilde varsayılan sınır 30 FPS
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            GrafikAyarlari.KayitliyiUygula();
         }
     }
 }
