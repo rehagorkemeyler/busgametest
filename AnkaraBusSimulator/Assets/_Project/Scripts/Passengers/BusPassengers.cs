@@ -30,6 +30,8 @@ namespace AnkaraBus.Passengers
         public int Onboard => onboard;
         public int Capacity => capacity;
         public bool IsBusy { get; private set; }
+        /// <summary>Bu sıradaki durakta iniş-biniş yapıldı ve bitti mi? (RouteTracker durağı bununla tamamlar.)</summary>
+        public bool Served(int stopIndex) => servedIndex == stopIndex && !IsBusy;
 
         public event System.Action<int> OnboardChanged;
 

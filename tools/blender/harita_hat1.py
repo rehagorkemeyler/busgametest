@@ -59,6 +59,10 @@ CINNAH_CHAIN = (
 )
 
 
+# Boş zeminin rengi (palet adı). Çim her yeri yeşile boyuyordu; kent merkezinde beton daha doğal.
+ZEMIN_RENGI = "beton"
+
+
 class Chain:
     """Uç uca eklenmiş yol parçaları; s (zincir boyunca metre) ile sorgulanır."""
 
@@ -523,7 +527,7 @@ def main():
     mesh.from_pydata(verts, [], faces)
     uv = mesh.uv_layers.new(name="UVMap")
     for loop in uv.data:
-        loop.uv = kit.palette_uv("cim")
+        loop.uv = kit.palette_uv(ZEMIN_RENGI)
     mesh.materials.append(mat)
     ground = bpy.data.objects.new("Zemin_Hat1", mesh)
     bpy.context.scene.collection.objects.link(ground)

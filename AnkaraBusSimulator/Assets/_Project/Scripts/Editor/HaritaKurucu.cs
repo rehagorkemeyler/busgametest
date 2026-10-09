@@ -155,6 +155,7 @@ namespace AnkaraBus.EditorTools
                 EditorUtility.ClearProgressBar();
             }
 
+            HatCarpismalari.Ekle(root.transform); // binalar, simge yapılar, duraklar
             BuildRoute(root.transform, layout);
             BuildTraffic(root.transform, layout, material);
             BuildPassengers(root.transform, material);

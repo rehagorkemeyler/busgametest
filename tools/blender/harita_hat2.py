@@ -44,6 +44,10 @@ HAT2_CHAIN = (
 RING_RADIUS = 14.0 + (2 * B["lane"] + 1.0) / 2   # ada + halka yarısı (yol_kit.piece_roundabout)
 
 
+# Boş zeminin rengi (palet adı). Çim her yeri yeşile boyuyordu; kent merkezinde beton daha doğal.
+ZEMIN_RENGI = "beton"
+
+
 def build_layout(widths, seed=2025, blocks=()):
     rng = random.Random(seed)
     lay = h1.Layout()
@@ -196,7 +200,7 @@ def main():
     mesh.from_pydata(verts, [], faces)
     uv = mesh.uv_layers.new(name="UVMap")
     for loop in uv.data:
-        loop.uv = kit.palette_uv("cim")
+        loop.uv = kit.palette_uv(ZEMIN_RENGI)
     mesh.materials.append(mat)
     ground = bpy.data.objects.new("Zemin_Hat2", mesh)
     bpy.context.scene.collection.objects.link(ground)

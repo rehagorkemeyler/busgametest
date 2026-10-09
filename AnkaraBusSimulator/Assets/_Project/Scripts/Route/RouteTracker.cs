@@ -6,7 +6,7 @@ namespace AnkaraBus.Route
 {
     /// <summary>
     /// Otobüsün üzerinde durur; hattaki sıradaki durağı takip eder.
-    /// Otobüs durak alanında durup kapıları belirli bir süre açık tutunca durak tamamlanır.
+    /// Otobüs durak alanında durup kapıları belirli bir süre açık tutunca ya da yolcu iniş-binişi bitince durak tamamlanır.
     /// </summary>
     public class RouteTracker : MonoBehaviour
     {
@@ -62,6 +62,12 @@ namespace AnkaraBus.Route
             if (exchanging)
             {
                 dwellTimer = Mathf.Min(dwellTimer, requiredDwellSeconds * 0.5f);
+                return;
+            }
+            // yolcu indirip bindirdiyse durak tamamlanmıştır; kapıyı hemen kapatıp kalkan otobüs "atladı" sayılmasın
+            if (passengers != null && passengers.Served(NextStopIndex))
+            {
+                Advance(true);
                 return;
             }
 

@@ -220,6 +220,65 @@ def classify(name):
     return "Govde"
 
 
+def iki_tarafli_yap(objs):
+    """İçe bakan dış yüzleri düzeltir.
+
+    Kaynak modelde bazı dış paneller içe bakıyor (Proton arka yüzleri de çiziyor); Unity arka yüzü çizmediği için
+    gövdede delik görünüyordu. Bir yüzün arkasından (-normal yönünde) atılan ışın otobüse çarpmadan kaçıyorsa
+    o yüzün arka tarafı dışarıdadır. Önü otobüse bakıyorsa yüz ters çevrilir; önü de boşsa (ince tek panel: ayna,
+    plaka) ters kopyası eklenip iki taraflı yapılır. Hiçbir yüz silinmez.
+    Camlar (saydam, '_Cam') yalnızca çevrilir, iki taraflı yapılmaz (iki kat cam koyulaşır).
+    Taban ve altlık hariç: içeriden zemin kaybolmasın."""
+    from mathutils.bvhtree import BVHTree
+    tris, verts = [], []
+    for tag, o in objs.items():
+        if tag.startswith("Golge_"):
+            continue  # gölge kabuğu her şeyi sarar, ışınları kesmesin
+        mw = o.matrix_world
+        base = len(verts)
+        verts += [mw @ v.co for v in o.data.vertices]
+        for p in o.data.polygons:
+            idx = [base + i for i in p.vertices]
+            for k in range(1, len(idx) - 1):
+                tris.append((idx[0], idx[k], idx[k + 1]))
+    bvh = BVHTree.FromPolygons(verts, tris)
+    toplam = 0
+    for tag, o in objs.items():
+        if tag.startswith(("Lamba_", "Golge_")):
+            continue
+        mw = o.matrix_world
+        rot = mw.to_3x3()
+        bm = bmesh.new()
+        bm.from_mesh(o.data)
+        bm.faces.ensure_lookup_table()
+        cevir, cift = [], []
+        for f in bm.faces:
+            mat = o.data.materials[f.material_index] if f.material_index < len(o.data.materials) else None
+            cam = mat is not None and mat.name.endswith("_Cam")
+            n = (rot @ f.normal).normalized()
+            c = mw @ f.calc_center_median()
+            if n.length < 0.5 or (n.z > 0.7 and c.z < 1.2) or c.z < 0.35:
+                continue  # taban, basamak, altlık
+            if bvh.ray_cast(c - n * 0.002, -n, 40.0)[0] is not None:
+                continue  # arkası otobüsün içi: doğru yöne bakıyor
+            # arkası dışarıda. Önü otobüse bakıyorsa yüz ters: çevir. Önü de boşsa (ince tek panel): iki taraflı yap.
+            if bvh.ray_cast(c + n * 0.002, n, 40.0)[0] is not None:
+                cevir.append(f)
+            elif not cam:
+                cift.append(f)
+        if cevir:
+            bmesh.ops.reverse_faces(bm, faces=cevir)
+        if cift:
+            dup = bmesh.ops.duplicate(bm, geom=cift)
+            bmesh.ops.reverse_faces(bm, faces=[g for g in dup["geom"] if isinstance(g, bmesh.types.BMFace)])
+        if cevir or cift:
+            toplam += len(cevir) + len(cift)
+            bm.to_mesh(o.data)
+            o.data.update()
+        bm.free()
+    print(f"düzeltilen yüz (çevrilen + iki taraflı): {toplam}")
+
+
 def build(src, out, render_path, mobil=False):
     model = tds.TDS(os.path.join(src, "models", "BMC Procity 12LF.3ds"))
     tex_dirs = [os.path.join(src, "textures"), os.path.join(src, "skins")]
@@ -348,6 +407,8 @@ def build(src, out, render_path, mobil=False):
     if mobil:
         build_atlas([o for t, o in objs.items() if not t.startswith("Lamba_")], tex_out)
         objs["Golge_Govde"] = shadow_proxy([objs["Govde"]] + [objs[t] for t in WHEELS])
+
+    iki_tarafli_yap(objs)
 
     # kök: zeminde, otobüs ortası
     allpts = [o.matrix_world @ Vector(c) for o in objs.values() for c in o.bound_box]

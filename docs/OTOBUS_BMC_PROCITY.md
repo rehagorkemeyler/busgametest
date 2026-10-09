@@ -111,3 +111,15 @@ Mobil için dönüştürücüde yapılanlar (Y4 ölçümünden sonra):
 | Draw call (gölge dahil) | ~140 | ~30 |
 
 `Atlas_BMC.png` için Unity'de **Max Size 2048** yeterli. Yeni ölçüm Y4 APK'sıyla yapılıp `docs/PERFORMANS.md`'ye eklenmeli.
+
+## İçe bakan dış yüzler (gövdedeki delikler)
+
+Kaynak modelde gövde kaplamasının (`M_caroserie`) ve kapı camlarının bir kısmı içe bakıyor. Proton arka yüzleri de çizdiği için orada görünmüyor, Unity ise arka yüzü çizmediği için gövdede delik açılıyordu (özellikle arka teker ile orta kapı arası).
+
+`bmc_donustur.py` → `iki_tarafli_yap` bunu düzeltir:
+- Her yüzün arkasından (-normal yönünde) ışın atılır. Işın otobüse çarpmadan kaçıyorsa yüzün arkası dışarıdadır.
+- Önü otobüse bakıyorsa yüz ters çevrilir. Önü de boşsa (ayna, plaka gibi ince tek panel) ters kopyası eklenir.
+- Hiçbir yüz silinmez. Camlar yalnızca çevrilir. Taban ve altlık hariç tutulur.
+
+Sonuç: iki modelde de 547 yüz düzeltildi. Yandan bakınca arka yüzü görünen gövde noktası 308'den 7'ye indi. Parça adları, pivotlar ve materyaller değişmedi; prefabın yeniden kurulması gerekmez.
+
