@@ -30,7 +30,7 @@ Motor çalışınca `D_2566UH_ein` sesi bir kez çalar. `D_2566UH_aus` (stop) ş
 | Korna | KLAKSON | klavyede **H**, dokunmatikte **KORNA** butonu (basılı tuttukça) |
 | Kapılar | DoorOpen1–3 / DoorClose1–3 | her kapı kendi konumunda, kendi sesiyle |
 | Kentkart | IBIS_piep | her binen yolcu için ön kapıda |
-| "Dur" zili | stop | duraktan çıkıştan 8–20 sn sonra (otobüste yolcu varsa) |
+| Yolcu: "Durakta inecek var!" | stop | duraktan çıkıştan 8–20 sn sonra (otobüste yolcu varsa) |
 
 ## İçe aktarma ayarları (Android)
 
@@ -49,3 +49,10 @@ Kayıtların RMS düzeyleri ölçülerek dengelendi (kulakla değil, ölçümle;
 - **Düzeltme:** fren bırakma sesi hiç çalmıyordu (basınç birkaç karede düştüğü için koşul tutmuyordu); artık "basıldı" durumu izleniyor.
 
 Seviye ayarı için `BusAudio` bileşenindeki katman `volume` değerleri ve `masterVolume` kullanılır. Kurucuyu tekrar çalıştırmak bu değerleri sıfırlar; kalıcı bir değişiklik `OtobusSesKurucu.EngineLayers` içinde yapılmalı.
+
+## Türkçe yolcu sesi
+
+Ses paketindeki `stop.wav` Rusçaydı ("На остановке, будьте добры!" — "Durakta, lütfen!"). Aynı dosya adıyla Türkçe
+"Durakta inecek var!" konmuştur (Unity bağlantıları değişmedi): `tools/ses/anons_tr.py`, Piper TTS `tr_TR-dfki-medium` sesi,
+48 kHz mono, eski sesin seviyesine yakın. Konuşma tanımayla (Whisper) doğrulandı: eski ses `ru`, yeni ses `tr` "Durakta inecek var."
+Ses paketinde başka konuşma yok (diğerleri motor, kapı, fren, zil sesleri).
