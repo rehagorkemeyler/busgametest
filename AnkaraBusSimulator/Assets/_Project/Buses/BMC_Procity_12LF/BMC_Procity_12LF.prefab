@@ -311,6 +311,8 @@ GameObject:
   - component: {fileID: 2951490291052843353}
   - component: {fileID: 4131194846524566301}
   - component: {fileID: 3103105459118542619}
+  - component: {fileID: 5385586790994292461}
+  - component: {fileID: 2836539360202227104}
   - component: {fileID: 4747146629019658239}
   - component: {fileID: 7078710346351499608}
   - component: {fileID: 2965646006205853051}
@@ -457,6 +459,36 @@ MonoBehaviour:
   route: {fileID: 0}
   requiredDwellSeconds: 4
   skipDistance: 25
+--- !u!114 &5385586790994292461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d100b055d6cd4eff8bcfea81473c8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Route.RotaRehberi
+  adim: 5
+  donusUzakligi: 220
+  donusAcisi: 40
+  sapmaSiniri: 25
+--- !u!114 &2836539360202227104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201460532403118460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38341a941a6dc4ff4a3597aa2e6cfcf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.UI.MiniHarita
+  gorusYaricapi: 160
+  capPiksel: 240
 --- !u!114 &4747146629019658239
 MonoBehaviour:
   m_ObjectHideFlags: 0

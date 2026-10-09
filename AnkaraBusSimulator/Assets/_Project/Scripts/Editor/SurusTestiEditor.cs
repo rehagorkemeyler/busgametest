@@ -17,6 +17,7 @@ namespace AnkaraBus.EditorTools
         private const string ActiveKey = "AnkaraBus.SurusTesti.Aktif";
         private const string BatchKey = "AnkaraBus.SurusTesti.Batch";
         private const string EndKey = "AnkaraBus.SurusTesti.Bitis";
+        private const string HizKey = "AnkaraBus.SurusTesti.Hiz";
         private const double TimeoutSeconds = 1200d;
 
         private static double startTime;
@@ -38,6 +39,15 @@ namespace AnkaraBus.EditorTools
         public static void RunHat1Batch() => Start(Hat1SahneKurucu.ScenePath, batch: true);
 
         public static void RunHat2Batch() => Start(Hat2SahneKurucu.ScenePath, batch: true);
+
+        /// <summary>Komut satırı: menüde seçilen otobüs "-otobus N" ile verilir (OyunSecimi.Otobus), sonra Hat 1.</summary>
+        public static void RunHat1OtobusBatch()
+        {
+            var args = System.Environment.GetCommandLineArgs();
+            int i = System.Array.IndexOf(args, "-otobus");
+            AnkaraBus.Gameplay.OyunSecimi.Otobus = i >= 0 && i + 1 < args.Length ? int.Parse(args[i + 1]) : 0;
+            Start(Hat1SahneKurucu.ScenePath, batch: true);
+        }
 
         [MenuItem("Ankara Bus/Ses ve Puan Testi (Hat 1)")]
         public static void RunSesPuanMenu()
@@ -75,6 +85,11 @@ namespace AnkaraBus.EditorTools
                 new GameObject("OtomatikPilot").AddComponent<OtomatikPilot>();
             SessionState.SetBool(ActiveKey, true);
             SessionState.SetBool(BatchKey, batch);
+            // batch testler zamanı hızlandırır ("-hiz N", varsayılan 3); fizik adımı sabit, sürüş aynı kalır
+            var args = System.Environment.GetCommandLineArgs();
+            int h = System.Array.IndexOf(args, "-hiz");
+            float hiz = h >= 0 && h + 1 < args.Length ? float.Parse(args[h + 1], System.Globalization.CultureInfo.InvariantCulture) : batch ? 3f : 1f;
+            SessionState.SetFloat(HizKey, menuKamera ? 1f : hiz);
             SessionState.SetString(EndKey, menuKamera ? "[MenuTest] BITTI" : sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
             Hook();
             EditorApplication.EnterPlaymode();
@@ -110,6 +125,9 @@ namespace AnkaraBus.EditorTools
 
         private static void OnUpdate()
         {
+            float hiz = SessionState.GetFloat(HizKey, 1f);
+            if (EditorApplication.isPlaying && !Mathf.Approximately(Time.timeScale, hiz))
+                Time.timeScale = hiz;
             if (EditorApplication.timeSinceStartup - startTime > TimeoutSeconds)
                 Finish(false, $"[SurusTesti] Zaman aşımı ({TimeoutSeconds / 60d:F0} dk)");
         }
@@ -122,6 +140,8 @@ namespace AnkaraBus.EditorTools
             SessionState.EraseBool(ActiveKey);
             SessionState.EraseBool(BatchKey);
             SessionState.EraseString(EndKey);
+            SessionState.EraseFloat(HizKey);
+            Time.timeScale = 1f;
             Debug.Log($"[SurusTesti] {(ok ? "BAŞARILI" : "BAŞARISIZ")}: {message}, sorun sayısı {problems}");
 
             if (batch)

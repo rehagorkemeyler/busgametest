@@ -195,3 +195,24 @@ Bellek: 230 / 229 MB.
 **Sonuç:** Sesler ve puan arayüzü FPS'i düşürmüyor. GPU ve bellek farkı ölçülemeyecek kadar küçük. CPU süresi kapalı build'de daha yüksek çıktı; bu, sistemlerin maliyetinin ölçüm gürültüsünden (telefon işlemci saatini yüke göre değiştiriyor, ±2–3 ms) küçük olduğunu gösterir. Kapalı build'deki tek 24 FPS dilimi uygulamanın ilk açılışındaki bir takılma; sonraki dilimlerde tekrarlanmadı.
 
 **Bekliyor:** A32 (Düşük) ölçümü. Telefon bağlanınca aynı iki APK ile yapılacak.
+
+## Ölçüm 7 — Y11: SketchUp binaları, lambalar, gece + yağmur (Galaxy S24 FE, Yüksek)
+
+9 Ekim 2026, S24 FE kabloyla bağlı, kalite **Yüksek** (tam kalite otobüs). Ölçüm: **Ankara Bus → Android → Y11 Test APK'sı**, telefonda
+`am start -n com.ankarabus.simulator/com.unity3d.player.UnityPlayerGameActivity -e gorev olcum -e zaman Gunduz|Gece -e yagmur 0|1 -e kalite 2`
+(`Y10Baslatici` intent'i okur, `Y11Hat` Hat 1'e PerfBenchmark ekler: her durakta dış ve kokpit kamera, 10 sn).
+
+| Yer | Kamera | Gündüz FPS (%1) | Gece+yağmur FPS (%1) | CPU / GPU ms (gece) | Draw call gündüz → gece | Üçgen (gece) |
+|---|---|---|---|---|---|---|
+| Kızılay AVM | dış | 57,8 (57,2) | 59,2 (58,8) | 9,1 / 10,4 | 643 → 666 | 1,02 M |
+| Kızılay AVM | kokpit | 60 (59,6) | 60 (59,5) | 8,9 / 10,3 | 613 → 638 | 1,01 M |
+| Meclis | dış | 60 | 60 | 9,3 / 9,6 | 438 → 436 | 845 bin |
+| Kuğulu Park | dış | 60 (59,5) | 60 (59,1) | 8,6 / 8,0 | 244 → 250 | 488 bin |
+| Kuğulu Park | kokpit | 60 (59,5) | 60 (59,4) | 8,5 / 9,1 | 211 → 228 | 432 bin |
+| Cinnah | dış | 60 | 60 | 8,7 / 8,0 | 244 → 242 | 456 bin |
+| Atakule | dış | 60 | 60 | 8,3 / 7,1 | 158 → 182 | 360 bin |
+
+- S24 FE Yüksek'te her yerde 60 FPS; gece + yağmurun maliyeti küçük (GPU +0,5 ms, draw call +25: lamba parlamaları, farlar, yağmur).
+- **Yeni SketchUp binaları Kızılay'da draw call'u ikiye katladı** (Ölçüm 3'te 279, şimdi 643; üçgen 1,05 M → 0,94 M). A32 Düşük için risk:
+  Ölçüm 3'te A32 Kızılay dış 34 FPS idi. **A32 ölçümü bekliyor** (telefon bağlı değildi); 30'un altına düşerse ilk aday Kızılay
+  bloklarının birleştirilmesi / LOD'u (draw call), sonra yağmur parçacıkları (en çok 1200).

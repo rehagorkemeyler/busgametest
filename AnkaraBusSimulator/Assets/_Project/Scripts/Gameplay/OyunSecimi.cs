@@ -35,6 +35,13 @@ namespace AnkaraBus.Gameplay
             set { PlayerPrefs.SetInt(HatKey, value); PlayerPrefs.Save(); }
         }
 
+        /// <summary>Otobüs sırası (Resources/OtobusKatalogu); 0 BMC Procity.</summary>
+        public static int Otobus
+        {
+            get => Mathf.Max(0, PlayerPrefs.GetInt("Otobus", 0));
+            set { PlayerPrefs.SetInt("Otobus", value); PlayerPrefs.Save(); }
+        }
+
         /// <summary>Kaplama sırası; -1 rastgele, kayıt yoksa -2 (prefabın kendi kaplaması).</summary>
         public static int Kaplama
         {

@@ -1,5 +1,6 @@
 using System.IO;
 using AnkaraBus.Diagnostics;
+using AnkaraBus.Gameplay;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -20,7 +21,25 @@ namespace AnkaraBus.EditorTools
         public const string PerfApkPath = "Builds/AnkaraBus_perf.apk";
         public const string DriveTestApkPath = "Builds/AnkaraBus_surus_testi.apk";
 
-        private enum Mode { None, Perf, DriveTest, SesPuan, MenuKamera }
+        private enum Mode { None, Perf, DriveTest, SesPuan, MenuKamera, Y10 }
+
+        // Y10: menü başlatıcı olur (zaman/hava/kalite ayarlanır), Hat 1 → Hat 2 otomatik pilot + Y10Gozlemci
+        private static OyunSecimi.Zaman y10Zaman;
+        private static bool y10Yagmur;
+        private static int y10Kalite = -1;
+
+        public static void Y10GeceYagmurBuild() => Y10Build(OyunSecimi.Zaman.Gece, true, -1, "Builds/AnkaraBus_y10_gece_yagmur.apk");
+        public static void Y10AksamBuild() => Y10Build(OyunSecimi.Zaman.Aksam, false, -1, "Builds/AnkaraBus_y10_aksam.apk");
+
+        /// <summary>Y11: zaman/hava/kalite/görev adb intent'iyle seçilir (bkz. Y10Baslatici).</summary>
+        [MenuItem("Ankara Bus/Android/Y11 Test APK'sı")]
+        public static void Y11Build() => Y10Build(OyunSecimi.Zaman.Gece, true, -1, "Builds/AnkaraBus_y11_test.apk");
+
+        private static void Y10Build(OyunSecimi.Zaman zaman, bool yagmur, int kalite, string apk)
+        {
+            y10Zaman = zaman; y10Yagmur = yagmur; y10Kalite = kalite;
+            Build(Mode.Y10, OyunSahneleri, apk);
+        }
 
         public const string MenuKameraApkPath = "Builds/AnkaraBus_menu_kamera_testi.apk";
 
@@ -124,6 +143,22 @@ namespace AnkaraBus.EditorTools
             {
                 if (mode == Mode.None || report == null)
                     return;
+
+                if (mode == Mode.Y10)
+                {
+                    if (scene.path == AnaMenuKurucu.ScenePath)
+                    {
+                        var bas = new GameObject("Y10Baslatici");
+                        SceneManager.MoveGameObjectToScene(bas, scene);
+                        bas.AddComponent<Y10Baslatici>().Ayarla(y10Zaman, y10Yagmur, y10Kalite);
+                        return;
+                    }
+                    var test = new GameObject("Y10Test");
+                    SceneManager.MoveGameObjectToScene(test, scene);
+                    string sonraki = scene.path == Hat1SahneKurucu.ScenePath ? Path.GetFileNameWithoutExtension(Hat2SahneKurucu.ScenePath) : null;
+                    test.AddComponent<Y11Hat>().Ayarla(sonraki);
+                    return;
+                }
 
                 if (mode == Mode.MenuKamera)
                 {

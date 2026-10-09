@@ -25,6 +25,13 @@ namespace AnkaraBus.Diagnostics
         private PerfProbe probe;
         private bool measuring;
 
+        /// <summary>Çalışma anında eklenince (Start'tan önce) etiketi ve sonraki sahneyi verir.</summary>
+        public void Ayarla(string etiket, string sonraki)
+        {
+            label = etiket;
+            nextScene = sonraki;
+        }
+
         private void Update()
         {
             if (measuring)

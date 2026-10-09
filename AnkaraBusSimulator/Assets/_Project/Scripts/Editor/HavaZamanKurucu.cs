@@ -180,7 +180,7 @@ namespace AnkaraBus.EditorTools
                             l.intensity = 3.2f * guc;
                             l.range = 22f;
                             l.shadows = LightShadows.Soft;
-                            l.shadowRadius = 0.3f;
+                            l.shapeRadius = 0.3f;
                             sonuc.Add(l);
                         }
                 }

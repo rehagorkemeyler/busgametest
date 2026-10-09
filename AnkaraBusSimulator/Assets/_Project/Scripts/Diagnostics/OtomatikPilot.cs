@@ -152,7 +152,8 @@ namespace AnkaraBus.Diagnostics
                 else if (Time.time - sonIlerlemeZamani > takilmaSuresi)
                 {
                     Debug.LogError($"[Surus] TAKILDI konum={bus.transform.position} ilerleme={ilerleme:F0} m hız={bus.SpeedKmh:F0} " +
-                                   $"öndeki={sonEngel ?? "yok"}");
+                                   $"öndeki={sonEngel ?? "yok"} temas={Temaslar()} gaz={input.AutoThrottle:F2} fren={input.AutoBrake:F2} " +
+                                   $"direksiyon={input.AutoSteer:F2} tekerler={string.Join(",", System.Linq.Enumerable.Select(bus.GetComponentsInChildren<WheelCollider>(), w => w.isGrounded ? "y" : "-"))}");
                     sonIlerlemeZamani = Time.time;
                 }
 
@@ -491,6 +492,20 @@ namespace AnkaraBus.Diagnostics
                     (car.transform.position - bus.transform.position).sqrMagnitude < 80f * 80f)
                     n++;
             return n;
+        }
+
+        /// <summary>Takılınca teşhis: otobüsün gövde kutusuna değen (otobüse ait olmayan) çarpıştırıcılar.</summary>
+        private string Temaslar()
+        {
+            var adlar = new System.Collections.Generic.List<string>();
+            foreach (var c in bus.GetComponentsInChildren<BoxCollider>())
+            {
+                var b = c.bounds;
+                foreach (var h in Physics.OverlapBox(b.center, b.extents + Vector3.one * 0.15f, c.transform.rotation))
+                    if (!h.transform.IsChildOf(bus.transform) && !(h is WheelCollider) && adlar.Count < 8)
+                        adlar.Add($"{h.name}@{h.bounds.center.y:F1}");
+            }
+            return adlar.Count > 0 ? string.Join(",", adlar) : "yok";
         }
     }
 }

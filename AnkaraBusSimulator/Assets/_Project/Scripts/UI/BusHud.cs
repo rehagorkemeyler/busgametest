@@ -20,6 +20,9 @@ namespace AnkaraBus.UI
         private IVehicleTelemetry telemetry;
         private AnkaraBus.Passengers.BusPassengers passengers;
 
+        /// <summary>Otobüs oyunda değiştirilince (OtobusDegistirici) yeni otobüse bağlanır; Start'tan önce çağrılır.</summary>
+        public void Baglan(RouteTracker yeni) => tracker = yeni;
+
         private void Start()
         {
             telemetry = tracker.GetComponent<IVehicleTelemetry>();

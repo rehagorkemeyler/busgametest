@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f13353b47b145bfac6d46d4c32518f, type: 3}
+  m_Name: Caio_Millennium_II
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDefinition
+  displayName: "Mercedes-Benz O500M \xB7 Caio Millennium II"
+  manufacturer: Mercedes-Benz / Caio
+  prefab: {fileID: 81916801708327052, guid: af420b62e90f34fba9fe391e5ec7dc93, type: 3}
+  preview: {fileID: 0}
+  liveries: []
+  passengerCapacity: 90
+  physics:
+    massKg: 16000
+    centerOfMass: {x: 0, y: 0.45, z: 0.27}
+    dragArea: 4.875
+    rollingResistance: 0.008
+    idleRpm: 600
+    maxRpm: 2300
+    torqueCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 600
+        value: 900
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1000
+        value: 1450
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1500
+        value: 1550
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 2000
+        value: 1400
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 2300
+        value: 1200
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    creepTorqueRatio: 0.06
+    engineBrakeTorque: 120
+    gearRatios:
+    - 3.43
+    - 2.01
+    - 1.42
+    - 1
+    - 0.83
+    - 0.59
+    reverseRatio: 4.84
+    finalDrive: 6.5
+    drivetrainEfficiency: 0.9
+    converterStallRpm: 1600
+    converterStallTorqueRatio: 2.2
+    upshiftRpm: 2200
+    upshiftRpmLightThrottle: 1300
+    downshiftRpm: 1050
+    shiftTime: 0.45
+    maxSpeedKmh: 85
+    serviceBrakeDecel: 5.5
+    frontBrakeBias: 0.55
+    brakeApplyTime: 0.35
+    brakeReleaseTime: 0.5
+    handbrakeHoldGradePercent: 18
+    retarderDecel: 1.2
+    hillHoldTime: 1.5
+    doorBrake: 1
+    maxSteerAngle: 48
+    steerReductionSpeedKmh: 60
+    steerAtReductionSpeed: 0.3
+    steerRate: 45
+    steeringWheelLockToLock: 900
+    wheelRadius: 0.525
+    frontWheelMass: 120
+    rearWheelMass: 240
+    suspensionDistance: 0.25
+    suspensionFrequency: 1.4
+    suspensionDamping: 0.45
+    antiRollStiffness: 120000
+    tireGrip: 1

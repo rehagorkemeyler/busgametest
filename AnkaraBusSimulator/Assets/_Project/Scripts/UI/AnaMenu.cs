@@ -37,6 +37,21 @@ namespace AnkaraBus.UI
         private readonly Image[] kaliteDugmeleri = new Image[GrafikAyarlari.SeviyeAdlari.Length];
         private GameObject yukleniyor;
         private Text yukleniyorYazi;
+        private Text otobusAdi;
+        private GameObject krediler;
+        private int vitrinOtobusu; // vitrindeki otobüsün katalog sırası (sahnede BMC: 0)
+
+        /// <summary>CC-BY modellerin kaynak gösterimi (docs/KREDILER.md ile aynı tutulmalı).</summary>
+        private const string KredilerYazisi =
+            "KREDİLER\n\n" +
+            "Mercedes-Benz O500M · Caio Millennium II\n" +
+            "Model: Marcos Elias Picão (MEP) · viamep.com\n" +
+            "Tekerlekler: Victor Ortega · Silecek ve hız göstergesi: Luiz Felipe Bonamigo\n" +
+            "Hız göstergesi dokusu: Dimitrius Caio Vespasiano\n" +
+            "Lisans: CC BY 3.0 (creativecommons.org/licenses/by/3.0)\n" +
+            "Değişiklik: Ankara kaplamaları, mobil sadeleştirme\n\n" +
+            "BMC Procity 12LF: Proton Bus Simulator modu (izinle)\n\n" +
+            "Kapatmak için dokun";
         private bool basladi;
 
         private void Awake()
@@ -45,6 +60,7 @@ namespace AnkaraBus.UI
             if (FindAnyObjectByType<EventSystem>() == null)
                 new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
             Build();
+            VitriniGuncelle();
             Yenile();
             KaplamayiOnizle();
         }
@@ -164,6 +180,20 @@ namespace AnkaraBus.UI
                 $"Bu telefon için önerilen: {GrafikAyarlari.SeviyeAdlari[(int)GrafikAyarlari.Onerilen]}", 24, TextAnchor.MiddleLeft, Dim);
             oneri.fontStyle = FontStyle.Normal;
 
+            // Krediler (CC-BY modeller kaynak gösterilerek kullanılır)
+            var kredi = Dugme(root, "Krediler", new Vector2(0f, 1f), new Vector2(110f, kaliteY - 175f), new Vector2(140f, 44f), 22, () => krediler.SetActive(true));
+            kredi.color = Panel;
+
+            // Otobüs seçimi (vitrinin altında)
+            var katalog = OtobusKatalogu.Yukle();
+            if (katalog != null && katalog.Sayi > 1)
+            {
+                var kutu = Box(root, "Otobus", new Vector2(1f, 0f), new Vector2(-300f, 290f), new Vector2(380f, 90f), Panel);
+                otobusAdi = Label(kutu, "", 24, TextAnchor.MiddleCenter, Color.white);
+                Dugme(root, "<", new Vector2(1f, 0f), new Vector2(-545f, 290f), new Vector2(90f, 90f), 36, () => OtobusSec(-1)).color = Panel;
+                Dugme(root, ">", new Vector2(1f, 0f), new Vector2(-55f, 290f), new Vector2(90f, 90f), 36, () => OtobusSec(1)).color = Panel;
+            }
+
             // Başla
             var basla = Dugme(root, "SEFERE BAŞLA", new Vector2(1f, 0f), new Vector2(-260f, 110f), new Vector2(440f, 130f), 46, Baslat);
             basla.color = Ok;
@@ -181,6 +211,90 @@ namespace AnkaraBus.UI
             yukleniyorYazi = Label(perde, "", 48, TextAnchor.MiddleCenter, Color.white);
             yukleniyor = perde.gameObject;
             yukleniyor.SetActive(false);
+
+            var kp = Element(root, "Krediler", new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+            kp.anchorMin = Vector2.zero;
+            kp.anchorMax = Vector2.one;
+            kp.gameObject.AddComponent<Image>().color = new Color(0.05f, 0.06f, 0.07f, 0.94f);
+            var kb = kp.gameObject.AddComponent<Button>();
+            kb.onClick.AddListener(() => krediler.SetActive(false));
+            var ky = Label(kp, KredilerYazisi, 30, TextAnchor.MiddleCenter, Color.white);
+            ky.fontStyle = FontStyle.Normal;
+            krediler = kp.gameObject;
+            krediler.SetActive(false);
+        }
+
+        private void OtobusSec(int yon)
+        {
+            var katalog = OtobusKatalogu.Yukle();
+            if (katalog == null || katalog.Sayi == 0)
+                return;
+            OyunSecimi.Otobus = ((Mathf.Clamp(OyunSecimi.Otobus, 0, katalog.Sayi - 1) + yon) % katalog.Sayi + katalog.Sayi) % katalog.Sayi;
+            VitriniGuncelle();
+            KaplamayiOnizle();
+        }
+
+        /// <summary>Vitrindeki otobüsü seçilen otobüsle değiştirir (yalnızca görsel: fizik ve oyun bileşenleri atılır).</summary>
+        private void VitriniGuncelle()
+        {
+            var katalog = OtobusKatalogu.Yukle();
+            if (katalog == null || katalog.Sayi == 0)
+                return;
+            int secili = Mathf.Clamp(OyunSecimi.Otobus, 0, katalog.Sayi - 1);
+            var tanim = katalog.otobusler[secili];
+            if (otobusAdi != null)
+                otobusAdi.text = tanim.displayName;
+            if (secili == vitrinOtobusu || vitrinKaplamasi == null || tanim.prefab == null)
+                return;
+
+            var eski = vitrinKaplamasi.transform;
+            // pasif bir ebeveynin altında oluştur: Awake'ler (harita, puan arayüzü, ses) çalışmasın
+            var gecici = new GameObject("VitrinGecici");
+            gecici.SetActive(false);
+            var yeni = Instantiate(tanim.prefab, gecici.transform);
+            VitrinYap(yeni);
+            yeni.name = "VitrinOtobusu";
+            yeni.tag = "Untagged";
+            yeni.transform.SetParent(eski.parent, false);
+            yeni.transform.SetLocalPositionAndRotation(eski.localPosition, eski.localRotation);
+            Destroy(gecici);
+            Destroy(eski.gameObject);
+            vitrinKaplamasi = yeni.GetComponent<BusLivery>();
+            vitrinOtobusu = secili;
+        }
+
+        private static void VitrinYap(GameObject otobus)
+        {
+            // AnaMenuKurucu.Strip ile aynı: yalnızca görsel bileşenler kalır; RequireComponent ile bağlı olanlar
+            // bağımlıları gittikten sonraki turda atılır
+            for (int tur = 0; tur < 8; tur++)
+            {
+                bool atildi = false;
+                foreach (var c in otobus.GetComponentsInChildren<Component>(true))
+                {
+                    if (c == null || c is Transform || c is MeshFilter || c is MeshRenderer || c is BusLivery || c is BusKaliteModeli
+                        || Gerekli(c))
+                        continue;
+                    DestroyImmediate(c);
+                    atildi = true;
+                }
+                if (!atildi)
+                    break;
+            }
+        }
+
+        private static bool Gerekli(Component c)
+        {
+            foreach (var diger in c.GetComponents<Component>())
+            {
+                if (diger == null || diger == c)
+                    continue;
+                foreach (RequireComponent req in diger.GetType().GetCustomAttributes(typeof(RequireComponent), true))
+                    foreach (var t in new[] { req.m_Type0, req.m_Type1, req.m_Type2 })
+                        if (t != null && t.IsInstanceOfType(c))
+                            return true;
+            }
+            return false;
         }
 
         private void Yenile()

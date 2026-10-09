@@ -1,0 +1,7 @@
+<linker>
+  <!-- HavaVeZaman.LambalariYak küre mesh'i için CreatePrimitive(Sphere) kullanır; sahnede SphereCollider
+       olmadığından build'de kırpılıyor ve "class 'SphereCollider' doesn't exist" hatası veriyordu -->
+  <assembly fullname="UnityEngine.PhysicsModule">
+    <type fullname="UnityEngine.SphereCollider" preserve="all" />
+  </assembly>
+</linker>

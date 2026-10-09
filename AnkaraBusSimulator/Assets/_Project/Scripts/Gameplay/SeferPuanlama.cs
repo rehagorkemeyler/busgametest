@@ -211,6 +211,8 @@ namespace AnkaraBus.Gameplay
             lastCollision = Time.time;
             ignoreAccelUntil = Time.time + 1f;
             ozet.carpisma++;
+            var nokta = transform.InverseTransformPoint(c.GetContact(0).point);
+            Debug.Log($"[Puan] çarpışma: {c.collider.name}, hız {speed:F1} m/s, otobüste ({nokta.x:F1}, {nokta.y:F1}, {nokta.z:F1})");
             Add("Çarpışma", -Mathf.Min(100, carpismaCezasi + Mathf.RoundToInt(speed * 5f)));
         }
 

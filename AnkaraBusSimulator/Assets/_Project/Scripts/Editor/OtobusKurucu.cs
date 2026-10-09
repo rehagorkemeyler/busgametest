@@ -7,21 +7,77 @@ using UnityEngine;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// BMC Procity FBX'inden sürülebilir otobüs prefabını ve BusDefinition asset'ini kurar.
-    /// Parça adları docs/OTOBUS_BMC_PROCITY.md'deki hiyerarşiye göredir.
-    /// Menü: Ankara Bus > BMC Procity Prefabını Kur
+    /// Otobüs FBX'inden sürülebilir otobüs prefabını ve BusDefinition asset'ini kurar (BMC Procity, Caio Millennium II).
+    /// Parça adları docs/OTOBUS_BMC_PROCITY.md'deki hiyerarşiye göredir (tools/blender/bmc_donustur.py, millennium_donustur.py).
+    /// Menü: Ankara Bus > BMC Procity Prefabını Kur / Caio Millennium Prefabını Kur
     /// </summary>
     public static class OtobusKurucu
     {
-        private const string Folder = "Assets/_Project/Buses/BMC_Procity_12LF/";
-        private const string ModelPath = Folder + "BMC_Procity_12LF.fbx";
-        public const string PrefabPath = Folder + "BMC_Procity_12LF.prefab";
-        private const string DefinitionPath = Folder + "BMC_Procity_12LF.asset";
-        private const string MaterialFolder = Folder + "Materials";
-        // Yüksek görüntü kalitesi için tam kalite model (docs/OTOBUS_BMC_PROCITY.md → Grafik ayarları için iki model)
-        private const string TamKaliteModelPath = Folder + "BMC_Procity_12LF_TamKalite.fbx";
-        private const string TamKaliteKaynak = "BMC_Procity_12LF_TamKalite";
-        private const string TamKaliteGorselPath = Folder + "Resources/" + TamKaliteKaynak + ".prefab";
+        /// <summary>Bir otobüs modelinin klasörü ve modele özgü kurulum değerleri.</summary>
+        private sealed class Tanim
+        {
+            public string Ad;
+            public string GorunenAd;
+            public string Uretici;
+            public int Kapasite = 90;
+            // gövde çarpışma kutusu (otobüs yerel); boşsa modelin sınırlarından
+            public Vector3? GovdeMerkez, GovdeBoyut;
+            public (string name, string body, string roof)[] Kaplamalar;
+            // fizik: BMC değerleri kopyalanır, bunlar üzerine yazılır
+            public System.Action<BusPhysicsSpec> Fizik;
+            public string Folder => "Assets/_Project/Buses/" + Ad + "/";
+            public string ModelPath => Folder + Ad + ".fbx";
+            public string PrefabPath => Folder + Ad + ".prefab";
+            public string DefinitionPath => Folder + Ad + ".asset";
+            public string MaterialFolder => Folder + "Materials";
+            // Yüksek görüntü kalitesi için tam kalite model (docs/OTOBUS_BMC_PROCITY.md → Grafik ayarları için iki model)
+            public string TamKaliteKaynak => Ad + "_TamKalite";
+            public string TamKaliteModelPath => Folder + TamKaliteKaynak + ".fbx";
+            public string TamKaliteGorselPath => Folder + "Resources/" + TamKaliteKaynak + ".prefab";
+        }
+
+        private static readonly Tanim Bmc = new Tanim
+        {
+            Ad = "BMC_Procity_12LF", GorunenAd = "BMC Procity 12LF", Uretici = "BMC",
+            GovdeMerkez = new Vector3(0f, 1.78f, -0.215f), GovdeBoyut = new Vector3(2.5f, 2.7f, 11.9f),
+            Kaplamalar = new[]
+            {
+                ("EGO kırmızı", "Textures/caroserie.png", "Textures/cngtank.png"),
+                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
+                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
+            },
+        };
+
+        private static readonly Tanim Millennium = new Tanim
+        {
+            Ad = "Caio_Millennium_II", GorunenAd = "Mercedes-Benz O500M · Caio Millennium II", Uretici = "Mercedes-Benz / Caio",
+            Kapasite = 90,
+            Kaplamalar = new[]
+            {
+                ("EGO kırmızı", "Textures/caroserie.png", (string)null),
+                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", null),
+                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", null),
+            },
+            // dingil mesafesi 6.6 m (BMC 5.9 m): aynı kavşaklardan dönebilsin diye daha büyük direksiyon açısı
+            Fizik = f => { f.wheelRadius = 0.525f; f.maxSteerAngle = 48f; },
+        };
+
+        /// <summary>Oyunda seçilebilen otobüsler, menüdeki sırayla (OyunSecimi.Otobus).</summary>
+        private static readonly Tanim[] Katalog = { Bmc, Millennium };
+
+        // Build sırasında kurulan otobüs; aşağıdaki yardımcılar bunu okur
+        private static Tanim aktif = Bmc;
+        private static string Folder => aktif.Folder;
+        private static string ModelPath => aktif.ModelPath;
+        private static string DefinitionPath => aktif.DefinitionPath;
+        private static string MaterialFolder => aktif.MaterialFolder;
+        private static string TamKaliteModelPath => aktif.TamKaliteModelPath;
+        private static string TamKaliteKaynak => aktif.TamKaliteKaynak;
+        private static string TamKaliteGorselPath => aktif.TamKaliteGorselPath;
+
+        /// <summary>Hat ve menü sahnelerine konan varsayılan otobüs (BMC); seçilen başkaysa oyunda değiştirilir.</summary>
+        public const string PrefabPath = "Assets/_Project/Buses/BMC_Procity_12LF/BMC_Procity_12LF.prefab";
+        public const string KatalogPath = "Assets/_Project/Resources/OtobusKatalogu.asset";
         private static readonly Color GlassColor = new Color(0.1f, 0.13f, 0.15f, 0.35f);
 
         private static readonly (string name, bool front, bool left)[] WheelParts =
@@ -40,8 +96,22 @@ namespace AnkaraBus.EditorTools
         };
 
         [MenuItem("Ankara Bus/BMC Procity Prefabını Kur")]
-        public static void Build()
+        public static void Build() => Build(Bmc);
+
+        [MenuItem("Ankara Bus/Caio Millennium Prefabını Kur")]
+        public static void BuildMillennium() => Build(Millennium);
+
+        /// <summary>Komut satırı: tüm otobüs prefabları ve katalog.</summary>
+        public static void BuildAllBatch()
         {
+            foreach (var t in Katalog)
+                Build(t);
+            EditorApplication.Exit(0);
+        }
+
+        private static void Build(Tanim tanim)
+        {
+            aktif = tanim;
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath);
             if (model == null)
             {
@@ -56,10 +126,21 @@ namespace AnkaraBus.EditorTools
             if (definition == null)
             {
                 definition = ScriptableObject.CreateInstance<BusDefinition>();
+                if (tanim != Bmc)
+                {
+                    // sürüş değerleri BMC'den (bulutta ayarlandı); modele özgü olanlar üzerine
+                    var bmc = AssetDatabase.LoadAssetAtPath<BusDefinition>(Bmc.DefinitionPath);
+                    if (bmc != null)
+                        definition.physics = JsonUtility.FromJson<BusPhysicsSpec>(JsonUtility.ToJson(bmc.physics));
+                    tanim.Fizik?.Invoke(definition.physics);
+                    definition.displayName = tanim.GorunenAd;
+                    definition.manufacturer = tanim.Uretici;
+                    definition.passengerCapacity = tanim.Kapasite;
+                }
                 AssetDatabase.CreateAsset(definition, DefinitionPath);
             }
 
-            var root = new GameObject("BMC_Procity_12LF");
+            var root = new GameObject(tanim.Ad);
             try
             {
                 var modelInstance = (GameObject)PrefabUtility.InstantiatePrefab(model, root.transform);
@@ -73,8 +154,31 @@ namespace AnkaraBus.EditorTools
 
                 var hull = new GameObject("Carpisma_Govde").AddComponent<BoxCollider>();
                 hull.transform.SetParent(root.transform, false);
-                hull.center = new Vector3(0f, 1.78f, -0.215f);
-                hull.size = new Vector3(2.5f, 2.7f, 11.9f);
+                if (tanim.GovdeMerkez.HasValue)
+                {
+                    hull.center = tanim.GovdeMerkez.Value;
+                    hull.size = tanim.GovdeBoyut.Value;
+                }
+                else
+                {
+                    // gövde sınırları: yandan taşan aynalar hariç (|x| < 1.27 m); altı tekerleklere değmesin
+                    // (BMC: zeminden 0.43 m yukarıda başlar)
+                    var b = new Bounds(new Vector3(0f, 1.6f, 0f), Vector3.zero);
+                    bool ilk = true;
+                    if (parts.TryGetValue("Govde", out var govde) && govde.GetComponent<MeshFilter>() != null)
+                        foreach (var v in govde.GetComponent<MeshFilter>().sharedMesh.vertices)
+                        {
+                            var p = root.transform.InverseTransformPoint(govde.TransformPoint(v));
+                            if (Mathf.Abs(p.x) > 1.27f)
+                                continue;
+                            if (ilk) { b = new Bounds(p, Vector3.zero); ilk = false; }
+                            else b.Encapsulate(p);
+                        }
+                    float alt = 0.43f;
+                    hull.center = new Vector3(0f, (alt + b.max.y) * 0.5f, b.center.z);
+                    hull.size = new Vector3(Mathf.Min(b.size.x, 2.5f), b.max.y - alt, b.size.z - 0.1f);
+                    Debug.Log($"[OtobusKurucu] {tanim.Ad} gövde kutusu: merkez {hull.center}, boyut {hull.size}");
+                }
 
                 var vehicle = root.AddComponent<BusVehicle>();
                 SetupWheels(root.transform, vehicle, parts, definition.physics);
@@ -103,11 +207,12 @@ namespace AnkaraBus.EditorTools
                 so.FindProperty("definition").objectReferenceValue = definition;
                 so.ApplyModifiedPropertiesWithoutUndo();
 
-                var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
+                var prefab = PrefabUtility.SaveAsPrefabAsset(root, tanim.PrefabPath);
                 definition.prefab = prefab;
                 EditorUtility.SetDirty(definition);
                 AssetDatabase.SaveAssets();
-                Debug.Log("[OtobusKurucu] Prefab kuruldu: " + PrefabPath);
+                KataloguGuncelle();
+                Debug.Log("[OtobusKurucu] Prefab kuruldu: " + tanim.PrefabPath);
             }
             finally
             {
@@ -174,14 +279,34 @@ namespace AnkaraBus.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        /// <summary>
+        /// Resources/OtobusKatalogu: menüde seçilebilen otobüslerin tanımları (prefabları build'e bunun üzerinden girer).
+        /// </summary>
+        private static void KataloguGuncelle()
+        {
+            var katalog = AssetDatabase.LoadAssetAtPath<OtobusKatalogu>(KatalogPath);
+            if (katalog == null)
+            {
+                if (!AssetDatabase.IsValidFolder("Assets/_Project/Resources"))
+                    AssetDatabase.CreateFolder("Assets/_Project", "Resources");
+                katalog = ScriptableObject.CreateInstance<OtobusKatalogu>();
+                AssetDatabase.CreateAsset(katalog, KatalogPath);
+            }
+            var list = new List<BusDefinition>();
+            foreach (var t in Katalog)
+            {
+                var d = AssetDatabase.LoadAssetAtPath<BusDefinition>(t.DefinitionPath);
+                if (d != null && d.prefab != null)
+                    list.Add(d);
+            }
+            katalog.otobusler = list.ToArray();
+            EditorUtility.SetDirty(katalog);
+            AssetDatabase.SaveAssets();
+        }
+
         private static void SetupLivery(GameObject root)
         {
-            var items = new (string name, string body, string roof)[]
-            {
-                ("EGO kırmızı", "Textures/caroserie.png", "Textures/cngtank.png"),
-                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
-                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", "Textures/Kaplamalar/cngtank_beyaz.png"),
-            };
+            var items = aktif.Kaplamalar;
             var livery = root.AddComponent<BusLivery>();
             var so = new SerializedObject(livery);
             var list = so.FindProperty("liveries");
@@ -192,7 +317,7 @@ namespace AnkaraBus.EditorTools
                 element.FindPropertyRelative("name").stringValue = items[i].name;
                 element.FindPropertyRelative("body").objectReferenceValue =
                     AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].body);
-                element.FindPropertyRelative("roofModule").objectReferenceValue =
+                element.FindPropertyRelative("roofModule").objectReferenceValue = items[i].roof == null ? null :
                     AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].roof);
             }
             so.ApplyModifiedPropertiesWithoutUndo();
