@@ -135,27 +135,50 @@ def siniflandir(o, mats):
     govde = adlar.index("M_Govde") if "M_Govde" in adlar else -1
     yeni = {}
 
-    # aday: M_Ic ve gövde içindeki M_Govde yüzleri (M_Govde kaplama rengine boyanır; içeride kalırsa zemin ve
-    # bölmeler kırmızı/mavi olur). İç bölge: yan duvarların, tavanın, ön ve arka yüzün içi
-    y_on = min((mw @ v.co).y for v in bm.verts) + 0.62
-    y_arka = max((mw @ v.co).y for v in bm.verts) - 0.25
+    # dünya koordinatında kopya ve ışın ağacı (iç/dış ayrımı ve ön/arka yüz için)
+    from mathutils.bvhtree import BVHTree
+    dunya = bm.copy()
+    dunya.transform(mw)
+    dunya.faces.ensure_lookup_table()
+    agac = BVHTree.FromBMesh(dunya)
+
+    def iceride(f):
+        """Yüzün normali yönündeki ışın 4 m içinde kendi gövdesine çarpıyorsa yüz içeride (dışarıdan görünmez).
+        Dış yüzlerin normali dışarı bakar (iki_tarafli_yap), ışın boşluğa gider; teker yuvası ve kapı oyukları da açık."""
+        c = f.calc_center_median()
+        n = f.normal
+        if n.length < 0.5 or not (abs(c.x) < 1.32 and 0.3 < c.z < 2.95):
+            return False
+        return agac.ray_cast(c + n * 0.003, n, 4.0)[0] is not None
+
+    # aday: M_Ic ve içeride kalan M_Govde / M_caroserie yüzleri. M_Govde kaplama rengine boyanır, M_caroserie kaplama
+    # dokusunu taşır: içeride kalırlarsa pencere dikmeleri, alt bölmeler ve zemin kırmızı/mavi görünür
+    uc_on = min(v.co.y for v in dunya.verts) if o.name == "Govde_On" else -1e9
     aday = set()
-    for f in bm.faces:
+    for f in dunya.faces:
         if f.material_index == ic:
             aday.add(f.index)
-        elif f.material_index == govde:
-            c = mw @ f.calc_center_median()
-            if abs(c.x) < 1.15 and 0.35 < c.z < 2.9 and y_on < c.y < y_arka:
-                aday.add(f.index)
-                yeni[f.index] = "M_Ic"
+        elif f.material_index in (govde, kar) and f.material_index >= 0 and iceride(f):
+            aday.add(f.index)
+            yeni[f.index] = "M_IcDuvar"
 
     for ada in adalar(bm, lambda f: f.index in aday):
         mn, mx = sinirlar(ada, mw)
         d = mx - mn
         alan = sum(f.calc_area() for f in ada)
         en_uzun = max(d)
-        if len(ada) >= 10 and en_uzun > 0.25 and alan / en_uzun < 0.22 and min(d) > 0.012:
-            hedef = "M_Direk"  # boru: alan, boyuna göre çok küçük
+        # boru: kapalı kesit (normaller birbirini götürür) ve alanı boyuna göre küçük. Gösterge paneli kenarı gibi
+        # ince şeritler tek yöne baktığı için boru sayılmaz
+        toplam_n = Vector()
+        for f in ada:
+            toplam_n += (rot @ f.normal) * f.calc_area()
+        kapali = toplam_n.length / max(alan, 1e-6) < 0.35
+        orta = (mn + mx) * 0.5
+        # ön camın önündeki silecekler ve yan duvardaki kapı fitilleri de ince ve kapalı: içeride değillerse koyu gri
+        icinde = abs(orta.x) < 1.1 and mn.y > uc_on + 0.45
+        if len(ada) >= 8 and en_uzun > 0.25 and alan / en_uzun < 0.25 and min(d) > 0.012 and kapali:
+            # koltuk ayakları (alçakta kalan borular) metal gri
+            hedef = "M_Direk" if mx.z > 1.0 and icinde else "M_KoltukKabuk"
         elif 0.3 < d.x < 0.95 and 0.3 < d.y < 0.95 and 0.35 < d.z < 0.75 and mn.z > 0.6 and len(ada) >= 12:
             hedef = "M_KoltukKabuk" if alan > 0.9 else "M_Koltuk"  # tek/çift koltuk: kabuk ~1,6 m², minder ~0,35–0,6 m²
         else:
@@ -171,21 +194,7 @@ def siniflandir(o, mats):
                 yeni[f.index] = "M_IcTavan"
             elif abs(n.x) > 0.6 and abs(c.x) > 0.9:
                 yeni[f.index] = "M_IcDuvar"
-    if kar >= 0:
-        for f in bm.faces:
-            if f.material_index != kar:
-                continue
-            c = mw @ f.calc_center_median()
-            n = rot @ f.normal
-            if n.x * c.x < 0 and abs(c.x) < 1.24:  # içe bakan yan yüz: iç duvar
-                yeni[f.index] = "M_IcDuvar"
-
     # ön/arka yüz: uçtan 0,8 m içinde, dışa bakan ve önünde/arkasında kendi gövdesinden hiçbir şey olmayan yüzler
-    from mathutils.bvhtree import BVHTree
-    dunya = bm.copy()
-    dunya.transform(mw)
-    dunya.faces.ensure_lookup_table()
-    agac = BVHTree.FromBMesh(dunya)
     on = o.name == "Govde_On"
     yon = -1.0 if on else 1.0
     uc = min(v.co.y for v in dunya.verts) if on else max(v.co.y for v in dunya.verts)

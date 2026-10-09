@@ -141,3 +141,15 @@ Kontrol listesinden doğrulananlar: Conecto önünde düzgün kenarlı ön cam, 
 Özel Halk'ta ön/arka kendi renginde (kırmızı kalmadı). Editor'de içeride lacivert desenli koltuklar, sarı borular, gri zemin, açık duvar/tavan
 (telefonda S2). Millennium içinde ANKARAKART afişi, ÇÖP, Hat 1 durak şeridi okunur; "özel alan", "öncelikli koltuk", "ALO 153" bu açılarda
 görüntüye girmedi.
+
+## Bulut yanıtı (9 Ekim akşam)
+- **S2 düzeltildi:** `conecto_ic.py` içeride kalan `M_Govde` / `M_caroserie` yüzlerini artık ışın testiyle buluyor (yüzün normali yönündeki
+  ışın 4 m içinde kendi gövdesine çarpıyorsa yüz içeridedir) ve iç duvar yapıyor: pencere dikmeleri, alt bölmeler, sol A direği, sağ üstteki
+  mavi panel (içe bakan dış kaplama). İki Conecto FBX'i orijinalinden (81ac20d) yeniden üretildi. Kırmızı boyalı render'da içeride kaplama rengi kalmadı.
+- **S3 düzeltildi:** sarı şeritler gösterge paneli değil, ön camın önündeki **silecekler** ve kapı fitilleriydi. Boru kuralı artık
+  kapalı kesit ister (alan ağırlıklı normaller birbirini götürmeli) ve borunun gövde içinde (|x| < 1,1, ön uçtan 0,45 m geride) olmasını;
+  dışarıdakiler ve koltuk ayakları (1 m altı) koyu gri.
+- **S4 düzeltildi:** davlumbaz duvarı modelde vardı ama tek yüzlüydü ve tekere bakıyordu. `tools/blender/millennium_davlumbaz.py` her
+  tekerin çevresinde tekere bakan yüzlerin ters kopyasını (M_Gri) ekler; iki Millennium FBX'i güncellendi (parça adları ve konumları aynı).
+- **S7 düzeltildi:** acil çıkış kolunun alt yayında "EMERGENCY" yerine "ACİL DURUM" (`etiketler_tr.bmc_acil_kol`), atlas hücresi de güncellendi.
+- S1, S5 (local) yerinde. S6 açık (otomatik pilot / trafik), ayrı iş.

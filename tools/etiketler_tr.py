@@ -171,6 +171,34 @@ def kaynaktan(yol):
     return Image.open(orijinal).convert("RGB")
 
 
+def bmc_acil_kol(yol):
+    """stickers.png alttaki yuvarlak acil çıkış kolu: halkanın altındaki "EMERGENCY" yerine yay üstünde "ACİL DURUM"
+    (üstteki "ACİL ÇIKIŞ KOLU" kaynakta zaten Türkçeydi). Halka merkezi (308, 1749), turuncu bant r 215–246 px."""
+    import math
+    img = Image.open(yol).convert("RGBA")
+    d = ImageDraw.Draw(img)
+    cx, cy, r0, r1 = 308, 1749, 215, 246
+    turuncu = (212, 56, 24, 255)
+    for a in range(5800, 12200, 4):            # 58°–122° (görüntüde 90° = alt)
+        t = math.radians(a / 100)
+        d.line([(cx + r0 * math.cos(t), cy + r0 * math.sin(t)), (cx + r1 * math.cos(t), cy + r1 * math.sin(t))],
+               fill=turuncu, width=3)
+    metin, f = "ACİL DURUM", font(27)
+    rm = (r0 + r1) / 2
+    genis = [d.textlength(h, font=f) + 3 for h in metin]
+    toplam = sum(genis) / rm                   # yay uzunluğu → açı (radyan)
+    t = math.pi / 2 + toplam / 2               # soldan başla (alt yayda soldan sağa açı azalır)
+    for h, g in zip(metin, genis):
+        orta = t - (g / rm) / 2
+        harf = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
+        ImageDraw.Draw(harf).text((24, 24), h, font=f, fill=(248, 196, 48, 255), anchor="mm")
+        harf = harf.rotate(90 - math.degrees(orta), resample=Image.BICUBIC)
+        x, y = cx + rm * math.cos(orta), cy + rm * math.sin(orta)
+        img.alpha_composite(harf, (int(x - 24), int(y - 24)))
+        t -= g / rm
+    img.save(yol, optimize=True)
+
+
 def bmc_ikizleri_ve_atlas(stickers_yol, atlas_yol):
     """stickers.png'de yeşil (acil çıkış vanası) ve sarı (kapıya yaslanmayın) etiketin iki kopyası var; model ikisini de
     kullanıyor. Türkçeleştirilen sağdaki kopyayı soldakinin (İngilizce) üzerine yazar. Düşük/Normal ayardaki BMC
@@ -191,6 +219,7 @@ def main():
     ap.add_argument("--proje", required=True)
     args = ap.parse_args()
     isle(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"), BMC)
+    bmc_acil_kol(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"))
     bmc_ikizleri_ve_atlas(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"),
                           os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/Atlas_BMC.png"))
     isle(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/adesivostransparentes.png"), MILLENNIUM)
