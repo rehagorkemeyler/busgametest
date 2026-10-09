@@ -123,3 +123,24 @@ Kaynak modelde gövde kaplamasının (`M_caroserie`) ve kapı camlarının bir k
 
 Sonuç: iki modelde de 547 yüz düzeltildi. Yandan bakınca arka yüzü görünen gövde noktası 308'den 7'ye indi. Parça adları, pivotlar ve materyaller değişmedi; prefabın yeniden kurulması gerekmez.
 
+## Motor gücü (9 Ekim): yokuşta 50–60, düzde 85 km/s
+
+Proton değerleri (en çok 1000 Nm, ~185 kW) 16 tonluk otobüsü %8 yokuşta ancak ~30 km/s'ye çıkarıyordu. Cinnah yokuşları %8–12. Oyun için güçlendirildi:
+
+| Değer | Eski | Yeni |
+|---|---|---|
+| Tork eğrisi (600/1000/1500/2000/2300 d/d) | 650/920/1000/880/720 Nm | 900/1450/1550/1400/1200 Nm (~295 kW) |
+| Vites büyütme (tam gaz) | 2100 d/d | 2200 d/d (dik yokuşta vites aramasın) |
+| Elektronik hız sınırı | 80 km/s | 85 km/s |
+
+Basit boyuna simülasyonla (tam gaz, otomatik vites, kütle/sürtünme/hava direnci `BusPhysicsSpec`'teki gibi) hesaplanan en yüksek hızlar:
+
+| Eğim | %0–2 | %4 | %6 | %8 | %10 | %12 |
+|---|---|---|---|---|---|---|
+| Eski | 80 | 68 | 50 | 30 | 31 | 22 |
+| Yeni | 85 | 85 | ~64 | ~61 | ~51 | ~38 |
+
+Gerçek değerler oyundaki tork konvertörü ve vites mantığıyla biraz farklı çıkabilir. **Ankara Bus → Sürüş Testi** ile ölçülmeli. Kalkış da güçlendi; tam gazla kalkışta "sert kalkış" cezası gelebilir.
+
+Not: Puanlamadaki hız sınırı hâlâ 50 km/s (+5 tolerans, `SeferPuanlama.hizSiniriKmh`). 85'e çıkan otobüs 55'in üstünde ceza alır.
+

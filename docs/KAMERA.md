@@ -27,3 +27,14 @@ Görünümler arasında **KAMERA** düğmesiyle (klavyede **C**) sırayla geçil
 - **Geri dönüş:** `returnDelay`: bırakıldıktan kaç saniye sonra kamera arkaya ya da yola döner.
 
 Sesler kameraya göre değişir: KOKPİT ve YOLCU'da iç motor seti ve kabin tıkırtısı duyulur (`BusCameraRig.IsInside`).
+
+## Direksiyon: ekran ya da telefonu eğ
+
+**AYARLAR → DİREKSİYON** (`Vehicle/KontrolAyarlari.cs`, seçim PlayerPrefs'te kalır):
+- **EKRAN:** Sol alttaki dokunmatik direksiyon simidi.
+- **TELEFONU EĞ:** Telefon yatay tutulup direksiyon gibi ekran düzleminde çevrilir; sağa çevirmek sağa döndürür. Ekrandaki simit gizlenir.
+  - Tam direksiyon 30° eğimde (`KontrolAyarlari.TamAci`, 15–60°). Ortada 1,5° ölü bölge var. Sensör titremesi yumuşatılır.
+  - İlk seçişte o anki tutuş "düz" kabul edilir. **ORTALA** ile istenen zaman yeniden ayarlanır.
+  - Telefon masada düz yatıyorsa eğim okunmaz. Klavye (A/D) her zaman önceliklidir, otomatik pilot da öyle.
+  - İvmeölçeri olmayan cihazda seçenek çalışmaz, panelde uyarı yazar.
+
