@@ -8,6 +8,8 @@ namespace AnkaraBus.Vehicle
     /// gecikmeli havalı fren, retarder, kapı açıkken durak freni, hıza göre azalan direksiyon.
     /// Girdiler (Throttle, Brake, Steer, Handbrake) BusInput veya dokunmatik arayüz tarafından yazılır.
     /// Tüm sayısal değerler BusDefinition.physics içindedir.
+    /// Körüklü otobüste tekerlekler iki Rigidbody'ye dağılır (KorukluOtobus): ön aks yön verir, ön gövdenin arka aksı
+    /// pasiftir, çeken aks arka gövdededir; kütle trailerMassRatio ile bölünür.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
     public class BusVehicle : MonoBehaviour, IVehicleTelemetry
@@ -21,6 +23,8 @@ namespace AnkaraBus.Vehicle
             public Transform visual;
             public bool front;
             public bool left;
+            [Tooltip("Ne direksiyon ne çekiş (körüklüde ön gövdenin arka aksı).")]
+            public bool passive;
             [NonSerialized] public Quaternion visualOffset;
         }
 
@@ -89,24 +93,39 @@ namespace AnkaraBus.Vehicle
             doors = GetComponentInChildren<BusDoorController>();
             var spec = Spec;
 
-            body.mass = spec.massKg;
+            body.mass = spec.massKg * (1f - spec.trailerMassRatio);
             body.centerOfMass = spec.centerOfMass;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             body.linearDamping = 0f;
             body.angularDamping = 0.05f;
 
-            float sprungMass = spec.massKg / Mathf.Max(1, wheels.Length);
+            // körüklüde arka gövde (tekerleklerin bağlı olduğu diğer Rigidbody) kütlenin kalanını taşır
+            foreach (var w in wheels)
+            {
+                var rb = w.collider.attachedRigidbody;
+                if (rb != null && rb != body)
+                    rb.mass = spec.massKg * Mathf.Max(spec.trailerMassRatio, 0.05f);
+            }
             float omega = 2f * Mathf.PI * spec.suspensionFrequency;
-            float spring = sprungMass * omega * omega;
-            float damper = 2f * spec.suspensionDamping * Mathf.Sqrt(spring * sprungMass);
 
             Vector3 frontSum = Vector3.zero, rearSum = Vector3.zero;
             int frontCount = 0, rearCount = 0;
             float frontLeftX = 0f, frontRightX = 0f;
 
+            var configured = new System.Collections.Generic.HashSet<Rigidbody>();
             foreach (var w in wheels)
             {
                 var c = w.collider;
+                var rb = c.attachedRigidbody != null ? c.attachedRigidbody : body;
+                int onBody = 0;
+                foreach (var o in wheels)
+                    if ((o.collider.attachedRigidbody != null ? o.collider.attachedRigidbody : body) == rb)
+                        onBody++;
+                float sprungMass = rb.mass / Mathf.Max(1, onBody);
+                float spring = sprungMass * omega * omega;
+                float damper = 2f * spec.suspensionDamping * Mathf.Sqrt(spring * sprungMass);
+                if (configured.Add(rb))
+                    c.ConfigureVehicleSubsteps(5f, 12, 15);
                 c.mass = w.front ? spec.frontWheelMass : spec.rearWheelMass;
                 c.radius = spec.wheelRadius;
                 c.suspensionDistance = spec.suspensionDistance;
@@ -118,14 +137,11 @@ namespace AnkaraBus.Vehicle
 
                 Vector3 local = transform.InverseTransformPoint(c.transform.position);
                 if (w.front) { frontSum += local; frontCount++; if (w.left) frontLeftX = local.x; else frontRightX = local.x; }
-                else { rearSum += local; rearCount++; }
+                else if (rb == body) { rearSum += local; rearCount++; }   // dingil: aynı gövdedeki arka aks
 
                 if (w.visual != null)
                     w.visualOffset = Quaternion.Inverse(c.transform.rotation) * w.visual.rotation;
             }
-
-            if (wheels.Length > 0)
-                wheels[0].collider.ConfigureVehicleSubsteps(5f, 12, 15);
 
             wheelbase = frontCount > 0 && rearCount > 0
                 ? Mathf.Abs(frontSum.z / frontCount - rearSum.z / rearCount)
@@ -209,7 +225,7 @@ namespace AnkaraBus.Vehicle
             float wheelRpm = 0f;
             int driven = 0;
             foreach (var w in wheels)
-                if (!w.front) { wheelRpm += w.collider.rpm; driven++; }
+                if (!w.front && !w.passive) { wheelRpm += w.collider.rpm; driven++; }
             wheelRpm = driven > 0 ? wheelRpm / driven : 0f;
 
             int direction = Selector == GearSelector.Reverse ? -1 : 1;
@@ -298,9 +314,12 @@ namespace AnkaraBus.Vehicle
                 ? spec.massKg * g * (spec.handbrakeHoldGradePercent / 100f) * 2f * r
                 : 0f;
 
-            int frontCount = 0, rearCount = 0;
+            int frontCount = 0, rearCount = 0, drivenCount = 0;
             foreach (var w in wheels)
+            {
                 if (w.front) frontCount++; else rearCount++;
+                if (!w.front && !w.passive) drivenCount++;
+            }
 
             foreach (var w in wheels)
             {
@@ -313,7 +332,7 @@ namespace AnkaraBus.Vehicle
                 else
                 {
                     brakeTorque = (serviceTotal * (1f - spec.frontBrakeBias) + retarderTotal + handbrakeTotal) / Mathf.Max(1, rearCount);
-                    w.collider.motorTorque = driveTorque / Mathf.Max(1, rearCount);
+                    w.collider.motorTorque = w.passive ? 0f : driveTorque / Mathf.Max(1, drivenCount);
                 }
                 w.collider.brakeTorque = brakeTorque;
             }
@@ -345,16 +364,17 @@ namespace AnkaraBus.Vehicle
 
         private void ApplyAntiRoll(BusPhysicsSpec spec)
         {
-            AntiRollAxle(spec, true);
-            AntiRollAxle(spec, false);
+            AntiRollAxle(spec, true, false);
+            AntiRollAxle(spec, false, false);
+            AntiRollAxle(spec, false, true);
         }
 
-        private void AntiRollAxle(BusPhysicsSpec spec, bool front)
+        private void AntiRollAxle(BusPhysicsSpec spec, bool front, bool passive)
         {
             WheelCollider left = null, right = null;
             foreach (var w in wheels)
             {
-                if (w.front != front) continue;
+                if (w.front != front || (!front && w.passive != passive)) continue;
                 if (w.left) left = w.collider; else right = w.collider;
             }
             if (left == null || right == null)
@@ -366,10 +386,12 @@ namespace AnkaraBus.Vehicle
             float rightTravel = rightGrounded ? Travel(right, rightHit) : 1f;
             float force = (leftTravel - rightTravel) * spec.antiRollStiffness * spec.suspensionDistance;
 
+            // aksın bağlı olduğu gövdeye (körüklüde arka aks arka gövdede)
+            var axleBody = left.attachedRigidbody != null ? left.attachedRigidbody : body;
             if (leftGrounded)
-                body.AddForceAtPosition(left.transform.up * -force, left.transform.position);
+                axleBody.AddForceAtPosition(left.transform.up * -force, left.transform.position);
             if (rightGrounded)
-                body.AddForceAtPosition(right.transform.up * force, right.transform.position);
+                axleBody.AddForceAtPosition(right.transform.up * force, right.transform.position);
         }
 
         /// <summary>0: tam sıkışmış, 1: tam açık.</summary>

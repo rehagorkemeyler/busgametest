@@ -28,6 +28,7 @@ namespace AnkaraBus.Traffic
         private BusVehicle otobus;
         private SeferPuanlama puanlama;
         private Material palet;
+        private OtobusOlcusu olcu = OtobusOlcusu.Varsayilan;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Baslat()
@@ -49,6 +50,7 @@ namespace AnkaraBus.Traffic
         {
             otobus = FindAnyObjectByType<BusVehicle>();
             puanlama = otobus != null ? otobus.GetComponent<SeferPuanlama>() : null;
+            olcu = OtobusOlcusu.Olc(otobus);
             palet = PaletBul();
             foreach (var stop in FindObjectsByType<BusStop>())
                 GecitKur(stop);
@@ -260,7 +262,7 @@ namespace AnkaraBus.Traffic
                 var otobus = sahip.otobus;
                 if (otobus == null || sahip.puanlama == null)
                     return;
-                Vector3 on = otobus.transform.position + otobus.transform.forward * 5.9f;
+                Vector3 on = otobus.transform.position + otobus.transform.forward * sahip.olcu.On;
                 float boyuna = Vector3.Dot(on - Merkez, Ileri);
                 float yan = Vector3.Dot(on - Merkez, Sag);
                 bool icinde = yan > YanMin && yan < YanMax && Mathf.Abs(boyuna) < 8f;
@@ -291,6 +293,8 @@ namespace AnkaraBus.Traffic
             }
 
             public float YanKonumu(Vector3 p) => Vector3.Dot(p - Merkez, Sag);
+
+            public OtobusOlcusu Olcu => sahip.olcu;
         }
 
         // ---------------------------------------------------------------- yaya
@@ -362,8 +366,8 @@ namespace AnkaraBus.Traffic
             {
                 if (otobus.SpeedKmh < 4f)
                     return false;
-                Vector3 yerel = otobus.transform.InverseTransformPoint(passenger.transform.position + Vector3.up * 0.9f);
-                return Mathf.Abs(yerel.x) < 1.6f && yerel.z > -6.3f && yerel.z < 6.1f && yerel.y < 3.2f;
+                // gövde kutuları: otobüsün boyuna göre (körüklüde arka gövde dahil)
+                return gecit.Olcu.Icinde(passenger.transform.position + Vector3.up * 0.9f);
             }
 
             /// <summary>Düşer, 4 sn yerde kalır (o sürede geçit dolu sayılır, araçlar bekler).</summary>

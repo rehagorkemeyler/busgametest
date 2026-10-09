@@ -50,6 +50,8 @@ namespace AnkaraBus.UI
             "Hız göstergesi dokusu: Dimitrius Caio Vespasiano\n" +
             "Lisans: CC BY 3.0 (creativecommons.org/licenses/by/3.0)\n" +
             "Değişiklik: Ankara kaplamaları, mobil sadeleştirme\n\n" +
+            "Mercedes-Benz O530G Conecto: \"Zort\" · sketchfab.com/privatetrs1\n" +
+            "Lisans: CC BY 4.0 · Değişiklik: Ankara kaplamaları, iki gövde, sadeleştirme\n\n" +
             "BMC Procity 12LF: Proton Bus Simulator modu (izinle)\n\n" +
             "Kapatmak için dokun";
         private bool basladi;

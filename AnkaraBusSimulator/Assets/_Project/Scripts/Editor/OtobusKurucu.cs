@@ -25,6 +25,14 @@ namespace AnkaraBus.EditorTools
             public (string name, string body, string roof)[] Kaplamalar;
             // fizik: BMC değerleri kopyalanır, bunlar üzerine yazılır
             public System.Action<BusPhysicsSpec> Fizik;
+            // körüklü: iki gövde (Govde_On / Govde_Arka, mafsal Govde_Arka'nın pivotunda), 6 teker, kapı parçası yok
+            public bool Koruklu;
+            // kapı parçası olmayan modelde kapı noktaları (otobüs yerel; z < MafsalZ olanlar arka gövdede)
+            public Vector3[] KapiNoktalari;
+            // dokusuz gövde parçasının (ön/arka yüz) kaplamaya göre rengi (Kaplamalar sırasıyla)
+            public string RenkMalzeme;
+            public Color[] Renkler;
+            public Vector3? MotorKonumu;
             public string Folder => "Assets/_Project/Buses/" + Ad + "/";
             public string ModelPath => Folder + Ad + ".fbx";
             public string PrefabPath => Folder + Ad + ".prefab";
@@ -62,8 +70,40 @@ namespace AnkaraBus.EditorTools
             Fizik = f => { f.wheelRadius = 0.525f; f.maxSteerAngle = 48f; },
         };
 
+        // Mercedes O530G Conecto (körüklü, 18,2 m): tools/blender/conecto_donustur.py, kaplama tools/kaplama_conecto.py
+        private static readonly Tanim Conecto = new Tanim
+        {
+            Ad = "MB_Conecto_G", GorunenAd = "Mercedes-Benz O530G Conecto (körüklü)", Uretici = "Mercedes-Benz",
+            Kapasite = 150,
+            Koruklu = true,
+            Kaplamalar = new[]
+            {
+                ("EGO kırmızı", "Textures/caroserie.png", (string)null),
+                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", null),
+                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", null),
+            },
+            RenkMalzeme = "M_Govde",
+            Renkler = new[]
+            {
+                new Color(0.84f, 0.11f, 0.13f), new Color(0.11f, 0.25f, 0.63f), new Color(0.2f, 0.59f, 0.87f),
+            },
+            // sağdaki 4 kapının ortası (kaynak y aralıkları + 2,87 m; conecto_donustur.KAPILAR)
+            KapiNoktalari = new[]
+            {
+                new Vector3(1.3f, 1.0f, 7.78f), new Vector3(1.3f, 1.0f, 1.89f),
+                new Vector3(1.3f, 1.0f, -4.23f), new Vector3(1.3f, 1.0f, -7.43f),
+            },
+            MotorKonumu = new Vector3(0f, 1.0f, -8.2f),
+            // 18 t (arka gövde %40), ağırlık merkezi ön ile orta aks arasında; dingil 5,9 m (BMC gibi)
+            Fizik = f =>
+            {
+                f.wheelRadius = 0.51f; f.maxSteerAngle = 45f; f.massKg = 18000f; f.trailerMassRatio = 0.4f;
+                f.centerOfMass = new Vector3(0f, 0.6f, 2.6f);
+            },
+        };
+
         /// <summary>Oyunda seçilebilen otobüsler, menüdeki sırayla (OyunSecimi.Otobus).</summary>
-        private static readonly Tanim[] Katalog = { Bmc, Millennium };
+        private static readonly Tanim[] Katalog = { Bmc, Millennium, Conecto };
 
         // Build sırasında kurulan otobüs; aşağıdaki yardımcılar bunu okur
         private static Tanim aktif = Bmc;
@@ -100,6 +140,9 @@ namespace AnkaraBus.EditorTools
 
         [MenuItem("Ankara Bus/Caio Millennium Prefabını Kur")]
         public static void BuildMillennium() => Build(Millennium);
+
+        [MenuItem("Ankara Bus/Mercedes Conecto (Körüklü) Prefabını Kur")]
+        public static void BuildConecto() => Build(Conecto);
 
         /// <summary>Komut satırı: tüm otobüs prefabları ve katalog.</summary>
         public static void BuildAllBatch()
@@ -161,29 +204,21 @@ namespace AnkaraBus.EditorTools
                 }
                 else
                 {
-                    // gövde sınırları: yandan taşan aynalar hariç (|x| < 1.27 m); altı tekerleklere değmesin
-                    // (BMC: zeminden 0.43 m yukarıda başlar)
-                    var b = new Bounds(new Vector3(0f, 1.6f, 0f), Vector3.zero);
-                    bool ilk = true;
-                    if (parts.TryGetValue("Govde", out var govde) && govde.GetComponent<MeshFilter>() != null)
-                        foreach (var v in govde.GetComponent<MeshFilter>().sharedMesh.vertices)
-                        {
-                            var p = root.transform.InverseTransformPoint(govde.TransformPoint(v));
-                            if (Mathf.Abs(p.x) > 1.27f)
-                                continue;
-                            if (ilk) { b = new Bounds(p, Vector3.zero); ilk = false; }
-                            else b.Encapsulate(p);
-                        }
-                    float alt = 0.43f;
-                    hull.center = new Vector3(0f, (alt + b.max.y) * 0.5f, b.center.z);
-                    hull.size = new Vector3(Mathf.Min(b.size.x, 2.5f), b.max.y - alt, b.size.z - 0.1f);
+                    if (parts.TryGetValue(tanim.Koruklu ? "Govde_On" : "Govde", out var govde))
+                        GovdeKutusu(hull, root.transform, govde);
                     Debug.Log($"[OtobusKurucu] {tanim.Ad} gövde kutusu: merkez {hull.center}, boyut {hull.size}");
                 }
 
                 var vehicle = root.AddComponent<BusVehicle>();
-                SetupWheels(root.transform, vehicle, parts, definition.physics);
+                Rigidbody arka = tanim.Koruklu ? SetupArkaGovde(root, body, parts) : null;
+                SetupWheels(root.transform, vehicle, parts, definition.physics, arka);
                 SetupSteeringWheel(root.transform, vehicle, parts);
-                SetupDoors(root, parts);
+                if (tanim.KapiNoktalari != null)
+                    SetupKapiNoktalari(root, arka, tanim.KapiNoktalari);
+                else
+                    SetupDoors(root, parts);
+                if (tanim.Koruklu)
+                    SetupKoruklu(root, arka, parts);
 
                 foreach (var pair in parts)
                     if (pair.Key.StartsWith("Lamba_"))
@@ -200,6 +235,12 @@ namespace AnkaraBus.EditorTools
                 SetupLivery(root);
                 OtobusSesKurucu.ConfigureImporters();
                 OtobusSesKurucu.Setup(root);
+                if (tanim.MotorKonumu.HasValue)
+                {
+                    var ses = new SerializedObject(root.GetComponent<BusAudio>());
+                    ses.FindProperty("enginePosition").vector3Value = tanim.MotorKonumu.Value;
+                    ses.ApplyModifiedPropertiesWithoutUndo();
+                }
                 if (tamKaliteVar)
                     SetupKaliteModeli(root, modelInstance.transform);
 
@@ -319,7 +360,11 @@ namespace AnkaraBus.EditorTools
                     AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].body);
                 element.FindPropertyRelative("roofModule").objectReferenceValue = items[i].roof == null ? null :
                     AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + items[i].roof);
+                element.FindPropertyRelative("color").colorValue =
+                    aktif.Renkler != null && i < aktif.Renkler.Length ? aktif.Renkler[i] : new Color(0f, 0f, 0f, 0f);
             }
+            if (!string.IsNullOrEmpty(aktif.RenkMalzeme))
+                so.FindProperty("colorMaterialName").stringValue = aktif.RenkMalzeme;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -371,16 +416,38 @@ namespace AnkaraBus.EditorTools
             EditorUtility.SetDirty(m);
         }
 
-        private static void SetupWheels(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts, BusPhysicsSpec spec)
+        // körüklü: ön aks yön verir, orta aks (ön gövdenin arkası) pasif, arka aks (arka gövde) çeker
+        private static readonly (string name, bool front, bool left, bool passive)[] KorukluTekerler =
+        {
+            ("Teker_OnSol", true, true, false), ("Teker_OnSag", true, false, false),
+            ("Teker_OrtaSol", false, true, true), ("Teker_OrtaSag", false, false, true),
+            ("Teker_ArkaSol", false, true, false), ("Teker_ArkaSag", false, false, false),
+        };
+
+        private static void SetupWheels(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts, BusPhysicsSpec spec,
+                                        Rigidbody arka)
         {
             var holder = new GameObject("Tekerlekler").transform;
             holder.SetParent(root, false);
+            Transform arkaHolder = null;
+            if (arka != null)
+            {
+                arkaHolder = new GameObject("Tekerlekler").transform;
+                arkaHolder.SetParent(arka.transform, false);
+            }
 
             var so = new SerializedObject(vehicle);
             var list = so.FindProperty("wheels");
             list.arraySize = 0;
 
-            foreach (var (name, front, left) in WheelParts)
+            var tekerler = new List<(string name, bool front, bool left, bool passive)>();
+            if (arka != null)
+                tekerler.AddRange(KorukluTekerler);
+            else
+                foreach (var (n, f, l) in WheelParts)
+                    tekerler.Add((n, f, l, false));
+
+            foreach (var (name, front, left, passive) in tekerler)
             {
                 if (!parts.TryGetValue(name, out var visual))
                 {
@@ -390,7 +457,8 @@ namespace AnkaraBus.EditorTools
 
                 // Statik yükte tekerlek, süspansiyonun hedef konumunda (yolun ortası) durur
                 var go = new GameObject("WC_" + name.Substring("Teker_".Length));
-                go.transform.SetParent(holder, false);
+                // çeken aks arka gövdenin Rigidbody'sine bağlı olmalı
+                go.transform.SetParent(arkaHolder != null && name.StartsWith("Teker_Arka") ? arkaHolder : holder, false);
                 go.transform.position = visual.position + root.up * (spec.suspensionDistance * 0.5f);
                 var collider = go.AddComponent<WheelCollider>();
                 collider.radius = spec.wheelRadius;
@@ -402,8 +470,131 @@ namespace AnkaraBus.EditorTools
                 element.FindPropertyRelative("visual").objectReferenceValue = visual;
                 element.FindPropertyRelative("front").boolValue = front;
                 element.FindPropertyRelative("left").boolValue = left;
+                element.FindPropertyRelative("passive").boolValue = passive;
             }
             so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>Gövde parçasının sınırlarından çarpışma kutusu: yandan taşan aynalar hariç (|x| &lt; 1.27 m),
+        /// altı tekerleklere değmesin (zeminden 0.43 m yukarıda başlar). Kutu, kendi objesinin yerelinde.</summary>
+        private static void GovdeKutusu(BoxCollider hull, Transform uzay, Transform govde)
+        {
+            var filter = govde.GetComponent<MeshFilter>();
+            if (filter == null || filter.sharedMesh == null)
+                return;
+            var b = new Bounds(new Vector3(0f, 1.6f, 0f), Vector3.zero);
+            bool ilk = true;
+            foreach (var v in filter.sharedMesh.vertices)
+            {
+                var p = uzay.InverseTransformPoint(govde.TransformPoint(v));
+                if (Mathf.Abs(p.x) > 1.27f)
+                    continue;
+                if (ilk) { b = new Bounds(p, Vector3.zero); ilk = false; }
+                else b.Encapsulate(p);
+            }
+            // yükseklik zeminden (uzay = kök); arka gövdede kök mafsal yüksekliğinde
+            float zemin = uzay.InverseTransformPoint(Vector3.zero).y;
+            float alt = zemin + 0.43f;
+            hull.center = new Vector3(0f, (alt + b.max.y) * 0.5f, b.center.z);
+            hull.size = new Vector3(Mathf.Min(b.size.x, 2.5f), b.max.y - alt, b.size.z - 0.1f);
+            Debug.Log($"[OtobusKurucu] {govde.name} gövde kutusu: merkez {hull.center}, boyut {hull.size}");
+        }
+
+        /// <summary>
+        /// Körüklünün arka gövdesi: mafsalda (Govde_Arka'nın pivotu) ayrı Rigidbody, ön gövdeye ConfigurableJoint ile bağlı:
+        /// konum kilitli; sapma ±52°, yokuşta eğilme ±10°, yatma ±4°; sapma ve eğilmede sönüm (gerçekte hidrolik).
+        /// Oyunda KorukluOtobus onu sahne köküne alır.
+        /// </summary>
+        private static Rigidbody SetupArkaGovde(GameObject root, Rigidbody on, Dictionary<string, Transform> parts)
+        {
+            var arkaGo = new GameObject("ArkaGovde");
+            arkaGo.transform.SetParent(root.transform, false);
+            arkaGo.transform.position = parts.TryGetValue("Govde_Arka", out var gArka) ? gArka.position : root.transform.TransformPoint(0f, 1f, -1.57f);
+            arkaGo.transform.rotation = root.transform.rotation;
+            arkaGo.layer = root.layer;
+            var rb = arkaGo.AddComponent<Rigidbody>();
+            rb.mass = 7000f; // BusVehicle oyunda kütleyi trailerMassRatio'dan kurar
+
+            var hull = new GameObject("Carpisma_Arka").AddComponent<BoxCollider>();
+            hull.transform.SetParent(arkaGo.transform, false);
+            if (gArka != null)
+                GovdeKutusu(hull, arkaGo.transform, gArka);
+
+            var j = arkaGo.AddComponent<ConfigurableJoint>();
+            j.connectedBody = on;
+            j.autoConfigureConnectedAnchor = false;
+            j.anchor = Vector3.zero;
+            j.connectedAnchor = root.transform.InverseTransformPoint(arkaGo.transform.position);
+            j.axis = Vector3.right;
+            j.secondaryAxis = Vector3.up;
+            j.xMotion = j.yMotion = j.zMotion = ConfigurableJointMotion.Locked;
+            j.angularXMotion = j.angularYMotion = j.angularZMotion = ConfigurableJointMotion.Limited;
+            j.lowAngularXLimit = new SoftJointLimit { limit = -10f };
+            j.highAngularXLimit = new SoftJointLimit { limit = 10f };
+            j.angularYLimit = new SoftJointLimit { limit = 52f };
+            j.angularZLimit = new SoftJointLimit { limit = 4f };
+            j.rotationDriveMode = RotationDriveMode.XYAndZ;
+            j.angularXDrive = new JointDrive { positionSpring = 0f, positionDamper = 60000f, maximumForce = float.MaxValue };
+            j.angularYZDrive = new JointDrive { positionSpring = 0f, positionDamper = 25000f, maximumForce = float.MaxValue };
+            j.enableCollision = false;
+            j.enablePreprocessing = false;
+            return rb;
+        }
+
+        /// <summary>Kapı parçası olmayan modelde kapılar: hareketsiz "kanat" noktaları (yolcular buraya yürür).</summary>
+        private static void SetupKapiNoktalari(GameObject root, Rigidbody arka, Vector3[] noktalar)
+        {
+            var controller = root.AddComponent<BusDoorController>();
+            var so = new SerializedObject(controller);
+            var groups = so.FindProperty("doors");
+            groups.arraySize = noktalar.Length;
+            float mafsalZ = arka != null ? root.transform.InverseTransformPoint(arka.transform.position).z : float.MinValue;
+            for (int i = 0; i < noktalar.Length; i++)
+            {
+                var nokta = new GameObject($"Kapi_{i + 1}");
+                nokta.transform.SetParent(arka != null && noktalar[i].z < mafsalZ ? arka.transform : root.transform, false);
+                nokta.transform.position = root.transform.TransformPoint(noktalar[i]);
+                var door = nokta.AddComponent<BusDoor>();
+                var dso = new SerializedObject(door);
+                dso.FindProperty("motion").enumValueIndex = (int)BusDoor.Motion.Slide;
+                dso.FindProperty("openPositionOffset").vector3Value = Vector3.zero;
+                dso.FindProperty("duration").floatValue = 1.2f;
+                dso.ApplyModifiedPropertiesWithoutUndo();
+                var group = groups.GetArrayElementAtIndex(i);
+                group.FindPropertyRelative("name").stringValue = i == 0 ? "Ön kapı" : $"{i + 1}. kapı";
+                var leaves = group.FindPropertyRelative("leaves");
+                leaves.arraySize = 1;
+                leaves.GetArrayElementAtIndex(0).objectReferenceValue = door;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static void SetupKoruklu(GameObject root, Rigidbody arka, Dictionary<string, Transform> parts)
+        {
+            var k = root.AddComponent<KorukluOtobus>();
+            var so = new SerializedObject(k);
+            so.FindProperty("arkaGovde").objectReferenceValue = arka;
+            var gorseller = new List<Transform>();
+            foreach (var ad in new[] { "Govde_Arka", "Golge_Arka" })
+                if (parts.TryGetValue(ad, out var t))
+                    gorseller.Add(t);
+            var list = so.FindProperty("arkaGorseller");
+            list.arraySize = gorseller.Count;
+            for (int i = 0; i < gorseller.Count; i++)
+                list.GetArrayElementAtIndex(i).objectReferenceValue = gorseller[i];
+            if (parts.TryGetValue("Koruk", out var koruk))
+                so.FindProperty("koruk").objectReferenceValue = koruk;
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            // modelde direksiyon yok: kokpit kamerası sürücü koltuğunda (solda, ön camın 1,25 m gerisi)
+            if (root.transform.Find("SurucuGozu") == null && parts.TryGetValue("Govde_On", out var on))
+            {
+                var r = on.GetComponent<Renderer>();
+                float onUc = r != null ? root.transform.InverseTransformPoint(r.bounds.max).z : 8.9f;
+                var eye = new GameObject("SurucuGozu").transform;
+                eye.SetParent(root.transform, false);
+                eye.localPosition = new Vector3(-0.62f, 2.25f, onUc - 1.25f);
+            }
         }
 
         private static void SetupSteeringWheel(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts)

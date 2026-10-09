@@ -16,15 +16,21 @@ namespace AnkaraBus.Vehicle
             public string name;
             public Texture2D body;
             public Texture2D roofModule;
+            [Tooltip("Dokusuz gövde parçalarının rengi (ör. körüklünün ön/arka yüzü); alfa 0 ise değişmez.")]
+            public Color color;
         }
 
         private static readonly int BaseMap = Shader.PropertyToID("_BaseMap");
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+        private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
+        private static readonly int ColorProp = Shader.PropertyToID("_Color");
 
         [Tooltip("Adında bu metin geçen materyallerin dokusu 'body' ile değişir.")]
         [SerializeField] private string bodyMaterialName = "caroserie";
         [Tooltip("Adında bu metin geçen materyallerin dokusu 'roofModule' ile değişir.")]
         [SerializeField] private string roofMaterialName = "cngtank";
+        [Tooltip("Adında bu metin geçen dokusuz materyallerin rengi kaplamanın 'color' değeriyle değişir (boşsa yok).")]
+        [SerializeField] private string colorMaterialName = "";
         [SerializeField] private Livery[] liveries;
         [SerializeField] private int selected;
         [Tooltip("Oyunda ana menüde seçilen kaplamayı uygula (Gameplay.OyunSecimi.Kaplama).")]
@@ -79,10 +85,15 @@ namespace AnkaraBus.Vehicle
                         texture = livery.body;
                     else if (livery.roofModule != null && material.name.Contains(roofMaterialName))
                         texture = livery.roofModule;
-                    if (texture == null)
+                    bool renk = livery.color.a > 0f && !string.IsNullOrEmpty(colorMaterialName)
+                                && material.name.Contains(colorMaterialName);
+                    if (texture == null && !renk)
                         continue;
                     renderer.GetPropertyBlock(block, i);
-                    block.SetTexture(material.HasProperty(BaseMap) ? BaseMap : MainTex, texture);
+                    if (texture != null)
+                        block.SetTexture(material.HasProperty(BaseMap) ? BaseMap : MainTex, texture);
+                    if (renk)
+                        block.SetColor(material.HasProperty(BaseColor) ? BaseColor : ColorProp, livery.color);
                     renderer.SetPropertyBlock(block, i);
                 }
             }

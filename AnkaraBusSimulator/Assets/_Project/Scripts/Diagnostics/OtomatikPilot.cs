@@ -38,7 +38,9 @@ namespace AnkaraBus.Diagnostics
         [SerializeField] private bool kirmizidaGec;
         [SerializeField] private float baslamaGecikmesi = 3f;
 
-        private const float OnUzunluk = 6f;
+        // otobüsün ön ucu ve dingil mesafesi (Start'ta ölçülür; BMC: 6 / 5,6 m)
+        private float OnUzunluk = 6f;
+        private float dingil = 5.6f;
 
         private readonly List<Vector3> yol = new List<Vector3>();
         private readonly List<float> yolMesafe = new List<float>();
@@ -96,6 +98,13 @@ namespace AnkaraBus.Diagnostics
             doors = bus.GetComponentInChildren<BusDoorController>();
             tracker = bus.GetComponent<RouteTracker>();
             ownColliders = bus.GetComponentsInChildren<Collider>();
+            var olcu = OtobusOlcusu.Olc(bus);
+            OnUzunluk = olcu.On + 0.1f;
+            var koruklu = bus.GetComponent<KorukluOtobus>();
+            if (koruklu != null && koruklu.ArkaGovde != null)
+                ownColliders = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(ownColliders,
+                    koruklu.ArkaGovde.GetComponentsInChildren<Collider>()));
+            dingil = DingilMesafesi(bus);
             if (!YoluKur())
                 yield break;
 
@@ -284,7 +293,7 @@ namespace AnkaraBus.Diagnostics
                 hedef++;
             Vector3 local = bus.transform.InverseTransformPoint(yol[hedef]);
             float alpha = Mathf.Atan2(local.x, Mathf.Max(local.z, 0.1f));
-            const float wheelbase = 5.6f;
+            float wheelbase = dingil;
             float steerDeg = Mathf.Atan2(2f * wheelbase * Mathf.Sin(alpha), bakis) * Mathf.Rad2Deg;
             input.AutoSteer = Mathf.Clamp(steerDeg / Mathf.Max(bus.Spec.maxSteerAngle * 0.95f, 1f), -1f, 1f);
 
@@ -362,7 +371,7 @@ namespace AnkaraBus.Diagnostics
         private float OnundekiMesafe()
         {
             var t = bus.transform;
-            Vector3 origin = t.position + t.up * 1.5f + t.forward * 6.5f;
+            Vector3 origin = t.position + t.up * 1.5f + t.forward * (OnUzunluk + 0.5f);
             var hits = Physics.SphereCastAll(origin, 1.1f, t.forward, 60f, ~0, QueryTriggerInteraction.Ignore);
             float best = float.MaxValue;
             sonEngel = null;
@@ -379,6 +388,23 @@ namespace AnkaraBus.Diagnostics
                 }
             }
             return best;
+        }
+
+        /// <summary>Ön aks ile aynı gövdedeki arka aks arası (körüklüde ön gövdenin arka aksı).</summary>
+        private static float DingilMesafesi(BusVehicle v)
+        {
+            float onZ = 0f, arkaZ = 0f;
+            int on = 0, arka = 0;
+            var body = v.GetComponent<Rigidbody>();
+            foreach (var c in v.GetComponentsInChildren<WheelCollider>())
+            {
+                if (c.attachedRigidbody != body)
+                    continue;
+                float z = v.transform.InverseTransformPoint(c.transform.position).z;
+                if (c.name.Contains("On")) { onZ += z; on++; }
+                else { arkaZ += z; arka++; }
+            }
+            return on > 0 && arka > 0 ? Mathf.Abs(onZ / on - arkaZ / arka) : 5.6f;
         }
 
         /// <summary>Noktanın, önümüzdeki güzergâh parçasına yatay uzaklığı.</summary>

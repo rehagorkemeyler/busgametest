@@ -85,6 +85,11 @@ namespace AnkaraBus.Vehicle
         private float lastPinch = -1f;
         private float lastTapTime = -1f;
 
+        private OtobusOlcusu olcu = OtobusOlcusu.Varsayilan;
+
+        /// <summary>Dış kamera mesafesi: 12 m'den uzun otobüste orantılı olarak geride.</summary>
+        private float TakipMesafesi => chaseDistance * Mathf.Max(1f, olcu.Uzunluk / 12f);
+
         public Mode CurrentMode => mode;
         public string ModeName => ModeNames[(int)mode];
         /// <summary>Kamera otobüsün içinde mi (sesler için)?</summary>
@@ -94,7 +99,7 @@ namespace AnkaraBus.Vehicle
         {
             cam = GetComponent<Camera>();
             orbitPitch = chasePitch;
-            distance = chaseDistance;
+            distance = TakipMesafesi;
             SetTarget(target);
         }
 
@@ -102,6 +107,8 @@ namespace AnkaraBus.Vehicle
         {
             target = vehicle;
             eye = vehicle != null ? FindChild(vehicle.transform, "SurucuGozu") : null;
+            olcu = OtobusOlcusu.Olc(vehicle);
+            distance = TakipMesafesi;
             if (vehicle != null)
             {
                 yaw = vehicle.transform.eulerAngles.y;
@@ -128,7 +135,7 @@ namespace AnkaraBus.Vehicle
             insideFov = 0f;
             orbitYaw = 0f;
             orbitPitch = chasePitch;
-            distance = chaseDistance;
+            distance = TakipMesafesi;
         }
 
         private static Transform FindChild(Transform root, string name)
@@ -210,7 +217,8 @@ namespace AnkaraBus.Vehicle
                     baseRotation = bus.rotation * Quaternion.Euler(0f, lookYaw, 0f) * Quaternion.Euler(5f + lookPitch, 0f, 0f);
                     break;
                 default: // Door
-                    position = bus.TransformPoint(doorPosition);
+                    // kapı kamerası otobüsün ön ucuna göre (BMC'de 6,2 m; uzun otobüste daha önde)
+                    position = bus.TransformPoint(new Vector3(doorPosition.x, doorPosition.y, olcu.On + 0.45f));
                     var look = Quaternion.LookRotation(bus.TransformPoint(doorLookAt) - position, bus.up);
                     baseRotation = Quaternion.AngleAxis(lookYaw, bus.up) * look * Quaternion.Euler(lookPitch, 0f, 0f);
                     break;

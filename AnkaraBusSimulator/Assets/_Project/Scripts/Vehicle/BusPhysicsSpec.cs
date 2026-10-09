@@ -15,6 +15,8 @@ namespace AnkaraBus.Vehicle
         [Min(1000f)] public float massKg = 16000f;
         [Tooltip("Yerel ağırlık merkezi. Devrilmemesi için gerçekten biraz alçak tutulur.")]
         public Vector3 centerOfMass = new Vector3(0f, 0.45f, 0.27f);
+        [Tooltip("Körüklü otobüste arka gövdenin toplam kütledeki payı (KorukluOtobus); tek gövdelide 0.")]
+        [Range(0f, 0.7f)] public float trailerMassRatio = 0f;
         [Tooltip("Hava direnci katsayısı × ön alan (m²).")]
         public float dragArea = 0.65f * 7.5f;
         [Tooltip("Yuvarlanma direnci katsayısı.")]

@@ -93,6 +93,7 @@ namespace AnkaraBus.Gameplay
         private float startTime = -1f;
         private Ozet ozet = new Ozet();
         private bool finished;
+        private OtobusOlcusu olcu = OtobusOlcusu.Varsayilan;
 
         public int Puan => ozet.puan;
         public float Kasa => ozet.kasa;
@@ -133,6 +134,10 @@ namespace AnkaraBus.Gameplay
 
         private void Start()
         {
+            olcu = OtobusOlcusu.Olc(this);
+            var koruklu = GetComponent<KorukluOtobus>();
+            if (koruklu != null)
+                koruklu.ArkaCarpti += OnCollisionEnter;
             var lanes = FindObjectsByType<TrafficLane>();
             signalLanes = Array.FindAll(lanes, l => l.HasSignal);
             lastSide = new float[signalLanes.Length];
@@ -254,7 +259,7 @@ namespace AnkaraBus.Gameplay
         /// <summary>Otobüsün önü kırmızı ışıklı bir şeridin durma çizgisini aynı yönde geçti mi?</summary>
         private void CheckSignals()
         {
-            Vector3 front = transform.position + transform.forward * 5.9f;
+            Vector3 front = transform.position + transform.forward * olcu.On;
             for (int i = 0; i < signalLanes.Length; i++)
             {
                 var lane = signalLanes[i];
