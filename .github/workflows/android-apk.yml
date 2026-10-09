@@ -1,0 +1,72 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [Ozan]
+    paths:
+      - 'AnkaraBusSimulator/Assets/**'
+      - 'AnkaraBusSimulator/Packages/**'
+      - 'AnkaraBusSimulator/ProjectSettings/**'
+      - '.github/workflows/android-apk.yml'
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      # Unity lisansı yoksa build denenmez (repo sahibi UNITY_LICENSE, UNITY_EMAIL, UNITY_PASSWORD eklemeli)
+      - name: Lisans kontrolü
+        id: lisans
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |
+          if [ -z "$UNITY_LICENSE" ]; then
+            echo "::warning::UNITY_LICENSE secret'ı yok, APK derlenmedi."
+            echo "var=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "var=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Disk alanı aç
+        if: steps.lisans.outputs.var == 'true'
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          android: false
+          tool-cache: false
+
+      - uses: actions/checkout@v4
+        if: steps.lisans.outputs.var == 'true'
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        if: steps.lisans.outputs.var == 'true'
+        with:
+          path: AnkaraBusSimulator/Library
+          key: Library-Android-${{ hashFiles('AnkaraBusSimulator/Packages/packages-lock.json', 'AnkaraBusSimulator/ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: Library-Android-
+
+      - name: APK derle
+        if: steps.lisans.outputs.var == 'true'
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: AnkaraBusSimulator
+          unityVersion: auto
+          targetPlatform: Android
+          buildMethod: AnkaraBus.EditorTools.AndroidBuild.OyunBuild
+
+      - uses: actions/upload-artifact@v4
+        if: steps.lisans.outputs.var == 'true'
+        with:
+          name: AnkaraBus-apk
+          path: AnkaraBusSimulator/Builds/AnkaraBus.apk
+          if-no-files-found: error
