@@ -16,6 +16,7 @@ mafsal körüğün ortası y=-4.45; Blender koordinatı, ön +Y).
 
 Kullanım (Blender 5.x):
     Blender -b --factory-startup --python conecto_donustur.py -- --src mercedes_benz_conecto.glb --out <klasör> [--mobil]
+Ardından iki FBX için de conecto_ic.py (iç mekân ve ön/arka yüz malzemeleri) çalıştırılır.
 """
 import argparse
 import math

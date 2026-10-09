@@ -143,3 +143,11 @@ Bulut tarafı şunları düzeltti/ekledi: (M) Millennium'a logo, filo numarası 
 - **Bekleyen (telefon):** eğerek direksiyon (yön, ORTALA, gizlenen direksiyon, hassasiyet), kapı kamerası, 4 kapıdan yolcu, oyunda gövde delikleri ve kokpit/yolcu kamerası,
   zemin rengi, dış kameranın binaya girmesi, "atlandı" cezası senaryosu, A32 ölçümü.
 
+
+### Y13 — İç ve dış kaplamalar
+Bulut tarafı: Conecto'nun iç mekânı (koltuklar, sarı borular, kaymaz zemin, iç duvar ve tavan; içeride kaplama rengine boyanan zemin
+ve kırmızı şerit düzeldi), ön/arka yüzü (düzgün ön cam, hat tabelası, plaka, stop lambaları, motor ızgarası; her kaplamanın kendi dokusu)
+ve BMC/Millennium içindeki Rumence/Portekizce etiketler Türkçe (Millennium'da Hat 1 durak şeridi, EGO afişi, Ankarakart, Alo 153).
+Ayrıntı: docs/OTOBUSLER.md → "İç ve dış kaplama (Y13)".
+**Prompt:**
+> `git pull origin Ozan` yap, derleme hatası varsa düzelt. **Ankara Bus → Mercedes Conecto (Körüklü) Prefabını Kur**'u çalıştır (iki Conecto FBX'i yeni malzemelerle güncellendi: `M_Zemin`, `M_Koltuk`, `M_KoltukKabuk`, `M_Direk`, `M_IcDuvar`, `M_IcTavan`, `M_onarka`; kurucu bunları Materials/'a çıkarır, Konsol'da "Tam kalite materyali eşleşmedi" uyarısı olmamalı). `M_Zemin` ve `M_Koltuk` dokularının (ic_zemin.png, ic_koltuk.png) bağlandığını ve Wrap Mode'un Repeat olduğunu kontrol et. `OtobusOnizleme.CizBatch` ile üç otobüsün her kaplamada dış ve iç görüntüsünü al: Conecto'nun önünde düzgün kenarlı ön cam, "ANKARA" tabelası ve plaka, arkasında stoplar/ızgara/plaka var mı ve EGO mavi ile Özel Halk'ta ön/arka yüz kendi renginde mi (kırmızı kalmamalı); içeride lacivert desenli koltuklar, sarı borular, koyu gri zemin, açık duvar/tavan var mı, zemin ya da bölmeler kaplama rengine boyanmış mı, içeriden kırmızı şerit görünüyor mu. BMC içinde etiketler (acil çıkış vanası, kapıya yaslanmayın, klima, tekerlekli sandalye) ve Millennium içinde (özel alan, öncelikli koltuk, hat şeridi, EGO afişi, ANKARAKART okuyucu, ALO 153) Türkçe ve okunur mu. Yanlış sınıflanan parça görürsen (ör. koltuk ayağı sarı, tutamak gri) `tools/blender/conecto_ic.py` eşiklerini not et. Telefonda (S24 FE) Conecto ile kokpit ve yolcu kamerasından bak, FPS'i Y11 ölçümüyle karşılaştır. Görüntüleri `docs/onizleme/` altına koy, sonuçları buraya yaz. APK'yı güncelle (`~/Desktop/AnkaraOtobus.apk`). Commit'le, push'la.

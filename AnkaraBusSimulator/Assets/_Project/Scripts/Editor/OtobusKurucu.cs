@@ -31,6 +31,8 @@ namespace AnkaraBus.EditorTools
             public Vector3[] KapiNoktalari;
             // dokusuz gövde parçasının (ön/arka yüz) kaplamaya göre rengi (Kaplamalar sırasıyla)
             public string RenkMalzeme;
+            // kaplamadaki ikinci dokunun (Kaplamalar.roof) gideceği malzeme adı parçası; boşsa BusLivery'nin varsayılanı (cngtank)
+            public string IkinciMalzeme;
             public Color[] Renkler;
             public Vector3? MotorKonumu;
             public string Folder => "Assets/_Project/Buses/" + Ad + "/";
@@ -78,10 +80,12 @@ namespace AnkaraBus.EditorTools
             Koruklu = true,
             Kaplamalar = new[]
             {
-                ("EGO kırmızı", "Textures/caroserie.png", (string)null),
-                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", null),
-                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", null),
+                ("EGO kırmızı", "Textures/caroserie.png", "Textures/onarka.png"),
+                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", "Textures/Kaplamalar/onarka_mavi.png"),
+                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", "Textures/Kaplamalar/onarka_ozel.png"),
             },
+            // ön/arka yüz (ön cam, tabela, plaka, stoplar) ayrı dokuda: BusLivery'nin ikinci doku yuvası (roofModule)
+            IkinciMalzeme = "onarka",
             RenkMalzeme = "M_Govde",
             Renkler = new[]
             {
@@ -365,6 +369,8 @@ namespace AnkaraBus.EditorTools
             }
             if (!string.IsNullOrEmpty(aktif.RenkMalzeme))
                 so.FindProperty("colorMaterialName").stringValue = aktif.RenkMalzeme;
+            if (!string.IsNullOrEmpty(aktif.IkinciMalzeme))
+                so.FindProperty("roofMaterialName").stringValue = aktif.IkinciMalzeme;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 

@@ -78,3 +78,26 @@ trafik aracının da otobüsün ön ucuna yol vermesi. Mafsal ve körük bu koş
 **Görsel kontrol (Editor, `OtobusOnizleme.CizBatch -cikti klasör`):** Millennium üç kaplamada EGO logosu, filo numarası (EGO 22-353) ve
 plaka (06 CUM 353, önde ve arkada) doğru ve okunur, sol yandaki yazılar ters değil. Conecto: sağda 4 kapı, solda kapı yok, yazılar ters değil;
 ön/arka yüz kaplama renginde. İçeriden (yolcu kamerası) Conecto'da yan duvarın alt kısmında kaplama şeridi görünüyor (iç yüze de kaplama düşüyor), küçük.
+
+## İç ve dış kaplama (Y13)
+
+**Conecto iç mekân** (`tools/blender/conecto_ic.py`, FBX'i yerinde işler; `conecto_donustur.py`'den sonra iki FBX için de çalıştırılır).
+Kaynakta doku olmadığı için tek gri olan iç mekân geometriden ayrıldı:
+koltuk kabuğu (`M_KoltukKabuk`, koyu gri) ve minderi (`M_Koltuk`, lacivert desenli kumaş `ic_koltuk.png`), tutunma boruları
+(`M_Direk`, sarı), zemin (`M_Zemin`, koyu gri kaymaz `ic_zemin.png`, 1 m tekrar), iç duvar (`M_IcDuvar`) ve tavan (`M_IcTavan`).
+Ayrım: ince uzun adalar boru, 0,3–0,95 m'lik adalar koltuk (alanı 0,9 m²'den büyükse kabuk), yukarı bakan alçak yüzler zemin.
+Gövde içinde kalan `M_Govde` yüzleri de iç malzemelere alındı (önceden zemin ve bölmeler kaplama rengine, kırmızıya boyanıyordu);
+dış kaplamanın içe bakan yüzleri iç duvar oldu (içeriden görünen kırmızı şerit gitti).
+
+**Conecto ön ve arka yüz**: önceden ön cam büyük üçgenlerin merkezine göre seçildiği için kenarı testere dişiydi. Şimdi ön ve arka
+yüzde dışarıdan görünen yüzler (ışın testi) `M_onarka` malzemesinde, düzlemsel UV ile `onarka*.png` dokusunda (`tools/kaplama_conecto.py`):
+yuvarlak köşeli ön cam, "ANKARA" hat tabelası, plaka; arkada cam, küçük tabela, stop/sinyal/geri lambaları, motor ızgarası, plaka,
+filo numarası ve EGO paneli. Her kaplamanın kendi ön/arka dokusu var (BusLivery'nin ikinci doku yuvası; `OtobusKurucu`
+Conecto için `roofMaterialName = "onarka"` yazar). Plakalar: 06 EGO 501 / 06 EGO 601 / 06 HO 1453.
+
+**Etiketler Türkçe** (`tools/etiketler_tr.py`; kaynak dokular `tools/etiket_kaynak/`):
+- BMC `stickers.png`: Rumence acil çıkış vanası, "kapıya yaslanmayın", tekerlekli sandalye yeri ve İngilizce klima etiketi Türkçe
+  (İngilizce acil çıkış ve "do not lean" etiketleri kaldı).
+- Millennium `adesivostransparentes.png` (özel alan, öncelikli koltuk), `bagulhosmep.png` (ÇÖP, kart okuyucuda ANKARAKART,
+  ihbar şeridi yerine ALO 153), `extras.png` (São Paulo hat şeridi yerine Hat 1 durakları, afiş yerine EGO/Ankarakart afişi,
+  sürücü tabela talimatı). `kaplama_millennium.py` `bagulhosmep.png`'yi baştan yazar; ondan sonra `etiketler_tr.py` yeniden çalıştırılmalı.
