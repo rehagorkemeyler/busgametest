@@ -134,6 +134,9 @@ namespace AnkaraBus.Diagnostics
             Debug.Log($"[Surus] BASLA sahne={SceneManager.GetActiveScene().name} hat={tracker.Route.LineNumber} " +
                       $"yol={yolMesafe[yolMesafe.Count - 1]:F0} m, durak={tracker.Route.StopCount}, trafik={trafik.Length} araç, " +
                       $"ışık={isiklar.Length}, yolcu_sistemi={(passengers != null ? "var" : "YOK")}");
+            var kor = bus.GetComponent<KorukluOtobus>();
+            Debug.Log($"[Surus] başlangıç konum={bus.transform.position} temas={Temaslar()}" +
+                      (kor != null && kor.ArkaGovde != null ? $" arka_gövde={bus.transform.InverseTransformPoint(kor.ArkaGovde.position)} mafsal={kor.MafsalAcisi:F1}°" : ""));
 
             float sonIlerleme = 0f, sonIlerlemeZamani = Time.time;
             float logZamani = 0f;
@@ -162,7 +165,9 @@ namespace AnkaraBus.Diagnostics
                 {
                     Debug.LogError($"[Surus] TAKILDI konum={bus.transform.position} ilerleme={ilerleme:F0} m hız={bus.SpeedKmh:F0} " +
                                    $"öndeki={sonEngel ?? "yok"} temas={Temaslar()} gaz={input.AutoThrottle:F2} fren={input.AutoBrake:F2} " +
-                                   $"direksiyon={input.AutoSteer:F2} tekerler={string.Join(",", System.Linq.Enumerable.Select(bus.GetComponentsInChildren<WheelCollider>(), w => w.isGrounded ? "y" : "-"))}");
+                                   $"direksiyon={input.AutoSteer:F2} el_freni={bus.Handbrake} kapı_freni={bus.DoorBrakeActive} " +
+                                   $"kapı_açık={bus.GetComponent<BusDoorController>()?.AnyOpen} yolcu_meşgul={bus.GetComponent<AnkaraBus.Passengers.BusPassengers>()?.IsBusy} " +
+                                   $"vites={bus.Gear} rpm={bus.EngineRpm:F0} fren_basıncı={bus.BrakePressure:F2} tekerler={TekerDurumu()}");
                     sonIlerlemeZamani = Time.time;
                 }
 
@@ -524,14 +529,46 @@ namespace AnkaraBus.Diagnostics
         private string Temaslar()
         {
             var adlar = new System.Collections.Generic.List<string>();
-            foreach (var c in bus.GetComponentsInChildren<BoxCollider>())
+            // körüklüde arka gövde sahne kökünde: onun kutusu da otobüsün
+            var koruklu = bus.GetComponent<KorukluOtobus>();
+            var arka = koruklu != null && koruklu.ArkaGovde != null ? koruklu.ArkaGovde.transform : null;
+            bool Otobusun(Transform t) => t.IsChildOf(bus.transform) || (arka != null && t.IsChildOf(arka));
+            var kutular = new System.Collections.Generic.List<BoxCollider>(bus.GetComponentsInChildren<BoxCollider>());
+            if (arka != null)
+                kutular.AddRange(arka.GetComponentsInChildren<BoxCollider>());
+            foreach (var c in kutular)
             {
-                var b = c.bounds;
-                foreach (var h in Physics.OverlapBox(b.center, b.extents + Vector3.one * 0.15f, c.transform.rotation))
-                    if (!h.transform.IsChildOf(bus.transform) && !(h is WheelCollider) && adlar.Count < 8)
-                        adlar.Add($"{h.name}@{h.bounds.center.y:F1}");
+                // kutunun kendi yönünde, gerçek boyutunda (OBB) bak; dünya AABB'si dönük kutuda çok büyük olur
+                var merkez = c.transform.TransformPoint(c.center);
+                var yari = Vector3.Scale(c.size * 0.5f, c.transform.lossyScale) + Vector3.one * 0.05f;
+                foreach (var h in Physics.OverlapBox(merkez, yari, c.transform.rotation))
+                    if (!Otobusun(h.transform) && !(h is WheelCollider) && adlar.Count < 8)
+                    {
+                        var p = bus.transform.InverseTransformPoint(h.ClosestPoint(merkez));
+                        adlar.Add($"{c.name}×{h.name}({h.GetType().Name}) otobüste ({p.x:F1},{p.y:F1},{p.z:F1})");
+                    }
             }
             return adlar.Count > 0 ? string.Join(",", adlar) : "yok";
+        }
+
+        /// <summary>Takılınca teşhis: her tekerin yerde olup olmadığı, yükü ve boyuna kayması (körüklüde arka gövdeninkiler de).</summary>
+        private string TekerDurumu()
+        {
+            var tekerler = new System.Collections.Generic.List<WheelCollider>(bus.GetComponentsInChildren<WheelCollider>());
+            var kor = bus.GetComponent<KorukluOtobus>();
+            if (kor != null && kor.ArkaGovde != null)
+                tekerler.AddRange(kor.ArkaGovde.GetComponentsInChildren<WheelCollider>());
+            var parcalar = new System.Collections.Generic.List<string>();
+            foreach (var w in tekerler)
+                parcalar.Add(w.GetGroundHit(out var h)
+                    ? $"{w.name}:yerde {h.force / 1000f:F0}kN kayma {h.forwardSlip:F2} rpm {w.rpm:F0} m={w.sprungMass:F0} motor={w.motorTorque:F0} fren={w.brakeTorque:F0}"
+                    : $"{w.name}:HAVADA rpm {w.rpm:F0}");
+            if (kor != null && kor.ArkaGovde != null)
+                parcalar.Add($"arka_gövde y={kor.ArkaGovde.position.y - bus.transform.position.y:F2} kütle={kor.ArkaGovde.mass:F0} mafsal={kor.MafsalAcisi:F1}° " +
+                             $"hız_ön={bus.GetComponent<Rigidbody>().linearVelocity.magnitude:F2} hız_arka={kor.ArkaGovde.linearVelocity.magnitude:F2} " +
+                             $"kinematik={bus.GetComponent<Rigidbody>().isKinematic}/{kor.ArkaGovde.isKinematic} kısıt={bus.GetComponent<Rigidbody>().constraints}/{kor.ArkaGovde.constraints} " +
+                             $"uyku={bus.GetComponent<Rigidbody>().IsSleeping()}/{kor.ArkaGovde.IsSleeping()}");
+            return string.Join(" | ", parcalar);
         }
     }
 }

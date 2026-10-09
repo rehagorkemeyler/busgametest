@@ -35,7 +35,7 @@ namespace AnkaraBus.Diagnostics
             yield return null;
             if (Gorev == "menu")
             {
-                foreach (var m in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+                foreach (var m in FindObjectsByType<MonoBehaviour>())
                     if (m.GetType().Name == "AnaMenu") m.SendMessage("Yenile", SendMessageOptions.DontRequireReceiver);
                 yield return new WaitForSeconds(3f);
                 yield return new WaitForEndOfFrame();

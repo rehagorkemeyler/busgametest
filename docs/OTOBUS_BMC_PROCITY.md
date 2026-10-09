@@ -140,7 +140,24 @@ Basit boyuna simülasyonla (tam gaz, otomatik vites, kütle/sürtünme/hava dire
 | Eski | 80 | 68 | 50 | 30 | 31 | 22 |
 | Yeni | 85 | 85 | ~64 | ~61 | ~51 | ~38 |
 
-Gerçek değerler oyundaki tork konvertörü ve vites mantığıyla biraz farklı çıkabilir. **Ankara Bus → Sürüş Testi** ile ölçülmeli. Kalkış da güçlendi; tam gazla kalkışta "sert kalkış" cezası gelebilir.
+**Ölçülen (Y12, 9 Ekim; Ankara Bus → Sürüş Testi, boş zemin, tam gaz 60 sn):**
+
+| Eğim | %0 | %8 | %10 | %12 |
+|---|---|---|---|---|
+| BMC Procity | 85 | 57 | 46 | 40 |
+| Caio Millennium II | 85* | – | – | – |
+| Mercedes Conecto (körüklü) | 85 | 48 | 41 | 35 |
+
+(*Millennium BMC'nin motor değerlerini kullanır; Hat 1 otomatik pilotta düzde 85'e ulaşıyor.) BMC 0-50 km/s 9,9 sn, 0-70 18,4 sn; tam kilit dönüş çapı 18,7 m
+(Conecto 16,0 m). Kalkışta geri kaçma yok, en fazla yatma 0,2° (Conecto 0,2°, yunuslama 0,8°): devrilme eğilimi yok.
+Komut satırı: `-executeMethod AnkaraBus.EditorTools.OtobusSurusTesti.RunBatch [-otobus N]` (N: katalog sırası; körüklüde arka gövde oyundaki gibi ayrılır).
+
+Vites düzeltmeleri (`BusVehicle.AutoShift`):
+- **Kalkışta 1→2→1 titremesi** vardı: vites kararı çeken tekerin devrinden verildiği için kalkıştaki patinaj (teker boşa dönüyor) 2 km/s'de
+  vites büyütüyordu. Artık karar yere göre hızdan (en çok %15 kayma payıyla) veriliyor; patinaj vitesi etkilemiyor.
+- **Yokuşta vites arama:** tam gazda vites küçülünce (kickdown ya da yük) gaz bırakılana kadar vites ancak devir sınırında büyüyor.
+  %8 ve %10'da vites arama yok; %12'de 3. ile 4. vites sınırında 20 sn'de bir dönen yavaş bir geçiş kaldı (33–40 km/s, 40 sn'de 3 değişim):
+  4. vites o eğimi ancak taşıyor. Eşik değiştirmek döngüyü kırmadı (`upshiftRpm` 2200 → aynı), bırakıldı. Kalkış da güçlendi; tam gazla kalkışta "sert kalkış" cezası gelebilir.
 
 Not: Puanlamadaki hız sınırı hâlâ 50 km/s (+5 tolerans, `SeferPuanlama.hizSiniriKmh`). 85'e çıkan otobüs 55'in üstünde ceza alır.
 

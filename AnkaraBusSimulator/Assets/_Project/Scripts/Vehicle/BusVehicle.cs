@@ -248,7 +248,12 @@ namespace AnkaraBus.Vehicle
                 return 0f;
 
             if (Selector == GearSelector.Drive)
-                AutoShift(spec, throttleIn, turbineRpm);
+            {
+                // vites kararı yere göre hızdan: kalkışta boşa dönen teker (patinaj) erken vites büyütmesin
+                float zeminRpm = ForwardSpeed / (2f * Mathf.PI * Mathf.Max(0.1f, spec.wheelRadius)) * 60f * ratio * spec.finalDrive;
+                // olağan kayma payı (%15) kalır; yalnızca boşa dönme elenir
+                AutoShift(spec, throttleIn, Mathf.Min(turbineRpm, Mathf.Max(0f, zeminRpm) * 1.15f));
+            }
 
             float maxTorque = spec.torqueCurve.Evaluate(EngineRpm);
             float engineTorque;
@@ -280,6 +285,12 @@ namespace AnkaraBus.Vehicle
 
             int count = spec.gearRatios.Length;
             float upRpm = Mathf.Lerp(spec.upshiftRpmLightThrottle, spec.upshiftRpm, throttleIn);
+            // tam gazda vites küçüldükten sonra (kickdown ya da yokuşta yük) gaz bırakılana kadar vites yalnızca
+            // devir sınırında büyür: yoksa büyük vites yokuşu taşıyamaz, yine küçülür ve vites arar
+            if (throttleIn < 0.5f)
+                kickdownTutma = false;
+            if (kickdownTutma)
+                upRpm = spec.maxRpm - 40f;
             float downRpm = Mathf.Lerp(spec.downshiftRpm * 0.7f, spec.downshiftRpm, throttleIn);
 
             if (Gear < count && turbineRpm > upRpm)
@@ -289,9 +300,15 @@ namespace AnkaraBus.Vehicle
                 float lowerRpm = turbineRpm / spec.gearRatios[Gear - 1] * spec.gearRatios[Gear - 2];
                 bool kickdown = throttleIn > 0.9f && lowerRpm < spec.upshiftRpm * 0.85f;
                 if (turbineRpm < downRpm || kickdown)
+                {
+                    // tam gazda yük altında küçüldüyse (yokuş) de tut: büyük vites yokuşu taşıyamadı
+                    kickdownTutma |= throttleIn > 0.9f;
                     ChangeGear(spec, Gear - 1);
+                }
             }
         }
+
+        private bool kickdownTutma;
 
         private void ChangeGear(BusPhysicsSpec spec, int gear)
         {
@@ -299,6 +316,10 @@ namespace AnkaraBus.Vehicle
             shiftTimer = spec.shiftTime;
             shiftCooldown = spec.shiftTime + 0.8f;
         }
+
+        // PhysX düşük hızda tahrik torku olmayan gövdenin tekerlerini yere "yapıştırır" (sticky tire). Körüklüde ön gövdenin
+        // hiçbir tekeri çekmediği için ön gövde kilitlenip arkadaki çeken aksın itmesine direniyordu; çok küçük bir tork bunu önler
+        private const float SerbestTork = 0.0001f;
 
         private void ApplyWheelTorques(BusPhysicsSpec spec, float driveTorque, float speedKmh)
         {
@@ -327,12 +348,12 @@ namespace AnkaraBus.Vehicle
                 if (w.front)
                 {
                     brakeTorque = serviceTotal * spec.frontBrakeBias / Mathf.Max(1, frontCount);
-                    w.collider.motorTorque = 0f;
+                    w.collider.motorTorque = SerbestTork;
                 }
                 else
                 {
                     brakeTorque = (serviceTotal * (1f - spec.frontBrakeBias) + retarderTotal + handbrakeTotal) / Mathf.Max(1, rearCount);
-                    w.collider.motorTorque = w.passive ? 0f : driveTorque / Mathf.Max(1, drivenCount);
+                    w.collider.motorTorque = w.passive ? SerbestTork : driveTorque / Mathf.Max(1, drivenCount);
                 }
                 w.collider.brakeTorque = brakeTorque;
             }

@@ -21,6 +21,7 @@ MonoBehaviour:
   physics:
     massKg: 16000
     centerOfMass: {x: 0, y: 0.45, z: 0.27}
+    trailerMassRatio: 0
     dragArea: 4.875
     rollingResistance: 0.008
     idleRpm: 600

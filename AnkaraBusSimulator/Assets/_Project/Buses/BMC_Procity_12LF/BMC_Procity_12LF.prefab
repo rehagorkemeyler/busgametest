@@ -389,18 +389,22 @@ MonoBehaviour:
     visual: {fileID: 6750939031342511107}
     front: 1
     left: 1
+    passive: 0
   - collider: {fileID: 2434327174775283851}
     visual: {fileID: 3642020906159616468}
     front: 1
     left: 0
+    passive: 0
   - collider: {fileID: 4684144973027884693}
     visual: {fileID: 6311343486308595234}
     front: 0
     left: 1
+    passive: 0
   - collider: {fileID: 9008306955876505172}
     visual: {fileID: 6973877166101325088}
     front: 0
     left: 0
+    passive: 0
   steeringWheel: {fileID: 5834932443509063133}
   steeringWheelAxis: {x: 0, y: 1, z: 0}
   stoppedThresholdKmh: 1.5
@@ -547,16 +551,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusLivery
   bodyMaterialName: caroserie
   roofMaterialName: cngtank
+  colorMaterialName: 
   liveries:
   - name: "EGO k\u0131rm\u0131z\u0131"
     body: {fileID: 2800000, guid: 1bc919d7e52a64b25b440f2896c9c12f, type: 3}
     roofModule: {fileID: 2800000, guid: e7ef75e17aee244ad84b8d3ef39cc1e8, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 0}
   - name: EGO mavi
     body: {fileID: 2800000, guid: 46fcc9e1f6ab54046a4695c351aa45de, type: 3}
     roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 0}
   - name: "\xD6zel Halk"
     body: {fileID: 2800000, guid: a90fd968e44e948788e64251f8975193, type: 3}
     roofModule: {fileID: 2800000, guid: fbb1898340d784709bc287a562f99a6c, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 0}
   selected: 0
   useMenuChoice: 1
 --- !u!114 &7315764167857771664

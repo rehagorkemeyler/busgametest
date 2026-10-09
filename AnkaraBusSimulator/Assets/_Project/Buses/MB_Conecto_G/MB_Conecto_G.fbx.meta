@@ -3,7 +3,67 @@ guid: f0a1e8399526047e2854c6ec0032023d
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Golge
+    second: {fileID: 2100000, guid: 2929aba43c8cc4964ae4c48d3d080beb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Govde
+    second: {fileID: 2100000, guid: 1a4e5b2f3d77f48fcaea2ac045f1f400, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Ic
+    second: {fileID: 2100000, guid: 9408a826a4ed54c9aac5131c3e8a54f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Jant
+    second: {fileID: 2100000, guid: 00d820e19c2224c338f66991b30d11fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Koruk
+    second: {fileID: 2100000, guid: 4dfed8df74a0a4a4f8c3e7c6eebebd9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Koyu
+    second: {fileID: 2100000, guid: 37d6514fe15ee4673a7415116a7d7848, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_On_Cam
+    second: {fileID: 2100000, guid: 652c9de899bb0487487debcc8627131a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Siyah
+    second: {fileID: 2100000, guid: f87eb7448f3c4442bae10adec4ec1d61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Tavan
+    second: {fileID: 2100000, guid: 17315b9a4e94a406581a52ed9338ce3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Teker
+    second: {fileID: 2100000, guid: e4fc5f14ae0074c809610f2fbc52fcfc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Yazi
+    second: {fileID: 2100000, guid: 18f0e1ec67ada4002aa4e3990d339346, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_caroserie
+    second: {fileID: 2100000, guid: 07ec4e3546e7442a0a09a81f80b8fb63, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

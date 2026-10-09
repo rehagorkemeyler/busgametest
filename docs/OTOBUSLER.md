@@ -52,3 +52,29 @@ Kaynaklar: docs/KREDILER.md.
   Motor sesi arkada (0, 1, −8.2). Direksiyon 45°, kütle 18 t. Kokpit kamerası: `SurucuGozu` (modelde direksiyon yok).
 - Uzunluğa bağlı kodlar `OtobusOlcusu` ile gövde kutularından (`Carpisma_*`) ölçülür: puanlamada ön uç, `YayaGecitleri` ön uç ve
   çarpma kutusu, kapı kamerası ve takip mesafesi (`BusCameraRig`), otomatik pilotta ön uç ve dingil mesafesi.
+
+## Y12 sonuçları (9 Ekim, Editor, otomatik pilot, Hat 1, 3× hız)
+
+| Otobüs | Durak | Çarpışma | Puan | Not |
+|---|---|---|---|---|
+| Caio Millennium II | 5/5 | 0 (önceden 2) | 189–230 | boyu ölçen otomatik pilotla temiz |
+| Mercedes Conecto | 3/5 | 2–5 | – | Kuğulu → Cinnah'ta takılıyor (aşağıda) |
+
+**Düzeltilen: Conecto hiç hareket etmiyordu.** Tam gazda motor devir sınırında, arka (çeken) tekerler boşa dönüyor, otobüs yerinde duruyordu.
+Sebep PhysX'in "yapışkan teker" kuralı: düşük hızda tahrik torku olmayan bir gövdenin tekerleri yere yapıştırılır; ön gövdenin dört
+tekerinin (ön + orta aks) hiçbiri çekmediği için ön gövde kilitleniyor, arka gövde onu itemiyordu (mafsal kaldırılınca arka gövde tek başına
+1 sn'de 5,7 m/s'ye çıktı). `BusVehicle.ApplyWheelTorques` artık çekmeyen tekerlere 0,0001 Nm veriyor (`SerbestTork`); BMC ve Millennium etkilenmedi.
+
+**Düzeltilen: Conecto ön/arka yüz kaplama renginde değildi** (ön gri, arka beyaz). `conecto_donustur.py` dünya dönüşümünden sonra yüz
+normallerini güncellemiyordu (kaynak kökünde Y-yukarı → Z-yukarı); normalin y'sine bakan kurallar (ön/arka yüz, camlar, tavan) yanlış
+yüzleri seçiyordu. `bm.normal_update()` eklendi; ön/arka yüz (normal yönünden bağımsız) cam bandı koyu cam, gerisi `M_Govde`.
+Ön tampon çevresinde birkaç küçük üçgen kaplama renginde kalıyor (kaynak model).
+
+**Açık: Kuğulu → Cinnah.** Kuğulu durağından çıkıp sağa dönerken ön gövdenin sol ön köşesi sol şeritteki bir araca sürtünüyor
+(`[Puan] çarpışma: Klasik_…, otobüste (-1.3, 1.5, 9.0)`), araç otobüsü köşedeki binaya (A3_Cankaya_5Kat) itiyor ve otobüs takılıyor.
+İki koşuda da aynı yerde. Otomatik pilotun cepten çıkışta yan şeridi kontrol etmesi ya da 18 m için dönüşe daha geç/daha geniş girmesi gerekiyor;
+trafik aracının da otobüsün ön ucuna yol vermesi. Mafsal ve körük bu koşularda kararlıydı (kopma/titreme kaydı yok).
+
+**Görsel kontrol (Editor, `OtobusOnizleme.CizBatch -cikti klasör`):** Millennium üç kaplamada EGO logosu, filo numarası (EGO 22-353) ve
+plaka (06 CUM 353, önde ve arkada) doğru ve okunur, sol yandaki yazılar ters değil. Conecto: sağda 4 kapı, solda kapı yok, yazılar ters değil;
+ön/arka yüz kaplama renginde. İçeriden (yolcu kamerası) Conecto'da yan duvarın alt kısmında kaplama şeridi görünüyor (iç yüze de kaplama düşüyor), küçük.

@@ -103,6 +103,7 @@ def build(src, out, mobil):
         bm = bmesh.new()
         bm.from_mesh(o.data)
         bm.transform(o.matrix_world)
+        bm.normal_update()  # transform normalleri güncellemez; kaynak kökünde Y-yukarı → Z-yukarı dönüşü var
         uv = bm.loops.layers.uv.active
         for f in bm.faces:
             c = f.calc_center_median()
@@ -129,10 +130,12 @@ def build(src, out, mobil):
                         mat = "M_Yazi"
                     elif abs(n.x) > 0.6 and abs(c.x) > 1.15 and 0.25 < c.z < 3.1:
                         mat = "M_caroserie"
-                    elif n.y > 0.5 and c.y > 5.6 and c.z > 0.95:
-                        mat = "M_On_Cam"
-                    elif n.y < -0.5 and c.y < -11.9 and 1.35 < c.z < 2.6:
-                        mat = "M_On_Cam"  # arka cam
+                    elif abs(n.y) > 0.5 and c.y > 5.78:
+                        # ön yüz (normalin yönüne bakmadan: kaynakta bazı ön yüzler içe bakıyor): cam bandı koyu,
+                        # gerisi kaplama rengi (M_Govde; BusLivery kaplamayla birlikte boyar). Gösterge paneli y < 5.7
+                        mat = "M_On_Cam" if 0.98 < c.z < 2.78 and abs(c.x) < 1.15 else "M_Govde"
+                    elif abs(n.y) > 0.5 and c.y < -11.95:
+                        mat = "M_On_Cam" if 1.35 < c.z < 2.6 and abs(c.x) < 1.05 else "M_Govde"  # arka yüz ve arka cam
                     elif n.z > 0.6 and c.z > 2.75:
                         mat = "M_Tavan"
                     elif abs(c.x) < 1.15 and 0.45 < c.z < 3.0 and abs(n.x) < 0.95:

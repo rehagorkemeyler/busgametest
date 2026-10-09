@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64f13353b47b145bfac6d46d4c32518f, type: 3}
-  m_Name: Caio_Millennium_II
+  m_Name: MB_Conecto_G
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDefinition
-  displayName: "Mercedes-Benz O500M \xB7 Caio Millennium II"
-  manufacturer: Mercedes-Benz / Caio
-  prefab: {fileID: 81916801708327052, guid: af420b62e90f34fba9fe391e5ec7dc93, type: 3}
+  displayName: "Mercedes-Benz O530G Conecto (k\xF6r\xFCkl\xFC)"
+  manufacturer: Mercedes-Benz
+  prefab: {fileID: 5090583626651053503, guid: 9e75a880bb38d465fa9b4b968ab6a19b, type: 3}
   preview: {fileID: 0}
   liveries: []
-  passengerCapacity: 90
+  passengerCapacity: 150
   physics:
-    massKg: 16000
-    centerOfMass: {x: 0, y: 0.45, z: 0.27}
-    trailerMassRatio: 0
+    massKg: 18000
+    centerOfMass: {x: 0, y: 0.6, z: 2.6}
+    trailerMassRatio: 0.4
     dragArea: 4.875
     rollingResistance: 0.008
     idleRpm: 600
@@ -104,12 +104,12 @@ MonoBehaviour:
     retarderDecel: 1.2
     hillHoldTime: 1.5
     doorBrake: 1
-    maxSteerAngle: 48
+    maxSteerAngle: 45
     steerReductionSpeedKmh: 60
     steerAtReductionSpeed: 0.3
     steerRate: 45
     steeringWheelLockToLock: 900
-    wheelRadius: 0.525
+    wheelRadius: 0.51
     frontWheelMass: 120
     rearWheelMass: 240
     suspensionDistance: 0.25
