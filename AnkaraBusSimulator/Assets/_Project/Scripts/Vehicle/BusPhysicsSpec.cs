@@ -23,13 +23,14 @@ namespace AnkaraBus.Vehicle
         [Header("Motor")]
         public float idleRpm = 600f;
         public float maxRpm = 2300f;
-        [Tooltip("X: devir, Y: tork (Nm).")]
+        [Tooltip("X: devir, Y: tork (Nm). Proton değerleri (en çok 1000 Nm) %8 yokuşta ancak ~30 km/s çıkıyordu;\n" +
+                 "oyun için güçlendirildi: düz yolda 85, %8'de ~60, %10'da ~50 km/s (docs/OTOBUS_BMC_PROCITY.md).")]
         public AnimationCurve torqueCurve = new AnimationCurve(
-            new Keyframe(600f, 650f),
-            new Keyframe(1000f, 920f),
-            new Keyframe(1500f, 1000f),
-            new Keyframe(2000f, 880f),
-            new Keyframe(2300f, 720f));
+            new Keyframe(600f, 900f),
+            new Keyframe(1000f, 1450f),
+            new Keyframe(1500f, 1550f),
+            new Keyframe(2000f, 1400f),
+            new Keyframe(2300f, 1200f));
         [Tooltip("Gaz verilmeden viteste ilerleme torku, maks. torkun oranı.")]
         [Range(0f, 0.3f)] public float creepTorqueRatio = 0.06f;
         [Tooltip("Gaz bırakınca motor freni torku (Nm, motor tarafında).")]
@@ -45,13 +46,13 @@ namespace AnkaraBus.Vehicle
         [Tooltip("Tork konvertörünün dururken torku kaç kat artırdığı.")]
         public float converterStallTorqueRatio = 2.2f;
         [Tooltip("Tam gazda vites büyütme devri; hafif gazda daha erken büyütür.")]
-        public float upshiftRpm = 2100f;
+        public float upshiftRpm = 2200f;
         public float upshiftRpmLightThrottle = 1300f;
         public float downshiftRpm = 1050f;
         [Tooltip("Vites değişimindeki tork kesintisi (sn).")]
         public float shiftTime = 0.45f;
         [Tooltip("Elektronik hız sınırı (km/s).")]
-        public float maxSpeedKmh = 80f;
+        public float maxSpeedKmh = 85f;
 
         [Header("Frenler")]
         [Tooltip("Tam frende hedeflenen yavaşlama (m/s²).")]

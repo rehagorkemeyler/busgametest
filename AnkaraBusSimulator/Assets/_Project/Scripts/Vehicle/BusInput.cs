@@ -7,7 +7,7 @@ namespace AnkaraBus.Vehicle
     /// Klavye ve dokunmatik girdiyi birleştirip BusVehicle'a yazar.
     /// Dokunmatik arayüz Touch* özelliklerini ve buton metotlarını kullanır.
     /// Klavye: W/S veya oklar gaz/fren, A/D direksiyon, Space el freni,
-    /// 1/2/3 = D/N/R, K kapılar, H korna.
+    /// 1/2/3 = D/N/R, K kapılar, H korna. Ayarda "Telefonu eğ" seçiliyse direksiyon ivmeölçerden (KontrolAyarlari).
     /// </summary>
     [RequireComponent(typeof(BusVehicle))]
     public class BusInput : MonoBehaviour
@@ -21,6 +21,7 @@ namespace AnkaraBus.Vehicle
         private BusDoorController doors;
         private BusAudio busAudio;
         private float keyboardSteer;
+        private float tiltSteer;
 
         public float TouchThrottle { get; set; }
         public float TouchBrake { get; set; }
@@ -69,7 +70,19 @@ namespace AnkaraBus.Vehicle
 
             vehicle.Throttle = throttle;
             vehicle.Brake = brake;
-            vehicle.Steer = TouchSteer ?? AutoSteer ?? keyboardSteer;
+            float? tilt = null;
+            if (KontrolAyarlari.Secili == KontrolAyarlari.Direksiyon.Egim)
+            {
+                float? hedef = KontrolAyarlari.EgimDireksiyonu();
+                if (hedef != null)
+                {
+                    // sensör titremesini yumuşat
+                    tiltSteer = Mathf.Lerp(tiltSteer, hedef.Value, 1f - Mathf.Exp(-12f * Time.deltaTime));
+                    tilt = tiltSteer;
+                }
+            }
+            bool keyboardSteering = Mathf.Abs(steerKeys) > 0f || Mathf.Abs(keyboardSteer) > 0.01f;
+            vehicle.Steer = TouchSteer ?? AutoSteer ?? (keyboardSteering ? keyboardSteer : tilt ?? keyboardSteer);
             if (busAudio != null)
                 busAudio.Horn(horn);
 

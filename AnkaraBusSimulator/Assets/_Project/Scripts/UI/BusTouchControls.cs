@@ -32,6 +32,7 @@ namespace AnkaraBus.UI
         private BusDoorController doors;
         private Font font;
         private GameObject settingsPanel;
+        private readonly Image[] steerButtons = new Image[2];
         private readonly Image[] qualityButtons = new Image[GrafikAyarlari.SeviyeAdlari.Length];
 
         public void Bind(BusInput busInput, BusCameraRig rig)
@@ -128,26 +129,47 @@ namespace AnkaraBus.UI
             blocker.gameObject.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.55f);
             settingsPanel = blocker.gameObject;
 
-            var box = Element(blocker, "Kutu", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(960f, 500f));
+            var box = Element(blocker, "Kutu", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(960f, 700f));
             var boxImage = box.gameObject.AddComponent<Image>();
             boxImage.sprite = UiShapes.RoundedRect;
             boxImage.type = Image.Type.Sliced;
             boxImage.color = new Color(0.1f, 0.11f, 0.13f, 0.96f);
 
-            Label(Element(box, "Baslik", new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(900f, 70f)),
+            Label(Element(box, "Baslik", new Vector2(0.5f, 1f), new Vector2(0f, -55f), new Vector2(900f, 70f)),
                 "GÖRÜNTÜ KALİTESİ", 46, TextAnchor.MiddleCenter);
 
             for (int i = 0; i < qualityButtons.Length; i++)
             {
                 var level = (KaliteSeviyesi)i;
                 qualityButtons[i] = Button(box, GrafikAyarlari.SeviyeAdlari[i], new Vector2(0.5f, 0.5f),
-                    new Vector2((i - 1) * 290f, 20f), new Vector2(260f, 140f), () => GrafikAyarlari.Uygula(level));
+                    new Vector2((i - 1) * 290f, 165f), new Vector2(260f, 110f), () => GrafikAyarlari.Uygula(level));
             }
 
-            var hint = Label(Element(box, "Oneri", new Vector2(0.5f, 0.5f), new Vector2(0f, -100f), new Vector2(900f, 50f)),
+            var hint = Label(Element(box, "Oneri", new Vector2(0.5f, 0.5f), new Vector2(0f, 80f), new Vector2(900f, 50f)),
                 $"Bu telefon için önerilen: {GrafikAyarlari.SeviyeAdlari[(int)GrafikAyarlari.Onerilen]}", 30, TextAnchor.MiddleCenter);
             hint.fontStyle = FontStyle.Normal;
             hint.color = Idle;
+
+            // Direksiyon: ekrandaki simit ya da telefonu eğme (KontrolAyarlari)
+            Label(Element(box, "DireksiyonBaslik", new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(900f, 60f)),
+                "DİREKSİYON", 40, TextAnchor.MiddleCenter);
+            steerButtons[0] = Button(box, "EKRAN", new Vector2(0.5f, 0.5f), new Vector2(-290f, -70f), new Vector2(260f, 100f),
+                () => KontrolAyarlari.Secili = KontrolAyarlari.Direksiyon.Ekran);
+            steerButtons[1] = Button(box, "TELEFONU EĞ", new Vector2(0.5f, 0.5f), new Vector2(0f, -70f), new Vector2(260f, 100f), () =>
+            {
+                if (!KontrolAyarlari.EgimVar)
+                    return;
+                if (KontrolAyarlari.Secili != KontrolAyarlari.Direksiyon.Egim)
+                    KontrolAyarlari.Ortala(); // ilk seçişte o anki tutuş orta olsun
+                KontrolAyarlari.Secili = KontrolAyarlari.Direksiyon.Egim;
+            });
+            Button(box, "ORTALA", new Vector2(0.5f, 0.5f), new Vector2(290f, -70f), new Vector2(260f, 100f), KontrolAyarlari.Ortala);
+            var steerHint = Label(Element(box, "DireksiyonIpucu", new Vector2(0.5f, 0.5f), new Vector2(0f, -150f), new Vector2(900f, 44f)),
+                KontrolAyarlari.EgimVar
+                    ? "Telefonu yatay tut, direksiyon gibi çevir. ORTALA: o anki tutuş düz gider."
+                    : "Bu cihazda eğim sensörü yok.", 26, TextAnchor.MiddleCenter);
+            steerHint.fontStyle = FontStyle.Normal;
+            steerHint.color = Idle;
 
             if (AnkaraBus.Gameplay.OyunSecimi.MenuVar)
             {
@@ -239,7 +261,11 @@ namespace AnkaraBus.UI
 
             input.TouchThrottle = throttle.Value;
             input.TouchBrake = brake.Value;
-            input.TouchSteer = wheel.IsHeld || Mathf.Abs(wheel.Value) > 0.001f ? wheel.Value : (float?)null;
+            // eğimle sürüşte ekrandaki direksiyon gizlenir
+            bool tilt = KontrolAyarlari.Secili == KontrolAyarlari.Direksiyon.Egim && KontrolAyarlari.EgimVar;
+            if (wheel.gameObject.activeSelf == tilt)
+                wheel.gameObject.SetActive(!tilt);
+            input.TouchSteer = !tilt && (wheel.IsHeld || Mathf.Abs(wheel.Value) > 0.001f) ? wheel.Value : (float?)null;
 
             var v = input.Vehicle;
             string gear = v.Selector switch
@@ -265,8 +291,12 @@ namespace AnkaraBus.UI
             doorButton.color = doors != null && doors.AnyOpen ? Ok : Panel;
 
             if (settingsPanel.activeSelf)
+            {
                 for (int i = 0; i < qualityButtons.Length; i++)
                     qualityButtons[i].color = (int)GrafikAyarlari.Mevcut == i ? Active : Panel;
+                for (int i = 0; i < steerButtons.Length; i++)
+                    steerButtons[i].color = (int)KontrolAyarlari.Secili == i ? Active : Panel;
+            }
         }
     }
 }
