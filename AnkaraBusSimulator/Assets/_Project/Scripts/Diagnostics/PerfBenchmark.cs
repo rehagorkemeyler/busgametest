@@ -66,6 +66,7 @@ namespace AnkaraBus.Diagnostics
                     rig.SetTarget(bus);
                     yield return Measure($"{label}/{i + 1}_{stop.StopName}/dis", rig, BusCameraRig.Mode.Chase);
                     yield return Measure($"{label}/{i + 1}_{stop.StopName}/kokpit", rig, BusCameraRig.Mode.Cockpit);
+                    yield return Measure($"{label}/{i + 1}_{stop.StopName}/yolcu", rig, BusCameraRig.Mode.Interior);
                 }
             }
             else
@@ -104,12 +105,7 @@ namespace AnkaraBus.Diagnostics
 
         private static void Teleport(BusVehicle bus, Transform target)
         {
-            var body = bus.GetComponent<Rigidbody>();
-            body.linearVelocity = Vector3.zero;
-            body.angularVelocity = Vector3.zero;
-            body.position = target.position + Vector3.up * 0.3f;
-            body.rotation = Quaternion.Euler(0f, target.eulerAngles.y, 0f);
-            bus.transform.SetPositionAndRotation(body.position, body.rotation);
+            OtobusIsinla.Tasi(bus, target.position + Vector3.up * 0.3f, Quaternion.Euler(0f, target.eulerAngles.y, 0f));
             bus.Handbrake = true;
         }
     }

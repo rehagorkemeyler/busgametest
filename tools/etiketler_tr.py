@@ -171,11 +171,28 @@ def kaynaktan(yol):
     return Image.open(orijinal).convert("RGB")
 
 
+def bmc_ikizleri_ve_atlas(stickers_yol, atlas_yol):
+    """stickers.png'de yeşil (acil çıkış vanası) ve sarı (kapıya yaslanmayın) etiketin iki kopyası var; model ikisini de
+    kullanıyor. Türkçeleştirilen sağdaki kopyayı soldakinin (İngilizce) üzerine yazar. Düşük/Normal ayardaki BMC
+    etiketleri Atlas_BMC.png'den okur (bmc_donustur.build_atlas: 2048'lik doku 1024'lük hücrede, sol üst (2068, 4));
+    güncel stickers.png o hücreye de yazılır."""
+    img = Image.open(stickers_yol).convert("RGBA")
+    # (Türkçe kopya, İngilizce kopya) panelleri, 2048 px dokuda
+    for tr, en in (((466, 459, 868, 861), (49, 456)), ((1292, 462, 1700, 894), (880, 460))):
+        img.paste(img.crop(tr), en)
+    img.save(stickers_yol)
+    atlas = Image.open(atlas_yol).convert("RGB")
+    atlas.paste(img.convert("RGB").resize((1024, 1024), Image.LANCZOS), (2068, 4))
+    atlas.save(atlas_yol, optimize=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--proje", required=True)
     args = ap.parse_args()
     isle(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"), BMC)
+    bmc_ikizleri_ve_atlas(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"),
+                          os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/Atlas_BMC.png"))
     isle(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/adesivostransparentes.png"), MILLENNIUM)
     millennium_bagulhos(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/bagulhosmep.png"))
     millennium_extras(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/extras.png"))

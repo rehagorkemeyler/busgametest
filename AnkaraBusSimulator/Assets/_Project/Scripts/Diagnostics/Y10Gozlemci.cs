@@ -65,6 +65,16 @@ namespace AnkaraBus.Diagnostics
             rehber = bus.GetComponent<RotaRehberi>();
             mini = bus.GetComponent<MiniHarita>() ?? FindAnyObjectByType<MiniHarita>();
             tracker = bus.GetComponent<RouteTracker>();
+            // yolcu durak isteği sesi ("Durakta inecek var!", stop.wav): ne zaman ve hangi düzeyde çaldığı
+            var ses = bus.GetComponent<BusAudio>();
+            float sonKalkis = -1f;
+            if (ses != null)
+                ses.OneShotPlayed += (klip, duzey) =>
+                {
+                    if (klip.StartsWith("DoorClose")) sonKalkis = Time.time;
+                    if (klip == "stop")
+                        Log($"yolcu sesi: '{klip}' düzey {duzey:F2}, kapı kapandıktan {Time.time - sonKalkis:F1} sn sonra, kamera {rig.CurrentMode}");
+                };
 
             Log($"BASLA sahne={sahne} zaman={OyunSecimi.SeciliZaman} yağmur={OyunSecimi.Yagmur} kalite={GrafikAyarlari.Mevcut} " +
                 $"rehber={(rehber != null ? "var" : "YOK")} miniharita={(mini != null ? "var" : "YOK")}");
@@ -302,15 +312,14 @@ namespace AnkaraBus.Diagnostics
         {
             var body = bus.GetComponent<Rigidbody>();
             var eski = body.position;
-            body.position = eski + bus.transform.right * 45f + Vector3.up * 2f;
-            body.linearVelocity = Vector3.zero;
+            var donus = body.rotation;
+            OtobusIsinla.Tasi(bus, eski + bus.transform.right * 45f + Vector3.up * 2f, donus);
             yield return new WaitForSeconds(1.5f);
             var bilgiText = (Text)Alan(mini, "bilgi");
             Check(rehber.RotadanCikti && bilgiText != null && bilgiText.text.Contains("ROTADAN"),
                 $"rotadan çıkınca uyarı ('{bilgiText?.text.Replace("\n", " / ")}', sapma {rehber.SapmaMesafesi:F0} m)");
             yield return Ekran("rotadan_cikti");
-            body.position = eski;
-            body.linearVelocity = Vector3.zero;
+            OtobusIsinla.Tasi(bus, eski, donus);
             yield return new WaitForSeconds(1f);
         }
 

@@ -86,7 +86,13 @@ namespace AnkaraBus.EditorTools
                     var ic = new (string ad, Vector3 konum, Vector3 hedef)[]
                     {
                         ("ic_kokpit", new Vector3(-0.7f, 2.3f, olcu.On - 1.6f), new Vector3(-0.3f, 1.6f, olcu.On + 5f)),
-                        ("ic_yolcu", new Vector3(0.3f, 2.1f, olcu.On - 3f), new Vector3(0f, 1.4f, -olcu.Arka)),
+                        ("ic_yolcu", new Vector3(0f, 1.9f, olcu.On - 3f), new Vector3(0f, 1.4f, -olcu.Arka)),
+                        // koridordan yan duvarlara yakın bakış (etiketler, afişler, okuyucular)
+                        ("ic_on_sag", new Vector3(-0.3f, 1.7f, olcu.On - 3.5f), new Vector3(1.3f, 1.5f, olcu.On - 2.5f)),
+                        ("ic_on_sol", new Vector3(0.3f, 1.7f, olcu.On - 3.5f), new Vector3(-1.3f, 1.5f, olcu.On - 2.5f)),
+                        ("ic_orta_sag", new Vector3(-0.3f, 1.7f, olcu.On - 7f), new Vector3(1.3f, 1.5f, olcu.On - 6f)),
+                        ("ic_orta_sol", new Vector3(0.3f, 1.7f, olcu.On - 7f), new Vector3(-1.3f, 1.5f, olcu.On - 6f)),
+                        ("ic_arka", new Vector3(0f, 1.9f, -olcu.Arka + 4f), new Vector3(0f, 1.5f, olcu.On)),
                         ("tam_sag", new Vector3(olcu.Uzunluk * 1.1f, 1.6f, (olcu.On - olcu.Arka) * 0.5f), new Vector3(0f, 1.4f, (olcu.On - olcu.Arka) * 0.5f)),
                     };
                     foreach (var (ad, konum, hedef) in ic)

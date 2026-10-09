@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Direk
+    second: {fileID: 2100000, guid: ad86aea6b145848eb91269543561b9ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Golge
     second: {fileID: 2100000, guid: 2929aba43c8cc4964ae4c48d3d080beb, type: 2}
   - first:
@@ -22,8 +27,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_IcDuvar
+    second: {fileID: 2100000, guid: 48808baef3ddb46b9a515ae59c62af22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_IcTavan
+    second: {fileID: 2100000, guid: 69310a414c36047d3abe865bc58964b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Jant
     second: {fileID: 2100000, guid: 00d820e19c2224c338f66991b30d11fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Koltuk
+    second: {fileID: 2100000, guid: c46355607a22542b58530fe7f9097fae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_KoltukKabuk
+    second: {fileID: 2100000, guid: 35bea86320a244e43a80e91efed847c7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -62,8 +87,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Zemin
+    second: {fileID: 2100000, guid: e41a0721fb60d4de2a24f1d4dae7b7de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_caroserie
     second: {fileID: 2100000, guid: 07ec4e3546e7442a0a09a81f80b8fb63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_onarka
+    second: {fileID: 2100000, guid: ea43a4806300a4e679b007359c0509c4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

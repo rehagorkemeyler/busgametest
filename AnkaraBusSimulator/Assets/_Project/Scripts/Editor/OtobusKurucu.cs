@@ -592,14 +592,15 @@ namespace AnkaraBus.EditorTools
                 so.FindProperty("koruk").objectReferenceValue = koruk;
             so.ApplyModifiedPropertiesWithoutUndo();
 
-            // modelde direksiyon yok: kokpit kamerası sürücü koltuğunda (solda, ön camın 1,25 m gerisi)
+            // modelde direksiyon yok: kokpit kamerası sürücü koltuğunda (solda)
             if (root.transform.Find("SurucuGozu") == null && parts.TryGetValue("Govde_On", out var on))
             {
                 var r = on.GetComponent<Renderer>();
                 float onUc = r != null ? root.transform.InverseTransformPoint(r.bounds.max).z : 8.9f;
                 var eye = new GameObject("SurucuGozu").transform;
                 eye.SetParent(root.transform, false);
-                eye.localPosition = new Vector3(-0.62f, 2.25f, onUc - 1.25f);
+                // ön uç sınırına öne taşan aynalar da giriyor: göz ön camın ~1,3 m gerisinde, koltuk göz hizasında
+                eye.localPosition = new Vector3(-0.62f, 2.05f, onUc - 1.9f);
             }
         }
 

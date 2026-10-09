@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 931392004451218669}
+  m_Father: {fileID: 2312997951177309644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &928146424709638616
 WheelCollider:
@@ -101,7 +101,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2788604814594968815}
+  m_Father: {fileID: 469094325951493651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4888242099545665443
 WheelCollider:
@@ -172,7 +172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2788604814594968815}
+  m_Father: {fileID: 469094325951493651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &2557996368709028670
 WheelCollider:
@@ -213,7 +213,7 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1 &2194919781063999769
+--- !u!1 &2927373172297198834
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 931392004451218669}
+  - component: {fileID: 469094325951493651}
   m_Layer: 0
   m_Name: Tekerlekler
   m_TagString: Untagged
@@ -229,22 +229,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &931392004451218669
+--- !u!4 &469094325951493651
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2194919781063999769}
+  m_GameObject: {fileID: 2927373172297198834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4569606364065405082}
-  - {fileID: 6465359915940128998}
-  m_Father: {fileID: 7606783072961446116}
+  - {fileID: 8318728886614084667}
+  - {fileID: 4516871595570806671}
+  - {fileID: 7244856743311371398}
+  - {fileID: 1072515102710385579}
+  m_Father: {fileID: 5543572295749544805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3116872296127136528
 GameObject:
@@ -329,7 +331,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2788604814594968815}
+  m_Father: {fileID: 469094325951493651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &6117176219961363120
 WheelCollider:
@@ -463,7 +465,7 @@ Transform:
   - {fileID: 908990380323267520}
   - {fileID: 7447701549770588361}
   - {fileID: 7606783072961446116}
-  - {fileID: 2788604814594968815}
+  - {fileID: 469094325951493651}
   - {fileID: 6854800769292411595}
   - {fileID: 6365470914144093868}
   - {fileID: 4110261040464304631}
@@ -703,20 +705,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusLivery
   bodyMaterialName: caroserie
-  roofMaterialName: cngtank
+  roofMaterialName: onarka
   colorMaterialName: M_Govde
   liveries:
   - name: "EGO k\u0131rm\u0131z\u0131"
     body: {fileID: 2800000, guid: c51899f490b9f4c90b92123b187b3e73, type: 3}
-    roofModule: {fileID: 0}
+    roofModule: {fileID: 2800000, guid: 33831fa08168b4dd49e9c0d369db7868, type: 3}
     color: {r: 0.84, g: 0.11, b: 0.13, a: 1}
   - name: EGO mavi
     body: {fileID: 2800000, guid: d1d11ddd864ae49ae969348205da1493, type: 3}
-    roofModule: {fileID: 0}
+    roofModule: {fileID: 2800000, guid: d50d6eea361e142cea4f62ef5ccbac8e, type: 3}
     color: {r: 0.11, g: 0.25, b: 0.63, a: 1}
   - name: "\xD6zel Halk"
     body: {fileID: 2800000, guid: b25c953d78fe2402d81205b8815386b0, type: 3}
-    roofModule: {fileID: 0}
+    roofModule: {fileID: 2800000, guid: 24bb32127feef44ed9096cabe244c21c, type: 3}
     color: {r: 0.2, g: 0.59, b: 0.87, a: 1}
   selected: 0
   useMenuChoice: 1
@@ -847,7 +849,7 @@ Transform:
   m_GameObject: {fileID: 5236580736005122928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.62, y: 2.25, z: 7.98987}
+  m_LocalPosition: {x: -0.62, y: 2.05, z: 7.33987}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -883,7 +885,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 931392004451218669}
+  m_Father: {fileID: 2312997951177309644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5923657952691211905
 WheelCollider:
@@ -977,41 +979,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5, y: 2.7485611, z: 10.666474}
   m_Center: {x: 0, y: 1.8042806, z: 3.7564852}
---- !u!1 &7295724266735001663
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2788604814594968815}
-  m_Layer: 0
-  m_Name: Tekerlekler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2788604814594968815
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7295724266735001663}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8318728886614084667}
-  - {fileID: 4516871595570806671}
-  - {fileID: 7244856743311371398}
-  - {fileID: 1072515102710385579}
-  m_Father: {fileID: 5543572295749544805}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7552327429083623824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1011,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1853476396225387204}
-  - {fileID: 931392004451218669}
+  - {fileID: 2312997951177309644}
   - {fileID: 939027190204085009}
   - {fileID: 6511658759939179425}
   m_Father: {fileID: 5543572295749544805}
@@ -1304,7 +1271,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2788604814594968815}
+  m_Father: {fileID: 469094325951493651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &557453451753442791
 WheelCollider:
@@ -1345,6 +1312,39 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
+--- !u!1 &8488401500201359593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2312997951177309644}
+  m_Layer: 0
+  m_Name: Tekerlekler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2312997951177309644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8488401500201359593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4569606364065405082}
+  - {fileID: 6465359915940128998}
+  m_Father: {fileID: 7606783072961446116}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9218955753990123326
 GameObject:
   m_ObjectHideFlags: 0
