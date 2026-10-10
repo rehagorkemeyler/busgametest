@@ -1,7 +1,8 @@
 # Y15 raporu (yerel oturum, 10 Ekim 2026)
 
 Telefon: Galaxy S24 FE (SM-S721B), USB. Kalite Yüksek, gündüz, yağmursuz (aksi yazılmadıkça).
-Görüntüler: `docs/onizleme/y15/`. Oyun APK'sı: `~/Desktop/AnkaraOtobus.apk`.
+Görüntüler: `docs/onizleme/y15/`. Oyun APK'sı: `~/Desktop/AnkaraOtobus.apk` (18:24, 155 MB; bu rapordaki oyun düzeltmeleri içinde — trafik, yaya geçidi).
+Test APK'sı (`Builds/AnkaraBus_y11_test.apk`) görevleri: `kamera`, `y10`, `koruklu`, yeni `hiz`.
 
 ## Hazırlık
 - `git pull origin Ozan` → derleme hatası yok.
@@ -81,7 +82,15 @@ aracının otobüs kontrolü yana kayışı (sollama, dolmuşun cebe yanaşması
 menzil 25 m. Otobüse çarpan trafik aracı artık loglanır (`[Trafik] … otobüse çarptı: şerit, yan, hız, dolmuş_durağı`); son koşularda
 satır yok.
 
-TELEFON_S3
+### Telefon (`-e gorev y10 -e otobus 2 -e hiz 2`, Hat 1, iki koşu)
+| Koşu | Durak | Süre | Puan | Kırmızı | Yaya | Çarpışma | Cinnah dönüşü |
+|---|---|---|---|---|---|---|---|
+| 1 | 4/5 | 300 sn | 277 | 0 | 0 | 0 | takılmadı |
+| 2 | 4/5 | 330 sn | 265 | 0 | 0 | 0 | takılmadı |
+
+`Kızılay AVM atlandı -100 (ilerleme 51 m)` iki koşuda da: `Y10Gozlemci` başta otobüsü 55 m yana ışınlayıp "rotadan çıktın" uyarısını
+deniyor (`[Y10] rotadan çıkma: +55 m yana ışınlandı`), otobüs geri döndüğünde ilk durağı geçmiş oluyor — testin kendi senaryosu,
+pilot hatası değil. `[Koruklu]`, `[Trafik]`, `FIRLADI` satırı yok.
 
 ## 4. "Durak cebi kenarı itkisi" — aslında testin ışınlaması (kök neden bulundu, düzeltildi)
 Kırpma loguna iki gövdenin son fizik adımındaki temasları eklendi (`Vehicle/KorukluOtobus.cs` `Temas`: çarpışan nesne, itki,
@@ -114,16 +123,67 @@ bağıl hız, her temas noktasının gövdedeki yeri, normali, derinliği). Kesk
   ```
   Aynı koşuda `yana_45m_isinlama`daki kırpma (dikey −5,3 m/s) da kalktı.
 
-TELEFON_S4
+Telefonda (`-e gorev koruklu -e otobus 2`, Hat 1 → Hat 2): iki hatta bütün bölümler `durum=OK`, `bölüm_fırlayan=0`, **`[Koruklu]`
+satırı yok**. Keskin dönüş Hat 1: `maks_eğim=8.1° maks_yalpa=0.82 rad/s çarpışma=0`; Hat 2: `maks_eğim=8.0° maks_yalpa=0.72 rad/s
+çarpışma=1 [Blok_12, hız 7.3 m/s]` (keskin dönüşte binaya burunla çarpma, senaryonun beklenen sonucu).
 
-KAMERA_ICERIK
+## 1. Conecto içi (telefon, yolcu kamerası, Kızılay başlangıcı)
+- **Körük ağzında kırmızı dikey şerit kaldı** (`tel_conecto_yolcu_arka.png`, yakın: `tel_conecto_yolcu_arka_koruk_kirmizi_kirpma.png`):
+  yolcu gözünden arkaya bakınca körüğün sol kenarındaki (otobüsün sol tarafı) dikmede, tavandan yere ince kırmızı şerit. Y14'teki
+  (`docs/onizleme/y14/tel_conecto_yolcu_arka_eski.png`) kalın kırmızı direkten çok daha ince ama kaplama rengi. Mavi panel yok.
+  Bulut için: `tools/blender/conecto_ic.py` — körük ağzının sol çerçevesi (arka gövde tarafı) hâlâ iç kutunun dışında sayılıyor olmalı.
+- Arkaya bakışta görüntünün sol üçte birini kameraya çok yakın gri bir panel kaplıyor (otobüsün sağ tarafı, z ≈ 1 m: 2. kapı kanadı
+  ya da kapı yanı bölmesi). Sağa bakış (`tel_conecto_yolcu_sag.png`) bu kapı açıklığını gösteriyor. Hata değil ama arka bakış dar.
+- **Tutunma boruları sarı** ✔ (tavan boruları ve dikey direkler).
 
-HIZ_SINIRI
+## 2. Kamera
+### Üç otobüs (telefon, `-e gorev kamera -e otobus N`)
+| Otobüs | Sorun |
+|---|---|
+| BMC | 0 |
+| Millennium | 0 |
+| Conecto | 1 — K6 (SERBEST, dönüş) |
+
+### K6 — SERBEST dönüşte "sıçrama" (açık; bulutun tahmini doğrulanmadı)
+Kamera testine engel mesafesi, sıçrama karesinin süresi, en uzun kare ve dünya çerçevesinde sarsıntı (kamera–otobüs ofsetinin ikinci
+farkı) eklendi (`Diagnostics/KameraTesti.cs`). Conecto, üç koşu (son ikisi yeni ölçümle):
+```
+donus DIŞ     hız=16 mafsal=-13° sıçrama=0.078 m dönüş=0.19° titreme=0.0016 engel_mesafesi=21.8–21.8 m sıçrama_karesi=17 ms en_uzun_kare=17 ms dünya_sarsıntı=0.002 m
+donus SERBEST hız=15 mafsal=-41° sıçrama=0.543 m dönüş=1.51° titreme=0.0108 engel_mesafesi=21.8–21.8 m sıçrama_karesi=17 ms en_uzun_kare=17 ms dünya_sarsıntı=0.030 m  SORUN
+geri  SERBEST hız=8  mafsal=-51° sıçrama=0.196 m dönüş=1.31° titreme=0.0099 … dünya_sarsıntı=0.038 m
+```
+- **Engel ışını devrede değil**: engel mesafesi her karede 21,8 m (tam mesafe). `OutsidePosition`'daki engel değişikliği (bulut) bu
+  ölçümü etkilemiyor; `EngeldenDonusHizi` ayarlanacak bir durum görülmedi. Engelden çıkınca geri gelme gecikmesi bu açılarda ölçülemedi
+  (otobüsün arkasında engel yok); elle denenmedi.
+- **Kare takılması yok**: sıçrama karesi ve en uzun kare 17 ms (60 FPS).
+- 0,5 m/kare "sıçrama" **otobüsün kendi çerçevesinde**: dönüşün en keskin anında (mafsal −41°) ön gövde hızla dönerken, yönü gecikmeli
+  izleyen (`yawSharpness` 2,5) 21 m geriedeki kamera otobüse göre kayıyor. Dünya çerçevesinde sarsıntı 3 cm/kare (eşik 5 cm). DIŞ aynı
+  testte dönüşün başında (mafsal −13°) ölçüldüğü için karşılaştırılabilir değil.
+- Görüntü: `tel_conecto_donus_serbest.png`, `tel_conecto_donus_dis.png`. Gözle (görüntülerde) bir bozukluk yok; videoyla/elle bakılmalı.
+  Ölçüm önerisi: DIŞ ve SERBEST aynı mafsal açısında ölçülsün ya da kip ölçütü dünya sarsıntısı olsun.
+
+## 5. Hız sınırı (telefon, BMC, Hat 1 Atatürk Bulvarı Kızılay → Meclis, %2 yokuş)
+Yeni `Diagnostics/HizTesti.cs` (`-e gorev hiz -e otobus 0`): trafik kaldırılır, otobüs başladığı şeridi izleyerek 8'er sn üç hızda
+tutulur, "Hız sınırı" cezaları sayılır. (Elle sürülmedi; aynı gaz/fren girdileriyle otomatik.)
+```
+[Hiz] hedef 72.0 km/s: ölçülen 66.8–70.7 km/s, ceza 0
+[Hiz] hedef 74.5 km/s: ölçülen 72.0–74.5 km/s, ceza 0
+[Hiz] hedef 78.0 km/s: ölçülen 76.0–77.9 km/s, ceza 2 (ilki 3.6 sn'de: 'Hız sınırı (70 km/s)')
+```
+70–75 km/s'de ceza yok; 76+ km/s'de 3 sn'de bir "Hız sınırı (70 km/s)" −6 (`tel_hiz_cezasi_78kmh.png`: 78 km/s, HUD'da
+"-6 Hız sınırı (70 km/s)"). Görüntüdeki PUAN −111, testin otobüsü Kızılay AVM durağından geçirmesinden (durak atlandı −100).
 
 ## Değişen dosyalar
 - `Diagnostics/OtomatikPilot.cs` (köşe yayı, viraj hızı, ilerleme izdüşümü, yaya geçidi, iz ve ceza logu)
 - `Traffic/TrafficCar.cs` (şerit boyunca otobüs), `Traffic/YayaGecitleri.cs` (yavaş yaklaşan araç, otobüsün ön ucu)
 - `Vehicle/KorukluOtobus.cs` (kırpma logunda iki gövdenin temasları, gövde başına ayrı log zamanlayıcısı)
-- `Diagnostics/KorukluTesti.cs` (ışınlamadan sonra oturma), `Diagnostics/KameraTesti.cs` (engel mesafesi, `y15_kamera_*.png`)
+- `Diagnostics/KorukluTesti.cs` (ışınlamadan sonra oturma, ışınlama kare logu), `Diagnostics/KameraTesti.cs` (engel mesafesi, kare süresi,
+  dünya sarsıntısı, `y15_kamera_*.png`)
 - Yeni `Diagnostics/HizTesti.cs` (görev `hiz`), `Diagnostics/Y11Hat.cs`, `Diagnostics/Y10Baslatici.cs`
 - `Buses/MB_Conecto_G/MB_Conecto_G.prefab` (yeniden kuruldu)
+
+## Açık kalanlar
+- Conecto körük ağzının sol çerçevesinde ince kırmızı şerit (bulut, `conecto_ic.py`).
+- K6: dünya çerçevesinde 3 cm/kare; görsel olarak (video/elle) değerlendirilmeli, testin DIŞ/SERBEST ölçümü aynı mafsal açısında değil.
+- Trafik araçları kinematik: otobüs onların önüne girerse otobüsü itebilir; şerit boyunca otobüs kontrolü bunu azaltır ama kaldırmaz.
+- Telefon testleri sırasında telefonun ekran kapanma süresi 30 dk'ya alındı (eski değer kaydedilmedi).

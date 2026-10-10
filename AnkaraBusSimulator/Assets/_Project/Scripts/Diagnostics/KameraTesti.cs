@@ -134,6 +134,9 @@ namespace AnkaraBus.Diagnostics
                 // Y15 K6: engel küre ışınının kısalttığı kamera mesafesi (DIŞ/SERBEST), en kısa ve en uzun
                 var engelAlani = typeof(BusCameraRig).GetField("engelMesafesi", BindingFlags.NonPublic | BindingFlags.Instance);
                 float engelEnAz = float.MaxValue, engelEnCok = 0f;
+                // Y15 K6: sıçrama karesinin süresi ve dünya çerçevesinde (otobüs dönüşünden bağımsız) kamera ofsetinin ikinci farkı
+                float sicramaDt = 0f, enUzunDt = 0f, dunyaSarsinti = 0f;
+                Vector3? dunyaOnceki = null, dunyaHiz = null;
                 float bitis = Time.time + 1.2f;
                 while (Time.time < bitis)
                 {
@@ -142,9 +145,21 @@ namespace AnkaraBus.Diagnostics
                     var cam = rig.transform;
                     var yerel = bus.transform.InverseTransformPoint(cam.position);
                     var yerelDonus = Quaternion.Inverse(bus.transform.rotation) * cam.rotation;
+                    var dunya = cam.position - bus.transform.position;
+                    if (dunyaOnceki.HasValue && kare > 3)
+                    {
+                        var v = (dunya - dunyaOnceki.Value) / Mathf.Max(Time.deltaTime, 1e-4f);
+                        if (dunyaHiz.HasValue)
+                            dunyaSarsinti = Mathf.Max(dunyaSarsinti, (v - dunyaHiz.Value).magnitude * Time.deltaTime);
+                        dunyaHiz = v;
+                        enUzunDt = Mathf.Max(enUzunDt, Time.deltaTime);
+                    }
+                    dunyaOnceki = dunya;
                     if (onceki.HasValue && kare > 3)
                     {
-                        maksSicrama = Mathf.Max(maksSicrama, (yerel - onceki.Value).magnitude);
+                        float sic = (yerel - onceki.Value).magnitude;
+                        if (sic > maksSicrama) sicramaDt = Time.deltaTime;
+                        maksSicrama = Mathf.Max(maksSicrama, sic);
                         maksDonusSicramasi = Mathf.Max(maksDonusSicramasi, Quaternion.Angle(yerelDonus, oncekiDonus.Value));
                     }
                     onceki = yerel;
@@ -176,7 +191,7 @@ namespace AnkaraBus.Diagnostics
                 if (titreme > 0.05f) sorunlar.Add($"TİTREME {titreme:F3} m");
                 sorun += sorunlar.Count;
                 Log($"{otobus} {yer} {BusCameraRig.ModeNames[k]} hız={bus.SpeedKmh:F0} km/s{mafsal} sıçrama={maksSicrama:F3} m dönüş={maksDonusSicramasi:F2}° " +
-                    $"titreme={titreme:F4}{(engelEnAz < float.MaxValue ? $" engel_mesafesi={engelEnAz:F1}–{engelEnCok:F1} m" : "")} kamera_yerel={bus.transform.InverseTransformPoint(rig.transform.position)} " +
+                    $"titreme={titreme:F4}{(engelEnAz < float.MaxValue ? $" engel_mesafesi={engelEnAz:F1}–{engelEnCok:F1} m" : "")} sıçrama_karesi={sicramaDt * 1000f:F0} ms en_uzun_kare={enUzunDt * 1000f:F0} ms dünya_sarsıntı={dunyaSarsinti:F3} m kamera_yerel={bus.transform.InverseTransformPoint(rig.transform.position)} " +
                     $"{(sorunlar.Count == 0 ? "OK" : "SORUN " + string.Join(", ", sorunlar))}");
                 yield return Ekran($"{yer}_{BusCameraRig.ModeNames[k]}");
             }
