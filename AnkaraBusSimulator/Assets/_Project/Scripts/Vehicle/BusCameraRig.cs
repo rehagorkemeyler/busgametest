@@ -88,6 +88,8 @@ namespace AnkaraBus.Vehicle
         private OtobusOlcusu olcu = OtobusOlcusu.Varsayilan;
 
         /// <summary>Dış kamera mesafesi: 12 m'den uzun otobüste orantılı olarak geride.</summary>
+        private readonly RaycastHit[] kameraVuruslari = new RaycastHit[16];
+        private Transform arkaGovde;
         private float TakipMesafesi => chaseDistance * Mathf.Max(1f, olcu.Uzunluk / 12f);
 
         public Mode CurrentMode => mode;
@@ -108,6 +110,8 @@ namespace AnkaraBus.Vehicle
             target = vehicle;
             eye = vehicle != null ? FindChild(vehicle.transform, "SurucuGozu") : null;
             olcu = OtobusOlcusu.Olc(vehicle);
+            var koruklu = vehicle != null ? vehicle.GetComponent<KorukluOtobus>() : null;
+            arkaGovde = koruklu != null && koruklu.ArkaGovde != null ? koruklu.ArkaGovde.transform : null;
             distance = TakipMesafesi;
             if (vehicle != null)
             {
@@ -244,11 +248,21 @@ namespace AnkaraBus.Vehicle
             look = pivot + Quaternion.Euler(0f, yaw, 0f) * Vector3.forward * ahead;
             Vector3 desired = pivot + Quaternion.Euler(orbitPitch, totalYaw, 0f) * new Vector3(0f, 0f, -distance);
 
-            // Kamera bina, yokuş ya da zeminin içine girmesin
+            // Kamera bina, yokuş ya da zeminin içine girmesin. Otobüsün kendi parçaları engel değildir; körüklüde arka gövde
+            // ayrı bir Rigidbody olarak sahne kökündedir (otobüsün çocuğu değil), o da sayılmaz: yoksa kamera otobüsün içine çekilir
             Vector3 toCamera = desired - pivot;
-            if (Physics.SphereCast(pivot, 0.3f, toCamera.normalized, out var hit, toCamera.magnitude, obstacleMask, QueryTriggerInteraction.Ignore)
-                && !hit.transform.IsChildOf(bus))
-                desired = pivot + toCamera.normalized * Mathf.Max(hit.distance - 0.2f, 1f);
+            int n = Physics.SphereCastNonAlloc(pivot, 0.3f, toCamera.normalized, kameraVuruslari, toCamera.magnitude, obstacleMask,
+                                               QueryTriggerInteraction.Ignore);
+            float enYakin = float.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                var h = kameraVuruslari[i];
+                if (h.distance <= 0f || h.transform.IsChildOf(bus) || (arkaGovde != null && h.transform.IsChildOf(arkaGovde)))
+                    continue;
+                enYakin = Mathf.Min(enYakin, h.distance);
+            }
+            if (enYakin < float.MaxValue)
+                desired = pivot + toCamera.normalized * Mathf.Max(enYakin - 0.2f, 1f);
             return desired;
         }
 

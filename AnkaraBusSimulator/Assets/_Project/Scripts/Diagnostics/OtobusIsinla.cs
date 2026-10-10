@@ -13,22 +13,14 @@ namespace AnkaraBus.Diagnostics
         {
             var body = bus.GetComponent<Rigidbody>();
             var koruklu = bus.GetComponent<KorukluOtobus>();
-            var arka = koruklu != null ? koruklu.ArkaGovde : null;
-            Vector3 arkaYerel = arka != null ? bus.transform.InverseTransformPoint(arka.position) : Vector3.zero;
 
             body.linearVelocity = Vector3.zero;
             body.angularVelocity = Vector3.zero;
             body.position = konum;
             body.rotation = donus;
             bus.transform.SetPositionAndRotation(konum, donus);
-            if (arka != null)
-            {
-                arka.linearVelocity = Vector3.zero;
-                arka.angularVelocity = Vector3.zero;
-                arka.position = konum + donus * new Vector3(0f, arkaYerel.y, arkaYerel.z);
-                arka.rotation = donus;
-                arka.transform.SetPositionAndRotation(arka.position, arka.rotation);
-            }
+            if (koruklu != null)
+                koruklu.ArkayiHizala();
             Physics.SyncTransforms();
         }
     }

@@ -20,6 +20,14 @@ namespace AnkaraBus.Vehicle
         [Tooltip("Arka gövdenin ağırlık merkezi (arka gövde yerel; kök mafsalda).")]
         [SerializeField] private Vector3 arkaAgirlikMerkezi = new Vector3(0f, 0.65f, -3.3f);
 
+        // fırlama koruması: mafsal noktası bu kadar ayrılırsa ya da arka gövde ön gövdeden bu kadar hızlı giderse
+        // (çözücü patlaması: içine doğduğu bir engel, ışınlama) arka gövde ön gövdenin arkasına düz oturtulur
+        private const float AzamiAyrilma = 0.6f;
+        private const float AzamiHizFarki = 15f;
+        private const float AzamiHiz = 40f;   // 144 km/s: otobüs 85 km/s'yi geçmez, üstü fizik hatasıdır
+
+        private Rigidbody onGovde;
+        private ConfigurableJoint mafsal;
         private Vector3[] gorselKonum;
         private Quaternion[] gorselDonus;
         private Quaternion korukDinlenme;
@@ -49,6 +57,18 @@ namespace AnkaraBus.Vehicle
             if (koruk != null)
                 korukDinlenme = Quaternion.Inverse(transform.rotation) * koruk.rotation;
 
+            onGovde = GetComponent<Rigidbody>();
+            mafsal = arkaGovde.GetComponent<ConfigurableJoint>();
+            foreach (var rb in new[] { onGovde, arkaGovde })
+            {
+                if (rb == null)
+                    continue;
+                // mafsallı iki gövde: daha çok çözücü adımı, yumuşak itme (içine girilen engelden fırlatmasın), hız sınırı
+                rb.solverIterations = Mathf.Max(rb.solverIterations, 12);
+                rb.solverVelocityIterations = Mathf.Max(rb.solverVelocityIterations, 4);
+                rb.maxDepenetrationVelocity = 2f;
+                rb.maxLinearVelocity = AzamiHiz;
+            }
             arkaGovde.interpolation = RigidbodyInterpolation.Interpolate;
             arkaGovde.centerOfMass = arkaAgirlikMerkezi;
             arkaGovde.angularDamping = 0.05f;
@@ -75,6 +95,39 @@ namespace AnkaraBus.Vehicle
         {
             if (ayrildi && arkaGovde != null)
                 Destroy(arkaGovde.gameObject);
+        }
+
+        /// <summary>Mafsalın ön gövdedeki noktası (dünya).</summary>
+        private Vector3 MafsalNoktasi => mafsal != null ? transform.TransformPoint(mafsal.connectedAnchor) : arkaGovde.position;
+
+        private void FixedUpdate()
+        {
+            if (arkaGovde == null || onGovde == null || !ayrildi)
+                return;
+            Vector3 nokta = MafsalNoktasi;
+            float ayrilma = (arkaGovde.position - nokta).magnitude;
+            float hizFarki = (arkaGovde.linearVelocity - onGovde.GetPointVelocity(nokta)).magnitude;
+            if (ayrilma > AzamiAyrilma || hizFarki > AzamiHizFarki)
+            {
+                Debug.LogWarning($"[Koruklu] mafsal ayrıldı ({ayrilma:F2} m, hız farkı {hizFarki:F1} m/s): arka gövde yeniden oturtuldu");
+                ArkayiHizala();
+            }
+        }
+
+        /// <summary>
+        /// Arka gövdeyi ön gövdenin arkasına düz (mafsal 0°) yerleştirir, hızını ön gövdeninkine eşitler.
+        /// Otobüs ışınlanınca (testler) ve mafsal koptuğunda çağrılır.
+        /// </summary>
+        public void ArkayiHizala()
+        {
+            if (arkaGovde == null)
+                return;
+            Vector3 nokta = MafsalNoktasi;
+            arkaGovde.position = nokta;
+            arkaGovde.rotation = transform.rotation;
+            arkaGovde.transform.SetPositionAndRotation(nokta, transform.rotation);
+            arkaGovde.linearVelocity = onGovde != null ? onGovde.GetPointVelocity(nokta) : Vector3.zero;
+            arkaGovde.angularVelocity = onGovde != null ? onGovde.angularVelocity : Vector3.zero;
         }
 
         private void LateUpdate()
