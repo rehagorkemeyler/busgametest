@@ -637,7 +637,7 @@ MonoBehaviour:
   sertKalkis: 1.8
   sertViraj: 2.5
   konforCezasi: 10
-  hizSiniriKmh: 50
+  hizSiniriKmh: 70
   hizToleransKmh: 5
   hizCezasi: 6
   kirmiziCezasi: 50

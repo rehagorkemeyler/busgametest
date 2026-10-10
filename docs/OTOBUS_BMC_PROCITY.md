@@ -159,5 +159,5 @@ Vites düzeltmeleri (`BusVehicle.AutoShift`):
   %8 ve %10'da vites arama yok; %12'de 3. ile 4. vites sınırında 20 sn'de bir dönen yavaş bir geçiş kaldı (33–40 km/s, 40 sn'de 3 değişim):
   4. vites o eğimi ancak taşıyor. Eşik değiştirmek döngüyü kırmadı (`upshiftRpm` 2200 → aynı), bırakıldı. Kalkış da güçlendi; tam gazla kalkışta "sert kalkış" cezası gelebilir.
 
-Not: Puanlamadaki hız sınırı hâlâ 50 km/s (+5 tolerans, `SeferPuanlama.hizSiniriKmh`). 85'e çıkan otobüs 55'in üstünde ceza alır.
+Not: Puanlamadaki hız sınırı 70 km/s (+5 tolerans, `SeferPuanlama.hizSiniriKmh`; Ankara ana caddeleri). 75'in üstünde ceza gelir.
 

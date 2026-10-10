@@ -61,7 +61,7 @@ namespace AnkaraBus.Gameplay
         [SerializeField] private int konforCezasi = 10;
 
         [Header("Kurallar")]
-        [SerializeField] private float hizSiniriKmh = 50f;
+        [SerializeField] private float hizSiniriKmh = 70f;
         [SerializeField] private float hizToleransKmh = 5f;
         [Tooltip("Her 3 sn hız sınırı aşımı için ceza.")]
         [SerializeField] private int hizCezasi = 6;
