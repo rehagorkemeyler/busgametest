@@ -130,7 +130,8 @@ namespace AnkaraBus.Vehicle
             bool wasOutside = mode == Mode.Chase || mode == Mode.Free;
             mode = newMode;
             ResetLook();
-            if (mode == Mode.Chase && target != null && !wasOutside)
+            // içeriden dışarı geçince kamera yerine hemen otursun (yoksa uzun otobüste 20 m'yi süzülerek alıyordu)
+            if ((mode == Mode.Chase || mode == Mode.Free) && target != null && !wasOutside)
                 SnapChase();
         }
 
@@ -219,19 +220,54 @@ namespace AnkaraBus.Vehicle
                     baseRotation *= Quaternion.Euler(0f, lookYaw, 0f) * Quaternion.Euler(cockpitPitch + lookPitch, 0f, 0f);
                     break;
                 case Mode.Interior:
-                    position = bus.TransformPoint(interiorPosition);
+                    position = bus.TransformPoint(YolcuKonumu);
                     baseRotation = bus.rotation * Quaternion.Euler(0f, lookYaw, 0f) * Quaternion.Euler(5f + lookPitch, 0f, 0f);
                     break;
                 default: // Door
-                    // kapı kamerası otobüsün ön ucuna göre (BMC'de 6,2 m; uzun otobüste daha önde)
+                    // kapı kamerası ve baktığı nokta otobüsün ön ucuna göre (BMC'de 6,2 m ve −1 m; uzun otobüste daha önde,
+                    // körüklüde ön kapı görüntünün kenarında kalmasın)
                     position = bus.TransformPoint(new Vector3(doorPosition.x, doorPosition.y, olcu.On + 0.45f));
-                    var look = Quaternion.LookRotation(bus.TransformPoint(doorLookAt) - position, bus.up);
+                    var hedef = bus.TransformPoint(new Vector3(doorLookAt.x, doorLookAt.y, doorLookAt.z + olcu.On - BmcOnUcu));
+                    position = KapiEngeli(bus, position);
+                    var look = Quaternion.LookRotation(hedef - position, bus.up);
                     baseRotation = Quaternion.AngleAxis(lookYaw, bus.up) * look * Quaternion.Euler(lookPitch, 0f, 0f);
                     break;
             }
             transform.SetPositionAndRotation(position, baseRotation);
             cam.fieldOfView = insideFov;
             cam.nearClipPlane = mode == Mode.Door ? 0.2f : 0.05f;
+        }
+
+        private const float BmcOnUcu = 5.9f;
+
+        /// <summary>Yolcu gözü; körüklüde mafsalın 3 m önünde (ortak konum körüğün içine düşüyordu).</summary>
+        private Vector3 YolcuKonumu
+        {
+            get
+            {
+                var p = interiorPosition;
+                if (arkaGovde != null && target != null)
+                    p.z = Mathf.Max(p.z, target.transform.InverseTransformPoint(arkaGovde.position).z + 3f);
+                return p;
+            }
+        }
+
+        /// <summary>Kapı kamerası durak, bina ya da araç içinde kalmasın: gövde yanından kameraya engel varsa önüne çekilir.</summary>
+        private Vector3 KapiEngeli(Transform bus, Vector3 istenen)
+        {
+            var kaynak = bus.TransformPoint(new Vector3(olcu.YariGenislik + 0.1f, doorPosition.y, olcu.On - 0.5f));
+            var yon = istenen - kaynak;
+            int n = Physics.SphereCastNonAlloc(kaynak, 0.2f, yon.normalized, kameraVuruslari, yon.magnitude, obstacleMask,
+                                               QueryTriggerInteraction.Ignore);
+            float enYakin = float.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                var h = kameraVuruslari[i];
+                if (h.distance <= 0f || h.collider is WheelCollider || h.transform.IsChildOf(bus) || (arkaGovde != null && h.transform.IsChildOf(arkaGovde)))
+                    continue;
+                enYakin = Mathf.Min(enYakin, h.distance);
+            }
+            return enYakin < float.MaxValue ? kaynak + yon.normalized * Mathf.Max(enYakin - 0.15f, 0f) : istenen;
         }
 
         private void SnapChase()

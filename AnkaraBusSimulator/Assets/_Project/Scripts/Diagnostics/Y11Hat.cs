@@ -27,6 +27,13 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<KorukluTesti>().Ayarla(true, sonrakiSahne);
                 return;
             }
+            if (Y10Baslatici.Gorev == "egim")
+            {
+                // Y14: elle eğerek direksiyon ve yolcu sesi (kulakla)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<EgimTesti>();
+                return;
+            }
             if (Y10Baslatici.Gorev == "kamera")
             {
                 // Y14: kamera kipleri ve ekran görüntüleri (yalnızca bu hat)
