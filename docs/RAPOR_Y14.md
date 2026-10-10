@@ -153,7 +153,7 @@ kameralar otobüse sabit: 0,000 m). Görsel kontrol:
 
 ## 4. Y13'ten kalanlar
 - **Yolcu sesi** ("Durakta inecek var!"): eğim testinde 10 kez çalındı (`[Egim] ses 'stop' düzey 0.40 kamera Cockpit` / `0.15 … Chase`,
-  klip 1,31 sn, mono, 48 kHz). Kulakla dil kontrolü kullanıcıda (ilk koşuda telefonun sesi kapalıydı). Y10 koşusunda da çaldığı loglandı — `[Y10] yolcu sesi: 'stop' düzey 0.15, kapı kapandıktan 18.3 sn sonra,
+  klip 1,31 sn, mono, 48 kHz). **Kullanıcı kulakla doğruladı: Türkçe "Durakta inecek var!", kokpitte ve dış kamerada duyuluyor** ✔ (ilk koşuda telefonun sesi kapalıydı). Y10 koşusunda da çaldığı loglandı — `[Y10] yolcu sesi: 'stop' düzey 0.15, kapı kapandıktan 18.3 sn sonra,
   kamera Chase` ve `… 8.5 sn sonra`. Düzey dış kamerada 0,15, kokpitte 0,40'a çıkar (`Vehicle/BusAudio.cs:242`). **Türkçe olduğu kulakla
   doğrulanmadı** (aşağıda).
 - **Conecto 4 kapıdan yolcu:** otomatik pilot koşusunda (Editor) 24 yolcu bindi, 24 indi, durak başına 9–19 sn; kapı başına dağılım ölçülmedi.
@@ -178,7 +178,6 @@ kameralar otobüse sabit: 0,000 m). Görsel kontrol:
     Saat yönü (sağa) +, ters yön −; tam direksiyon 30°'de. Sola en çok −11° çevrildi (−0,48), tam sol bu koşuda denenmedi.
 
 ## Bitmeyen adımlar
-- Yolcu sesinin Türkçe olduğu ve duyulabilirliği: kullanıcının kulağıyla (test sonrası sorulacak).
 - Tam sola eğme: bu koşuda en çok −11°.
 - Conecto ile dokunmatikle elle sürüş (binaya çarpma, kaldırım, Cinnah) yalnızca otomatik senaryolarla yapıldı.
 - S3 (otomatik pilot Cinnah dönüşü), K6 (SERBEST dönüşte oynama), durak cebi kenarı itkisi, kırmızı körük direği: ayrı iş.
