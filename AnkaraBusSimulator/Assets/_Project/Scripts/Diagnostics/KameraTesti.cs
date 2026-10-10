@@ -13,7 +13,7 @@ namespace AnkaraBus.Diagnostics
     /// dönüşte (körüklüde mafsal kırıkken) ve geri giderken dener. Her çekimde: kamera otobüsün gövde kutusunun içinde mi
     /// (dış/kapı/serbest), bir binanın/durağın içinde mi, 1 sn boyunca kareden kareye otobüse göre sıçrıyor mu, titriyor mu.
     /// Ayrıca yolcu kamerasından yan duvarlara ve teker yuvalarına bakan görüntüler (Y13 kontrolleri).
-    /// Sonuçlar "[Kamera]" satırları, görüntüler persistentDataPath/y14_kamera_*.png. Y11 test build'inde "kamera" görevi.
+    /// Sonuçlar "[Kamera]" satırları, görüntüler persistentDataPath/y15_kamera_*.png. Y11 test build'inde "kamera" görevi.
     /// </summary>
     public class KameraTesti : MonoBehaviour
     {
@@ -131,6 +131,9 @@ namespace AnkaraBus.Diagnostics
                 int kare = 0, icinde = 0, duvarda = 0;
                 Quaternion? oncekiDonus = null;
                 var konumlar = new List<Vector3>();
+                // Y15 K6: engel küre ışınının kısalttığı kamera mesafesi (DIŞ/SERBEST), en kısa ve en uzun
+                var engelAlani = typeof(BusCameraRig).GetField("engelMesafesi", BindingFlags.NonPublic | BindingFlags.Instance);
+                float engelEnAz = float.MaxValue, engelEnCok = 0f;
                 float bitis = Time.time + 1.2f;
                 while (Time.time < bitis)
                 {
@@ -147,6 +150,11 @@ namespace AnkaraBus.Diagnostics
                     onceki = yerel;
                     oncekiDonus = yerelDonus;
                     if (kare > 3) konumlar.Add(yerel);
+                    if (engelAlani != null && (kip == BusCameraRig.Mode.Chase || kip == BusCameraRig.Mode.Free))
+                    {
+                        float e = (float)engelAlani.GetValue(rig);
+                        if (e < 1000f) { engelEnAz = Mathf.Min(engelEnAz, e); engelEnCok = Mathf.Max(engelEnCok, e); }
+                    }
                     if (kip != BusCameraRig.Mode.Cockpit && kip != BusCameraRig.Mode.Interior && olcu.Icinde(cam.position, 0f))
                         icinde++;
                     if (DuvarIcinde(cam.position))
@@ -168,7 +176,7 @@ namespace AnkaraBus.Diagnostics
                 if (titreme > 0.05f) sorunlar.Add($"TİTREME {titreme:F3} m");
                 sorun += sorunlar.Count;
                 Log($"{otobus} {yer} {BusCameraRig.ModeNames[k]} hız={bus.SpeedKmh:F0} km/s{mafsal} sıçrama={maksSicrama:F3} m dönüş={maksDonusSicramasi:F2}° " +
-                    $"titreme={titreme:F4} kamera_yerel={bus.transform.InverseTransformPoint(rig.transform.position)} " +
+                    $"titreme={titreme:F4}{(engelEnAz < float.MaxValue ? $" engel_mesafesi={engelEnAz:F1}–{engelEnCok:F1} m" : "")} kamera_yerel={bus.transform.InverseTransformPoint(rig.transform.position)} " +
                     $"{(sorunlar.Count == 0 ? "OK" : "SORUN " + string.Join(", ", sorunlar))}");
                 yield return Ekran($"{yer}_{BusCameraRig.ModeNames[k]}");
             }
@@ -199,7 +207,7 @@ namespace AnkaraBus.Diagnostics
             yield return new WaitForEndOfFrame();
             if (Application.isBatchMode)
                 yield break;
-            string dosya = $"y14_kamera_{otobus}_{AnkaraBus.GrafikAyarlari.Mevcut}_{Ad(ad)}.png";
+            string dosya = $"y15_kamera_{otobus}_{AnkaraBus.GrafikAyarlari.Mevcut}_{Ad(ad)}.png";
             Y11Hat.Kaydet(dosya);
         }
     }

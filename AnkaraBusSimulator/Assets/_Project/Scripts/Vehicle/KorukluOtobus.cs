@@ -120,7 +120,7 @@ namespace AnkaraBus.Vehicle
             }
         }
 
-        private float sonKirpmaLogu = -10f;
+        private float sonOnKirpma = -10f, sonArkaKirpma = -10f;
 
         private void Kirp(Rigidbody rb)
         {
@@ -139,10 +139,55 @@ namespace AnkaraBus.Vehicle
                 rb.angularVelocity = w - yatay + yatay.normalized * AzamiDevrilme;
                 kirpildi = true;
             }
-            if (kirpildi && Time.time - sonKirpmaLogu > 2f)
+            bool on = rb == onGovde;
+            if (kirpildi && Time.time - (on ? sonOnKirpma : sonArkaKirpma) > 2f)
             {
-                sonKirpmaLogu = Time.time;
-                Debug.LogWarning($"[Koruklu] {(rb == onGovde ? "ön" : "arka")} gövde fırlatılıyordu (dikey {v.y:F1} m/s, yalpa {yatay.magnitude:F1} rad/s): kırpıldı");
+                if (on) sonOnKirpma = Time.time; else sonArkaKirpma = Time.time;
+                Debug.LogWarning($"[Koruklu] {(on ? "ön" : "arka")} gövde fırlatılıyordu (dikey {v.y:F1} m/s, yalpa {yatay.magnitude:F1} rad/s): kırpıldı" +
+                                 $" | ön temas: {onTemas.Yaz(onGovde.transform)} | arka temas: {arkaTemas.Yaz(arkaGovde.transform)}");
+            }
+        }
+
+        // fırlatan temasın kaynağı (Y15): her gövdenin son fizik adımındaki çarpışma temasları, kırpma logunda yazılır
+        private readonly Temas onTemas = new Temas();
+        private readonly Temas arkaTemas = new Temas();
+
+        private void OnCollisionEnter(Collision c) => onTemas.Kaydet(c);
+        private void OnCollisionStay(Collision c) => onTemas.Kaydet(c);
+
+        private sealed class Temas
+        {
+            private readonly ContactPoint[] noktalar = new ContactPoint[8];
+            private int adet;
+            private float zaman = -1f;
+            private Collider diger;
+            private Vector3 itki, bagilHiz;
+
+            public void Kaydet(Collision c)
+            {
+                // aynı adımda birden çok çarpışma: en büyük itkiyi tutan kalır
+                if (zaman == Time.fixedTime && c.impulse.sqrMagnitude <= itki.sqrMagnitude)
+                    return;
+                zaman = Time.fixedTime;
+                adet = c.GetContacts(noktalar);
+                diger = c.collider;
+                itki = c.impulse;
+                bagilHiz = c.relativeVelocity;
+            }
+
+            public string Yaz(Transform govde)
+            {
+                if (zaman < 0f || Time.fixedTime - zaman > 0.1f)
+                    return "yok";
+                var sb = new System.Text.StringBuilder();
+                sb.Append($"{(diger != null ? diger.name : "?")} ({(Time.fixedTime - zaman) * 1000f:F0} ms önce) itki={itki.magnitude:F0} N·s ({itki.normalized:F2}) bağıl_hız={bagilHiz.magnitude:F1} m/s");
+                for (int i = 0; i < adet; i++)
+                {
+                    var p = noktalar[i];
+                    sb.Append($" | {p.thisCollider?.name}: nokta(gövdede)={govde.InverseTransformPoint(p.point):F2} dünya_y={p.point.y:F2}" +
+                              $" normal={p.normal:F2} derinlik={-p.separation:F3} m");
+                }
+                return sb.ToString();
             }
         }
 
@@ -185,7 +230,16 @@ namespace AnkaraBus.Vehicle
             private void OnCollisionEnter(Collision c)
             {
                 if (sahip != null)
+                {
+                    sahip.arkaTemas.Kaydet(c);
                     sahip.ArkaCarpti?.Invoke(c);
+                }
+            }
+
+            private void OnCollisionStay(Collision c)
+            {
+                if (sahip != null)
+                    sahip.arkaTemas.Kaydet(c);
             }
         }
     }

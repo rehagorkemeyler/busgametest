@@ -234,11 +234,17 @@ namespace AnkaraBus.Traffic
                 YolVermeKontrolu();
             }
 
-            /// <summary>Geçide 30 m'den yakın, ona doğru 4 m/sn'den hızlı gelen araç ya da otobüs yoksa güvenli.</summary>
+            /// <summary>
+            /// Geçide 30 m'den yakın, ona doğru 4 m/sn'den hızlı gelen ya da 12 m'den yakın veya 6 sn'de varacak kadar hızlı gelen
+            /// araç ya da otobüs yoksa güvenli. Y15: 10 km/s ile geçide gelen otobüsü yayalar "yaklaşmıyor" sayıp burnunun önüne
+            /// çıkıyordu ("Yayaya çarptın", Hat 1 Kuğulu sonrası geçit).
+            /// </summary>
             private bool GuvenliMi()
             {
                 var otobus = sahip.otobus;
-                if (otobus != null && Yaklasiyor(otobus.transform.position, otobus.GetComponent<Rigidbody>().linearVelocity))
+                // otobüsün önü (körüklüde kök önden 9 m geride)
+                if (otobus != null && Yaklasiyor(otobus.transform.position + otobus.transform.forward * sahip.olcu.On,
+                                                 otobus.GetComponent<Rigidbody>().linearVelocity))
                     return false;
                 foreach (var car in TrafficCar.Aktifler)
                     if (Yaklasiyor(car.transform.position, car.transform.forward * car.Speed))
@@ -250,10 +256,14 @@ namespace AnkaraBus.Traffic
             {
                 Vector3 d = Merkez - p;
                 d.y = 0f;
-                if (d.sqrMagnitude > 30f * 30f || hiz.sqrMagnitude < 16f)
+                float uzaklik = d.magnitude;
+                float yaklasma = uzaklik > 0.01f ? Vector3.Dot(hiz, d) / uzaklik : 0f;
+                if (uzaklik > 30f || yaklasma < 0.5f)
+                    return false;
+                if (hiz.sqrMagnitude < 16f && uzaklik > 12f && uzaklik / yaklasma > 6f)
                     return false;
                 float yan = Vector3.Dot(p - Merkez, Sag);
-                return yan > YanMin - 3f && yan < YanMax + 3f && Vector3.Dot(hiz, d) > 0f;
+                return yan > YanMin - 3f && yan < YanMax + 3f;
             }
 
             /// <summary>Otobüsün önü, üzerinde (otobüsün 7 m yakınında) yaya varken geçit çizgisini geçerse ceza.</summary>

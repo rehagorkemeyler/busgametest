@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AnkaraBus.Route;
+using AnkaraBus.Vehicle;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -106,7 +107,14 @@ namespace AnkaraBus.Traffic
 
             float dt = Time.fixedDeltaTime;
             float target = Mathf.Min(maxSpeedKmh, Lane.SpeedLimitKmh) / 3.6f;
-            float free = FreeDistanceAhead(safeGap + speed * speed / (2f * braking) + 3f, out var obstacle);
+            float range = safeGap + speed * speed / (2f * braking) + 3f;
+            float free = FreeDistanceAhead(range, out var obstacle);
+            float otobus = OtobusSeritBoyunca(Mathf.Max(range, 25f), out var otobusGovdesi);
+            if (otobus < free)
+            {
+                free = otobus;
+                obstacle = otobusGovdesi;
+            }
             bool blockedByObstacle = false;
             if (free < float.MaxValue)
             {
@@ -426,6 +434,99 @@ namespace AnkaraBus.Traffic
             while (i < exits.Length && exits[i].at <= distance)
                 i++;
             return i;
+        }
+
+        // oyuncu otobüsünün gövde kutuları (körüklüde arka gövde ayrı Rigidbody), bütün araçlar paylaşır
+        private static readonly List<BoxCollider> OtobusKutulari = new List<BoxCollider>();
+        private static readonly List<BoxCollider> KutuTampon = new List<BoxCollider>();
+        private static float kutularZamani = -10f;
+
+        private static List<BoxCollider> Kutular()
+        {
+            if (Time.time - kutularZamani < 2f && (OtobusKutulari.Count == 0 || OtobusKutulari[0] != null))
+                return OtobusKutulari;
+            kutularZamani = Time.time;
+            OtobusKutulari.Clear();
+            var bus = FindAnyObjectByType<BusVehicle>();
+            if (bus == null)
+                return OtobusKutulari;
+            void Ekle(Component kok)
+            {
+                kok.GetComponentsInChildren(KutuTampon);
+                foreach (var k in KutuTampon)
+                    if (!k.isTrigger && !OtobusKutulari.Contains(k))
+                        OtobusKutulari.Add(k);
+            }
+            Ekle(bus);
+            var koruklu = bus.GetComponent<KorukluOtobus>();
+            if (koruklu != null && koruklu.ArkaGovde != null)
+                Ekle(koruklu.ArkaGovde);
+            return OtobusKutulari;
+        }
+
+        /// <summary>
+        /// Şerit boyunca (kavşak bağlantısında ve virajda da) önümüzdeki 'range' metrede otobüsün gövdesine kalan mesafe.
+        /// Düz ileri kutu ışını eğri şeritte yolu kesen otobüsü görmüyordu: Cinnah'tan Kızılay'a sola dönen araç, ışık değişince
+        /// kavşakta hâlâ dönmekte olan körüklünün sol önüne 35 km/s giriyor, kinematik olduğu için onu itip kilitliyordu
+        /// (docs/RAPOR_Y15.md S3). Şeridin sonunda kesin (olasılığı 1) çıkış varsa sonraki şeritte devam edilir.
+        /// </summary>
+        private float OtobusSeritBoyunca(float range, out Rigidbody govde)
+        {
+            govde = null;
+            var kutular = Kutular();
+            if (kutular.Count == 0 || kutular[0] == null)
+                return float.MaxValue;
+            float yakin = range + 25f;
+            if ((kutular[0].transform.position - transform.position).sqrMagnitude > yakin * yakin)
+                return float.MaxValue;
+            var lane = Lane;
+            float d0 = Distance + frontOffset;
+            int cikis = nextExit;
+            for (float d = 0f; d <= range; d += 2f)
+            {
+                float at = d0 + d;
+                // kesin çıkış: sonraki şeride geç
+                var exits = lane.Exits;
+                if (cikis < exits.Length && at >= exits[cikis].at && exits[cikis].probability >= 0.999f && exits[cikis].target != null)
+                {
+                    d0 = exits[cikis].targetAt - d + (d0 + d - exits[cikis].at);
+                    lane = exits[cikis].target;
+                    cikis = int.MaxValue;
+                    at = d0 + d;
+                }
+                if (at > lane.Length)
+                    break;
+                lane.Sample(at, out var p, out var f);
+                p.y += 1f;
+                // yana kayarken (sollama, dolmuşun cebe yanaşması) hem şimdiki hem hedef yan konumda
+                var sag = Vector3.Cross(Vector3.up, f).normalized;
+                if (OtobusaDegiyor(kutular, p + sag * lateral, out govde)
+                    || (Mathf.Abs(lateralTarget - lateral) > 0.3f && OtobusaDegiyor(kutular, p + sag * lateralTarget, out govde)))
+                    return d;
+            }
+            return float.MaxValue;
+        }
+
+        private static bool OtobusaDegiyor(List<BoxCollider> kutular, Vector3 p, out Rigidbody govde)
+        {
+            foreach (var k in kutular)
+                if (k != null && k.enabled && (k.ClosestPoint(p) - p).sqrMagnitude < 1.3f * 1.3f)
+                {
+                    govde = k.attachedRigidbody;
+                    return true;
+                }
+            govde = null;
+            return false;
+        }
+
+        // Y15 teşhis: otobüse çarpan trafik aracının durumu (kinematik araç otobüsü itebilir)
+        private void OnCollisionEnter(Collision c)
+        {
+            if (c.rigidbody == null || c.rigidbody.isKinematic || Lane == null)
+                return;
+            Debug.Log($"[Trafik] {name} otobüse çarptı: şerit {Lane.name} {Distance:F1} m, yan {lateral:F2}→{lateralTarget:F2} m, " +
+                      $"hız {speed * 3.6f:F0} km/s, dolmuş_durağı={(dolmusStop != null ? dolmusStop.StopName : "yok")}, " +
+                      $"otobüste {c.rigidbody.transform.InverseTransformPoint(transform.position):F1}");
         }
 
         /// <summary>Öndeki en yakın hareketli cisme (araç, otobüs) mesafe. Yol ve binalar yok sayılır.</summary>

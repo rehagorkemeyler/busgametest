@@ -41,6 +41,13 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<KameraTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "hiz")
+            {
+                // Y15: hız sınırı cezası 75 km/s üstünde mi (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<HizTesti>();
+                return;
+            }
             // her görevde fırlama bekçisi (yalnızca izler)
             gameObject.AddComponent<KorukluTesti>();
             if (Y10Baslatici.Gorev == "olcum")

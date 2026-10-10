@@ -46,6 +46,9 @@ namespace AnkaraBus.Diagnostics
         private readonly List<float> yolMesafe = new List<float>();
         private readonly List<float> yolHiz = new List<float>();
         private readonly List<(float mesafe, TrafficLane serit)> durmaCizgileri = new List<(float, TrafficLane)>();
+        // güzergâhın şerit parçaları (parçanın yoldaki başlangıcı, şeritteki aralığı): yaya geçitleri çalışma anında eklenir
+        private readonly List<(float mesafe, float basla, float bitis, TrafficLane serit)> seritParcalari =
+            new List<(float, float, float, TrafficLane)>();
 
         private BusVehicle bus;
         private BusInput input;
@@ -123,10 +126,16 @@ namespace AnkaraBus.Diagnostics
                 };
             var puanlama = bus.GetComponent<AnkaraBus.Gameplay.SeferPuanlama>();
             if (puanlama != null)
+                puanlama.Puanlandi += (neden, p) =>
+                {
+                    if (p < 0)
+                        Debug.Log($"[Surus] ceza: {neden} {p} (ilerleme {ilerleme:F0} m)");
+                };
+            if (puanlama != null)
                 puanlama.SeferBitti += o => Debug.Log(
                     $"[Surus] PUAN puan={o.puan} yıldız={o.yildiz} kasa={o.kasa:F2} yolcu={o.yolcu} konfor={o.konfor:F0} " +
                     $"süre={o.sure:F0}/{o.hedefSure:F0} sn atlanan_durak={o.atlananDurak} kırmızı_ışık={o.kirmiziIsik} " +
-                    $"sert_sürüş={o.sertSurus} hız_ihlali={o.hizIhlali} çarpışma={o.carpisma}");
+                    $"sert_sürüş={o.sertSurus} hız_ihlali={o.hizIhlali} çarpışma={o.carpisma} yaya={o.yaya}");
             trafik = FindObjectsByType<TrafficCar>();
             isiklar = FindObjectsByType<TrafficSignal>();
 
@@ -139,7 +148,7 @@ namespace AnkaraBus.Diagnostics
                       (kor != null && kor.ArkaGovde != null ? $" arka_gövde={bus.transform.InverseTransformPoint(kor.ArkaGovde.position)} mafsal={kor.MafsalAcisi:F1}°" : ""));
 
             float sonIlerleme = 0f, sonIlerlemeZamani = Time.time;
-            float logZamani = 0f;
+            float logZamani = 0f, izZamani = 0f;
             while (!tracker.Completed)
             {
                 TrafigiGozle();
@@ -169,6 +178,17 @@ namespace AnkaraBus.Diagnostics
                                    $"kapı_açık={bus.GetComponent<BusDoorController>()?.AnyOpen} yolcu_meşgul={bus.GetComponent<AnkaraBus.Passengers.BusPassengers>()?.IsBusy} " +
                                    $"vites={bus.Gear} rpm={bus.EngineRpm:F0} fren_basıncı={bus.BrakePressure:F2} tekerler={TekerDurumu()}");
                     sonIlerlemeZamani = Time.time;
+                }
+
+                // Y15: virajda/kavşakta (yol hızı dönüş için düşürülmüş yerde) iz: ön uç, yön, güzergâhtan sapma
+                if (yolHiz[mevcutIndex] <= 30f && Time.time > izZamani)
+                {
+                    izZamani = Time.time + 0.5f;
+                    var t = bus.transform;
+                    Vector3 burun = t.position + t.forward * OnUzunluk;
+                    Debug.Log($"[Surus] İZ ilerleme={ilerleme:F0} m konum={t.position:F1} burun={burun:F1} yön={t.eulerAngles.y:F0}° " +
+                              $"hız={bus.SpeedKmh:F0} direksiyon={input.AutoSteer:F2} sapma_burun={YolaUzaklik(burun, mevcutIndex, 40):F1} m " +
+                              $"öndeki={sonEngel ?? "yok"}");
                 }
 
                 if (Time.time > logZamani)
@@ -219,9 +239,11 @@ namespace AnkaraBus.Diagnostics
             }
 
             float basla = 0f;
+            var baglantilar = new List<(int bas, int son)>();
             for (int i = 0; i < sira.Count; i++)
             {
                 var lane = sira[i];
+                int seritBasi = yol.Count;
                 float bitis = lane.Length;
                 float sonrakiBasla = 0f;
                 if (i + 1 < sira.Count)
@@ -234,12 +256,15 @@ namespace AnkaraBus.Diagnostics
 
                 if (lane.StopLine >= basla && lane.StopLine < bitis)
                     durmaCizgileri.Add((OncekiMesafe() + (lane.StopLine - basla), lane));
+                seritParcalari.Add((OncekiMesafe(), basla, bitis, lane));
                 for (float d = basla; d < bitis; d += 2f)
                 {
                     lane.Sample(d, out var p, out _);
                     Ekle(p, lane.SpeedLimitKmh * hizOrani);
                 }
                 basla = sonrakiBasla;
+                if (lane.name.Contains("Baglanti") && i > 0 && i + 1 < sira.Count)
+                    baglantilar.Add((seritBasi, yol.Count));
             }
 
             // Son durak şeridin bitişinin biraz ilerisinde olabilir (ör. dönüş halkası girişi)
@@ -248,15 +273,105 @@ namespace AnkaraBus.Diagnostics
             for (int i = 1; i <= 6; i++)
                 Ekle(son + yon * (2f * i), 15f);
 
+            // Kavşak bağlantılarının keskin köşesi otobüs boyuna göre yay olur (sondan başa: indeksler kaymasın)
+            // yay başlangıcından sonraki durma çizgileri ve şerit parçaları yolun kısalması kadar kayar
+            for (int k = baglantilar.Count - 1; k >= 0; k--)
+            {
+                if (!KoseyiYuvarla(baglantilar[k].bas, baglantilar[k].son, out float sinir, out float fark))
+                    continue;
+                for (int i = 0; i < durmaCizgileri.Count; i++)
+                    if (durmaCizgileri[i].mesafe > sinir)
+                        durmaCizgileri[i] = (durmaCizgileri[i].mesafe + fark, durmaCizgileri[i].serit);
+                for (int i = 0; i < seritParcalari.Count; i++)
+                    if (seritParcalari[i].mesafe > sinir)
+                        seritParcalari[i] = (seritParcalari[i].mesafe + fark, seritParcalari[i].basla, seritParcalari[i].bitis, seritParcalari[i].serit);
+            }
+
             // Virajlarda hız: önümüzdeki 25 m'deki yön değişimine göre
             for (int i = 1; i < yol.Count; i++)
             {
                 int j = Mathf.Min(yol.Count - 1, i + 12);
                 if (j <= i + 1) continue;
                 float aci = Vector3.Angle(Duz(yol[i] - yol[i - 1]), Duz(yol[j] - yol[j - 1]));
+                // körüklü keskin dönüşte daha yavaş: 21 km/s'de arka (çeken) aks ön gövdeyi yaydan 3 m dışarı itiyordu (Y15 S3)
                 if (aci > 12f)
-                    yolHiz[i] = Mathf.Min(yolHiz[i], Mathf.Lerp(30f, 15f, Mathf.InverseLerp(12f, 60f, aci)));
+                    yolHiz[i] = Mathf.Min(yolHiz[i], Mathf.Lerp(30f, OnUzunluk > 8f ? 11f : 15f, Mathf.InverseLerp(12f, 60f, aci)));
             }
+            return true;
+        }
+
+        /// <summary>
+        /// Kavşak bağlantı şeridi (yol[bas..son)) trafik araçları için çizilmiş: Bulvar → Cinnah sağ dönüşü ~3 m yarıçaplı.
+        /// Pilot otobüsün kökünü (ön gövdenin arka aksı) güzergâhta tutar; o köşede 18 m'lik körüklünün burnu 6,5 m dışarı
+        /// savrulup Cinnah'ın karşı yön şeridine giriyor, orada bekleyen/dönen araca çarpıp kilitleniyordu (docs/RAPOR_Y15.md S3).
+        /// Giriş ve çıkış doğrultuları arasındaki köşe, otobüsün ön boyuna göre (körüklü 10 m, solo ~7 m) teğet bir yay olur:
+        /// dönüşe daha erken başlanır, burun gidiş yarısında kalır (arka iç teker köşedeki bordüre biraz biner).
+        /// </summary>
+        private bool KoseyiYuvarla(int bas, int son, out float sinir, out float fark)
+        {
+            sinir = float.MaxValue;
+            fark = 0f;
+            if (bas < 2 || son + 1 >= yol.Count)
+                return false;
+            Vector3 a = yol[bas - 1], b = yol[son];
+            Vector3 dIn = Duz(a - yol[bas - 2]).normalized, dOut = Duz(yol[son + 1] - b).normalized;
+            float aci = Vector3.SignedAngle(dIn, dOut, Vector3.up);
+            float payda = dIn.x * dOut.z - dIn.z * dOut.x;
+            if (Mathf.Abs(aci) < 30f || Mathf.Abs(payda) < 1e-3f)
+                return false;
+            // a + dIn·t = b + dOut·u (XZ)
+            Vector3 ab = Duz(b - a);
+            float t = (ab.x * dOut.z - ab.z * dOut.x) / payda;
+            Vector3 kesisim = Duz(a) + dIn * t;
+            float R = Mathf.Clamp(OnUzunluk + 1f, 7f, 10f);
+            float teget = R * Mathf.Tan(Mathf.Abs(aci) * 0.5f * Mathf.Deg2Rad);
+            Vector3 tGiris = kesisim - dIn * teget, tCikis = kesisim + dOut * teget;
+            int p = bas - 1;
+            while (p > 0 && Vector3.Dot(Duz(yol[p]) - tGiris, dIn) >= 0f)
+                p--;
+            int q = son;
+            while (q < yol.Count - 1 && Vector3.Dot(Duz(yol[q]) - tCikis, dOut) <= 0f)
+                q++;
+            if (p <= 0 || q >= yol.Count - 1 || teget > 25f)
+                return false;
+            float hiz = float.MaxValue;
+            for (int i = p + 1; i < q; i++)
+                hiz = Mathf.Min(hiz, yolHiz[i]);
+            if (hiz == float.MaxValue)
+                hiz = Mathf.Min(yolHiz[p], yolHiz[q]);
+            // yay: merkez, giriş teğetinin dönüş yönündeki yanında
+            Vector3 yan = aci > 0f ? Vector3.Cross(Vector3.up, dIn) : Vector3.Cross(dIn, Vector3.up);
+            Vector3 merkez = tGiris + yan * R;
+            Vector3 r0 = tGiris - merkez;
+            int adim = Mathf.Max(2, Mathf.CeilToInt(R * Mathf.Abs(aci) * Mathf.Deg2Rad / 2f));
+            var yay = new List<Vector3>();
+            for (int i = 0; i <= adim; i++)
+            {
+                float f = i / (float)adim;
+                var nokta = merkez + Quaternion.AngleAxis(aci * f, Vector3.up) * r0;
+                nokta.y = Mathf.Lerp(yol[p].y, yol[q].y, f);
+                yay.Add(nokta);
+            }
+            // yayın sonundan sonraki şeridin ilk noktasına kadar 2 m'de bir (aralık kalmasın)
+            Vector3 son0 = yay[yay.Count - 1];
+            float bosluk = Vector3.Distance(son0, yol[q]);
+            for (float d = 2f; d < bosluk - 1f; d += 2f)
+                yay.Add(Vector3.Lerp(son0, yol[q], d / bosluk));
+            // yayın başı (eski yolda): bundan önceki mesafeler değişmez
+            sinir = yolMesafe[p] + Vector3.Distance(Duz(yol[p]), tGiris);
+            float eskiUzunluk = yolMesafe[q] - yolMesafe[p];
+            int silinen = q - p - 1;
+            yol.RemoveRange(p + 1, silinen);
+            yolMesafe.RemoveRange(p + 1, silinen);
+            yolHiz.RemoveRange(p + 1, silinen);
+            yol.InsertRange(p + 1, yay);
+            yolMesafe.InsertRange(p + 1, new float[yay.Count]);
+            for (int i = 0; i < yay.Count; i++)
+                yolHiz.Insert(p + 1, hiz);
+            for (int i = p + 1; i < yol.Count; i++)
+                yolMesafe[i] = yolMesafe[i - 1] + Vector3.Distance(yol[i - 1], yol[i]);
+            fark = (yolMesafe[p + yay.Count + 1] - yolMesafe[p]) - eskiUzunluk;
+            Debug.Log($"[Surus] köşe yuvarlandı: {aci:F0}°, yarıçap {R:F1} m, yay {tGiris:F1} → {tCikis:F1}, {silinen} nokta → {yay.Count}, yol {fark:+0.0;-0.0} m");
             return true;
         }
 
@@ -288,7 +403,15 @@ namespace AnkaraBus.Diagnostics
         {
             int index = EnYakin(bus.transform.position);
             mevcutIndex = index;
+            // en yakın noktadan segment üzerine izdüşüm: noktalar 2 m arayla, yuvarlanınca körüklü durma çizgisini 1 m aşıyordu
             ilerleme = yolMesafe[index];
+            if (index + 1 < yol.Count)
+            {
+                Vector3 seg = Duz(yol[index + 1] - yol[index]);
+                float t = seg.sqrMagnitude > 1e-4f ? Vector3.Dot(Duz(bus.transform.position - yol[index]), seg.normalized) : 0f;
+                float onceki = index > 0 ? yolMesafe[index] - yolMesafe[index - 1] : 0f;
+                ilerleme += Mathf.Clamp(t, -onceki, seg.magnitude);
+            }
             float v = Mathf.Max(0f, bus.ForwardSpeed);
 
             // Pure pursuit
@@ -303,7 +426,10 @@ namespace AnkaraBus.Diagnostics
             input.AutoSteer = Mathf.Clamp(steerDeg / Mathf.Max(bus.Spec.maxSteerAngle * 0.95f, 1f), -1f, 1f);
 
             // Hedef hız: yol hızı, durağa yaklaşma, kırmızı ışık, öndeki araç
-            float hedefHiz = yolHiz[Mathf.Min(yol.Count - 1, index + 6)] / 3.6f;
+            // önümüzdeki 12 m'nin en düşük yol hızı (virajın ortasında hızlanmasın)
+            float hedefHiz = float.MaxValue;
+            for (int i = index; i <= Mathf.Min(yol.Count - 1, index + 6); i++)
+                hedefHiz = Mathf.Min(hedefHiz, yolHiz[i] / 3.6f);
             float durakKalan = stopMesafe - ilerleme;
             if (durakKalan > 0f)
                 hedefHiz = Mathf.Min(hedefHiz, Mathf.Sqrt(2f * rahatYavaslama * Mathf.Max(0f, durakKalan - 0.5f)) + 0.6f);
@@ -331,6 +457,19 @@ namespace AnkaraBus.Diagnostics
                     kirmizidaBekliyor = kalan < 15f;
                 }
             }
+
+            // dolu yaya geçidinin önünde dur (Y15: pilot geçitlere bakmıyordu, "Yayaya çarptın" cezası geliyordu)
+            foreach (var (mesafe, basla, bitis, serit) in seritParcalari)
+                foreach (var (at, gecit) in serit.Gecitler)
+                {
+                    if (at < basla || at >= bitis)
+                        continue;
+                    float kalan = mesafe + (at - basla) - gecit.YariGenislik - 1.5f - ilerleme - OnUzunluk;
+                    if (kalan < -0.5f || kalan > 40f || !gecit.Dolu)
+                        continue;
+                    hedefHiz = Mathf.Min(hedefHiz, Mathf.Sqrt(2f * 1.8f * Mathf.Max(0f, kalan - 0.5f)));
+                    kirmizidaBekliyor |= kalan < 15f;
+                }
 
             float onBos = Mathf.Min(OnundekiMesafe(), YolBoyuncaEngel());
             bool engel = false;

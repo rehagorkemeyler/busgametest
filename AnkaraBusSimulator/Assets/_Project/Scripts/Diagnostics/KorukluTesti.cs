@@ -363,10 +363,19 @@ namespace AnkaraBus.Diagnostics
                 sonuc(false);
                 yield break;
             }
-            // ışınlanan tekerler bir önceki yerin süspansiyon durumunu taşır: önce hızsız otursun, sonra hız ver
+            // ışınlanan tekerler bir önceki yerin süspansiyon durumunu taşır: önce hızsız otursun, sonra hız ver.
+            // Y15: ilk fizik adımında amortisör eski yerle yeni yer arasındaki sıkışma farkını hız sayıp ön gövdeyi
+            // 14,7 m/s yukarı itiyordu (Cinnah yokuşu → Kızılay AVM durağı); oturma adımlarında gövde hızları sıfırlanır.
             bus.Handbrake = true;
             for (int i = 0; i < 10; i++)
+            {
                 yield return new WaitForFixedUpdate();
+                foreach (var rb in arka != null ? new[] { on, arka } : new[] { on })
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+            }
             bus.Handbrake = false;
             var donus = Quaternion.Euler(0f, yon, 0f);
             bus.SetSelector(hiz < 0f ? BusVehicle.GearSelector.Reverse : BusVehicle.GearSelector.Drive);
@@ -378,10 +387,10 @@ namespace AnkaraBus.Diagnostics
 
         private bool Yerlestir(Vector3 nokta, float yon, float hiz)
         {
+            var donus = Quaternion.Euler(0f, yon, 0f);
             float zemin = ZeminY(nokta);
             if (float.IsNaN(zemin))
                 return false;
-            var donus = Quaternion.Euler(0f, yon, 0f);
             OtobusIsinla.Tasi(bus, new Vector3(nokta.x, zemin + (float.IsNaN(zeminPayi) ? 0.3f : zeminPayi + 0.05f), nokta.z), donus);
             if (TemasVar())
                 return false;
@@ -595,6 +604,8 @@ namespace AnkaraBus.Diagnostics
             foreach (var s in Duraklar())
             {
                 bool kondu = false;
+                KareIzle(1f);
+                Log($"keskin dönüş: {s.StopName} durağına ışınlanıyor, nokta {s.transform.position}");
                 yield return Yerlestir(s.transform.position, s.transform.eulerAngles.y, 11f, r => kondu = r);
                 if (!kondu)
                     continue;
