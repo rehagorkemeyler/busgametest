@@ -8,7 +8,7 @@ namespace AnkaraBus.Diagnostics
 {
     /// <summary>
     /// Y11 test build'inde hat sahnesine eklenir; Y10Baslatici.Gorev'e göre ölçüm turunu (PerfBenchmark)
-    /// ya da Y10 sürüş gözlemini (OtomatikPilot + Y10Gozlemci) başlatır.
+    /// ya da Y10 sürüş gözlemini (OtomatikPilot + Y10Gozlemci) ya da körüklü fırlama testini (KorukluTesti) başlatır.
     /// </summary>
     public class Y11Hat : MonoBehaviour
     {
@@ -20,6 +20,22 @@ namespace AnkaraBus.Diagnostics
         {
             string sahne = SceneManager.GetActiveScene().name;
             string etiket = $"{sahne}_{OyunSecimi.SeciliZaman}{(OyunSecimi.Yagmur ? "_yagmur" : "")}";
+            if (Y10Baslatici.Gorev == "koruklu")
+            {
+                // Y14: fırlama zorlama senaryoları, Hat 1 → Hat 2
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KorukluTesti>().Ayarla(true, sonrakiSahne);
+                return;
+            }
+            if (Y10Baslatici.Gorev == "kamera")
+            {
+                // Y14: kamera kipleri ve ekran görüntüleri (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KameraTesti>();
+                return;
+            }
+            // her görevde fırlama bekçisi (yalnızca izler)
+            gameObject.AddComponent<KorukluTesti>();
             if (Y10Baslatici.Gorev == "olcum")
             {
                 // ölçüm yalnızca Hat 1'de (Kızılay ve Kuğulu bu hatta)

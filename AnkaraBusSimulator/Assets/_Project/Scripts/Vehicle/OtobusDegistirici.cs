@@ -115,7 +115,7 @@ namespace AnkaraBus.Vehicle
 
             // hemen yok et: Start'ta FindAnyObjectByType eski otobüsü bulmasın
             Object.DestroyImmediate(eski.gameObject);
-            Debug.Log($"[Otobus] {secili.displayName} seçildi");
+            Debug.Log($"[Otobus] {secili.displayName} seçildi (sahne {yeniGo.scene.name})");
         }
     }
 }

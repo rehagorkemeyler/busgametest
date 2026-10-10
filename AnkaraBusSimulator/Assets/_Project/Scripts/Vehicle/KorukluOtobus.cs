@@ -25,6 +25,10 @@ namespace AnkaraBus.Vehicle
         private const float AzamiAyrilma = 0.6f;
         private const float AzamiHizFarki = 15f;
         private const float AzamiHiz = 40f;   // 144 km/s: otobüs 85 km/s'yi geçmez, üstü fizik hatasıdır
+        // otobüs %10 yokuşu 85 km/s'de çıkarken bile 2,4 m/s yükselir; bir engelin kenarına binip fırlatılınca (Y14: durak,
+        // trafik aracı) dikey hız ve yalpa/baş vurma burada kırpılır
+        private const float AzamiYukselme = 3f;     // m/s
+        private const float AzamiDevrilme = 1.2f;   // rad/s, gövdenin yatay eksenlerinde
 
         private Rigidbody onGovde;
         private ConfigurableJoint mafsal;
@@ -104,6 +108,8 @@ namespace AnkaraBus.Vehicle
         {
             if (arkaGovde == null || onGovde == null || !ayrildi)
                 return;
+            Kirp(onGovde);
+            Kirp(arkaGovde);
             Vector3 nokta = MafsalNoktasi;
             float ayrilma = (arkaGovde.position - nokta).magnitude;
             float hizFarki = (arkaGovde.linearVelocity - onGovde.GetPointVelocity(nokta)).magnitude;
@@ -111,6 +117,32 @@ namespace AnkaraBus.Vehicle
             {
                 Debug.LogWarning($"[Koruklu] mafsal ayrıldı ({ayrilma:F2} m, hız farkı {hizFarki:F1} m/s): arka gövde yeniden oturtuldu");
                 ArkayiHizala();
+            }
+        }
+
+        private float sonKirpmaLogu = -10f;
+
+        private void Kirp(Rigidbody rb)
+        {
+            var v = rb.linearVelocity;
+            var w = rb.angularVelocity;
+            var up = rb.transform.up;
+            var yatay = Vector3.ProjectOnPlane(w, up);
+            bool kirpildi = false;
+            if (v.y > AzamiYukselme)
+            {
+                rb.linearVelocity = new Vector3(v.x, AzamiYukselme, v.z);
+                kirpildi = true;
+            }
+            if (yatay.magnitude > AzamiDevrilme)
+            {
+                rb.angularVelocity = w - yatay + yatay.normalized * AzamiDevrilme;
+                kirpildi = true;
+            }
+            if (kirpildi && Time.time - sonKirpmaLogu > 2f)
+            {
+                sonKirpmaLogu = Time.time;
+                Debug.LogWarning($"[Koruklu] {(rb == onGovde ? "ön" : "arka")} gövde fırlatılıyordu (dikey {v.y:F1} m/s, yalpa {yatay.magnitude:F1} rad/s): kırpıldı");
             }
         }
 

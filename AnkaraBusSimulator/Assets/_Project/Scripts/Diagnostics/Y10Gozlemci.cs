@@ -313,7 +313,23 @@ namespace AnkaraBus.Diagnostics
             var body = bus.GetComponent<Rigidbody>();
             var eski = body.position;
             var donus = body.rotation;
-            OtobusIsinla.Tasi(bus, eski + bus.transform.right * 45f + Vector3.up * 2f, donus);
+            // rotadan 45–75 m uzakta, zemine oturan ve bir binaya/durağa değmeyen yer (eskiden 45 m yana ve 2 m yukarı
+            // ışınlanıyordu: otobüs bir durağın ya da binanın içine düşüp fırlayabiliyordu)
+            float yerden = eski.y - ZeminY(eski);
+            string temas = "yer yok";
+            foreach (float d in new[] { 45f, -45f, 55f, -55f, 65f, -65f, 75f, -75f })
+            {
+                if (!OtobusIsinla.ZemineTasi(bus, eski + bus.transform.right * d, donus, yerden + 0.05f))
+                    continue;
+                temas = OtobusIsinla.Temas(bus);
+                if (temas == null)
+                {
+                    Log($"rotadan çıkma: {d:+0;-0} m yana ışınlandı");
+                    break;
+                }
+            }
+            if (temas != null)
+                Log($"rotadan çıkma: boş yer bulunamadı ({temas}), son denenen yerde");
             yield return new WaitForSeconds(1.5f);
             var bilgiText = (Text)Alan(mini, "bilgi");
             Check(rehber.RotadanCikti && bilgiText != null && bilgiText.text.Contains("ROTADAN"),
@@ -321,6 +337,14 @@ namespace AnkaraBus.Diagnostics
             yield return Ekran("rotadan_cikti");
             OtobusIsinla.Tasi(bus, eski, donus);
             yield return new WaitForSeconds(1f);
+        }
+
+        private float ZeminY(Vector3 p)
+        {
+            foreach (var h in Physics.RaycastAll(p + Vector3.up * 0.5f, Vector3.down, 20f, ~0, QueryTriggerInteraction.Ignore).OrderBy(h => h.distance))
+                if (!(h.collider is WheelCollider) && h.collider.attachedRigidbody == null)
+                    return h.point.y;
+            return p.y;
         }
 
         // ---------------- Yardımcılar ----------------

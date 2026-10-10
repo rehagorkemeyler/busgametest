@@ -6292,8 +6292,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
   m_PrefabInstance: {fileID: 234482959}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &234482962
-MeshCollider:
+--- !u!65 &234482962
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6310,10 +6310,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5609299947759389422, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.6, y: 3.25, z: 2.2}
+  m_Center: {x: -0.64999986, y: 1.575, z: -0.75}
 --- !u!1001 &239625627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12222,8 +12221,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
   m_PrefabInstance: {fileID: 466351314}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &466351317
-MeshCollider:
+--- !u!65 &466351317
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -12240,10 +12239,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5609299947759389422, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.6, y: 3.25, z: 2.2}
+  m_Center: {x: -0.64999986, y: 1.575, z: -0.75}
 --- !u!1001 &468307014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38503,8 +38501,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
   m_PrefabInstance: {fileID: 1402295866}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1402295869
-MeshCollider:
+--- !u!65 &1402295869
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38521,10 +38519,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5609299947759389422, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.6, y: 3.25, z: 2.2}
+  m_Center: {x: -0.64999986, y: 1.575, z: -0.75}
 --- !u!1001 &1404046292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44624,8 +44621,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
   m_PrefabInstance: {fileID: 1645630743}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1645630746
-MeshCollider:
+--- !u!65 &1645630746
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -44642,10 +44639,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5609299947759389422, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.6, y: 3.25, z: 2.2}
+  m_Center: {x: -0.64999986, y: 1.575, z: -0.75}
 --- !u!1001 &1649040204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52357,8 +52353,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
   m_PrefabInstance: {fileID: 1927021741}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1927021744
-MeshCollider:
+--- !u!65 &1927021744
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52375,10 +52371,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5609299947759389422, guid: 5bef72db3368f44808cc8927bbba3435, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.6, y: 3.25, z: 2.2}
+  m_Center: {x: -0.64999986, y: 1.575, z: -0.75}
 --- !u!1001 &1927625949
 PrefabInstance:
   m_ObjectHideFlags: 0

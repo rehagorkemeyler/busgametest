@@ -49,6 +49,24 @@ namespace AnkaraBus.EditorTools
             Start(Hat1SahneKurucu.ScenePath, batch: true);
         }
 
+        /// <summary>Komut satırı: körüklü fırlama testi (KorukluTesti). "-otobus N" (varsayılan 2, Conecto), "-hat 1|2".</summary>
+        public static void RunKorukluBatch()
+        {
+            var args = System.Environment.GetCommandLineArgs();
+            int i = System.Array.IndexOf(args, "-otobus");
+            AnkaraBus.Gameplay.OyunSecimi.Otobus = i >= 0 && i + 1 < args.Length ? int.Parse(args[i + 1]) : 2;
+            int h = System.Array.IndexOf(args, "-hat");
+            bool hat2 = h >= 0 && h + 1 < args.Length && args[h + 1] == "2";
+            Start(hat2 ? Hat2SahneKurucu.ScenePath : Hat1SahneKurucu.ScenePath, batch: true, koruklu: true);
+        }
+
+        [MenuItem("Ankara Bus/Körüklü Fırlama Testi (Hat 1)")]
+        public static void RunKorukluMenu()
+        {
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                Start(Hat1SahneKurucu.ScenePath, batch: false, koruklu: true);
+        }
+
         [MenuItem("Ankara Bus/Ses ve Puan Testi (Hat 1)")]
         public static void RunSesPuanMenu()
         {
@@ -74,10 +92,12 @@ namespace AnkaraBus.EditorTools
             Start(scenePath, batch: false);
         }
 
-        private static void Start(string scenePath, bool batch, bool sesPuan = false, bool menuKamera = false)
+        private static void Start(string scenePath, bool batch, bool sesPuan = false, bool menuKamera = false, bool koruklu = false)
         {
             EditorSceneManager.OpenScene(scenePath);
-            if (menuKamera)
+            if (koruklu)
+                new GameObject("KorukluTesti").AddComponent<KorukluTesti>().Ayarla(true, null);
+            else if (menuKamera)
                 new GameObject("MenuKameraTesti").AddComponent<MenuKameraTesti>();
             else if (sesPuan)
                 new GameObject("SesPuanSenaryosu").AddComponent<SesPuanSenaryosu>();
@@ -89,8 +109,8 @@ namespace AnkaraBus.EditorTools
             var args = System.Environment.GetCommandLineArgs();
             int h = System.Array.IndexOf(args, "-hiz");
             float hiz = h >= 0 && h + 1 < args.Length ? float.Parse(args[h + 1], System.Globalization.CultureInfo.InvariantCulture) : batch ? 3f : 1f;
-            SessionState.SetFloat(HizKey, menuKamera ? 1f : hiz);
-            SessionState.SetString(EndKey, menuKamera ? "[MenuTest] BITTI" : sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
+            SessionState.SetFloat(HizKey, menuKamera || koruklu ? 1f : hiz);
+            SessionState.SetString(EndKey, koruklu ? "[KorTest] BITTI" : menuKamera ? "[MenuTest] BITTI" : sesPuan ? "[SesPuan] BITTI" : "[Surus] BITTI");
             Hook();
             EditorApplication.EnterPlaymode();
         }
@@ -113,6 +133,8 @@ namespace AnkaraBus.EditorTools
                 Finish(problems == 0, message);
                 return;
             }
+            if (message.StartsWith("[KorTest] FIRLADI"))
+                problems++;
             if (!message.StartsWith("[Surus]"))
             {
                 if (type == LogType.Exception)

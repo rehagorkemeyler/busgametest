@@ -91,6 +91,8 @@ namespace AnkaraBus.Vehicle
         private readonly RaycastHit[] kameraVuruslari = new RaycastHit[16];
         private Transform arkaGovde;
         private float TakipMesafesi => chaseDistance * Mathf.Max(1f, olcu.Uzunluk / 12f);
+        /// <summary>Yakınlaştırınca en kısa mesafe: körüklüde arka uç kökten 9 m geride, 7 m'de kamera arka gövdenin içindeydi.</summary>
+        private float EnYakinMesafe => Mathf.Max(distanceRange.x, olcu.Arka + 2.5f);
 
         public Mode CurrentMode => mode;
         public string ModeName => ModeNames[(int)mode];
@@ -175,7 +177,7 @@ namespace AnkaraBus.Vehicle
                 case Mode.Free:
                     orbitYaw = Mathf.Repeat(orbitYaw + drag.x * degPerPixel + 180f, 360f) - 180f;
                     orbitPitch = Mathf.Clamp(orbitPitch - drag.y * degPerPixel, orbitPitchRange.x, orbitPitchRange.y);
-                    distance = Mathf.Clamp(distance * (1f - zoom), distanceRange.x, distanceRange.y);
+                    distance = Mathf.Clamp(distance * (1f - zoom), EnYakinMesafe, distanceRange.y);
                     // dış takip: otobüs giderken ve parmak bırakılmışken kamera arkaya döner
                     if (mode == Mode.Chase && idleTime > returnDelay && movingTime > 0.5f)
                     {

@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Gri
+    second: {fileID: 2100000, guid: 680ed8eed7d424c9c9d657159989da05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_adesivostransparentes_Cam
     second: {fileID: 2100000, guid: 3440a3d90e7434f44b5d6ff1b31fd071, type: 2}
   - first:

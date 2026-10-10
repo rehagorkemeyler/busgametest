@@ -7,8 +7,8 @@ namespace AnkaraBus.Diagnostics
 {
     /// <summary>
     /// Test başlatıcısı: zamanı, havayı ve kaliteyi ayarlayıp görevi başlatır. Android'de ayarlar
-    /// intent ile verilebilir: am start ... -e gorev olcum|y10|menu -e zaman Gunduz|Aksam|Gece -e yagmur 0|1 -e kalite 0|1|2
-    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü).
+    /// intent ile verilebilir: am start ... -e gorev olcum|y10|menu|koruklu|kamera -e zaman Gunduz|Aksam|Gece -e yagmur 0|1 -e kalite 0|1|2
+    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü; koruklu: KorukluTesti). -e otobus 0|1|2
     /// </summary>
     public class Y10Baslatici : MonoBehaviour
     {
