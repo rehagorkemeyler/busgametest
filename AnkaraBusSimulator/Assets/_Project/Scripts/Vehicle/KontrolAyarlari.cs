@@ -38,8 +38,35 @@ namespace AnkaraBus.Vehicle
             set { PlayerPrefs.SetFloat(AciKey, Mathf.Clamp(value, 15f, 60f)); PlayerPrefs.Save(); }
         }
 
-        /// <summary>Bu cihazda ivmeölçer var mı?</summary>
-        public static bool EgimVar => Accelerometer.current != null;
+        /// <summary>Bu cihazda ivmeölçer (ya da yerçekimi sensörü) var mı?</summary>
+        public static bool EgimVar => Accelerometer.current != null || GravitySensor.current != null;
+
+        /// <summary>Yerçekimi yönü (cihaz ekseni, g). Önce yerçekimi sensörü (titremesiz), yoksa ivmeölçer. Android'de sensörler
+        /// kapalı başlar: açılır ve örnekleme hızı verilir (verilmeyince S24 FE'de değer hiç gelmiyordu, Y14).</summary>
+        public static Vector3? Yercekimi()
+        {
+            var gs = GravitySensor.current;
+            if (gs != null)
+            {
+                Ac(gs);
+                var g = gs.gravity.ReadValue();
+                if (g.sqrMagnitude > 0.01f)
+                    return g;
+            }
+            var acc = Accelerometer.current;
+            if (acc == null)
+                return null;
+            Ac(acc);
+            return acc.acceleration.ReadValue();
+        }
+
+        private static void Ac(Sensor s)
+        {
+            if (!s.enabled)
+                InputSystem.EnableDevice(s);
+            if (s.samplingFrequency < 30f)
+                s.samplingFrequency = 60f;
+        }
 
         /// <summary>
         /// Telefonun ekran düzlemindeki dönüşü (derece, saat yönü +). İvmeölçer yoksa ya da telefon neredeyse
@@ -47,12 +74,10 @@ namespace AnkaraBus.Vehicle
         /// </summary>
         public static float? EgimAcisi()
         {
-            var acc = Accelerometer.current;
-            if (acc == null)
+            var oku = Yercekimi();
+            if (oku == null)
                 return null;
-            if (!acc.enabled)
-                InputSystem.EnableDevice(acc);
-            Vector3 g = acc.acceleration.ReadValue(); // cihaz ekseninde yerçekimi yönü (dik tutulunca y = -1)
+            Vector3 g = oku.Value; // cihaz ekseninde yerçekimi yönü (dik tutulunca y = -1)
             float sx, sy;
             switch (Screen.orientation)
             {

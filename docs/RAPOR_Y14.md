@@ -1,8 +1,8 @@
 # Y14 raporu (yerel oturum, 10 Ekim 2026)
 
 Telefon: Galaxy S24 FE (SM-S721B), USB. Kalite Yüksek, gündüz, yağmursuz (aksi yazılmadıkça).
-Görüntüler: `docs/onizleme/y14/`. Oyun APK'sı: `~/Desktop/AnkaraOtobus.apk` (16:29, 155 MB, bu rapordaki bütün düzeltmeler içinde).
-Telefon oturum boyunca üç kez USB'den düştü (ikisi Unity derlemesinden sonra, biri derleme yokken); yarım kalan adımlar sonda.
+Görüntüler: `docs/onizleme/y14/`. Oyun APK'sı: `~/Desktop/AnkaraOtobus.apk` (16:55, 155 MB, bu rapordaki bütün düzeltmeler içinde).
+Telefon oturum boyunca üç kez USB'den düştü (ikisi Unity derlemesinden sonra, biri derleme yokken); kullanıcı yeniden bağlayınca kalan telefon adımları tamamlandı.
 
 ## Hazırlık
 - `git pull` → derleme hatası yok. `Rigidbody.maxLinearVelocity` bu sürümde (6000.6.4f1) var, satır kaldı.
@@ -117,12 +117,13 @@ gözünden yanlara/arkaya ve kokpitten sağa bakış.
 |---|---|---|---|---|
 | K1 Kamera durak sundurmasının içinde (`DUVARIN İÇİNDE 56/56 kare`) | üçü, her kalite | KAPI | Kızılay başlangıcı (sağda durak) | **düzeltildi**, telefonda BMC/Conecto 0 sorun |
 | K2 İçeriden SERBEST'e geçince kamera 20 m'yi süzülerek alıyor (`SIÇRAMA 0.54–0.64 m/kare`) | Conecto | SERBEST | her yerde | **düzeltildi** |
-| K3 Yolcu gözü körüğün içinde: sağa bakınca yalnız körük kıvrımları, önünde kırmızı direk | Conecto | YOLCU | her yerde | **düzeltildi**, telefonda görüntüyle doğrulanmadı |
-| K4 Ön kapı görüntünün sağ kenarına sıkışıyor | Conecto | KAPI | Meclis | **düzeltildi**, telefonda görüntüyle doğrulanmadı |
+| K3 Yolcu gözü körüğün içinde: sağa bakınca yalnız körük kıvrımları, önünde kırmızı direk | Conecto | YOLCU | her yerde | **düzeltildi**, telefonda doğrulandı (`tel_conecto_yolcu_yeni.png`, `tel_conecto_yolcu_sag_yeni.png`) |
+| K4 Ön kapı görüntünün sağ kenarına sıkışıyor | Conecto | KAPI | Meclis | **düzeltildi**, telefonda doğrulandı (`tel_conecto_kapi_meclis_yeni.png`) |
 | K5 Yakınlaştırınca (7 m) kamera arka gövdenin içinde | Conecto | DIŞ, SERBEST | her yerde | **düzeltildi** (kod incelemesi; arka uç kökten 9,2 m) |
 | K6 Dönüşte mafsal kırıkken kamera karede 0,52 m oynuyor | Conecto | SERBEST | dönüş, 14 km/s, mafsal −42° | açık (sınırda) |
 
-- **K1** `Vehicle/BusCameraRig.cs:256` `KapiEngeli`: gövde yanından kameraya küre ışını; engel varsa kamera önüne çekilir.
+- **K1** `Vehicle/BusCameraRig.cs:256` `KapiEngeli`: gövde yanından kameraya küre ışını; engel varsa kamera önüne çekilir. Kızılay başlangıcında
+  (sağda durak) kamera artık gövdenin yanına sokuluyor, görüş dar ama duvarın içinde değil (`tel_conecto_kapi_baslangic_yeni.png`).
 - **K2** `BusCameraRig.cs:134` içeriden DIŞ'a geçerken yapılan anında yerleştirme SERBEST'e de uygulanır.
 - **K3** `BusCameraRig.cs:244` `YolcuKonumu`: körüklüde mafsalın 3 m önü (z −1,2 → +1,4). Eski: `tel_conecto_yolcu_eski.png`,
   `tel_conecto_yolcu_sag_koruk_eski.png`, `tel_conecto_yolcu_arka_eski.png`.
@@ -131,6 +132,7 @@ gözünden yanlara/arkaya ve kokpitten sağa bakış.
 - **K6** SERBEST'te kamera 21 m geride; dönüşte otobüsün yönünü gecikmeli izlerken engel küre ışını (ağaç/bina) mesafeyi kısa süre kısaltıp
   bırakıyor olabilir (tahmin, `BusCameraRig.cs` `OutsidePosition`). DIŞ kipte aynı yerde sorun ölçülmedi.
 
+Son APK ile telefonda: **BMC 0 sorun, Millennium 0 sorun, Conecto yalnızca K6.**
 Ölçümde sorun çıkmayanlar (eski APK, üç otobüs): DIŞ, KOKPİT, YOLCU hiçbir yerde otobüsün/duvarın içinde değil, sıçrama/titreme yok (içeride
 kameralar otobüse sabit: 0,000 m). Görsel kontrol:
 - **Conecto kokpit** (`tel_conecto_kokpit.png`): göz direksiyon/koltuk hizasında; yol, gösterge paneli, vites görünüyor. Sağ üstteki
@@ -141,33 +143,49 @@ kameralar otobüse sabit: 0,000 m). Görsel kontrol:
 
 ## 3. Y13 düzeltmeleri
 - **Conecto içinde kırmızı/mavi:** pencere dikmeleri, alt bölmeler, A direği gri ✔ (`tel_conecto_yolcu_eski.png`, `tel_conecto_kokpit.png`).
-  **Kalan:** körüğün önünde/yanında **kırmızı bir dikey çubuk** (yolcu arka bakış `tel_conecto_yolcu_arka_eski.png`, yolcu ileri bakışta ortada).
-  Kaplama rengi mi, düğme direği mi belirsiz — bulut için: `tools/blender/conecto_ic.py` mafsal çevresindeki `M_Govde` parçaları.
+  **Kalan:** körüğün önünde/yanında **kırmızı bir dikey çubuk** (yolcu arka bakış `tel_conecto_yolcu_arka_eski.png`). Yeni yolcu gözünden
+  (mafsalın 3 m önü) ileri bakışta görünmüyor, arkaya dönünce görünür. Kaplama rengi mi, düğme direği mi belirsiz — bulut için:
+  `tools/blender/conecto_ic.py` mafsal çevresindeki `M_Govde` parçaları.
 - **Silecekler ve kapı fitilleri** sarı değil ✔; tutunma boruları sarı ✔.
 - **Millennium teker yuvaları** içeriden kapalı ✔.
 - **BMC "ACİL DURUM":** `Atlas_BMC.png` (Düşük/Normal) kol halkasının altında "ACİL DURUM" ✔ (`bmc_atlas_acil_durum.png`). Oyunda kol, test
   açılarına girmediği için ekranda görülmedi.
 
 ## 4. Y13'ten kalanlar
-- **Yolcu sesi** ("Durakta inecek var!"): telefonda çaldığı loglandı — `[Y10] yolcu sesi: 'stop' düzey 0.15, kapı kapandıktan 18.3 sn sonra,
+- **Yolcu sesi** ("Durakta inecek var!"): eğim testinde 10 kez çalındı (`[Egim] ses 'stop' düzey 0.40 kamera Cockpit` / `0.15 … Chase`,
+  klip 1,31 sn, mono, 48 kHz). Kulakla dil kontrolü kullanıcıda (ilk koşuda telefonun sesi kapalıydı). Y10 koşusunda da çaldığı loglandı — `[Y10] yolcu sesi: 'stop' düzey 0.15, kapı kapandıktan 18.3 sn sonra,
   kamera Chase` ve `… 8.5 sn sonra`. Düzey dış kamerada 0,15, kokpitte 0,40'a çıkar (`Vehicle/BusAudio.cs:242`). **Türkçe olduğu kulakla
   doğrulanmadı** (aşağıda).
 - **Conecto 4 kapıdan yolcu:** otomatik pilot koşusunda (Editor) 24 yolcu bindi, 24 indi, durak başına 9–19 sn; kapı başına dağılım ölçülmedi.
 - **Arka gövdeyle çarpışma cezası:** telefonda Hat 2 geri geri binaya: `[Puan] çarpışma: A1_Bulvar_6Kat_Krem, hız 4.0 m/s, otobüste (-1.0, 0…)`
   (arka gövdenin çarpışması `KorukluOtobus.ArkaCarpti` → `SeferPuanlama` cezası) ✔.
-- **Eğerek direksiyon:** test görevi hazır (`Diagnostics/EgimTesti.cs`, `-e gorev egim`: 60 sn eğim açısı + direksiyon logu, aynı anda yolcu sesi 6 sn'de bir
-  kokpit/dış sırayla). Telefon koptuğu için koşmadı.
+- **Eğerek direksiyon (S4, düzeltildi ve telefonda doğrulandı):** `Diagnostics/EgimTesti.cs` (`-e gorev egim`): 60 sn eğim + direksiyon
+  logu, aynı anda yolcu sesi 6 sn'de bir kokpit/dış sırayla.
+  - İlk iki koşuda açı hep "yok", direksiyon 0. Ham değer loglanmadığı için sensörün mü okunmadığı yoksa telefonun masada mı durduğu
+    ayırt edilemedi (kullanıcı ilkinde telefonun masada olduğunu söyledi). `Vehicle/KontrolAyarlari.cs:46` `Yercekimi()`: sensör açılırken
+    örnekleme hızı da verilir (60 Hz) ve önce yerçekimi sensörü (titremesiz), yoksa ivmeölçer okunur; test başında ilk değerler gelene
+    kadar 1 sn beklenip orta alınır. Sonraki koşuda ham değer geldi: `ivme=(0.02, -0.03, -1.00) açık=True 50Hz` (masada düz — doğru olarak "yok").
+  - Kullanıcı telefonu elinde tutunca (aynen):
+    ```
+    [Egim] BASLA ivmeölçer=var merkez=4.0° tam_açı=30° yön=LandscapeLeft
+    [Egim] açı=4.0° direksiyon=+0.12 … ivme=(-0.94, 0.01, -0.28)
+    [Egim] açı=-11.1° direksiyon=-0.44 … ivme=(-0.95, 0.21, -0.30)
+    [Egim] açı=25.7° direksiyon=+0.73 … ivme=(-0.85, -0.41, -0.37)
+    [Egim] açı=85.7° direksiyon=+1.00 … ivme=(-0.05, -0.94, -0.31)
+    [Egim] açı=yok° direksiyon=+0.00 … ivme=(-0.01, -0.02, -1.00)   (telefon masaya bırakıldı)
+    [Egim] SONUC direksiyon aralığı -0.48 … +1.00, ses 10 kez
+    ```
+    Saat yönü (sağa) +, ters yön −; tam direksiyon 30°'de. Sola en çok −11° çevrildi (−0,48), tam sol bu koşuda denenmedi.
 
 ## Bitmeyen adımlar
-- Son APK ile (kamera düzeltmeleri) **Millennium kamera testi** ve **Conecto/BMC görüntülerinin çekilmesi**: telefon USB'den düştü
-  (`adb: device 'R5CXA2NZ50B' not found`). Ölçüm satırları alındı (BMC 0 sorun, Conecto yalnızca K6), görüntüler alınamadı.
-- **Eğerek direksiyon ve yolcu sesinin kulakla dinlenmesi:** `EgimTesti` kişi telefonu tutarken koşmalı:
-  `adb shell am start -n com.ankarabus.simulator/com.unity3d.player.UnityPlayerGameActivity -e gorev egim -e otobus 0` (test APK'sı `Builds/AnkaraBus_y11_test.apk`).
-- Conecto ile elle sürüş (binaya çarpma, kaldırım, Cinnah) yalnızca otomatik senaryolarla yapıldı; dokunmatikle elle denenmedi.
+- Yolcu sesinin Türkçe olduğu ve duyulabilirliği: kullanıcının kulağıyla (test sonrası sorulacak).
+- Tam sola eğme: bu koşuda en çok −11°.
+- Conecto ile dokunmatikle elle sürüş (binaya çarpma, kaldırım, Cinnah) yalnızca otomatik senaryolarla yapıldı.
+- S3 (otomatik pilot Cinnah dönüşü), K6 (SERBEST dönüşte oynama), durak cebi kenarı itkisi, kırmızı körük direği: ayrı iş.
 
 ## Değişen dosyalar
 - `Editor/HatCarpismalari.cs` (durak kutusu, menü), `Scenes/Hat1_KizilayAtakule.unity`, `Scenes/Hat2_KizilayUlus.unity` (durak çarpışmaları)
-- `Vehicle/KorukluOtobus.cs` (kırpma), `Vehicle/BusCameraRig.cs` (K1–K5), `Vehicle/OtobusDegistirici.cs` (log)
+- `Vehicle/KorukluOtobus.cs` (kırpma), `Vehicle/BusCameraRig.cs` (K1–K5), `Vehicle/OtobusDegistirici.cs` (log), `Vehicle/KontrolAyarlari.cs` (sensör)
 - `Diagnostics/OtobusIsinla.cs` (`Temas`, `ZemineTasi`), `Diagnostics/Y10Gozlemci.cs` (`RotadanCik`), `Diagnostics/Y11Hat.cs`, `Diagnostics/Y10Baslatici.cs`
   (görevler `koruklu`, `kamera`, `egim`), yeni `Diagnostics/KorukluTesti.cs`, `KameraTesti.cs`, `EgimTesti.cs`, `Editor/SurusTestiEditor.cs` (`RunKorukluBatch`)
 - Prefablar yeniden kuruldu (Millennium `M_Gri`, Conecto)
@@ -182,3 +200,5 @@ kameralar otobüse sabit: 0,000 m). Görsel kontrol:
 | `tel_conecto_donus_dis.png` | Conecto dönüşte dış kamera |
 | `tel_millennium_yolcu_sag_on.png`, `tel_millennium_yolcu_sol_on.png` | teker yuvaları kapalı |
 | `tel_bmc_dusuk_yolcu_sag_on.png`, `bmc_atlas_acil_durum.png` | BMC Düşük iç, atlas "ACİL DURUM" |
+| `tel_conecto_yolcu_yeni.png`, `tel_conecto_yolcu_sag_yeni.png`, `tel_conecto_kapi_meclis_yeni.png`, `tel_conecto_kapi_baslangic_yeni.png` | K1, K3, K4 sonrası (telefon) |
+| `tel_millennium_kapi_meclis.png` | Millennium kapı kamerası durakta |

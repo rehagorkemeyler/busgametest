@@ -21,6 +21,8 @@ namespace AnkaraBus.Diagnostics
             var ses = bus.GetComponent<BusAudio>();
             var onceki = KontrolAyarlari.Secili;
             KontrolAyarlari.Secili = KontrolAyarlari.Direksiyon.Egim;
+            KontrolAyarlari.Yercekimi();          // sensörleri aç
+            yield return new WaitForSeconds(1f);  // ilk değerler gelsin
             KontrolAyarlari.Ortala();
             Debug.Log($"[Egim] BASLA ivmeölçer={(KontrolAyarlari.EgimVar ? "var" : "YOK")} merkez={KontrolAyarlari.Merkez:F1}° tam_açı={KontrolAyarlari.TamAci:F0}° " +
                       $"yön={Screen.orientation}");
@@ -45,7 +47,11 @@ namespace AnkaraBus.Diagnostics
                 if (Time.time > sonrakiLog)
                 {
                     sonrakiLog = Time.time + 0.5f;
-                    Debug.Log($"[Egim] açı={(aci.HasValue ? aci.Value.ToString("F1") : "yok")}° direksiyon={direksiyon:+0.00;-0.00} hız={bus.SpeedKmh:F0}");
+                    var acc = UnityEngine.InputSystem.Accelerometer.current;
+                    var gs = UnityEngine.InputSystem.GravitySensor.current;
+                    Debug.Log($"[Egim] açı={(aci.HasValue ? aci.Value.ToString("F1") : "yok")}° direksiyon={direksiyon:+0.00;-0.00} hız={bus.SpeedKmh:F0} " +
+                              $"ivme={(acc != null ? $"{acc.acceleration.ReadValue()} açık={acc.enabled} {acc.samplingFrequency:F0}Hz" : "yok")} " +
+                              $"yerçekimi={(gs != null ? $"{gs.gravity.ReadValue()} açık={gs.enabled}" : "yok")}");
                 }
                 if (Time.time > sonrakiSes && cab != null && klip != null && oneShot != null)
                 {
