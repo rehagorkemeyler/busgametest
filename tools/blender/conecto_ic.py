@@ -142,13 +142,20 @@ def siniflandir(o, mats):
     dunya.faces.ensure_lookup_table()
     agac = BVHTree.FromBMesh(dunya)
 
+    y_bas = min(v.co.y for v in dunya.verts)
+    y_son = max(v.co.y for v in dunya.verts)
+
     def iceride(f):
-        """Yüzün normali yönündeki ışın 4 m içinde kendi gövdesine çarpıyorsa yüz içeride (dışarıdan görünmez).
-        Dış yüzlerin normali dışarı bakar (iki_tarafli_yap), ışın boşluğa gider; teker yuvası ve kapı oyukları da açık."""
+        """Yüz içeride mi (dışarıdan görünmez)? (1) Yan duvarların, tavanın, ön ve arka yüzün içinde kalan kutuda, ya da
+        (2) normali yönündeki ışın 4 m içinde kendi gövdesine çarpıyor (dış yüzlerin normali dışarı bakar, ışın boşluğa gider;
+        teker yuvası ve kapı oyukları açık). (1) körük ağzının yanındaki ince direkler için gerekli: oradan çıkan ışın
+        körük açıklığından (arka gövde bu ağaçta yok) boşluğa gidiyordu."""
         c = f.calc_center_median()
         n = f.normal
         if n.length < 0.5 or not (abs(c.x) < 1.32 and 0.3 < c.z < 2.95):
             return False
+        if abs(c.x) < 1.15 and c.z < 2.9 and y_bas + 0.62 < c.y < y_son - 0.25:
+            return True
         return agac.ray_cast(c + n * 0.003, n, 4.0)[0] is not None
 
     # aday: M_Ic ve içeride kalan M_Govde / M_caroserie yüzleri. M_Govde kaplama rengine boyanır, M_caroserie kaplama

@@ -332,7 +332,7 @@ namespace AnkaraBus.Diagnostics
                 }
             }
 
-            float onBos = OnundekiMesafe();
+            float onBos = Mathf.Min(OnundekiMesafe(), YolBoyuncaEngel());
             bool engel = false;
             if (onBos < 60f)
             {
@@ -394,6 +394,36 @@ namespace AnkaraBus.Diagnostics
             }
             return best;
         }
+
+        /// <summary>
+        /// Güzergâh boyunca (virajda da) önümüzdeki 30 m'de yolun üstünde duran ya da yola giren araca kalan mesafe (ön uçtan).
+        /// Düz ileri küre ışını virajda dönüş şeridindeki aracı görmüyordu; 18 m'lik körüklü ona sürtünüp binaya itiliyordu
+        /// (docs/RAPOR_Y14.md S3). Yol çizgisinden 1,8 m'ye kadar olan araçlar sayılır (komşu şeritteki araç ~2,4 m'de kalır).
+        /// </summary>
+        private float YolBoyuncaEngel()
+        {
+            float bas = ilerleme + OnUzunluk;
+            for (int i = mevcutIndex; i < yol.Count; i++)
+            {
+                float d = yolMesafe[i] - bas;
+                if (d < 0f)
+                    continue;
+                if (d > 30f)
+                    break;
+                int n = Physics.OverlapSphereNonAlloc(yol[i] + Vector3.up * 1.0f, 1.8f, yolEngelleri, ~0, QueryTriggerInteraction.Ignore);
+                for (int k = 0; k < n; k++)
+                {
+                    var c = yolEngelleri[k];
+                    if (c.attachedRigidbody == null || c is WheelCollider || System.Array.IndexOf(ownColliders, c) >= 0)
+                        continue;
+                    sonEngel ??= c.attachedRigidbody.name;
+                    return d;
+                }
+            }
+            return float.MaxValue;
+        }
+
+        private readonly Collider[] yolEngelleri = new Collider[16];
 
         /// <summary>Ön aks ile aynı gövdedeki arka aks arası (körüklüde ön gövdenin arka aksı).</summary>
         private static float DingilMesafesi(BusVehicle v)

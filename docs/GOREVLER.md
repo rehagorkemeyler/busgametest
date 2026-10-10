@@ -168,3 +168,21 @@ Bulut, docs/RAPOR_Y13.md'deki S2, S3, S4, S7'yi düzeltti (raporun sonundaki "Bu
 > **3. Y13 düzeltmeleri.** Conecto yolcu ve kokpit kamerasında içeride kırmızı/mavi kalmadı mı (pencere dikmeleri, alt bölmeler, A direği gri olmalı), silecekler ve kapı fitilleri sarı değil mi, tutunma boruları hâlâ sarı mı; Millennium'da teker yuvaları içeriden kapalı mı (teker görünmemeli); BMC'de acil çıkış kolunun altında "ACİL DURUM" (Düşük/Normal ayarda da).
 > **4. Y13'ten kalanlar.** Yolcunun "Durakta inecek var!" sesi (Türkçe, seviyesi), Conecto kapı kamerası ve 4 kapıdan yolcu, arka gövdeyle çarpışma cezası, telefonu eğerek direksiyon.
 > Görüntüleri `docs/onizleme/y14/`'e koy, sonuçları `docs/RAPOR_Y14.md`'ye yaz (Y13 raporu gibi: sorun, otobüs, kamera, yer, tekrar adımı, log, kaynak dosya/satır). Yeni oyun APK'sını `~/Desktop/AnkaraOtobus.apk`'ye koy. Commit'le, push'la. Yarıda kesilirsen önce raporu yazıp push et.
+
+### Y15 — Temizlik: hız sınırı, Conecto içi, kamera, otomatik pilot, durak cebi
+Bulut tarafı (docs/RAPOR_Y14.md'deki açıklar):
+- **Hız sınırı 70 km/s** (ceza 75 üstünde; `SeferPuanlama.hizSiniriKmh`, üç prefabda da 70 yazıldı). Otobüs düzde 85 yapıyordu, 55 üstü ceza geliyordu.
+- **Conecto körük yanındaki kırmızı direk:** `conecto_ic.py` içerideki kutuda kalan `M_Govde` yüzlerini de iç duvar yapar (körük ağzından
+  çıkan ışın boşluğa gittiği için o direk "dışarıda" sayılıyordu). İki Conecto FBX'i yeniden üretildi; içerideki kaplama rengi alanı 4,6 m² → 0,04 m².
+- **K6 (SERBEST kamera dönüşte oynuyor):** `BusCameraRig.OutsidePosition` engel yaklaşınca kamerayı hemen öne alır, engel kalkınca 10 m/s ile geri
+  bırakır (önce her karede atlıyordu).
+- **S3 (otomatik pilot Cinnah dönüşü):** `OtomatikPilot.YolBoyuncaEngel` virajda da güzergâh boyunca 30 m'deki araçlara bakar (düz ileri ışın
+  dönüş şeridindeki aracı görmüyordu).
+**Prompt:**
+> `git pull origin Ozan` yap, derleme hatası varsa düzelt. **Ankara Bus → Mercedes Conecto (Körüklü) Prefabını Kur** (Conecto FBX'leri güncellendi). Üç otobüs prefabında `SeferPuanlama` hız sınırının 70 olduğunu kontrol et (sahnelerde 50 olarak geçersiz kılınmışsa 70 yap).
+> 1. **Conecto içi:** yolcu kamerasıyla körüğe ve arkaya bak — kırmızı/mavi çubuk ya da panel kaldı mı (`tel_conecto_yolcu_arka` açısı). Tutunma boruları sarı mı.
+> 2. **Kamera K6:** `-e gorev kamera -e otobus 2` ile SERBEST ve DIŞ kipte dönüş ölçümünü tekrarla; sıçrama kalmadı mı. Engelden çıkınca kamera geri gelirken rahatsız edici bir gecikme var mı (varsa `EngeldenDonusHizi`'ni ayarla). Üç otobüste kamera testini bir kez daha koş, sorun sayısını yaz.
+> 3. **Otomatik pilot S3:** telefonda `-e gorev y10 -e otobus 2 -e hiz 2` ile Hat 1'i en az iki kez koş; Kuğulu → Cinnah dönüşünde takılıyor mu. Takılırsa log ve kök neden (`OtomatikPilot.YolBoyuncaEngel` aracı görüyor mu, `sonEngel`); gerekirse düzelt. `RunHat1OtobusBatch -otobus 0/1/2` (Editor) üçü de 5/5 durak, 0 çarpışma mı; yavaşlama yüzünden süre çok uzadıysa yaz.
+> 4. **Durak cebi kenarı itkisi:** `KorukluTesti` keskin dönüşte `[Koruklu] ön gövde fırlatılıyordu` hâlâ tetikleniyorsa çarpışmanın temas noktasını ve normalini logla (`SeferPuanlama.OnCollisionEnter`'a geçici log ya da `KorukluTesti`), hangi yüzeyle çarpıştığını bul: bordür (0,15 m), kaldırım yüzeyi, cep girişindeki eğik kenar mı, gövde kutusunun altı mı. Kök nedeni düzelt (ör. o yol parçalarının çarpışmasını sadeleştir ya da gövde kutusunun altını yükselt) ve kırpmanın artık tetiklenmediğini göster.
+> 5. **Hız sınırı:** Hat 1'de elle düzde 70–75 km/s'de ceza gelmiyor, 76+ km/s'de "Hız sınırı (70 km/s)" cezası geliyor mu.
+> Sonuçları `docs/RAPOR_Y15.md`'ye yaz (sorun, otobüs, yer, log, kaynak), görüntüleri `docs/onizleme/y15/`'e koy. APK'yı güncelle (`~/Desktop/AnkaraOtobus.apk`). Commit'le, push'la. Yarıda kesilirsen önce raporu push et.

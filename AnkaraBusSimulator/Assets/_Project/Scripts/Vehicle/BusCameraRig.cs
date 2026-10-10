@@ -272,6 +272,7 @@ namespace AnkaraBus.Vehicle
 
         private void SnapChase()
         {
+            engelMesafesi = float.MaxValue;
             transform.position = OutsidePosition(out var look);
             transform.LookAt(look);
         }
@@ -299,10 +300,17 @@ namespace AnkaraBus.Vehicle
                     continue;
                 enYakin = Mathf.Min(enYakin, h.distance);
             }
-            if (enYakin < float.MaxValue)
-                desired = pivot + toCamera.normalized * Mathf.Max(enYakin - 0.2f, 1f);
+            // engel yaklaşınca kamera hemen öne gelir, engel kalkınca yavaşça geri gider: dönüşte ağaç/direk küre ışınına girip
+            // çıkınca kamera karede yarım metre ileri-geri oynamasın
+            float hedef = enYakin < float.MaxValue ? Mathf.Max(enYakin - 0.2f, 1f) : toCamera.magnitude;
+            engelMesafesi = hedef < engelMesafesi ? hedef : Mathf.MoveTowards(engelMesafesi, hedef, EngeldenDonusHizi * Time.deltaTime);
+            if (engelMesafesi < toCamera.magnitude)
+                desired = pivot + toCamera.normalized * engelMesafesi;
             return desired;
         }
+
+        private const float EngeldenDonusHizi = 10f; // m/s
+        private float engelMesafesi = float.MaxValue;
 
         private void UpdateOutside(float dt)
         {
