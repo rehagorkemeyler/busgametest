@@ -129,6 +129,9 @@ namespace AnkaraBus.Vehicle
             var livery = GetComponent<BusLivery>();
             if (livery != null)
                 livery.Select(livery.Selected);
+            var tabela = GetComponent<HatTabelasi>();
+            if (tabela != null)
+                tabela.MalzemeyiYenile();
         }
     }
 }

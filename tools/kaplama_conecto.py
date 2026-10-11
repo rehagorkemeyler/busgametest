@@ -153,7 +153,6 @@ def onarka(spec, ad):
         kutu(-OA_X, OA_X, 0.0, 0.30, ETEK)                       # tampon altı
         if spec["serit"]:
             kutu(-OA_X, OA_X, CAM_Z[0] - 0.12 - spec["serit"], CAM_Z[0] - 0.12, BEYAZ)
-        led = (255, 168, 20)
         if not arka:
             # geniş ön cam (alt kenarı ortada 1,08 m, yanlara doğru hafif yükselir), üstte hat tabelası
             ust, kenar = 2.80, 1.17
@@ -161,14 +160,11 @@ def onarka(spec, ad):
                    for i in range(41)]
             d.polygon(pts + [P(kenar, ust), P(-kenar, ust)], fill=CAM)
             kutu(-0.98, 0.98, 2.50, 2.74, (8, 8, 8), r=0.02)
-            yazi(-0.78, 2.62, "EGO" if spec["ego_panel"] or spec["amblem"] else "ÖHO", 0.11, led)
-            yazi(0.12, 2.62, "ANKARA", 0.15, led)
             plaka(0.47)
         else:
             # arka cam, küçük hat tabelası, stop lambaları, motor ızgarası, plaka, filo numarası
             kutu(-1.04, 1.04, 1.80, 2.60, CAM, r=0.06)
             kutu(0.40, 0.96, 2.38, 2.55, (8, 8, 8))
-            yazi(0.68, 2.465, "ANKARA", 0.10, led)
             for xa, xb in ((-1.10, -0.92), (0.92, 1.10)):
                 kutu(xa, xb, 0.95, 1.30, (190, 20, 20), r=0.02, outline=(25, 5, 5), width=4)  # stop / park
                 kutu(xa, xb, 0.78, 0.93, (235, 140, 20), r=0.02)   # sinyal

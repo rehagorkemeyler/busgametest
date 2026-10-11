@@ -1,5 +1,5 @@
 """
-Otobüs içi etiketleri Türkçeleştirir: BMC Procity (stickers.png: Rumence/İngilizce) ve Caio Millennium II
+Otobüs içi etiketleri Türkçeleştirir: BMC Procity (stickers.png: Rumence/İngilizce, lawo_WL_vcsik.png iç şerit reklamı) ve Caio Millennium II
 (adesivostransparentes.png, bagulhosmep.png, extras.png: Portekizce / São Paulo → Ankara: hat şeridi, afiş,
 Ankarakart okuyucu, Alo 153, sürücü talimatı). Yazı alanı etiketin zemin rengiyle örtülür, Türkçe yazı sığdırılarak çizilir.
 Rumence etiketlerin yerine Türkçesi gelir, İngilizceler kalır (iki dilli). Simgeler değişmez.
@@ -214,6 +214,20 @@ def bmc_ikizleri_ve_atlas(stickers_yol, atlas_yol):
     atlas.save(atlas_yol, optimize=True)
 
 
+def bmc_ic_serit(yol):
+    """lawo_WL_vcsik.png (BMC iç ışık şeridi): soldaki Rumence çekici reklamı ("Noi ti-o tragem…") yerine EGO / Ankarakart
+    şeridi. Sağdaki bilgi ekranı (kırmızı/mavi) değişmez."""
+    img = kaynaktan(yol)
+    d = ImageDraw.Draw(img)
+    d.rectangle((0, 0, 958, img.height), fill=(0, 0, 0))
+    sari = (255, 214, 40)
+    kutu_yazi(d, (40, 40, 920, 250), "ANKARAKART\nile kolay yolculuk", sari, 110)
+    kutu_yazi(d, (40, 300, 920, 470), "Kartınızı ön kapıdaki\nokuyucuya okutun", (240, 240, 240), 70)
+    kutu_yazi(d, (40, 500, 920, 590), "EGO  ·  ALO 153", sari, 70)
+    img.save(yol, optimize=True)
+    print("yazıldı:", yol)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--proje", required=True)
@@ -222,6 +236,7 @@ def main():
     bmc_acil_kol(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"))
     bmc_ikizleri_ve_atlas(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/stickers.png"),
                           os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/Atlas_BMC.png"))
+    bmc_ic_serit(os.path.join(args.proje, "Buses/BMC_Procity_12LF/Textures/lawo_WL_vcsik.png"))
     isle(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/adesivostransparentes.png"), MILLENNIUM)
     millennium_bagulhos(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/bagulhosmep.png"))
     millennium_extras(os.path.join(args.proje, "Buses/Caio_Millennium_II/Textures/extras.png"))

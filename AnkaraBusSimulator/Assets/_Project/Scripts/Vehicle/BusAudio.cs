@@ -73,6 +73,7 @@ namespace AnkaraBus.Vehicle
         private bool lastHandbrake;
         private int lastOnboard;
         private float stopRequestTimer = -1f;
+        private AnonsSistemi anons;
 
         /// <summary>Tek seferlik ses çalındı: (klip adı, ses düzeyi). Testler ve hata ayıklama için.</summary>
         public event Action<string, float> OneShotPlayed;
@@ -237,6 +238,10 @@ namespace AnkaraBus.Vehicle
             // duraktan çıktıktan bir süre sonra bir yolcu "dur" düğmesine basar
             if (stopRequestTimer > 0f)
             {
+                // durak anonsu çalarken yolcu araya girmez
+                anons ??= GetComponent<AnonsSistemi>();
+                if (anons != null && anons.Caliyor)
+                    stopRequestTimer = Mathf.Max(stopRequestTimer, 1.5f);
                 stopRequestTimer -= Time.deltaTime;
                 if (stopRequestTimer <= 0f && stopRequest != null && (passengers == null || passengers.Onboard > 0))
                     OneShot(cabSource, stopRequest, masterVolume * (0.15f + 0.25f * interiorBlend));

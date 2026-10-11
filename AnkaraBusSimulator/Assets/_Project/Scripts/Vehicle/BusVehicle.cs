@@ -80,7 +80,15 @@ namespace AnkaraBus.Vehicle
 
         public event Action<GearSelector> SelectorChanged;
 
-        private void Awake() => Initialize();
+        private void Awake()
+        {
+            Initialize();
+            // hat tabelası ve durak anonsları (prefab kurulumu gerektirmez)
+            if (GetComponent<HatTabelasi>() == null)
+                gameObject.AddComponent<HatTabelasi>();
+            if (GetComponent<AnkaraBus.Route.RouteTracker>() != null && GetComponent<AnonsSistemi>() == null)
+                gameObject.AddComponent<AnonsSistemi>();
+        }
 
         /// <summary>Awake'te çağrılır. Edit modundaki testler de doğrudan çağırabilir.</summary>
         public void Initialize()

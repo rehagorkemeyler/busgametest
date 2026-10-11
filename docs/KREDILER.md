@@ -23,8 +23,8 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
 
 - Proton Bus Simulator modu; üreticisinden izin alınarak kullanılıyor (docs/OTOBUS_BMC_PROCITY.md).
 
-## Türkçe yolcu sesi ("Durakta inecek var!")
+## Türkçe yolcu sesi ("Durakta inecek var!") ve durak anonsları
 
 - Piper TTS (https://github.com/rhasspy/piper), ses modeli `tr_TR-dfki-medium` (https://huggingface.co/rhasspy/piper-voices).
 - Veri kümesi: DFKI MARY TTS Türkçe (https://github.com/marytts/dfki-ot-data/) — **CC BY-NC-SA 4.0** (ticari olmayan kullanım;
-  oyun satılacaksa bu ses değiştirilmeli). Üretim: `tools/ses/anons_tr.py`.
+  oyun satılacaksa bu sesler değiştirilmeli). Üretim: `tools/ses/anons_tr.py`, `tools/ses/anonslar.py` (`Resources/Anonslar/`).

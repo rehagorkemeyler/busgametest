@@ -144,6 +144,14 @@ def siniflandir(o, mats):
 
     y_bas = min(v.co.y for v in dunya.verts)
     y_son = max(v.co.y for v in dunya.verts)
+    # iç kutu: dış uçta (ön yüz / arka yüz) pay bırakılır, körük ağzında bırakılmaz (ağzın çerçevesi içeridedir).
+    # Körük ağzının çerçevesi yan duvara dayanır: orada |x| sınırı da yan duvarın iç yüzüne kadar
+    if o.name == "Govde_On":
+        ic_y = (y_bas + 0.62, y_son + 0.01)
+    else:
+        ic_y = (y_bas - 0.01, y_son - 0.25)
+    ic_x = 1.15
+    korukte = (lambda y: y > y_son - 1.0) if o.name == "Govde_On" else (lambda y: y < y_bas + 1.0)
 
     def iceride(f):
         """Yüz içeride mi (dışarıdan görünmez)? (1) Yan duvarların, tavanın, ön ve arka yüzün içinde kalan kutuda, ya da
@@ -154,7 +162,9 @@ def siniflandir(o, mats):
         n = f.normal
         if n.length < 0.5 or not (abs(c.x) < 1.32 and 0.3 < c.z < 2.95):
             return False
-        if abs(c.x) < 1.15 and c.z < 2.9 and y_bas + 0.62 < c.y < y_son - 0.25:
+        if abs(c.x) < (1.24 if korukte(c.y) else ic_x) and c.z < 2.9 and ic_y[0] < c.y < ic_y[1]:
+            if korukte(c.y) and abs(c.x) >= ic_x and n.x * c.x > 0:
+                return False  # körük ağzında yan duvarın dış yüzü (dışarı bakıyor)
             return True
         return agac.ray_cast(c + n * 0.003, n, 4.0)[0] is not None
 

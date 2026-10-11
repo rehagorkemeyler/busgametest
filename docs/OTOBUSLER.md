@@ -101,3 +101,17 @@ Conecto için `roofMaterialName = "onarka"` yazar). Plakalar: 06 EGO 501 / 06 EG
 - Millennium `adesivostransparentes.png` (özel alan, öncelikli koltuk), `bagulhosmep.png` (ÇÖP, kart okuyucuda ANKARAKART,
   ihbar şeridi yerine ALO 153), `extras.png` (São Paulo hat şeridi yerine Hat 1 durakları, afiş yerine EGO/Ankarakart afişi,
   sürücü tabela talimatı). `kaplama_millennium.py` `bagulhosmep.png`'yi baştan yazar; ondan sonra `etiketler_tr.py` yeniden çalıştırılmalı.
+
+## Hat tabelası ve durak anonsları (Y16)
+
+- **LED hat tabelası** (`Vehicle/HatTabelasi.cs`, `Vehicle/LedYazi.cs`): nokta matris (128 × 16 nokta, Türkçe harfler), kehribar. Ön:
+  "1 ATAKULE" 4 sn, sonra "1 KIZILAY AVM - ATAKULE" (sığmayan kayar); hat bitince "SERVİS DIŞI", rotasız (menü) "ANKARA". Arka: hat numarası.
+  BMC: ön camın arkasında (z 5,64) ve arka yüzde; Conecto: ön/arka dokudaki tabela kutularının üstünde (arka tabela arka gövdede);
+  Millennium: modelin tabela malzemesinin (`vmatrix`, kaynakta "RESERVADO") dokusu değiştirilir (ön, arka ve yan küçük tabelalar).
+  Yerleşim `HatTabelasi.Bul` içinde otobüs tanımı adına göre. `BusVehicle.Awake` ekler (prefab kurulumu gerekmez).
+- **Durak anonsları** (`Vehicle/AnonsSistemi.cs`, klipler `Resources/Anonslar/`, üretim `tools/ses/anonslar.py`): duraktan kalkınca
+  (kapılar kapalı, 12 km/s üstü) gong + "Sıradaki durak, X." (sıradaki son duraksa "… Son durak."); son durakta "Son durağa geldik.
+  İnerken eşyalarınızı unutmayınız. İyi günler dileriz." İçeride yüksek, dışarıda kısık. Anons çalarken yolcunun "Durakta inecek var!" sesi bekler.
+  Yeni durak eklenince `anonslar.py`'deki `DURAKLAR`'a ekleyip yeniden üretin (klibi olmayan durakta yalnızca gong çalar).
+  Okunuşlar Whisper ile denetlendi; TTS bazı adları ayrı yazınca doğru okuyor (`OKUNUS`: "Kızılay Ave Me", "Ata kule", "Cinnâh", "Sıhiye").
+- BMC iç ışık şeridindeki (`lawo_WL_vcsik.png`) Rumence çekici reklamı yerine Ankarakart / EGO / Alo 153 şeridi (`tools/etiketler_tr.py`).
