@@ -410,7 +410,38 @@ namespace AnkaraBus.EditorTools
                 var material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
                 if (material.name.EndsWith("_Cam"))
                     MakeGlass(material);
+                else if (LambaMaskeleri.TryGetValue(material.name, out var maske))
+                    LambaMalzemesi(material, maske);
             }
+        }
+
+        // Conecto gece lambaları (tools/blender/conecto_lambalar.py): malzeme → maske dokusu (null: düz renk)
+        private static readonly Dictionary<string, string> LambaMaskeleri = new Dictionary<string, string>
+        {
+            { "M_LambaPencere", "Textures/gece_yan.png" }, { "M_LambaPark", "Textures/gece_onarka.png" },
+            { "M_LambaFren", "Textures/gece_fren.png" }, { "M_LambaIc", null },
+        };
+
+        /// <summary>Kendi ışığıyla parlayan lamba yüzü: URP/Unlit (ışıktan, gece prob/ay ışığından etkilenmez), maskenin
+        /// saydam yerleri alfa kesmeyle atılır. Parçalar gündüz kapalı (Lamba_*), HavaVeZaman gece açar.</summary>
+        private static void LambaMalzemesi(Material m, string maske)
+        {
+            var shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null)
+                return;
+            m.shader = shader;
+            var doku = maske != null ? AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + maske) : null;
+            m.SetTexture("_BaseMap", doku);
+            m.SetColor("_BaseColor", maske != null ? Color.white : new Color(1f, 0.98f, 0.94f));
+            bool kes = doku != null;
+            m.SetFloat("_AlphaClip", kes ? 1f : 0f);
+            m.SetFloat("_Cutoff", 0.5f);
+            if (kes)
+                m.EnableKeyword("_ALPHATEST_ON");
+            else
+                m.DisableKeyword("_ALPHATEST_ON");
+            m.renderQueue = kes ? (int)UnityEngine.Rendering.RenderQueue.AlphaTest : -1;
+            EditorUtility.SetDirty(m);
         }
 
         private static void MakeGlass(Material m)
@@ -632,7 +663,8 @@ namespace AnkaraBus.EditorTools
             var so = new SerializedObject(k);
             so.FindProperty("arkaGovde").objectReferenceValue = arka;
             var gorseller = new List<Transform>();
-            foreach (var ad in new[] { "Govde_Arka", "Golge_Arka" })
+            // arka gövdedeki lambalar da (conecto_lambalar.py) arka gövdeyle birlikte hareket eder
+            foreach (var ad in new[] { "Govde_Arka", "Golge_Arka", "Lamba_Pencere_Arka", "Lamba_Park_Arka", "Lamba_Fren", "Lamba_IcSerit_Arka" })
                 if (parts.TryGetValue(ad, out var t))
                     gorseller.Add(t);
             var list = so.FindProperty("arkaGorseller");

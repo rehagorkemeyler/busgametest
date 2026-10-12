@@ -14,6 +14,9 @@ u 0–0,5 ön yüz (önden bakınca, x −1,32 … 1,32 m), u 0,5–1 arka yüz 
 Ön cam (yuvarlak köşeli), hat tabelası, plaka, bel şeridi; arkada cam, stop lambaları, motor ızgarası, plaka, filo no.
 Ön/arka yüzde kalan kenarlar (M_Govde, dokusuz) BusLivery'de kaplamayla birlikte boyanır.
 
+Gece maskeleri (RGBA, kaplamadan bağımsız): gece_yan.png (yan camlar), gece_onarka.png (farlar, park lambaları, arka cam),
+gece_fren.png (stop lambaları). blender/conecto_lambalar.py bunlarla Lamba_* parçalarını kurar.
+
 Kullanım:
     python kaplama_conecto.py --out AnkaraBusSimulator/Assets/_Project/Buses/MB_Conecto_G/Textures
 """
@@ -119,6 +122,13 @@ def doku(spec):
 OA = 1024
 OA_X = 1.32
 OA_H = 3.3
+FARLAR = ((-1.18, -0.78), (0.78, 1.18))          # ön yüz (önden bakınca), z FAR_Z
+FAR_Z = (0.56, 0.74)
+SINYAL_ON = ((-1.18, -1.00), (1.00, 1.18))
+STOPLAR = ((-1.10, -0.92), (0.92, 1.10))         # arka yüz (arkadan bakınca), z STOP_Z
+STOP_Z = (0.95, 1.30)
+ARKA_CAM = (-1.04, 1.04, 1.80, 2.60)
+GECE_PENCERE = ((176, 166, 140), (62, 56, 46))   # içerisi yanarken camlar: üstte tavan ışığı, altta koltuklar (loş)
 PLAKA = {"ego_kirmizi": "06 EGO 501", "ego_mavi": "06 EGO 601", "ozel_halk": "06 HO 1453"}
 
 
@@ -160,13 +170,17 @@ def onarka(spec, ad):
                    for i in range(41)]
             d.polygon(pts + [P(kenar, ust), P(-kenar, ust)], fill=CAM)
             kutu(-0.98, 0.98, 2.50, 2.74, (8, 8, 8), r=0.02)
+            for xa, xb in FARLAR:
+                kutu(xa, xb, FAR_Z[0], FAR_Z[1], (200, 205, 212), r=0.04, outline=(30, 30, 34), width=4)  # far
+            for xa, xb in SINYAL_ON:
+                kutu(xa, xb, FAR_Z[1] + 0.02, FAR_Z[1] + 0.10, (235, 140, 20), r=0.02)                  # sinyal
             plaka(0.47)
         else:
             # arka cam, küçük hat tabelası, stop lambaları, motor ızgarası, plaka, filo numarası
-            kutu(-1.04, 1.04, 1.80, 2.60, CAM, r=0.06)
+            kutu(*ARKA_CAM, CAM, r=0.06)
             kutu(0.40, 0.96, 2.38, 2.55, (8, 8, 8))
-            for xa, xb in ((-1.10, -0.92), (0.92, 1.10)):
-                kutu(xa, xb, 0.95, 1.30, (190, 20, 20), r=0.02, outline=(25, 5, 5), width=4)  # stop / park
+            for xa, xb in STOPLAR:
+                kutu(xa, xb, STOP_Z[0], STOP_Z[1], (190, 20, 20), r=0.02, outline=(25, 5, 5), width=4)  # stop / park
                 kutu(xa, xb, 0.78, 0.93, (235, 140, 20), r=0.02)   # sinyal
                 kutu(xa, xb, 0.60, 0.76, (235, 235, 235), r=0.02)  # geri vites
             for i in range(7):                                    # motor ızgarası
@@ -186,6 +200,81 @@ def onarka(spec, ad):
     return out
 
 
+def egim(img, z_ust, z_alt, piksel_z):
+    """Yanan (alfa > 0) piksellerin rengini yüksekliğe göre GECE_PENCERE üst → alt renge boyar (yalnız alfası 255 olanlar
+    pencere; diğer lambalara dokunmaz). piksel_z(y) → metre."""
+    px = img.load()
+    (r0, g0, b0), (r1, g1, b1) = GECE_PENCERE
+    for y in range(img.height):
+        t = min(max((z_ust - piksel_z(y)) / max(z_ust - z_alt, 1e-6), 0.0), 1.0)
+        renk = (int(r0 + (r1 - r0) * t), int(g0 + (g1 - g0) * t), int(b0 + (b1 - b0) * t), 255)
+        for x in range(img.width):
+            if px[x, y] == PENCERE_ISARET:
+                px[x, y] = renk
+
+
+PENCERE_ISARET = (1, 2, 3, 255)   # maskede pencere yeri (sonra egim ile boyanır)
+
+
+def gece_yan():
+    """Gece pencere maskesi (yan doku düzeninde, RGBA): camlar yanar, gerisi saydam. conecto_lambalar.py'nin Lamba_Pencere
+    parçaları bu dokuyu kullanır (Unlit, alfa kesme); kapı camları kanatlarla gider, dahil değil."""
+    yanlar = []
+    for sol in (False, True):
+        img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        for a, b in ((Y0 + 0.25, KORUK[0] - 0.05), (KORUK[1] + 0.05, Y1 - 0.15)):
+            xa, xb = sorted((X(a + 0.04, sol), X(b - 0.04, sol)))
+            d.rectangle([xa, Z(CAM_Z[1] - 0.05), xb, Z(CAM_Z[0] + 0.04)], fill=PENCERE_ISARET)
+        if not sol:
+            for a, b in KAPILAR:
+                xa, xb = sorted((X(a, sol), X(b, sol)))
+                d.rectangle([xa, Z(KAPI_Z[1] + 0.02), xb, Z(KAPI_Z[0])], fill=(0, 0, 0, 0))
+        egim(img, CAM_Z[1], CAM_Z[0], lambda y: H_M - y / PX)
+        if sol:
+            img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        yanlar.append(img.resize((W, 256), Image.NEAREST))
+    out = Image.new("RGBA", (W, 512), (0, 0, 0, 0))
+    out.paste(yanlar[0], (0, 0))
+    out.paste(yanlar[1], (0, 256))
+    return out
+
+
+def gece_onarka(fren):
+    """Ön/arka yüz gece maskesi (onarka düzeninde, RGBA). fren=False: farlar (ön), park/stop lambaları ve arka cam (arka);
+    fren=True: yalnız stop lambaları, parlak kırmızı (Lamba_Fren, frende yanar)."""
+    sz = OA / OA_H
+    gw = int(round(2 * OA_X * sz))
+    yuzler = []
+    for arka in (False, True):
+        img = Image.new("RGBA", (gw, OA), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+
+        def kutu(xa, xb, za, zb, renk, r=0.0):
+            x0, y0 = int(round((xa + OA_X) * sz)), int(round((OA_H - zb) * sz))
+            x1, y1 = int(round((xb + OA_X) * sz)), int(round((OA_H - za) * sz))
+            d.rounded_rectangle([x0, y0, x1, y1], radius=int(r * sz), fill=renk + (255,))
+
+        if fren:
+            if arka:
+                for xa, xb in STOPLAR:
+                    kutu(xa + 0.02, xb - 0.02, STOP_Z[0] + 0.02, STOP_Z[1] - 0.02, (255, 40, 30), r=0.02)
+        elif not arka:
+            for xa, xb in FARLAR:
+                kutu(xa + 0.03, xb - 0.03, FAR_Z[0] + 0.03, FAR_Z[1] - 0.03, (255, 248, 225), r=0.03)
+        else:
+            for xa, xb in STOPLAR:
+                kutu(xa + 0.02, xb - 0.02, STOP_Z[1] - 0.14, STOP_Z[1] - 0.02, (150, 12, 10), r=0.02)   # park (kısık)
+            xa, xb, za, zb = ARKA_CAM
+            kutu(xa + 0.05, xb - 0.05, za + 0.05, zb - 0.05, PENCERE_ISARET[:3], r=0.05)
+            egim(img, zb, za, lambda y: OA_H - y / sz)
+        yuzler.append(img.resize((OA // 2, OA), Image.NEAREST))
+    out = Image.new("RGBA", (OA, OA), (0, 0, 0, 0))
+    out.paste(yuzler[0], (0, 0))
+    out.paste(yuzler[1], (OA // 2, 0))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -197,6 +286,11 @@ def main():
         print("kaydedildi:", yol)
         yol = os.path.join(args.out, spec["onarka"])
         onarka(spec, name).save(yol, optimize=True)
+        print("kaydedildi:", yol)
+    # gece maskeleri (üç kaplamada ortak)
+    for ad, img in (("gece_yan.png", gece_yan()), ("gece_onarka.png", gece_onarka(False)), ("gece_fren.png", gece_onarka(True))):
+        yol = os.path.join(args.out, ad)
+        img.save(yol, optimize=True)
         print("kaydedildi:", yol)
 
 

@@ -12,6 +12,7 @@ Kar ve Y16'dan kalan testler bu işler bitince **hep birlikte** yapılacak (kull
 | C | Gece içerisi gri | Üç otobüs | İç ışık eklendi (yerel, gövde başına bir nokta ışık) ama iç yüzeylerin çoğu dokusuz düz gri; ışık panelleri yanmıyor (emissive yok). | Bulut |
 | D | Conecto içi koltuklar dışında kaplamasız | Conecto | `conecto_ic.py`: `M_IcDuvar` (0,80 gri), `M_IcTavan` (0,90) düz renk, dokusuz. | Bulut |
 | E | Gündüz de biraz soluk | Üç otobüs | Conecto `M_Govde` `_BaseColor` FBX'ten 0,906 geliyor (%10 koyu); HDR/renk düzeltme yok; kaplama dokuları düz, panel ayrıntısı az. | Bulut |
+| G | Conecto'da hiç lamba parçası yok (far, stop, park, iç ışık, cam) | Conecto, üç kaplama (kırmızı, mavi, Özel Halk) | Kaynak modelde lamba yoktu; camlar dokuya boyalı, gece yanmıyor. → `conecto_lambalar.py` | Bulut (yapıldı) |
 | F | BMC ve Millennium kapıları/içi | – | Raporda sorun yok; aynı "gri" görünüm var mı bakılmadı. | Yerel (önce bak) |
 
 ## Sıra ve yapılacaklar
@@ -33,7 +34,7 @@ Kar ve Y16'dan kalan testler bu işler bitince **hep birlikte** yapılacak (kull
 arka gövdeyle mi hareket ediyor, yolcular dört kapıdan inip biniyor mu, kapı kamerası ön kapıyı gösteriyor mu.
 **Kabul:** dört kapı görünür biçimde açılıp kapanıyor; kapalıyken boşluk yok, içerisi görünmüyor.
 
-### 2. Gece otobüs dış görünümü (B) ve soluk renk (E)
+### 2. Gece otobüs dış görünümü (B) ve soluk renk (E) — bulut kısmı yapıldı (Conecto lambaları, dolgu ışığı, far konumu; GOREVLER Y18 madde 8)
 **Bulut**
 - **Otobüse özel dolgu ışığı:** gece ve akşam, yalnız otobüsü aydınlatan ikinci yönlü ışık (URP rendering layer: otobüs renderer'ları
   ayrı katmanda, ışığın `renderingLayerMask`'ı yalnız o katman; üç kalite ayarında `m_SupportsLightLayers` zaten açık). Sokak lambası

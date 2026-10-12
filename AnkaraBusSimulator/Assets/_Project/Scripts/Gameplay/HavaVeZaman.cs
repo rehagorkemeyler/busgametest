@@ -40,6 +40,7 @@ namespace AnkaraBus.Gameplay
         private AudioSource yagmurSesi;
         private Transform yagmurEfekti;
         private Material gokKopyasi;
+        private Transform dolguIsigi;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Baslat()
@@ -105,6 +106,13 @@ namespace AnkaraBus.Gameplay
                 bool icerde = kamera != null && kamera.IsInside;
                 ruzgarSesi.volume = Mathf.MoveTowards(ruzgarSesi.volume, icerde ? 0.08f : 0.3f, Time.deltaTime);
             }
+            if (dolguIsigi != null && Camera.main != null)
+            {
+                // kameranın baktığı yöne, 35° yukarıdan: otobüsün görünen yüzü aydınlanır
+                var ileri = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up);
+                if (ileri.sqrMagnitude > 1e-4f)
+                    dolguIsigi.rotation = Quaternion.LookRotation(ileri.normalized) * Quaternion.Euler(35f, 0f, 0f);
+            }
             if (karEfekti != null && Camera.main != null)
             {
                 // taneler dünya uzayında ~5 sn'de göz hizasına iner: yayıcı otobüsün gideceği yere kaydırılmazsa
@@ -133,6 +141,8 @@ namespace AnkaraBus.Gameplay
                         gunes = l;
             if (gunes != null)
             {
+                // ana ışık açıkça bu olsun: URP aksi halde en parlak yönlü ışığı seçer, gece otobüs dolgu ışığı (DolguIsigi) olabilirdi
+                RenderSettings.sun = gunes;
                 gunes.transform.rotation = Quaternion.Euler(ayar.gunesAcisi);
                 gunes.color = ayar.gunesRengi;
                 gunes.intensity = ayar.gunesSiddeti * (yagmur || kar ? 0.5f : 1f);
@@ -222,7 +232,9 @@ namespace AnkaraBus.Gameplay
         {
             if (otobus == null)
                 return;
-            foreach (var ad in new[] { "Lamba_KisaFar", "Lamba_Park", "Lamba_Ic1", "Lamba_Ic2", "Lamba_Ic3", "Lamba_IcSerit" })
+            // Conecto'da (tools/blender/conecto_lambalar.py) ayrıca yan camlar, arka gövdenin park lambaları ve tavan şeridi
+            foreach (var ad in new[] { "Lamba_KisaFar", "Lamba_Park", "Lamba_Ic1", "Lamba_Ic2", "Lamba_Ic3", "Lamba_IcSerit",
+                                       "Lamba_Park_Arka", "Lamba_IcSerit_Arka", "Lamba_Pencere_On", "Lamba_Pencere_Arka" })
             {
                 var lamba = Bul(otobus, ad);
                 if (lamba != null)
@@ -236,12 +248,14 @@ namespace AnkaraBus.Gameplay
             IcIsik(bus, arka);
             if (arka != null)
                 IcIsik(arka, null);
+            DolguIsigi(bus, arka);
             // far: Düşük kalitede yalnızca lamba camları yanar (gerçek zamanlı ışık doluluk maliyeti)
             if (GrafikAyarlari.Mevcut == KaliteSeviyesi.Dusuk)
                 return;
             var far = new GameObject("Far").AddComponent<Light>();
             far.transform.SetParent(bus, false);
-            far.transform.localPosition = new Vector3(0f, 1.0f, 6.2f);
+            // otobüsün ön ucunun hemen önünde (18 m'lik körüklüde eski sabit 6,2 m ışığı gövdenin içine koyuyordu)
+            far.transform.localPosition = new Vector3(0f, 1.0f, OtobusOlcusu.Olc(otobus).On + 0.3f);
             far.transform.localRotation = Quaternion.Euler(9f, 0f, 0f);
             far.type = LightType.Spot;
             far.range = 45f;
@@ -250,6 +264,30 @@ namespace AnkaraBus.Gameplay
             far.intensity = zaman == OyunSecimi.Zaman.Gece ? 3.5f : 1.8f;
             far.color = new Color(1f, 0.96f, 0.88f);
             far.shadows = LightShadows.None;
+        }
+
+        /// <summary>Yalnız otobüsü aydınlatan rendering layer biti (URP Light Layers; üç kalite ayarında açık).</summary>
+        public const int OtobusIsikKatmani = 6;
+
+        /// <summary>
+        /// Akşam/gece otobüsün dışı seyrek prob ve kısık ay ışığıyla gri kalıyordu (binalar lightmap'le aydınlık). Yalnız
+        /// otobüsün renderer'larını aydınlatan, gölgesiz, sıcak bir yönlü ışık: kameranın arkasından ve üstünden gelir,
+        /// kaplama rengi (kırmızı/mavi) seçilsin. Binalara ve trafiğe etkisi yok (rendering layer).
+        /// </summary>
+        private void DolguIsigi(Transform bus, Transform arka)
+        {
+            uint bit = 1u << OtobusIsikKatmani;
+            foreach (var kok in new[] { bus, arka })
+                if (kok != null)
+                    foreach (var r in kok.GetComponentsInChildren<Renderer>(true))
+                        r.renderingLayerMask |= bit;
+            var isik = new GameObject("OtobusDolguIsigi").AddComponent<Light>();
+            isik.type = LightType.Directional;
+            isik.color = new Color(1f, 0.88f, 0.74f);
+            isik.intensity = zaman == OyunSecimi.Zaman.Gece ? 0.4f : 0.22f;
+            isik.shadows = LightShadows.None;
+            isik.renderingLayerMask = (int)bit;
+            dolguIsigi = isik.transform;
         }
 
         /// <summary>Gövdenin çarpışma kutularının boyuna ortasına tavan altında beyaz nokta ışık (gölgesiz; dış yüzler ışığa

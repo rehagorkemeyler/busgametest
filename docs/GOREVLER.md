@@ -247,5 +247,16 @@ rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md →
 6. Yolcular dört kapıdan inip biniyor mu; kapı sesleri her kapıda mı; kapı kamerası ön kapıyı gösteriyor mu.
 7. A32'de kısa tur (kapılar + FPS). Ekran görüntüleri: kapalı, açık (dış), açık (iç), körük kırık 3. kapı.
 Hareket ayarı gerekiyorsa (dışarı 0,09 m, kayma 0,6 m, 1,6 s) `OtobusKurucu.SetupPlugKapilar` sabitleri; değiştirdiysen rapora yaz.
-Rapor: `docs/RAPOR_Y18.md` (yukarıdaki maddeler + BMC ve Millennium'da kapılarla ilgili gördüğün sorunlar, ekran görüntüsüyle).
+8. **Gece (Conecto, üç kaplama: EGO kırmızı, EGO mavi, Özel Halk):** bulut Conecto'ya gece lambaları ekledi (`conecto_lambalar.py`;
+   modelde hiç lamba yoktu): yan camlar loş sıcak yanar, farlar, arka park/stop lambaları, arka cam, tavanda iki ışık şeridi
+   (arka gövdedekiler arka gövdeyle döner). Ayrıca üç otobüse yalnız otobüsü aydınlatan dolgu ışığı (`HavaVeZaman.DolguIsigi`,
+   URP rendering layer 6) ve far ışığı artık otobüsün ön ucunda (Conecto'da gövdenin içindeydi). Prefabı kurunca `Materials/`'ta
+   `M_LambaPencere/Park/Fren/Ic` URP Unlit olmalı (Pencere/Park/Fren alfa kesmeli, `gece_*.png`). Gece ve akşam, açık ve kar,
+   **üç kaplamanın her biriyle** dıştan (ön, yan, arka) ve içeriden bak: kaplama rengi seçiliyor mu (mavi/açık mavi gri-siyah değil),
+   camlar yanıyor mu, lamba yüzleri gövdeye oturuyor mu (titreme/z-fighting yok), frende stop yanıyor mu (gündüz de), körük kırıkken
+   arka gövde lambaları yerinde mi, Yüksek ↔ Düşük değişince lambalar kaybolmuyor mu. Dolgu ışığı binaları da aydınlatıyorsa
+   rendering layer çalışmıyor demektir: `UniversalAdditionalLightData.renderingLayers`'ı da ayarla, rapora yaz. Çok parlak/sönükse
+   şiddeti (gece 0,4, akşam 0,22) ayarla. BMC ve Millennium'u da gece bir kez kontrol et. A32 Düşük'te gece FPS (önce/sonra).
+Rapor: `docs/RAPOR_Y18.md` (yukarıdaki maddeler + BMC ve Millennium'da kapılarla ilgili gördüğün sorunlar, ekran görüntüsüyle;
+her kaplama için gece ekran görüntüsü).
 Commit ve **push** et, `git log origin/Ozan -1` ile push'u doğrula.
