@@ -213,6 +213,8 @@ rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md →
 > Sonuçları `docs/RAPOR_Y17.md`'ye, görüntüleri `docs/onizleme/y17/`'ye koy. APK'yı güncelle. Commit'le, **push'la ve push'un gittiğini kontrol et**. Yarıda kesilirsen önce raporu push et.
 
 ### Y17 — bulut için (yerel telefon testlerinden, 12 Ekim 2026)
+> **Kullanıcı yerel ışık düzeltmeleriyle (c4b147d) A32'de baktı: iç ve dış hâlâ gri, Conecto kapıları hâlâ çalışmıyor.** Işıkla
+> çözülmüyor; asıl iş doku/model tarafında (aşağıdaki 1–3). Yerel ışık ayarları kalsın, gerekirse `GeceProbCarpani` birlikte ayarlanır.
 1. **Conecto kapıları görünmüyor/çalışmıyor (kullanıcı, telefonda):** modelde kapı kanadı yok. `OtobusKurucu.SetupKapiNoktalari` dört kapı için
    yalnızca boş `Kapi_1..4` noktası koyuyor (`BusDoor` Slide, `openPositionOffset` sıfır): KAPILAR düğmesi oyun mantığında çalışıyor
    ama görünürde hiçbir şey açılıp kapanmıyor, kapı boşluklarından otobüsün içi görünüyor. İstenen: `conecto_donustur.py`'de sağdaki
