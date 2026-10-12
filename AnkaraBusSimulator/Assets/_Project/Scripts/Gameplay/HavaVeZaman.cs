@@ -24,6 +24,9 @@ namespace AnkaraBus.Gameplay
     {
         public const string KaynakKlasoru = "Hava/";
 
+        /// <summary>Akşam/gece otobüs ve trafik araçlarının ışık probu parlaklığı (bkz. IsikSeti.Uygula).</summary>
+        public const float GeceProbCarpani = 1.8f, AksamProbCarpani = 1.25f;
+
         private OyunSecimi.Zaman zaman;
         private bool yagmur;
         private bool kar;
@@ -118,7 +121,7 @@ namespace AnkaraBus.Gameplay
             string sahne = SceneManager.GetActiveScene().name;
             var set = Resources.Load<IsikSeti>(IsikSeti.Yol(sahne, zaman));
             if (set != null)
-                set.Uygula();
+                set.Uygula(zaman == OyunSecimi.Zaman.Gece ? GeceProbCarpani : AksamProbCarpani);
             else
                 Debug.LogWarning($"[HavaVeZaman] {sahne} için {zaman} ışığı bake edilmemiş (Ankara Bus > Akşam ve Gece Işığını Bake Et); " +
                                  "binalar gündüz ışığında kalır.");
@@ -169,7 +172,8 @@ namespace AnkaraBus.Gameplay
                 // kar: beyazımsı, yakın sis (gece mavimsi koyu); yağan kar görüşü kapatır
                 sis = Color.Lerp(sis, zaman == OyunSecimi.Zaman.Gunduz ? new Color(0.83f, 0.85f, 0.88f)
                     : new Color(0.16f, 0.18f, 0.22f) * (zaman == OyunSecimi.Zaman.Gece ? 0.6f : 1.6f), 0.75f);
-                bas = 15f;
+                // dış kamera otobüsün 15–21 m gerisinde: sis daha yakında başlarsa otobüs grileşir
+                bas = 30f;
                 bit = Mathf.Min(bit, 320f);
             }
             RenderSettings.fogColor = sis;

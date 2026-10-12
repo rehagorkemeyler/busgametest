@@ -211,3 +211,19 @@ rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md →
 > 4. **Y16'dan kalanlar:** düzeltilmiş APK ile Millennium tabelası (gündüz/gece, Türkçe işaretler, arka/yan hat no), Türkçe harf boşluğu, menü vitrininde "ANKARA", BMC gece tavan şeridinde Ankarakart yazısı, Conecto körük ağzında şerit kalmadı mı (mavi ve kırmızı kaplamada).
 > 5. **Anons okunuşu (kulakla):** Kızılay AVM, Kuğulu Park, Cinnah, Sıhhiye, Ulus doğru mu; kötüyse not et.
 > Sonuçları `docs/RAPOR_Y17.md`'ye, görüntüleri `docs/onizleme/y17/`'ye koy. APK'yı güncelle. Commit'le, **push'la ve push'un gittiğini kontrol et**. Yarıda kesilirsen önce raporu push et.
+
+### Y17 — bulut için (yerel telefon testlerinden, 12 Ekim 2026)
+1. **Conecto kapıları görünmüyor/çalışmıyor (kullanıcı, telefonda):** modelde kapı kanadı yok. `OtobusKurucu.SetupKapiNoktalari` dört kapı için
+   yalnızca boş `Kapi_1..4` noktası koyuyor (`BusDoor` Slide, `openPositionOffset` sıfır): KAPILAR düğmesi oyun mantığında çalışıyor
+   ama görünürde hiçbir şey açılıp kapanmıyor, kapı boşluklarından otobüsün içi görünüyor. İstenen: `conecto_donustur.py`'de sağdaki
+   4 kapıya ayrı kanat parçaları (BMC gibi `Kapi_1_Sol/Sag …` ya da Conecto'nun gerçek kapısına uygun içe/dışa açılan çift kanat), camlı
+   ve kaplama renginde; kurucuda Conecto'yu `SetupDoors` (DoorGroups) yoluna al ve 4 grup tanımla (arka gövdedeki 3. ve 4. kapı
+   `ArkaGovde`'nin çocuğu olmalı). Yerelde: prefabı kur, telefonda dört kapı açılıyor mu, yolcular kapılardan inip biniyor mu.
+2. **Otobüslerin içi gri / kaplamasız (kullanıcı):** Conecto'da koltuklar dışında iç duvar ve tavan dokusuz düz renk
+   (`conecto_ic.py`: `M_IcDuvar` 0,80 gri, `M_IcTavan` 0,90). İstenen: iç yan panellere (pencere altı) ve tavana doku — ör. açık bej/krem
+   panel, pencere altında koyu gri plastik bant, tavanda ışık şeridi ve reklam çerçeveleri, zeminde sarı tutunma çizgisi, kapı
+   çevresinde sarı uyarı şeridi; BMC ve Millennium içine de bak (aynı "boş" görünüm var mı). Gece otobüs içi `IcIsik` ile aydınlanıyor;
+   renkler gece de seçilsin.
+3. **Gece otobüs dışı gri (kullanıcı):** yerelde gece ışık probları hareketli nesneler için ×1,8 (akşam ×1,25) güçlendirildi
+   (`IsikSeti.Uygula(hareketliCarpan)`, `HavaVeZaman.GeceProbCarpani`) ve karlı sis 15 → 30 m'den başlıyor (dış kamera Conecto'da
+   ~21 m geride). Yine yetmezse: Conecto arka yüz dokusu (`onarka*.png`) gece neredeyse düz gri; arka yüze kaplama rengi/şeridi.

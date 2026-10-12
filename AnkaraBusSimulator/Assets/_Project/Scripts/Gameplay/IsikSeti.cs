@@ -17,7 +17,9 @@ namespace AnkaraBus.Gameplay
 
         public static string Yol(string sahne, OyunSecimi.Zaman zaman) => $"IsikSetleri/{sahne}_{zaman}";
 
-        public void Uygula()
+        /// <param name="hareketliCarpan">Probların parlaklık çarpanı: yalnızca otobüs ve trafik gibi hareketli nesneleri etkiler
+        /// (binalar lightmap'ten aydınlanır). Gece problar yalnızca seyrek lamba ışığı ve kısık gök taşıdığı için otobüs grileşiyordu.</param>
+        public void Uygula(float hareketliCarpan = 1f)
         {
             var maps = new LightmapData[renk.Length];
             for (int i = 0; i < renk.Length; i++)
@@ -31,7 +33,7 @@ namespace AnkaraBus.Gameplay
             for (int p = 0; p < sh.Length; p++)
                 for (int c = 0; c < 3; c++)
                     for (int k = 0; k < 9; k++)
-                        sh[p][c, k] = problar[p * 27 + c * 9 + k];
+                        sh[p][c, k] = problar[p * 27 + c * 9 + k] * hareketliCarpan;
             // sahnenin prob nesnesine dokunma (Editor'de varlığa yazılmasın): kopyası
             var kopya = Object.Instantiate(probes);
             kopya.bakedProbes = sh;
