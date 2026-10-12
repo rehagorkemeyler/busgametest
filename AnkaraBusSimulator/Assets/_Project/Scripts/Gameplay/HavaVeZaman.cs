@@ -229,15 +229,13 @@ namespace AnkaraBus.Gameplay
                     lamba.SetActive(true);
             }
             var bus = otobus.transform;
-            // kabin: kokpit ve yolcu kamerasında içerisi karanlık kalmasın
-            var ic = new GameObject("IcIsik").AddComponent<Light>();
-            ic.transform.SetParent(bus, false);
-            ic.transform.localPosition = new Vector3(0f, 2.4f, 0.5f);
-            ic.type = LightType.Point;
-            ic.range = 9f;
-            ic.intensity = 1.6f;
-            ic.color = new Color(0.9f, 0.95f, 1f);
-            ic.shadows = LightShadows.None;
+            // kabin: kokpit ve yolcu kamerasında içerisi karanlık kalmasın. Her gövdenin (körüklüde ön ve arka) ortasında, boyuna
+            // yetecek menzilde bir ışık: tek ışık önde dururken 18 m'lik körüklünün ortası ve arkası griye dönüyordu.
+            var koruklu = otobus.GetComponent<KorukluOtobus>();
+            var arka = koruklu != null && koruklu.ArkaGovde != null ? koruklu.ArkaGovde.transform : null;
+            IcIsik(bus, arka);
+            if (arka != null)
+                IcIsik(arka, null);
             // far: Düşük kalitede yalnızca lamba camları yanar (gerçek zamanlı ışık doluluk maliyeti)
             if (GrafikAyarlari.Mevcut == KaliteSeviyesi.Dusuk)
                 return;
@@ -252,6 +250,40 @@ namespace AnkaraBus.Gameplay
             far.intensity = zaman == OyunSecimi.Zaman.Gece ? 3.5f : 1.8f;
             far.color = new Color(1f, 0.96f, 0.88f);
             far.shadows = LightShadows.None;
+        }
+
+        /// <summary>Gövdenin çarpışma kutularının boyuna ortasına tavan altında beyaz nokta ışık (gölgesiz; dış yüzler ışığa
+        /// sırtını döndüğü için dışarıyı aydınlatmaz).</summary>
+        private static void IcIsik(Transform govde, Transform haric)
+        {
+            float on = float.MinValue, son = float.MaxValue, tavan = 2.8f;
+            foreach (var c in govde.GetComponentsInChildren<BoxCollider>(true))
+            {
+                if (!c.name.StartsWith("Carpisma_") || (haric != null && c.transform.IsChildOf(haric)))
+                    continue;
+                foreach (float z in new[] { c.center.z - c.size.z * 0.5f, c.center.z + c.size.z * 0.5f })
+                {
+                    float yerel = govde.InverseTransformPoint(c.transform.TransformPoint(new Vector3(c.center.x, c.center.y, z))).z;
+                    on = Mathf.Max(on, yerel);
+                    son = Mathf.Min(son, yerel);
+                }
+                // gövde kökleri farklı yükseklikte (körüklünün arka gövdesi mafsal yüksekliğinde): tavanı kutudan oku
+                tavan = govde.InverseTransformPoint(c.transform.TransformPoint(c.center + Vector3.up * c.size.y * 0.5f)).y;
+            }
+            if (on < son)
+            {
+                on = 5.9f;
+                son = -6.1f;
+            }
+            float boy = on - son;
+            var ic = new GameObject("IcIsik").AddComponent<Light>();
+            ic.transform.SetParent(govde, false);
+            ic.transform.localPosition = new Vector3(0f, tavan - 0.45f, (on + son) * 0.5f);
+            ic.type = LightType.Point;
+            ic.range = Mathf.Max(9f, boy * 0.75f);
+            ic.intensity = 2f;
+            ic.color = new Color(0.92f, 0.96f, 1f);
+            ic.shadows = LightShadows.None;
         }
 
         // ------------------------------------------------------------ yağmur

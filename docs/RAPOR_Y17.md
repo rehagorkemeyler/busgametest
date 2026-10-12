@@ -55,6 +55,10 @@ Kullanıcı A32'yi bağladı (onay). A32 Düşük'te kare hızı **45'te sınır
   **Yerelde yapıldı:** gece probları ×1,8, akşam ×1,25 (`IsikSeti.Uygula(hareketliCarpan)`; binalar lightmap'le aydınlandığı için
   etkilenmez, maliyeti yok), karlı sis 30 m'den başlıyor. Sonrasında Conecto'nun yan yüzünde kırmızı EGO kaplaması seçiliyor; arka yüz
   dokusu kendisi açık gri.
+- **Gece iç mekân gri:** tek iç ışık sürücünün arkasındaydı (menzil 9 m); 18 m'lik Conecto'nun ortası ve arkası loş problarla
+  kalıyordu. **Yerelde yapıldı:** her gövdenin (körüklüde ön ve arka) tavanı altında, ortasında bir ışık, menzil gövde boyunun
+  %75'i (en az 9 m), şiddet 1,6 → 2 (`HavaVeZaman.IcIsik`). A32 görüntüsünde körüğe kadar iç aydınlık; duvarlar dokusuz düz gri (bulut).
+- Kullanıcı: gündüz de biraz soluk, gece çok daha belirgin. Bu düzeltmelerle oyun APK'sı A32'ye kuruldu, kullanıcı gece bakacak.
 - **Conecto kapıları çalışmıyor, kapı yerinden içerisi görünüyor:** modelde kapı kanadı yok, kurucu yalnızca boş kapı noktaları koyuyor.
 - **İç mekân koltuklar dışında gri, kaplamasız:** iç duvar/tavan dokusuz düz renk (`conecto_ic.py`).
 

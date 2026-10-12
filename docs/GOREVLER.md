@@ -222,8 +222,10 @@ rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md →
 2. **Otobüslerin içi gri / kaplamasız (kullanıcı):** Conecto'da koltuklar dışında iç duvar ve tavan dokusuz düz renk
    (`conecto_ic.py`: `M_IcDuvar` 0,80 gri, `M_IcTavan` 0,90). İstenen: iç yan panellere (pencere altı) ve tavana doku — ör. açık bej/krem
    panel, pencere altında koyu gri plastik bant, tavanda ışık şeridi ve reklam çerçeveleri, zeminde sarı tutunma çizgisi, kapı
-   çevresinde sarı uyarı şeridi; BMC ve Millennium içine de bak (aynı "boş" görünüm var mı). Gece otobüs içi `IcIsik` ile aydınlanıyor;
-   renkler gece de seçilsin.
-3. **Gece otobüs dışı gri (kullanıcı):** yerelde gece ışık probları hareketli nesneler için ×1,8 (akşam ×1,25) güçlendirildi
-   (`IsikSeti.Uygula(hareketliCarpan)`, `HavaVeZaman.GeceProbCarpani`) ve karlı sis 15 → 30 m'den başlıyor (dış kamera Conecto'da
-   ~21 m geride). Yine yetmezse: Conecto arka yüz dokusu (`onarka*.png`) gece neredeyse düz gri; arka yüze kaplama rengi/şeridi.
+   çevresinde sarı uyarı şeridi; BMC ve Millennium içine de bak (aynı "boş" görünüm var mı). Gece de renkler seçilsin.
+3. **Gece otobüsün dışı ve içi gri (kullanıcı; gündüz sorun yok):** yerelde yapılan: ışık probları hareketli nesnelerde gece ×1,8
+   (akşam ×1,25; `IsikSeti.Uygula(hareketliCarpan)`, `HavaVeZaman.GeceProbCarpani`), karlı sis 15 → 30 m (dış kamera Conecto'da ~21 m
+   geride), iç ışık otobüs boyunca (bkz. RAPOR_Y17). Hâlâ gri kalırsa bulut: Conecto arka yüz dokusu (`onarka*.png`) gece neredeyse düz
+   gri, arka yüze kaplama rengi/şeridi; iç tavan ışık şeritlerine yayılan (emissive) doku.
+   **Gündüz de biraz soluk (kullanıcı):** Conecto `M_Govde` `_BaseColor` FBX'ten 0,906 geliyor (renk %10 koyu) → 1; kaplama dokularında
+   doygunluk ve panel/kapı çerçevesi ayrıntısı.
