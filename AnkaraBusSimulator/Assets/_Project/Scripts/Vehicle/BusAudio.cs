@@ -304,8 +304,9 @@ namespace AnkaraBus.Vehicle
             if (index < 0 || index >= doorSources.Count)
                 return;
             var clips = open ? doorOpen : doorClose;
-            if (index < clips.Length && clips[index] != null)
-                OneShot(doorSources[index], clips[index], masterVolume);
+            // klip sayısından fazla kapı (Conecto'da 4 kapı, 3 klip): fazladan kapılar son klibi çalar
+            if (clips.Length > 0 && clips[Mathf.Min(index, clips.Length - 1)] != null)
+                OneShot(doorSources[index], clips[Mathf.Min(index, clips.Length - 1)], masterVolume);
         }
 
         private void OnStopServed(BusStop stop)

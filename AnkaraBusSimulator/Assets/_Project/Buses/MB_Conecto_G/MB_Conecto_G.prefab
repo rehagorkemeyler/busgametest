@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3877347102672475093}
+  m_Father: {fileID: 3222189828622851498}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &928146424709638616
 WheelCollider:
@@ -71,6 +71,41 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
+--- !u!1 &1108552963793168138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822608232495037777}
+  m_Layer: 0
+  m_Name: Tekerlekler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1822608232495037777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108552963793168138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8318728886614084667}
+  - {fileID: 4516871595570806671}
+  - {fileID: 7244856743311371398}
+  - {fileID: 1072515102710385579}
+  m_Father: {fileID: 5543572295749544805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210435293537915967
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3222189828622851498}
+  m_Father: {fileID: 1822608232495037777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4888242099545665443
 WheelCollider:
@@ -171,11 +206,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8318728886614084667}
-  - {fileID: 4516871595570806671}
-  - {fileID: 7244856743311371398}
-  - {fileID: 1072515102710385579}
-  m_Father: {fileID: 5543572295749544805}
+  - {fileID: 4569606364065405082}
+  - {fileID: 6465359915940128998}
+  m_Father: {fileID: 7606783072961446116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836230234315196075
 GameObject:
@@ -207,7 +240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3222189828622851498}
+  m_Father: {fileID: 1822608232495037777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &2557996368709028670
 WheelCollider:
@@ -248,39 +281,6 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1 &2344552239338303610
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3877347102672475093}
-  m_Layer: 0
-  m_Name: Tekerlekler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3877347102672475093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2344552239338303610}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4569606364065405082}
-  - {fileID: 6465359915940128998}
-  m_Father: {fileID: 7606783072961446116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3116872296127136528
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3222189828622851498}
+  m_Father: {fileID: 1822608232495037777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &6117176219961363120
 WheelCollider:
@@ -405,54 +405,6 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1 &4886140203899683681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6854800769292411595}
-  - component: {fileID: 17470218505761663}
-  m_Layer: 0
-  m_Name: Kapi_1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6854800769292411595
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4886140203899683681}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 1, z: 7.78}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5543572295749544805}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &17470218505761663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4886140203899683681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
-  motion: 1
-  openEulerOffset: {x: 0, y: 90, z: 0}
-  openPositionOffset: {x: 0, y: 0, z: 0}
-  duration: 1.2
 --- !u!1 &5090583626651053503
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,9 +450,7 @@ Transform:
   - {fileID: 908990380323267520}
   - {fileID: 7447701549770588361}
   - {fileID: 7606783072961446116}
-  - {fileID: 3222189828622851498}
-  - {fileID: 6854800769292411595}
-  - {fileID: 6365470914144093868}
+  - {fileID: 1822608232495037777}
   - {fileID: 4110261040464304631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -593,16 +543,20 @@ MonoBehaviour:
   doors:
   - name: "\xD6n kap\u0131"
     leaves:
-    - {fileID: 17470218505761663}
+    - {fileID: 5612969373935925097}
+    - {fileID: 846040064518592959}
   - name: "2. kap\u0131"
     leaves:
-    - {fileID: 666514893448930031}
+    - {fileID: 2327462426163566177}
+    - {fileID: 2715680438341554448}
   - name: "3. kap\u0131"
     leaves:
-    - {fileID: 6404347328592315237}
+    - {fileID: 3219048759173463904}
+    - {fileID: 2945373906041277995}
   - name: "4. kap\u0131"
     leaves:
-    - {fileID: 3011462582072979803}
+    - {fileID: 1619040643129149554}
+    - {fileID: 2478606460873555904}
   maxOpenSpeedKmh: 3
 --- !u!114 &2145593709188711670
 MonoBehaviour:
@@ -620,6 +574,10 @@ MonoBehaviour:
   arkaGorseller:
   - {fileID: 6516366581388247915}
   - {fileID: 2969941259522372668}
+  - {fileID: 675258611442609136}
+  - {fileID: 5746049681681882823}
+  - {fileID: 4735256876963555974}
+  - {fileID: 5364680272986139746}
   koruk: {fileID: 2657597176572360572}
   arkaAgirlikMerkezi: {x: 0, y: 0.65, z: -3.3}
 --- !u!114 &1480800383110387536
@@ -918,7 +876,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3877347102672475093}
+  m_Father: {fileID: 3222189828622851498}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5923657952691211905
 WheelCollider:
@@ -1044,9 +1002,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1853476396225387204}
-  - {fileID: 3877347102672475093}
-  - {fileID: 939027190204085009}
-  - {fileID: 6511658759939179425}
+  - {fileID: 3222189828622851498}
   m_Father: {fileID: 5543572295749544805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1261430416479389846
@@ -1178,102 +1134,6 @@ ConfigurableJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1 &7882963353695162933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 939027190204085009}
-  - component: {fileID: 6404347328592315237}
-  m_Layer: 0
-  m_Name: Kapi_3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &939027190204085009
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882963353695162933}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2924029, y: 0, z: -2.6583955}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7606783072961446116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6404347328592315237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882963353695162933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
-  motion: 1
-  openEulerOffset: {x: 0, y: 90, z: 0}
-  openPositionOffset: {x: 0, y: 0, z: 0}
-  duration: 1.2
---- !u!1 &7962309705300217987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6365470914144093868}
-  - component: {fileID: 666514893448930031}
-  m_Layer: 0
-  m_Name: Kapi_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6365470914144093868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7962309705300217987}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 1, z: 1.89}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5543572295749544805}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &666514893448930031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7962309705300217987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
-  motion: 1
-  openEulerOffset: {x: 0, y: 90, z: 0}
-  openPositionOffset: {x: 0, y: 0, z: 0}
-  duration: 1.2
 --- !u!1 &8344926057993193477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1164,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3222189828622851498}
+  m_Father: {fileID: 1822608232495037777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &557453451753442791
 WheelCollider:
@@ -1345,54 +1205,6 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1 &9218955753990123326
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6511658759939179425}
-  - component: {fileID: 3011462582072979803}
-  m_Layer: 0
-  m_Name: Kapi_4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6511658759939179425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9218955753990123326}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2924029, y: 0, z: -5.8583956}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7606783072961446116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3011462582072979803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9218955753990123326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
-  motion: 1
-  openEulerOffset: {x: 0, y: 90, z: 0}
-  openPositionOffset: {x: 0, y: 0, z: 0}
-  duration: 1.2
 --- !u!1001 &799345581227443243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1445,8 +1257,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8028538511638764779, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7747228505348615651, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7559697590898081388, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7206658042825187315, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6884760898062537768, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6720576470111113386, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6295766197383714446, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4009310947881909901, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3658498632460303540, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3167938702003347584, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
@@ -1461,13 +1305,41 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -1346913111956326856, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1080401076721685559, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -701897113188082991, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -625201440874340696, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -575027396682972165, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -296697193250083359, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 771022044147418238, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_Name
       value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256804181514044343, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1302166640094530886, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_CastShadows
@@ -1477,7 +1349,19 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2154529019948192878, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839456941955602237, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4915481762692104521, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317193775871127646, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
@@ -1485,15 +1369,83 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6667537048706335169, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578686432673211590, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8174468269815941843, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795766549080473144, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9038754392837264096, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -6490110064545723756, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5612969373935925097}
+    - targetCorrespondingSourceObject: {fileID: -9105629373755376229, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 846040064518592959}
+    - targetCorrespondingSourceObject: {fileID: 4174184728758262483, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2327462426163566177}
+    - targetCorrespondingSourceObject: {fileID: -7092271104050163864, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2715680438341554448}
+    - targetCorrespondingSourceObject: {fileID: -21011820070370608, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3219048759173463904}
+    - targetCorrespondingSourceObject: {fileID: 4233803359305535940, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2945373906041277995}
+    - targetCorrespondingSourceObject: {fileID: -5426771938863171240, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1619040643129149554}
+    - targetCorrespondingSourceObject: {fileID: 6533080304106219818, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2478606460873555904}
   m_SourcePrefab: {fileID: 100100000, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+--- !u!4 &675258611442609136 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -9058752386887553061, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &771688688934828464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9105629373755376229, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &846040064518592959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771688688934828464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: -0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 0}
 --- !u!4 &908990380323267520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
@@ -1504,6 +1456,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -6984342757040818492, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
   m_PrefabInstance: {fileID: 799345581227443243}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1622678586777766723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7092271104050163864, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2715680438341554448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622678586777766723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: -0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 0}
 --- !u!4 &2657597176572360572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3456079640047268695, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
@@ -1514,9 +1489,106 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2459107530908659735, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
   m_PrefabInstance: {fileID: 799345581227443243}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3384921151372758719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6490110064545723756, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5612969373935925097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3384921151372758719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: 0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 0}
+--- !u!1 &3591239358815147503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4233803359305535940, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2945373906041277995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3591239358815147503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: -0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 7606783072961446116}
+--- !u!1 &3673378699776368376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4174184728758262483, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2327462426163566177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673378699776368376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: 0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 0}
 --- !u!4 &4184970238372422050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3531904922399417737, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4586884603860991347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5426771938863171240, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1619040643129149554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4586884603860991347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: 0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 7606783072961446116}
+--- !u!4 &4735256876963555974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3845832633033134419, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
   m_PrefabInstance: {fileID: 799345581227443243}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5063813123384321563 stripped
@@ -1524,6 +1596,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5571409753401172528, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
   m_PrefabInstance: {fileID: 799345581227443243}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5364680272986139746 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4511211705934190519, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5746049681681882823 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4275665163355284756, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5890129411449892097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6533080304106219818, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2478606460873555904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890129411449892097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: -0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 7606783072961446116}
 --- !u!4 &6516366581388247915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5870741676435736384, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
@@ -1534,6 +1639,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8795471272371089714, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
   m_PrefabInstance: {fileID: 799345581227443243}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8404422027796547323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -21011820070370608, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}
+  m_PrefabInstance: {fileID: 799345581227443243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3219048759173463904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8404422027796547323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130fef6a133a44d01bbc4f11fef267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnkaraBus.Vehicle.BusDoor
+  motion: 2
+  openEulerOffset: {x: 0, y: 90, z: 0}
+  openPositionOffset: {x: 0.09, y: 0, z: 0.6}
+  plugOutOffset: {x: 0.09, y: 0, z: 0}
+  duration: 1.6
+  takip: {fileID: 7606783072961446116}
 --- !u!4 &8796699517210381451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8143632964043655328, guid: f0a1e8399526047e2854c6ec0032023d, type: 3}

@@ -62,6 +62,20 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<TutusTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "kapi")
+            {
+                // Y18: kapı kanatları (Conecto plug kapı), yolcular, sesler, körük, kalite; Conecto → BMC → Millennium (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KapiTesti>();
+                return;
+            }
+            if (Y10Baslatici.Gorev == "gece")
+            {
+                // Y18: gece lambaları, dolgu ışığı (rendering layer), kaplamalar, fren, kalite, FPS; Conecto → BMC → Millennium
+                Time.timeScale = 1f;
+                gameObject.AddComponent<GeceTesti>();
+                return;
+            }
             if (Y10Baslatici.Gorev == "tabela")
             {
                 // Y16: LED hat tabelası, üç otobüs ve kaplamalar, sonra sonraki hat

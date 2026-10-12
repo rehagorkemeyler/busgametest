@@ -57,6 +57,26 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_LambaFren
+    second: {fileID: 2100000, guid: f863fd6a7c7064feea2b0425d9d4bcfb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_LambaIc
+    second: {fileID: 2100000, guid: d0cbdaf6c1c3343ddb490552f0e87f16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_LambaPark
+    second: {fileID: 2100000, guid: 9ed803309e01c4826b755d41f95a6cfc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_LambaPencere
+    second: {fileID: 2100000, guid: f05387920bc164134a68579abd7d44b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_On_Cam
     second: {fileID: 2100000, guid: 652c9de899bb0487487debcc8627131a, type: 2}
   - first:

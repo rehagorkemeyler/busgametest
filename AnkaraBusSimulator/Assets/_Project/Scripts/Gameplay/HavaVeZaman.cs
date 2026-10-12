@@ -287,6 +287,10 @@ namespace AnkaraBus.Gameplay
             isik.intensity = zaman == OyunSecimi.Zaman.Gece ? 0.4f : 0.22f;
             isik.shadows = LightShadows.None;
             isik.renderingLayerMask = (int)bit;
+            // URP ışığın katmanını ek ışık verisinden okur: yalnız Light.renderingLayerMask ile binalar da aydınlanıyordu (Y18)
+            var urp = isik.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalLightData>()
+                      ?? isik.gameObject.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalLightData>();
+            urp.renderingLayers = bit;
             dolguIsigi = isik.transform;
         }
 

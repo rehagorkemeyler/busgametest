@@ -260,3 +260,26 @@ Hareket ayarı gerekiyorsa (dışarı 0,09 m, kayma 0,6 m, 1,6 s) `OtobusKurucu.
 Rapor: `docs/RAPOR_Y18.md` (yukarıdaki maddeler + BMC ve Millennium'da kapılarla ilgili gördüğün sorunlar, ekran görüntüsüyle;
 her kaplama için gece ekran görüntüsü).
 Commit ve **push** et, `git log origin/Ozan -1` ile push'u doğrula.
+
+### Y19 — bulut için: Conecto'yu toparlama (kullanıcı kararı, 13 Ekim)
+Kullanıcı körüklü modeli çok kötü buldu. Dokulu orijinal model (Jendomen'in MAN Lion's Classic SG 313'ü; izin var) indirilemedi, bu yüzden
+**mevcut Conecto toparlanacak**. Sorunlar `docs/RAPOR_Y18.md`, görüntüler `docs/gorseller/y18/`. Her madde ayrı commit; her commit'ten
+sonra yerel için kısa doğrulama promptu (yerel `kapi` ve `gece` testlerini aynı ölçütlerle koşar: `Y18Kurulum.TestBatch`).
+Sıra etkiye göre:
+1. **Tekerlekler:** sekizgen, kaba tekerlekler yerine BMC'nin dokulu tekerleği (`BMC Procity 12LF`, izinli) Conecto ölçüsüne (yarıçap
+   0,51 m, iz genişliği aynı) uyarlanarak; jant, lastik yanağı, bijonlar. Mobil ve tam kalite FBX'te aynı ad ve pivot (`Teker_*`).
+   Kabul: yakından yuvarlak, dokulu (`kapi_mb_kapali_kapi2` ile karşılaştır).
+2. **Kapı kanatları (`conecto_kapilar.py`):** 3–4. kapı kanatlarındaki cam delikleri (`kapali_kapi3/4`: üçgen boşluklar, içerisi görünüyor)
+   kapansın; kanada karışan gövde yüzleri (`acik_kapi3/4`: alt iç köşede kırmızı üçgen) temizlensin; kanat camı cam malzemesi
+   (`*_Cam`), kanat çevresinde ve kasada koyu kauçuk çerçeve. `Govde_Arka` ve `Kapi_4_1`'deki kendini kesen poligon (Unity uyarısı) giderilsin.
+   Kabul: dört kapı kapalıyken delik yok, açıkken kanat temiz; Unity içe aktarmada uyarı yok.
+3. **Gövde gölgelendirmesi:** normaller düz/köşeli görünüyor → auto-smooth (yaklaşık 40°), sert kenarlar korunarak. Kaplama dokularına
+   panel çizgileri, siyah pencere çerçeveleri, tavan ekipmanı (klima kutusu ayrıntısı). Kabul: gündüz yan görünüm yumuşak, renk canlı.
+4. **Körük:** düz gri kutu yerine kıvrımlı, dokulu kauçuk körük (koyu gri, kıvrım aralarında gölge; normal ya da doku).
+5. **Ön/arka yüz:** far, ızgara, tampon, plaka çevresi ayrıntılı doku (`onarka*.png`, üç kaplama).
+6. **Gece yan camları (`conecto_lambalar.py`):** `Lamba_Pencere_*` şu an opak bej panel; yarı saydam ve daha loş sıcak ışık olsun,
+   içerisi (koltuklar, direkler) seçilsin (`gece_mb_*_yan_sag`).
+7. **İç mekân (`conecto_ic.py`, Y18 eylem planı madde 3):** yan paneller açık krem, pencere altı koyu gri bant, tavan ışık şeritleri (gece
+   emissive), zeminde kapı önlerinde sarı şerit.
+**Yerel (bulut değil):** kapı kamerası durakta açılan ön kanatla kapanıyor (`acik_kapi_kamerasi`) → `BusCameraRig.KapiEngeli` kamerayı
+gövdeden en az ~0,5 m dışarıda ve biraz yukarıda tutsun; dolgu ışığı şiddeti (0,4/0,22 sönük, 0,55/0,3 denenecek); A32 gece FPS.
