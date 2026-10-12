@@ -231,3 +231,21 @@ rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md →
    gri, arka yüze kaplama rengi/şeridi; iç tavan ışık şeritlerine yayılan (emissive) doku.
    **Gündüz de biraz soluk (kullanıcı):** Conecto `M_Govde` `_BaseColor` FBX'ten 0,906 geliyor (renk %10 koyu) → 1; kaplama dokularında
    doygunluk ve panel/kapı çerçevesi ayrıntısı.
+
+### Y18 — Conecto kapıları (adım 1, `docs/EYLEM_PLANI_Y18.md`)
+Önce `git pull --rebase origin Ozan`. Bulut Conecto'nun iki FBX'ini kapı kanatlı olarak güncelledi (`conecto_kapilar.py`), `BusDoor`'a
+`Plug` hareketi ve arka gövde takibi (`takip`), kurucuya `SetupPlugKapilar` ekledi.
+1. Unity'yi aç, FBX'ler yeniden içe aktarılsın. **Ankara Bus > Mercedes Conecto (Körüklü) Prefabını Kur** ile prefabı ve
+   tam kalite görseli yeniden kur. Konsolda hata/uyarı yoksa devam; varsa rapora yaz.
+2. Prefabda `Model/…/Kapi_1_1 … Kapi_4_2` var mı, her birinde `BusDoor` (Motion Plug), kapı 3–4'te `takip` = arka gövde mi;
+   `BusDoorController` 4 grup ("Ön kapı", "2. kapı", "3. kapı", "4. kapı").
+3. Editor'de Conecto ile sür: durakta KAPILAR / tek kapı düğmeleri → kanatlar önce dışarı çıkıp sonra yana kayıyor mu (öndeki öne, arkadaki
+   geriye); kapalıyken boşluk/delik veya içerisi görünüyor mu; açıkken kanat gövdeye gömülüyor mu; kapı resmi (kaplama) kanatla kayıyor mu.
+   Dışarıdan ve içeriden (yolcu kamerası) bak. Kaplamayı değiştir (kırmızı/mavi/Özel Halk): kanatlar da değişiyor mu.
+4. Körük kırıkken (virajda dur) 3. ve 4. kapıyı aç: kanatlar arka gövdeyle birlikte mi, kayıyor/titriyor mu.
+5. Kaliteyi Yüksek ↔ Düşük değiştir: kanatlar yerinde kalıyor mu (tam kalite modelde aynı pivot).
+6. Yolcular dört kapıdan inip biniyor mu; kapı sesleri her kapıda mı; kapı kamerası ön kapıyı gösteriyor mu.
+7. A32'de kısa tur (kapılar + FPS). Ekran görüntüleri: kapalı, açık (dış), açık (iç), körük kırık 3. kapı.
+Hareket ayarı gerekiyorsa (dışarı 0,09 m, kayma 0,6 m, 1,6 s) `OtobusKurucu.SetupPlugKapilar` sabitleri; değiştirdiysen rapora yaz.
+Rapor: `docs/RAPOR_Y18.md` (yukarıdaki maddeler + BMC ve Millennium'da kapılarla ilgili gördüğün sorunlar, ekran görüntüsüyle).
+Commit ve **push** et, `git log origin/Ozan -1` ile push'u doğrula.

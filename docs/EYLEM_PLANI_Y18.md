@@ -16,7 +16,7 @@ Kar ve Y16'dan kalan testler bu işler bitince **hep birlikte** yapılacak (kull
 
 ## Sıra ve yapılacaklar
 
-### 1. Conecto kapıları (A) — en önce
+### 1. Conecto kapıları (A) — en önce (bulut kısmı yapıldı: conecto_kapilar.py, BusDoor Plug, SetupPlugKapilar; GOREVLER Y18)
 **Bulut**
 - `tools/blender/conecto_kapilar.py` (FBX son işlem, `conecto_ic.py`'den sonra): sağ yandaki 4 kapının dikdörtgeni içindeki yüzleri
   (dış kaplama, iç panel, tutamak, cam; `KAPILAR` y aralıkları, z 0,3–2,66, x < −1,0) gövdeden ayırıp her kapı için iki kanat yap:

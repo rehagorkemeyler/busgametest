@@ -91,7 +91,8 @@ namespace AnkaraBus.EditorTools
             {
                 new Color(0.84f, 0.11f, 0.13f), new Color(0.11f, 0.25f, 0.63f), new Color(0.2f, 0.59f, 0.87f),
             },
-            // sağdaki 4 kapının ortası (kaynak y aralıkları + 2,87 m; conecto_donustur.KAPILAR)
+            // kanatsız eski FBX için: sağdaki 4 kapının ortası (kaynak y aralıkları + 2,87 m; conecto_donustur.KAPILAR).
+            // Kanatlı FBX'te (tools/blender/conecto_kapilar.py: Kapi_1_1 … Kapi_4_2) SetupPlugKapilar kullanılır.
             KapiNoktalari = new[]
             {
                 new Vector3(1.3f, 1.0f, 7.78f), new Vector3(1.3f, 1.0f, 1.89f),
@@ -217,7 +218,9 @@ namespace AnkaraBus.EditorTools
                 Rigidbody arka = tanim.Koruklu ? SetupArkaGovde(root, body, parts) : null;
                 SetupWheels(root.transform, vehicle, parts, definition.physics, arka);
                 SetupSteeringWheel(root.transform, vehicle, parts);
-                if (tanim.KapiNoktalari != null)
+                if (tanim.Koruklu && parts.ContainsKey("Kapi_1_1"))
+                    SetupPlugKapilar(root, arka, parts);
+                else if (tanim.KapiNoktalari != null)
                     SetupKapiNoktalari(root, arka, tanim.KapiNoktalari);
                 else
                     SetupDoors(root, parts);
@@ -571,6 +574,54 @@ namespace AnkaraBus.EditorTools
                 var leaves = group.FindPropertyRelative("leaves");
                 leaves.arraySize = 1;
                 leaves.GetArrayElementAtIndex(0).objectReferenceValue = door;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>
+        /// Conecto: modeldeki Kapi_N_1 (öndeki) / Kapi_N_2 (arkadaki) kanatları "plug" kapı olur: önce dışarı çıkar, sonra
+        /// gövde boyunca kayar (öndeki öne, arkadaki geriye). Mafsalın gerisindeki kapıların kanatları arka gövdeyi izler.
+        /// </summary>
+        private static void SetupPlugKapilar(GameObject root, Rigidbody arka, Dictionary<string, Transform> parts)
+        {
+            const float Disari = 0.09f, Kayma = 0.6f;
+            var controller = root.AddComponent<BusDoorController>();
+            var so = new SerializedObject(controller);
+            var groups = so.FindProperty("doors");
+            groups.arraySize = 0;
+            float mafsalZ = arka != null ? root.transform.InverseTransformPoint(arka.transform.position).z : float.MinValue;
+            for (int no = 1; no <= 4; no++)
+            {
+                var leaves = new List<BusDoor>();
+                for (int k = 1; k <= 2; k++)
+                {
+                    if (!parts.TryGetValue($"Kapi_{no}_{k}", out var leaf))
+                        continue;
+                    // kanat yönleri otobüs ekseninde: dışarı +x (kapılar sağda), öndeki kanat +z, arkadaki −z
+                    Vector3 disari = new Vector3(Disari, 0f, 0f);
+                    Vector3 acik = disari + new Vector3(0f, 0f, k == 1 ? Kayma : -Kayma);
+                    Vector3 Yerel(Vector3 v) => leaf.parent != null
+                        ? leaf.parent.InverseTransformVector(root.transform.TransformVector(v)) : root.transform.TransformVector(v);
+                    var door = leaf.gameObject.AddComponent<BusDoor>();
+                    var dso = new SerializedObject(door);
+                    dso.FindProperty("motion").enumValueIndex = (int)BusDoor.Motion.Plug;
+                    dso.FindProperty("plugOutOffset").vector3Value = Yerel(disari);
+                    dso.FindProperty("openPositionOffset").vector3Value = Yerel(acik);
+                    dso.FindProperty("duration").floatValue = 1.6f;
+                    if (arka != null && root.transform.InverseTransformPoint(LeafCenter(leaf)).z < mafsalZ)
+                        dso.FindProperty("takip").objectReferenceValue = arka.transform;
+                    dso.ApplyModifiedPropertiesWithoutUndo();
+                    leaves.Add(door);
+                }
+                if (leaves.Count == 0)
+                    continue;
+                int i = groups.arraySize++;
+                var group = groups.GetArrayElementAtIndex(i);
+                group.FindPropertyRelative("name").stringValue = no == 1 ? "Ön kapı" : $"{no}. kapı";
+                var leafList = group.FindPropertyRelative("leaves");
+                leafList.arraySize = leaves.Count;
+                for (int j = 0; j < leaves.Count; j++)
+                    leafList.GetArrayElementAtIndex(j).objectReferenceValue = leaves[j];
             }
             so.ApplyModifiedPropertiesWithoutUndo();
         }

@@ -48,7 +48,10 @@ Kaynaklar: docs/KREDILER.md.
   `Golge_Arka`) her karede ona taşınır, `Koruk` mafsal açısının yarısı kadar döner. Kütle `trailerMassRatio` (0,4) ile bölünür.
   Teker: ön aks + orta aks (ön gövde, `passive` = tahriksiz) + arka aks (arka gövde, çeken). `BusVehicle` her aksın viraj
   denge çubuğunu kendi gövdesine uygular. Arka gövdenin çarpışmaları puanlamaya `KorukluOtobus.ArkaCarpti` ile gelir.
-- 4 kapı: kapı parçası yok; sağda sanal kapı noktaları (z 7.78 / 1.89 / −4.23 / −7.43; arka ikisi arka gövdede), kapasite 150.
+- 4 kapı (Y18): `tools/blender/conecto_kapilar.py` kapı kanatlarını gövdeden ayırır: `Kapi_1_1 … Kapi_4_2` (N_1 öndeki, N_2 arkadaki
+  kanat; pivot kanat dikdörtgeninin ortası, iki modelde aynı), kökün çocuğu. Kurucu (`SetupPlugKapilar`) kanatlara `BusDoor` Plug
+  hareketi verir: önce 9 cm dışarı, sonra 60 cm gövde boyunca (öndeki öne, arkadaki geriye), 1,6 s. Kapı 3–4 kanatları `takip` ile arka
+  gövdeyi izler (körük kırıkken onunla döner). Kanatsız eski FBX'te sanal kapı noktalarına düşer. Kapasite 150.
   Motor sesi arkada (0, 1, −8.2). Direksiyon 45°, kütle 18 t. Kokpit kamerası: `SurucuGozu` (modelde direksiyon yok).
 - Uzunluğa bağlı kodlar `OtobusOlcusu` ile gövde kutularından (`Carpisma_*`) ölçülür: puanlamada ön uç, `YayaGecitleri` ön uç ve
   çarpma kutusu, kapı kamerası ve takip mesafesi (`BusCameraRig`), otomatik pilotta ön uç ve dingil mesafesi.
