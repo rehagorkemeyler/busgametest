@@ -19,7 +19,7 @@ namespace AnkaraBus.Diagnostics
         private void Awake()
         {
             string sahne = SceneManager.GetActiveScene().name;
-            string etiket = $"{sahne}_{OyunSecimi.SeciliZaman}{(OyunSecimi.Yagmur ? "_yagmur" : "")}";
+            string etiket = $"{sahne}_{OyunSecimi.SeciliZaman}{(OyunSecimi.SeciliHava != OyunSecimi.Hava.Acik ? "_" + OyunSecimi.SeciliHava : "")}";
             if (Y10Baslatici.Gorev == "koruklu")
             {
                 // Y14: fırlama zorlama senaryoları, Hat 1 → Hat 2
@@ -46,6 +46,20 @@ namespace AnkaraBus.Diagnostics
                 // Y15: hız sınırı cezası 75 km/s üstünde mi (yalnızca bu hat)
                 Time.timeScale = 1f;
                 gameObject.AddComponent<HizTesti>();
+                return;
+            }
+            if (Y10Baslatici.Gorev == "kar")
+            {
+                // Y17: karlı hava görüntüleri (Kızılay ve son durak, dış/kokpit, durur ve sürerken), FPS, rüzgâr sesi; sonra sonraki hat
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KarTesti>().Ayarla(sonrakiSahne);
+                return;
+            }
+            if (Y10Baslatici.Gorev == "tutus")
+            {
+                // Y17: kuru / yağmur / kar tutuşu: 50 km/s'den fren, Cinnah'ta kalkış, keskin dönüş (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<TutusTesti>();
                 return;
             }
             if (Y10Baslatici.Gorev == "tabela")

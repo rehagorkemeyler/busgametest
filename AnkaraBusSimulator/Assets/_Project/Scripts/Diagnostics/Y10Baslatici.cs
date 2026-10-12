@@ -7,14 +7,15 @@ namespace AnkaraBus.Diagnostics
 {
     /// <summary>
     /// Test başlatıcısı: zamanı, havayı ve kaliteyi ayarlayıp görevi başlatır. Android'de ayarlar
-    /// intent ile verilebilir: am start ... -e gorev olcum|y10|menu|koruklu|kamera|egim|hiz|tabela|anons -e zaman Gunduz|Aksam|Gece -e yagmur 0|1 -e kalite 0|1|2
-    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü; koruklu: KorukluTesti). -e otobus 0|1|2
+    /// intent ile verilebilir: am start ... -e gorev olcum|y10|menu|koruklu|kamera|egim|hiz|tabela|anons|kar|tutus -e zaman Gunduz|Aksam|Gece -e yagmur 0|1 -e hava Acik|Yagmur|Kar -e kalite 0|1|2
+    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü; koruklu: KorukluTesti). -e otobus 0|1|2 -e kaplama N (Y17: hava yagmur'u ezer)
     /// </summary>
     public class Y10Baslatici : MonoBehaviour
     {
         [SerializeField] private OyunSecimi.Zaman zaman = OyunSecimi.Zaman.Gece;
         [SerializeField] private bool yagmur = true;
         [SerializeField] private int kalite = -1;
+        private OyunSecimi.Hava? hava;
         [SerializeField] private string ilkSahne = "Hat1_KizilayAtakule";
 
         /// <summary>Hat sahnelerindeki Y11Hat bunu okur.</summary>
@@ -30,8 +31,9 @@ namespace AnkaraBus.Diagnostics
             IntentOku();
             OyunSecimi.SeciliZaman = zaman;
             OyunSecimi.Yagmur = yagmur;
+            if (hava.HasValue) OyunSecimi.SeciliHava = hava.Value;
             if (kalite >= 0) GrafikAyarlari.Uygula((KaliteSeviyesi)kalite, kaydet: true);
-            Debug.Log($"[Y11] BASLAT gorev={Gorev} zaman={zaman} yagmur={yagmur} kalite={GrafikAyarlari.Mevcut} cihaz={SystemInfo.deviceModel}");
+            Debug.Log($"[Y11] BASLAT gorev={Gorev} zaman={zaman} hava={OyunSecimi.SeciliHava} otobus={OyunSecimi.Otobus} kaplama={OyunSecimi.Kaplama} kalite={GrafikAyarlari.Mevcut} cihaz={SystemInfo.deviceModel}");
             yield return null;
             if (Gorev == "menu")
             {
@@ -39,7 +41,7 @@ namespace AnkaraBus.Diagnostics
                     if (m.GetType().Name == "AnaMenu") m.SendMessage("Yenile", SendMessageOptions.DontRequireReceiver);
                 yield return new WaitForSeconds(3f);
                 yield return new WaitForEndOfFrame();
-                Y11Hat.Kaydet($"y11_menu_{zaman}{(yagmur ? "_yagmur" : "")}.png");
+                Y11Hat.Kaydet($"y11_menu_{zaman}_{OyunSecimi.SeciliHava}.png");
                 Debug.Log("[Y11] BITTI menu");
                 yield break;
             }
@@ -61,6 +63,8 @@ namespace AnkaraBus.Diagnostics
                 if (int.TryParse(Al("kalite") ?? "", out int k)) kalite = k;
                 if (float.TryParse(Al("hiz") ?? "", System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float hz)) Hiz = hz;
                 if (!string.IsNullOrEmpty(Al("otobus")) && int.TryParse(Al("otobus"), out int ot)) OyunSecimi.Otobus = ot;
+                if (System.Enum.TryParse(Al("hava") ?? "", true, out OyunSecimi.Hava h)) hava = h;
+                if (!string.IsNullOrEmpty(Al("kaplama")) && int.TryParse(Al("kaplama"), out int kp)) OyunSecimi.Kaplama = kp;
             }
             catch (System.Exception e)
             {

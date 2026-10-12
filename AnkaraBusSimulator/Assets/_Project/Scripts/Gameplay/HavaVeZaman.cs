@@ -31,6 +31,7 @@ namespace AnkaraBus.Gameplay
         private Transform karEfekti;
         private ZamanAyarlari.Ayar ayar;
         private BusVehicle otobus;
+        private Rigidbody otobusGovdesi;
         private BusCameraRig kamera;
         private GameObject frenLambasi;
         private AudioSource yagmurSesi;
@@ -60,6 +61,7 @@ namespace AnkaraBus.Gameplay
             ayar = ZamanAyarlari.Al(zaman);
             var tracker = FindAnyObjectByType<RouteTracker>();
             otobus = tracker != null ? tracker.GetComponent<BusVehicle>() : null;
+            otobusGovdesi = otobus != null ? otobus.GetComponent<Rigidbody>() : null;
             kamera = FindAnyObjectByType<BusCameraRig>();
             frenLambasi = Bul(otobus, "Lamba_Fren");
 
@@ -101,7 +103,12 @@ namespace AnkaraBus.Gameplay
                 ruzgarSesi.volume = Mathf.MoveTowards(ruzgarSesi.volume, icerde ? 0.08f : 0.3f, Time.deltaTime);
             }
             if (karEfekti != null && Camera.main != null)
-                karEfekti.position = Camera.main.transform.position + Vector3.up * 10f;
+            {
+                // taneler dünya uzayında ~5 sn'de göz hizasına iner: yayıcı otobüsün gideceği yere kaydırılmazsa
+                // sürerken kar geride kalır ve kameranın çevresi boşalır
+                var hiz = otobusGovdesi != null ? Vector3.ProjectOnPlane(otobusGovdesi.linearVelocity, Vector3.up) : Vector3.zero;
+                karEfekti.position = Camera.main.transform.position + Vector3.up * 10f + Vector3.ClampMagnitude(hiz * 4.5f, 80f);
+            }
         }
 
         // ------------------------------------------------------------ zaman
