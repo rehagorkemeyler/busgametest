@@ -1,4 +1,8 @@
-# Y17 raporu (yerel oturum, 12 Ekim 2026) — ARA RAPOR
+# Y17 raporu (yerel oturum, 12 Ekim 2026) — ARA RAPOR, TESTLER ERTELENDİ
+
+> **Kullanıcı kararı:** oyuna otopilot eklenmeyecek, otopilotlu test yok. Kar testleri (FPS tekrarı, tutuş, görüntü) ve Y16'dan
+> kalanlar, bulut `GOREVLER.md` → "Y17 — bulut için" işlerini (gri iç/dış, Conecto kapıları) bitirince **hep birlikte** test edilecek.
+> A32'de ve `~/Desktop/AnkaraOtobus.apk`'de oyun APK'sı (otopilotsuz) kurulu.
 
 > Telefon testleri **kullanıcının onayını bekliyor** (kullanıcı bir süre bilgisayar başında değil). Bu ara rapor yalnızca Mac'teki
 > hazırlığı içerir; 1–5. maddelerin sonuçları telefon testlerinden sonra eklenecek.
@@ -62,13 +66,12 @@ Kullanıcı A32'yi bağladı (onay). A32 Düşük'te kare hızı **45'te sınır
 - **Conecto kapıları çalışmıyor, kapı yerinden içerisi görünüyor:** modelde kapı kanadı yok, kurucu yalnızca boş kapı noktaları koyuyor.
 - **İç mekân koltuklar dışında gri, kaplamasız:** iç duvar/tavan dokusuz düz renk (`conecto_ic.py`).
 
-## Telefon test planı
+## Ertelenen telefon test planı (bulut düzeltmelerinden sonra; otopilot maddesi çıkarıldı)
 | # | Görev | Ayarlar |
 |---|---|---|
 | 1 | `menu` | Karlı seçili menü (üç düğme sığıyor mu, vitrinde "ANKARA") |
 | 1 | `kar` | gündüz / akşam / gece, Yüksek, Conecto |
 | 2 | `tutus` | BMC ve Conecto |
-| 2 | `y10` (otomatik pilot) | `-e hava Kar -e otobus 0` ve `2` |
 | 3 | `kar` | gece, Yüksek (FPS satırları) |
 | 4 | `tabela`, `kamera` | Millennium tabelası, Türkçe harfler, BMC tavan şeridi, Conecto körük ağzı (mavi ve kırmızı kaplama) |
 | 5 | `anons` | kulakla (kullanıcı) |
