@@ -23,12 +23,14 @@ namespace AnkaraBus.Vehicle
             public float en;                 // m (boy dokunun en/boy oranından)
             public bool arka;                // hat numarası tabelası
             public bool arkaGovdede;         // körüklüde arka gövdeye bağlı
+            public float boy;                // >0: levha bu yüksekliğe uzatılır (m)
         }
 
         private struct Yerlesim
         {
             public Levha[] levhalar;
             public string malzeme;           // dokusu değiştirilecek malzeme adı parçası (Millennium)
+            public int arkaGenislik;         // arka (hat no) dokusunun genişliği, nokta (0: ArkaGenislik)
         }
 
         private static Yerlesim Bul(string tanim)
@@ -46,7 +48,20 @@ namespace AnkaraBus.Vehicle
                         },
                     };
                 case "Caio_Millennium_II":
-                    return new Yerlesim { levhalar = new Levha[0], malzeme = "vmatrix" };
+                    // ön tabela modelin "vmatrix" malzemesi (1,51 × 0,20 m). Aynı malzemeyi kullanan küçük arka tabela
+                    // (0,28 × 0,15 m, arka camın arkası) ve iki yan tabela (0,28 × 0,29 m, kapı yanları) ön yazıyı sıkıştırıp
+                    // gösterirdi: üstlerine hat numarası levhası (Y16)
+                    return new Yerlesim
+                    {
+                        malzeme = "vmatrix",
+                        arkaGenislik = 30,
+                        levhalar = new[]
+                        {
+                            new Levha { konum = new Vector3(0f, 2.847f, -6.449f), normal = Vector3.back, en = 0.29f, arka = true },
+                            new Levha { konum = new Vector3(1.218f, 1.315f, 4.161f), normal = Vector3.right, en = 0.29f, boy = 0.295f, arka = true },
+                            new Levha { konum = new Vector3(-1.217f, 1.315f, 2.731f), normal = Vector3.left, en = 0.29f, boy = 0.295f, arka = true },
+                        },
+                    };
                 case "MB_Conecto_G":
                     // ön: dokudaki tabela kutusu (x ±0,98, y 2,50–2,74), yüzey 15° geriye yatık; arka: sağ üst küçük tabela
                     return new Yerlesim
@@ -74,6 +89,12 @@ namespace AnkaraBus.Vehicle
         private int sonKayma = -1;
 
         private string malzemeAdi;
+        private Material ledMalzeme;
+        private int arkaGenislik = ArkaGenislik;
+
+        // malzemedeki tabelada dokunun üst/alt kenarı çerçevenin altında kalıyor (Türkçe harflerin noktası, çengeli):
+        // doku dikeyde bu orana küçültülür
+        private const float MalzemeDikeyOrani = 0.82f;
 
         /// <summary>Türkçe büyük harf (i → İ, ı → I); CultureInfo("tr-TR") her platformda olmayabilir.</summary>
         private static string Buyuk(string s) => s.Replace('i', 'İ').Replace('ı', 'I').ToUpperInvariant();
@@ -81,11 +102,13 @@ namespace AnkaraBus.Vehicle
         private void Start()
         {
             tracker = GetComponent<RouteTracker>();
-            onDoku = YeniDoku(OnGenislik, out onPiksel);
-            arkaDoku = YeniDoku(ArkaGenislik, out arkaPiksel);
-
             var vehicle = GetComponent<BusVehicle>();
             var yer = Bul(vehicle != null && vehicle.Definition != null ? vehicle.Definition.name : name.Replace("(Clone)", ""));
+            if (yer.arkaGenislik > 0)
+                arkaGenislik = yer.arkaGenislik;
+            onDoku = YeniDoku(OnGenislik, out onPiksel);
+            arkaDoku = YeniDoku(arkaGenislik, out arkaPiksel);
+
             var koruklu = GetComponent<KorukluOtobus>();
             foreach (var l in yer.levhalar)
             {
@@ -120,26 +143,51 @@ namespace AnkaraBus.Vehicle
             sr.sprite = Sprite.Create(doku, new Rect(0, 0, doku.width, doku.height), new Vector2(0.5f, 0.5f), doku.width / l.en);
             sr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             sr.receiveShadows = false;
+            if (l.boy > 0f)
+                go.transform.localScale = new Vector3(1f, l.boy / (l.en * doku.height / doku.width), 1f);
         }
 
-        /// <summary>Tabela dokusunu modelin tabela malzemesine (Millennium) yeniden verir. Kalite modeli değişince
-        /// (BusKaliteModeli malzeme bloklarını siler) çağrılır.</summary>
+        /// <summary>Modelin tabela malzemesini (Millennium) tabela dokulu ışıksız malzemeyle değiştirir (gece de yanar).
+        /// Kalite modeli değişince (BusKaliteModeli malzemeleri geri koyar) çağrılır.</summary>
         public void MalzemeyiYenile()
         {
             if (string.IsNullOrEmpty(malzemeAdi) || onDoku == null)
                 return;
+            if (ledMalzeme == null)
+            {
+                // Resources'taki opak URP/Unlit malzeme: shader varyantı build'de var (Shader.Find'e güvenilmez)
+                var sablon = Resources.Load<Material>("Hava/M_LambaParlama");
+                if (sablon != null)
+                {
+                    ledMalzeme = new Material(sablon) { name = "HatTabelasi_LED" };
+                    ledMalzeme.SetColor("_BaseColor", Color.white);
+                    ledMalzeme.SetTexture("_BaseMap", onDoku);
+                    float k = MalzemeDikeyOrani;
+                    ledMalzeme.SetTextureScale("_BaseMap", new Vector2(1f, 1f / k));
+                    ledMalzeme.SetTextureOffset("_BaseMap", new Vector2(0f, -(1f - k) / (2f * k)));
+                }
+            }
             var blok = new MaterialPropertyBlock();
             foreach (var r in GetComponentsInChildren<Renderer>(true))
             {
                 var mats = r.sharedMaterials;
+                bool degisti = false;
                 for (int i = 0; i < mats.Length; i++)
                 {
                     if (mats[i] == null || !mats[i].name.Contains(malzemeAdi))
                         continue;
+                    if (ledMalzeme != null)
+                    {
+                        mats[i] = ledMalzeme;
+                        degisti = true;
+                        continue;
+                    }
                     r.GetPropertyBlock(blok, i);
                     blok.SetTexture(mats[i].HasProperty("_BaseMap") ? "_BaseMap" : "_MainTex", onDoku);
                     r.SetPropertyBlock(blok, i);
                 }
+                if (degisti)
+                    r.sharedMaterials = mats;
             }
         }
 
@@ -214,7 +262,7 @@ namespace AnkaraBus.Vehicle
 
         private void ArkayiCiz(string numara)
         {
-            LedYazi.Ciz(arkaPiksel, ArkaGenislik, LedYazi.Noktalar(numara), 0, true);
+            LedYazi.Ciz(arkaPiksel, arkaGenislik, LedYazi.Noktalar(numara), 0, true);
             Yukle(arkaDoku, arkaPiksel);
         }
 
@@ -228,6 +276,7 @@ namespace AnkaraBus.Vehicle
         {
             if (onDoku != null) Destroy(onDoku);
             if (arkaDoku != null) Destroy(arkaDoku);
+            if (ledMalzeme != null) Destroy(ledMalzeme);
         }
     }
 }

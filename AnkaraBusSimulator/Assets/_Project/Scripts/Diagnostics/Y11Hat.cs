@@ -48,6 +48,24 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<HizTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "tabela")
+            {
+                // Y16: LED hat tabelası, üç otobüs ve kaplamalar, sonra sonraki hat
+                Time.timeScale = 1f;
+                gameObject.AddComponent<TabelaTesti>().Ayarla(sonrakiSahne);
+                return;
+            }
+            if (Y10Baslatici.Gorev == "anons")
+            {
+                // Y16: gerçek zamanlı otomatik pilot, durak anonsları ve FPS; bir durak atlanır (sıradaki durak anonsu yine gelmeli)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KorukluTesti>();
+                var pilot = gameObject.AddComponent<OtomatikPilot>();
+                pilot.Configure(null, sonrakiSahne);
+                pilot.Senaryo(1f, 2, false, 0f);
+                gameObject.AddComponent<AnonsTesti>();
+                return;
+            }
             // her görevde fırlama bekçisi (yalnızca izler)
             gameObject.AddComponent<KorukluTesti>();
             if (Y10Baslatici.Gorev == "olcum")

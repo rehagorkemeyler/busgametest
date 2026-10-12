@@ -50,7 +50,8 @@ namespace AnkaraBus.Diagnostics
             yield return Kipler("baslangic");
             // yolcu kamerasından yanlara (Y13: Conecto iç renkler, Millennium teker yuvaları, BMC etiketleri)
             foreach (var (ad, yaw, pitch) in new[] { ("yolcu_sag_on", 50f, 22f), ("yolcu_sol_on", -50f, 22f), ("yolcu_sag", 95f, 10f),
-                                                     ("yolcu_sol", -95f, 10f), ("yolcu_arka", 175f, 5f), ("kokpit_sag", 60f, 5f) })
+                                                     ("yolcu_sol", -95f, 10f), ("yolcu_arka", 175f, 5f), ("kokpit_sag", 60f, 5f),
+                                                     ("yolcu_tavan_sol", -70f, -30f), ("yolcu_tavan_sag", 70f, -30f), ("yolcu_tavan_arka", 175f, -25f) })
             {
                 rig.SetMode(ad.StartsWith("kokpit") ? BusCameraRig.Mode.Cockpit : BusCameraRig.Mode.Interior);
                 Alan("lookYaw", yaw);
