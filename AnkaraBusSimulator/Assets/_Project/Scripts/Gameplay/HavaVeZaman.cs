@@ -36,7 +36,7 @@ namespace AnkaraBus.Gameplay
         private BusVehicle otobus;
         private Rigidbody otobusGovdesi;
         private BusCameraRig kamera;
-        private GameObject frenLambasi;
+        private GameObject frenLambasi, frenLambasiArka;
         private AudioSource yagmurSesi;
         private Transform yagmurEfekti;
         private Material gokKopyasi;
@@ -68,6 +68,7 @@ namespace AnkaraBus.Gameplay
             otobusGovdesi = otobus != null ? otobus.GetComponent<Rigidbody>() : null;
             kamera = FindAnyObjectByType<BusCameraRig>();
             frenLambasi = Bul(otobus, "Lamba_Fren");
+            frenLambasiArka = Bul(otobus, "Lamba_Fren_Arka");   // körüklü BMC/Millennium: stoplar arka gövdede
 
             if (zaman != OyunSecimi.Zaman.Gunduz)
                 ZamaniUygula();
@@ -92,8 +93,11 @@ namespace AnkaraBus.Gameplay
         {
             if (otobus == null)
                 return;
+            bool fren = otobus.Brake > 0.05f || otobus.BrakePressure > 0.1f;
             if (frenLambasi != null)
-                frenLambasi.SetActive(otobus.Brake > 0.05f || otobus.BrakePressure > 0.1f);
+                frenLambasi.SetActive(fren);
+            if (frenLambasiArka != null)
+                frenLambasiArka.SetActive(fren);
             if (yagmurSesi != null)
             {
                 bool icerde = kamera != null && kamera.IsInside;
@@ -232,14 +236,15 @@ namespace AnkaraBus.Gameplay
         {
             if (otobus == null)
                 return;
-            // Conecto'da (tools/blender/conecto_lambalar.py) ayrıca yan camlar, arka gövdenin park lambaları ve tavan şeridi
+            // körüklüde arka gövdedeki eşleri "_Arka" ekiyle (koruklu_yap.py); Conecto'da ayrıca yan camlar (conecto_lambalar.py)
             foreach (var ad in new[] { "Lamba_KisaFar", "Lamba_Park", "Lamba_Ic1", "Lamba_Ic2", "Lamba_Ic3", "Lamba_IcSerit",
-                                       "Lamba_Park_Arka", "Lamba_IcSerit_Arka", "Lamba_Pencere_On", "Lamba_Pencere_Arka" })
-            {
-                var lamba = Bul(otobus, ad);
-                if (lamba != null)
-                    lamba.SetActive(true);
-            }
+                                       "Lamba_Pencere_On", "Lamba_Pencere" })
+                foreach (var ek in new[] { "", "_Arka" })
+                {
+                    var lamba = Bul(otobus, ad + ek);
+                    if (lamba != null)
+                        lamba.SetActive(true);
+                }
             var bus = otobus.transform;
             // kabin: kokpit ve yolcu kamerasında içerisi karanlık kalmasın. Her gövdenin (körüklüde ön ve arka) ortasında, boyuna
             // yetecek menzilde bir ışık: tek ışık önde dururken 18 m'lik körüklünün ortası ve arkası griye dönüyordu.

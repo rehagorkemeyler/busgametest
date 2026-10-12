@@ -62,6 +62,30 @@ namespace AnkaraBus.Vehicle
                             new Levha { konum = new Vector3(-1.217f, 1.315f, 2.731f), normal = Vector3.left, en = 0.29f, boy = 0.295f, arka = true },
                         },
                     };
+                case "BMC_Procity_18":
+                    // körüklü BMC (koruklu_yap.py): ön gövde BMC'nin önü; arka yüz arka gövdede, BMC'ninkinden 5,30 m geride
+                    return new Yerlesim
+                    {
+                        levhalar = new[]
+                        {
+                            new Levha { konum = new Vector3(0f, 2.62f, 5.64f), normal = Vector3.forward, en = 1.6f },
+                            new Levha { konum = new Vector3(0f, 2.72f, -11.175f), normal = Vector3.back, en = 0.6f, arka = true, arkaGovdede = true },
+                        },
+                    };
+                case "Caio_Millennium_II_G":
+                    // körüklü Millennium: "vmatrix" malzemesi iki gövdede de; arka tabela arka gövdede (5,70 m geride),
+                    // yan tabelalar ön gövdede (Millennium'daki yerleri)
+                    return new Yerlesim
+                    {
+                        malzeme = "vmatrix",
+                        arkaGenislik = 30,
+                        levhalar = new[]
+                        {
+                            new Levha { konum = new Vector3(0f, 2.847f, -12.149f), normal = Vector3.back, en = 0.29f, arka = true, arkaGovdede = true },
+                            new Levha { konum = new Vector3(1.218f, 1.315f, 4.161f), normal = Vector3.right, en = 0.29f, boy = 0.295f, arka = true },
+                            new Levha { konum = new Vector3(-1.217f, 1.315f, 2.731f), normal = Vector3.left, en = 0.29f, boy = 0.295f, arka = true },
+                        },
+                    };
                 case "MB_Conecto_G":
                     // ön: dokudaki tabela kutusu (x ±0,98, y 2,50–2,74), yüzey 15° geriye yatık; arka: sağ üst küçük tabela
                     return new Yerlesim

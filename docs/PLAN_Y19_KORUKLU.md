@@ -63,16 +63,20 @@ Girdi: tek gövdelinin Unity'ye hazır FBX'i (mobil ve tam kalite ayrı ayrı). 
 | 7 iç mekân | kaynağın dokulu iç mekânı |
 
 ## 2. Adımlar (her biri ayrı commit; bulut Blender render'ıyla doğrular, yerel Unity/telefonda)
-1. **Model aracı + BMC körüklü FBX'leri** (mobil, tam kalite) + render seti. *Kabul (bulut):* render'larda kesik koltuk, delik, boşluk,
+1. ✔ (bulut, 13 Ekim) **Model aracı + BMC körüklü FBX'leri** (mobil, tam kalite) + render seti. *Kabul (bulut):* render'larda kesik koltuk, delik, boşluk,
    ters yüz yok; kapılar yerinde; lambalar iki gövdede; tam kalite ve mobilde parça adları ve pivotlar aynı (betik karşılaştırır).
-2. **Unity kurulumu** (kurucu, kapılar, lambalar, tabela, katalog) + yerel prompt. *Kabul (yerel):* prefab hatasız/uyarısız kurulur;
+2. ✔ bulut kısmı (yerel doğrulama: GOREVLER Y19) **Unity kurulumu** (kurucu, kapılar, lambalar, tabela, katalog) + yerel prompt. *Kabul (yerel):* prefab hatasız/uyarısız kurulur;
    menüde seçilir; sürüş (kalkış, fren, viraj, Kuğulu → Cinnah, yokuş) mafsal titremesiz; 4 kapı açılıp kapanır, körük kırıkken
    3–4. kapı arka gövdeyle; yolcular 4 kapıdan iner; gece lambalar (ön/arka), fren, kaplamalar (3); Yüksek ↔ Düşük; A32 FPS ≥ BMC − 5.
-3. **Millennium körüklü** (aynı araç) + yerel doğrulama (aynı ölçütler, 3 kapı).
+3. ✔ bulut kısmı **Millennium körüklü** (aynı araç) + yerel doğrulama (aynı ölçütler, 3 kapı).
 4. **Cila:** körük dokusu/kıvrım, kesim çerçevesi, ikinci filo numarası/etiket tekrarı (arka gövdede aynı yazı iki kez görünüyorsa
    kaplamada düzelt), kapı kamerası, iç ışıkların arka gövdede eşit dağılımı, LED tabela arka gövdede.
 5. **Son tur:** üç zaman × iki hava (açık/kar) × iki körüklü × üç kaplama görüntü seti, sürüş testi, A32 ve S24 FPS, APK.
    Kullanıcı onayı → Conecto dosyaları `Buses/_Arsiv`'e taşınır (ya da silinir; kullanıcıya sorulur).
+
+Bulut notu (13 Ekim): körük katı dönmek yerine iki kemikli deri (virajda bükülür) — 1.3'e ek. BMC'de tavandaki CNG kutusunun kuyruğu
+arka gövdenin başına düşüyordu: silindi, yerine çatı levhası. Render kontrolleri: dış (sağ, sol, ön, arka, üst), körük yakın,
+iç (ön gövde → arka), mafsal 30°.
 
 ## 3. Riskler ve önlemler
 - **Kesim ağzı:** iç mekân kesitinde (taban altı, tavan arası) boşluk görünebilir → çerçeve konturu kesitten ölçülür, iç/dış ayrı yüz.

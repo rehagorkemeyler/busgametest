@@ -9,9 +9,10 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
 - Tekerlekler: Victor Ortega · Silecekler ve hız göstergesi: Luiz Felipe Bonamigo · Hız göstergesi dokusu: Dimitrius Caio Vespasiano
 - Lisans: **CC BY 3.0** — https://creativecommons.org/licenses/by/3.0/
 - Değişiklikler: mobil için sadeleştirme, Ankara kaplamaları (EGO kırmızı, EGO mavi, Özel Halk), parça ayrımı
-  (`tools/blender/millennium_donustur.py`). Model hayran çalışmasıdır; marka adları tanıtım amaçlı.
+  (`tools/blender/millennium_donustur.py`); körüklü versiyon bu modelden türetildi (`tools/blender/koruklu_yap.py`).
+  Model hayran çalışmasıdır; marka adları tanıtım amaçlı.
 
-## Mercedes-Benz O530G Conecto (körüklü)
+## Mercedes-Benz O530G Conecto (körüklü) — Y19'dan beri oyunda değil (dosyalar duruyor)
 
 - Model: **"Zort"** — https://sketchfab.com/privatetrs1
 - Kaynak: https://sketchfab.com/3d-models/mercedes-benz-conecto-ceb9e135aedc4b60a8d815fb54920129
@@ -22,6 +23,7 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
 ## BMC Procity 12LF
 
 - Proton Bus Simulator modu; üreticisinden izin alınarak kullanılıyor (docs/OTOBUS_BMC_PROCITY.md).
+- Körüklü versiyon (BMC Procity 18) bu modelden türetildi (`tools/blender/koruklu_yap.py`).
 
 ## Türkçe yolcu sesi ("Durakta inecek var!") ve durak anonsları
 

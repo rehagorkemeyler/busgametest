@@ -33,7 +33,37 @@ Kaynaklar: docs/KREDILER.md.
 - Sürüş testi (Editor, otomatik pilot, Hat 1): 5/5 durak, takılma yok, 2 çarpışma (trafik aracı öne/arkaya). BMC aynı testte 0 çarpışma.
   `Unity -batchmode ... -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1OtobusBatch -otobus 1`.
 
-## Mercedes O530G Conecto (körüklü)
+## Körüklü versiyonlar: BMC Procity 18 ve Caio Millennium II körüklü (Y19)
+
+Plan: `docs/PLAN_Y19_KORUKLU.md`. Conecto'nun yerine (menüden çıktı, kurulabilir durumda). Tek gövdelinin kendi dokulu
+modelinden `tools/blender/koruklu_yap.py` ile üretilir; FBX, malzemeler, dokular ve kaplamalar tek gövdelinin klasöründe ortak
+(`Tanim.Klasor`). Prefab: **Ankara Bus → BMC Procity 18 (Körüklü) / Caio Millennium II (Körüklü) Prefabını Kur**.
+
+| | BMC_Procity_18 (`Buses/BMC_Procity_12LF/`) | Caio_Millennium_II_G (`Buses/Caio_Millennium_II/`) |
+|---|---|---|
+| Boy | −11,19 … 5,89 (17,1 m) | −12,24 … 6,11 (18,8 m) |
+| Ön gövde | kaynak [−3,55 … ön]: ön kapı, orta kapı, ön aks 2,93, orta aks −2,72 | kaynak [−4,00 … ön]: ön kapı, orta kapı, ön aks 3,53, orta aks −3,12 |
+| Körük / mafsal | 0,9 m, mafsal (0, 1, −4,00) | 0,9 m, mafsal (0, 1, −4,45) |
+| Arka gövde | kaynak [arka … 0,85], 5,30 m geri: 3. kapı (kaynağın K2'si), 4. kapı (K3), çeken aks −8,02 | kaynak [arka … 0,80], 5,70 m geri: 3. kapı (K2), çeken aks −8,82 |
+| Çokgen (mobil / tam) | Govde_On 79 / 110 bin, Govde_Arka 41 / 57 bin | 34 / 59 bin, 20 / 35 bin |
+
+- Parçalar: `Govde_On`, `Govde_Arka` ve `Koruk` (pivot mafsalda), `Teker_OnSol/OnSag`, `Teker_OrtaSol/OrtaSag`, `Teker_ArkaSol/ArkaSag`,
+  `Kapi_N_K`, `Direksiyon`, `Lamba_*` (ön gövde) ve `Lamba_*_Arka` (arka gövde; stop `Lamba_Fren_Arka`), `Golge_On/Golge_Arka`.
+  Adı `_Arka` ile biten her parça oyunda arka gövdeyle hareket eder (`KorukluOtobus.arkaGorseller`, kurucu otomatik doldurur).
+- Kesim: dış kabuk ve büyük parçalar düzlemde kesilir; kesimden geçen iç mekân parçaları (koltuk, direk) silinir. Gövdelerin açık
+  uçlarında kauçuk çerçeve (`M_KorukCerceve`; dış kontur kesitin dışbükey zarfı, iç açıklık x ±1,05, taban … 2,45 m).
+  BMC'de tavandaki CNG kutusunun kuyruğu arka gövdenin başına düşüyordu: silindi, yerine düz çatı levhası.
+- Körük: 14 kıvrımlı akordeon, dış ve iç yüzey, dokulu kauçuk (`Textures/koruk.png`, `M_Koruk`), tabanda döner tabla. Oyunda
+  **iki kemikli deri** (`OtobusKurucu.KorukDerisi`, `<Ad>_KorukDeri.asset`): ön ucu ön gövdeye, arka ucu arka gövdeye bağlı, virajda bükülür.
+- Kapılar: kaynağın menteşeli kanatları (`SetupDoors`), mafsalın gerisindekiler `BusDoor.takip` ile arka gövdeyi izler. Grup adları
+  "Ön kapı", "2. kapı", "3. kapı"(, "4. kapı").
+- Fizik: BMC'den kopya + BMC 18: 17,5 t, arka %38, ağırlık merkezi (0, 0,6, −0,4), arka gövde (0, 0,65, −4,0); Millennium G: 18 t,
+  arka %40, teker 0,525, direksiyon 48°, arka gövde (0, 0,65, −4,4). Motor sesi arka gövdenin sonunda.
+- Hat tabelası (`HatTabelasi.Bul`): ön tabela kaynağınki; arka tabela arka gövdede.
+- Üretim: `Blender -b --python tools/blender/koruklu_yap.py -- --kaynak <tek gövdeli>.fbx --otobus bmc|millennium` (mobil ve
+  `_TamKalite` için ayrı ayrı; çıktı kaynağın klasörüne `<Ad>.fbx` / `<Ad>_TamKalite.fbx`).
+
+## Mercedes O530G Conecto (körüklü) — Y19'da menüden çıktı
 
 - `MB_Conecto_G.fbx` (mobil) ve `MB_Conecto_G_TamKalite.fbx`. Prefab: **Ankara Bus → Mercedes Conecto (Körüklü) Prefabını Kur**.
 - Parçalar (Unity yerel, kök zeminde, ön +Z): `Govde_On`, `Govde_Arka` ve `Koruk` (pivotları mafsalda: (0, 1.0, −1.57)),

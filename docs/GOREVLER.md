@@ -283,3 +283,34 @@ Sıra etkiye göre:
    emissive), zeminde kapı önlerinde sarı şerit.
 **Yerel (bulut değil):** kapı kamerası durakta açılan ön kanatla kapanıyor (`acik_kapi_kamerasi`) → `BusCameraRig.KapiEngeli` kamerayı
 gövdeden en az ~0,5 m dışarıda ve biraz yukarıda tutsun (13 Ekim'de iki basit deneme tutmadı, bkz. RAPOR_Y18; başka açı gerek); dolgu ışığı şiddeti 0,55/0,3 yapıldı; A32 gece FPS.
+
+### Y19 — yerel: körüklü BMC ve Millennium (Conecto yerine; `docs/PLAN_Y19_KORUKLU.md`)
+Kullanıcı kararı: körüklü otobüsler BMC ve Millennium'un kendi dokulu modellerinden. Bulut iki körüklüyü üretti
+(`tools/blender/koruklu_yap.py`; FBX'ler tek gövdelilerin klasöründe: `BMC_Procity_12LF/BMC_Procity_18(_TamKalite).fbx`,
+`Caio_Millennium_II/Caio_Millennium_II_G(_TamKalite).fbx`, `Textures/koruk.png`) ve kurucuyu, kapıları, lambaları, tabelayı,
+kataloğu güncelledi. Conecto menüden çıktı (dosyaları duruyor, kurucu menüsü duruyor). Ayrıntı: `docs/OTOBUSLER.md` → Körüklü versiyonlar.
+Önce `git pull --rebase origin Ozan`.
+1. **Kurulum:** Unity'yi aç (FBX'ler içe aktarılsın; **Unity uyarıları dahil** konsolu rapora yaz). Sırayla **Ankara Bus → BMC Procity 18
+   (Körüklü) Prefabını Kur**, **Caio Millennium II (Körüklü) Prefabını Kur**; sonra **BMC Procity** ve **Caio Millennium** prefablarını
+   da yeniden kur (kurucu malzeme eşlemesi değişti, tek gövdelilerde değişiklik olmamalı: önce/sonra aynı görüntü). Kontrol:
+   `Materials/`'ta yinelenen malzeme yok, yeni `M_Koruk` (dokulu), `M_KorukCerceve`, `M_KorukTabla`; körüklü modellerde gömülü malzeme kalmadı.
+   Prefabda: `KorukluOtobus` (arkaGorseller: Govde_Arka, Golge_Arka, Lamba_*_Arka; `koruk` boş), `Koruk/KorukDeri` (SkinnedMeshRenderer,
+   kemikler kök + ArkaGovde), `BusDoorController` 4 grup (BMC) / 3 grup (Millennium), arka gövde kanatlarında `takip = ArkaGovde`.
+   Katalogda 4 otobüs: BMC, Millennium, BMC körüklü, Millennium körüklü.
+2. **Test araçları:** `KapiTesti`/`GeceTesti`'nde Conecto sırası (katalog indeksi) değişti → iki körüklüyü kapsayacak şekilde güncelle
+   (Conecto adımlarındaki ölçütler körüklülere). Yeni görev `koruklu`: aşağıdaki 3–6. maddelerin görüntü ve ölçümleri.
+3. **Görünüm (iki körüklü, üç kaplama):** dıştan sağ/sol/ön/arka/üstten, körük yakın, içeriden yolcu kamerası (ön gövde → körük → arka
+   gövde), kokpit. Kabul: delik, boşluk, ters yüz, havada parça, kesik koltuk yok; kesim çerçevesi gövdeye oturuyor; körük kıvrımlı ve
+   dokulu; kaplama iki gövdede de doğru (EGO kırmızı/mavi/Özel Halk); Yüksek ↔ Düşük'te parça kaybolmuyor/kaymıyor.
+4. **Sürüş:** Hat 1 ve Hat 2 tam sefer (otopilot yok, elle): kalkış, fren, Kuğulu → Cinnah dönüşü, Cinnah yokuşu, durak cepleri.
+   Kabul: mafsal titremiyor/fırlamıyor, körük virajda **bükülüyor** (iki gövdeye bağlı kalıyor, dış köşede boşluk, iç köşede gövdeye
+   gömülme yok; `KorukDeri`), arka gövde kaldırıma gömülmüyor, kamera arka gövdeye takılmıyor. Titreme/fırlama varsa önce
+   `SetupArkaGovde` sönümleri, sonra `ArkaAgirlik`/`trailerMassRatio` (değiştirdiysen yaz).
+5. **Kapılar:** her kapı açılıp kapanıyor, körük kırıkken arka gövde kapıları gövdeyle birlikte; yolcular bütün kapılardan iniyor; sesler
+   her kapıda; kapı kamerası (Y18'de Conecto'da açılan kanat görüntüyü kapatıyordu: `BusCameraRig` kapı kamerası gövdeden ≥ 0,5 m dışarıda).
+6. **Gece/akşam (açık ve kar):** farlar, park (iki gövde), stoplar (`Lamba_Fren_Arka`, frende), iç ışıklar iki gövdede, dolgu ışığı
+   (binaları aydınlatmıyor), LED tabela ön ve arka (arka gövdede, gövdeyle dönüyor).
+7. **Performans:** A32 Düşük ve S24 Yüksek'te Hat 1 gündüz ve gece FPS: BMC, BMC körüklü, Millennium, Millennium körüklü.
+   Kabul: körüklü, tek gövdeliden en fazla 5 FPS düşük. Değilse rapora çokgen/çizim sayısıyla yaz (bulut arka gövde iç mekânını sadeleştirir).
+8. APK: menüde dört otobüs, Krediler'de körüklü satırları.
+Rapor: `docs/RAPOR_Y19.md` (her madde, ekran görüntüleri `docs/gorseller/y19/`), commit, **push**, `git log origin/Ozan -1` ile doğrula.
