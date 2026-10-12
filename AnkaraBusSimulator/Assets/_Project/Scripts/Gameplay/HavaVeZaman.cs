@@ -26,6 +26,9 @@ namespace AnkaraBus.Gameplay
 
         private OyunSecimi.Zaman zaman;
         private bool yagmur;
+        private bool kar;
+        private AudioSource ruzgarSesi;
+        private Transform karEfekti;
         private ZamanAyarlari.Ayar ayar;
         private BusVehicle otobus;
         private BusCameraRig kamera;
@@ -53,6 +56,7 @@ namespace AnkaraBus.Gameplay
         {
             zaman = OyunSecimi.SeciliZaman;
             yagmur = OyunSecimi.Yagmur;
+            kar = OyunSecimi.Kar;
             ayar = ZamanAyarlari.Al(zaman);
             var tracker = FindAnyObjectByType<RouteTracker>();
             otobus = tracker != null ? tracker.GetComponent<BusVehicle>() : null;
@@ -63,7 +67,11 @@ namespace AnkaraBus.Gameplay
                 ZamaniUygula();
             if (yagmur)
                 YagmuruUygula();
-            if (zaman != OyunSecimi.Zaman.Gunduz || yagmur)
+            if (kar)
+                KariUygula();
+            // yol tutuşu: ıslak yolda biraz, karda belirgin kayar (BusVehicle tekerlerin sürtünme sertliğine uygular)
+            BusVehicle.HavaTutusu = kar ? 0.6f : yagmur ? 0.85f : 1f;
+            if (zaman != OyunSecimi.Zaman.Gunduz || yagmur || kar)
                 PaletiDegistir();
         }
 
@@ -71,6 +79,7 @@ namespace AnkaraBus.Gameplay
         {
             if (gokKopyasi != null)
                 Destroy(gokKopyasi);
+            BusVehicle.HavaTutusu = 1f;
         }
 
         private void Update()
@@ -86,6 +95,13 @@ namespace AnkaraBus.Gameplay
             }
             if (yagmurEfekti != null && Camera.main != null)
                 yagmurEfekti.position = Camera.main.transform.position + Vector3.up * 12f;
+            if (ruzgarSesi != null)
+            {
+                bool icerde = kamera != null && kamera.IsInside;
+                ruzgarSesi.volume = Mathf.MoveTowards(ruzgarSesi.volume, icerde ? 0.08f : 0.3f, Time.deltaTime);
+            }
+            if (karEfekti != null && Camera.main != null)
+                karEfekti.position = Camera.main.transform.position + Vector3.up * 10f;
         }
 
         // ------------------------------------------------------------ zaman
@@ -109,7 +125,7 @@ namespace AnkaraBus.Gameplay
             {
                 gunes.transform.rotation = Quaternion.Euler(ayar.gunesAcisi);
                 gunes.color = ayar.gunesRengi;
-                gunes.intensity = ayar.gunesSiddeti * (yagmur ? 0.5f : 1f);
+                gunes.intensity = ayar.gunesSiddeti * (yagmur || kar ? 0.5f : 1f);
                 gunes.shadowStrength = ayar.golgeGucu;
             }
             GokyuzuVeSis();
@@ -125,9 +141,9 @@ namespace AnkaraBus.Gameplay
             {
                 gokKopyasi = new Material(RenderSettings.skybox);
                 if (zaman != OyunSecimi.Zaman.Gunduz)
-                    ZamanAyarlari.GokyuzuAyarla(gokKopyasi, ayar, yagmur);
+                    ZamanAyarlari.GokyuzuAyarla(gokKopyasi, ayar, yagmur || kar);
                 else
-                    ZamanAyarlari.GokyuzuAyarla(gokKopyasi, Gunduz(), yagmur);
+                    ZamanAyarlari.GokyuzuAyarla(gokKopyasi, Gunduz(), yagmur || kar);
                 RenderSettings.skybox = gokKopyasi;
             }
             RenderSettings.fog = true;
@@ -140,6 +156,14 @@ namespace AnkaraBus.Gameplay
                 sis = Color.Lerp(sis, new Color(0.5f, 0.53f, 0.56f) * (zaman == OyunSecimi.Zaman.Gece ? 0.15f : 1f), 0.6f);
                 bas = 25f;
                 bit = Mathf.Min(bit, 420f);
+            }
+            if (kar)
+            {
+                // kar: beyazımsı, yakın sis (gece mavimsi koyu); yağan kar görüşü kapatır
+                sis = Color.Lerp(sis, zaman == OyunSecimi.Zaman.Gunduz ? new Color(0.83f, 0.85f, 0.88f)
+                    : new Color(0.16f, 0.18f, 0.22f) * (zaman == OyunSecimi.Zaman.Gece ? 0.6f : 1.6f), 0.75f);
+                bas = 15f;
+                bit = Mathf.Min(bit, 320f);
             }
             RenderSettings.fogColor = sis;
             RenderSettings.fogStartDistance = bas;
@@ -248,6 +272,69 @@ namespace AnkaraBus.Gameplay
             yagmurSesi.Play();
         }
 
+        // ------------------------------------------------------------ kar
+
+        private void KariUygula()
+        {
+            if (zaman == OyunSecimi.Zaman.Gunduz)
+            {
+                // karlı gündüz: güneş kısık ve gölgeler soluk (kapalı hava), gök beyazımsı gri
+                var gunes = RenderSettings.sun;
+                if (gunes != null)
+                {
+                    gunes.intensity *= 0.55f;
+                    gunes.shadowStrength *= 0.5f;
+                }
+                GokyuzuVeSis();
+            }
+            var prefab = Resources.Load<GameObject>(KaynakKlasoru + "Kar");
+            if (prefab != null)
+            {
+                karEfekti = Instantiate(prefab).transform;
+                karEfekti.name = "Kar";
+            }
+            else
+                Debug.LogWarning("[HavaVeZaman] Kar prefabı yok (Ankara Bus > Hava ve Gece Malzemelerini Kur).");
+
+            ruzgarSesi = gameObject.AddComponent<AudioSource>();
+            ruzgarSesi.clip = RuzgarSesiUret();
+            ruzgarSesi.loop = true;
+            ruzgarSesi.spatialBlend = 0f;
+            ruzgarSesi.volume = 0f;
+            ruzgarSesi.Play();
+        }
+
+        /// <summary>8 sn'lik döngüsel hafif rüzgâr: süzülmüş gürültü, yavaşça kabarıp sönen (karlı havanın uğultusu).</summary>
+        private static AudioClip RuzgarSesiUret()
+        {
+            const int hz = 22050;
+            int n = hz * 8;
+            var veri = new float[n];
+            var rnd = new System.Random(11);
+            float d1 = 0f, d2 = 0f;
+            for (int i = 0; i < n; i++)
+            {
+                float g = (float)(rnd.NextDouble() * 2.0 - 1.0);
+                d1 += 0.02f * (g - d1);          // alçak geçiren: uğultu
+                d2 += 0.004f * (d1 - d2);
+                float t = (float)i / n;
+                // döngü başı ve sonu aynı olsun diye zarf sinüslerden
+                float zarf = 0.55f + 0.3f * Mathf.Sin(t * Mathf.PI * 2f) + 0.15f * Mathf.Sin(t * Mathf.PI * 6f + 1f);
+                veri[i] = (d1 - d2) * 6f * zarf;
+            }
+            // uçları yumuşat (döngü tıkırtısız)
+            int yum = hz / 10;
+            for (int i = 0; i < yum; i++)
+            {
+                float k = (float)i / yum;
+                veri[i] *= k;
+                veri[n - 1 - i] *= k;
+            }
+            var clip = AudioClip.Create("Ruzgar", n, 1, hz, false);
+            clip.SetData(veri, 0);
+            return clip;
+        }
+
         /// <summary>4 sn'lik döngüsel yağmur sesi: süzülmüş gürültü + rastgele damla tıkırtıları.</summary>
         private static AudioClip YagmurSesiUret()
         {
@@ -294,7 +381,8 @@ namespace AnkaraBus.Gameplay
         private void PaletiDegistir()
         {
             bool gece = ayar.lamba > 0f;
-            string ad = gece && yagmur ? "M_AnkaraPalet_GeceIslak" : gece ? "M_AnkaraPalet_Gece" : "M_AnkaraPalet_Islak";
+            string ad = kar ? (gece ? "M_AnkaraPalet_GeceKarli" : "M_AnkaraPalet_Karli")
+                : gece && yagmur ? "M_AnkaraPalet_GeceIslak" : gece ? "M_AnkaraPalet_Gece" : "M_AnkaraPalet_Islak";
             var yeni = Resources.Load<Material>(KaynakKlasoru + ad);
             if (yeni == null)
             {

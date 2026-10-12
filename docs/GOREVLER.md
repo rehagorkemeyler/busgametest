@@ -198,3 +198,16 @@ kırmızı şerit (Y15) düzeltildi (Conecto FBX'leri yeniden üretildi). Ayrın
 > 3. **Conecto içi:** yolcu kamerasıyla arkaya/körüğe bak, kırmızı şerit kaldı mı. **BMC:** gece iç ışık şeridinde Türkçe Ankarakart yazısı.
 > 4. Telefonda (S24 FE) Hat 1'i Conecto ile bir kez sür, FPS'i Y15 ile karşılaştır (tabela dokusu kayarken her karede yüklenir).
 > Sonuçları `docs/RAPOR_Y16.md`'ye, görüntüleri `docs/onizleme/y16/`'ya koy. APK'yı güncelle. Commit'le, push'la. Yarıda kesilirsen önce raporu push et.
+
+### Y17 — Kar ve Y16'dan kalanlar
+Bulut tarafı: menüde hava **Açık / Yağmurlu / Karlı**; karda yağan kar, karlı zemin (çim, kaldırım, çatı beyaz, asfalt ıslak), beyazımsı sis ve gök,
+rüzgâr uğultusu, yol tutuşu karda %60, yağmurda %85 (docs/HAVA_ZAMAN.md → Kar). Conecto körük ağzındaki şerit (Y16 raporu) kök nedeni bulundu
+(yüz normalinin sıfıra çok yakın x bileşeni "dışa bakıyor" sayılıyordu), düzeltildi; Conecto FBX'leri yeniden üretildi.
+**Prompt:**
+> `git pull origin Ozan` yap, derleme hatası varsa düzelt. Unity açılınca `HavaZamanKurucu.EksikseKur` kar malzemelerini ve `Kar.prefab`'ı kurmalı (Konsol: "Malzemeler, yağmur ve kar prefabları kuruldu"; kurmazsa **Ankara Bus → Hava ve Gece Malzemelerini Kur**). `Resources/Hava/T_AnkaraPalet_Karli.png` nokta süzgeçli, sıkıştırmasız mı. **Ankara Bus → Mercedes Conecto (Körüklü) Prefabını Kur**.
+> 1. **Kar:** menüde ZAMAN · HAVA'da "Karlı" seç (üç hava düğmesi sığıyor mu, seçim kalıcı mı; eski "Yağmurlu" kaydı doğru okunuyor mu). Hat 1 ve Hat 2'yi gündüz, akşam ve gece karlı başlat: kar yağıyor mu (yoğunluk, tane boyu, rüzgârla salınma; kokpitten ve dış kameradan), çim/kaldırım/çatılar beyaz, asfalt koyu-ıslak mı, palet kaymış ya da yanlış hücre boyanmış bir şey var mı (ör. bina duvarı beyaz, yol çizgisi kaybolmuş), sis ve gök uyumlu mu, gece pencereler yanıyor mu. Rüzgâr sesi içeride kısık mı. Ekran görüntüsü al (gündüz ve gece, Kızılay ve Atakule).
+> 2. **Tutuş:** `HizTesti` benzeri ölç (ya da elle): 50 km/s'den tam frende duruş mesafesi kuru / yağmur / kar; Cinnah yokuşunda karda kalkış (patinaj, geri kayma), keskin dönüşte savrulma. Oynanış için fazla kaygansa `HavaVeZaman`'daki 0,6 / 0,85'i ayarla. Otomatik pilotla karda Hat 1 (`-otobus 0` ve `2`): durak, çarpışma, takılma.
+> 3. **Telefon FPS:** S24 FE Yüksek'te karlı gece Kızılay ve Atakule'de dış ve kokpit kamerasıyla FPS ölç (2500 parçacık + gürültü modülü); 60'ın altına düşüyorsa `KarPrefabi`'ndaki `maxParticles`/`rateOverTime`'ı düşür ya da Düşük kalitede gürültü modülünü kapat.
+> 4. **Y16'dan kalanlar:** düzeltilmiş APK ile Millennium tabelası (gündüz/gece, Türkçe işaretler, arka/yan hat no), Türkçe harf boşluğu, menü vitrininde "ANKARA", BMC gece tavan şeridinde Ankarakart yazısı, Conecto körük ağzında şerit kalmadı mı (mavi ve kırmızı kaplamada).
+> 5. **Anons okunuşu (kulakla):** Kızılay AVM, Kuğulu Park, Cinnah, Sıhhiye, Ulus doğru mu; kötüyse not et.
+> Sonuçları `docs/RAPOR_Y17.md`'ye, görüntüleri `docs/onizleme/y17/`'ye koy. APK'yı güncelle. Commit'le, **push'la ve push'un gittiğini kontrol et**. Yarıda kesilirsen önce raporu push et.

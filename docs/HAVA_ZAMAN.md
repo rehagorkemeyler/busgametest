@@ -1,6 +1,6 @@
-# Zaman (Gündüz / Akşam / Gece) ve Yağmur
+# Zaman (Gündüz / Akşam / Gece), Yağmur ve Kar
 
-Ana menünün **ZAMAN · HAVA** satırında seçilir (`OyunSecimi.SeciliZaman`, `OyunSecimi.Yagmur`).
+Ana menünün **ZAMAN · HAVA** satırında seçilir (`OyunSecimi.SeciliZaman`, `OyunSecimi.SeciliHava`: Açık / Yağmurlu / Karlı).
 Hat sahnesinde `Gameplay/HavaVeZaman.cs` uygular. Bu bileşen sahneye eklenmez: otobüs ve rota olan her sahne yüklenince kendiliğinden oluşur.
 
 ## Akşam ve gece
@@ -33,6 +33,18 @@ Set bake edilmemişse uyarı yazılır ve binalar gündüz ışığında kalır.
 - **Gök ve sis:** Gök gri, sis yoğun (25–420 m), güneş kısık.
 - **Ses:** Yağmur sesi oyun açılırken üretilir (gürültü + damla tıkırtıları, ses dosyası yok). Kokpit ve yolcu görünümünde daha kısık duyulur.
 
+## Kar
+
+- **Kar taneleri:** Kameranın 10 m üstünde 50×50 m alandan yavaşça süzülür, rüzgârla salınır (gürültü modülü). En çok 2500 parçacık,
+  tek malzeme (`Resources/Hava/Kar.prefab`, `M_Kar`, `T_KarTanesi`).
+- **Karlı zemin:** Palet malzemesinin karlı kopyası (`M_AnkaraPalet_Karli`, gecede `_GeceKarli`): çim, toprak, kaldırım, bordür, düz çatı
+  ve kiremit beyaz, ağaçlar karlı, asfalt ıslak/sulu kar. Doku `tools/hava/karli_palet.py` ile paletten üretilir
+  (`Resources/Hava/T_AnkaraPalet_Karli.png`); palete renk eklenince yeniden çalıştırılmalı.
+- **Gök ve sis:** Beyazımsı gri gök, yakın sis (15–320 m; gece koyu mavimsi), güneş kısık, gölgeler soluk.
+- **Ses:** Hafif rüzgâr uğultusu (oyun açılırken üretilir), içeride kısık.
+- **Yol tutuşu:** Karda tekerlerin sürtünme sertliği %60'a, yağmurda %85'e iner (`BusVehicle.HavaTutusu`): fren mesafesi uzar,
+  virajda ve kalkışta kayma artar.
+
 ## Malzemeler
 
 **Ankara Bus → Hava ve Gece Malzemelerini Kur** bir kez çalıştırılır. Şunları `Resources/Hava` altına üretir:
@@ -48,4 +60,3 @@ Bu malzemeler hazır durur, çünkü oyunda shader anahtar kelimesi açmak build
 
 - **Silecekler:** BMC modunda silecek tek bir obje olarak geliyor (iki silecek birlikte, 20 animasyon karesi). Ayrı dönen parçalara ayırmak modelin yeniden dönüştürülmesini gerektiriyor; ayrı bir iş olarak bırakıldı.
 - **Trafik araçlarında far yok:** Low-poly modellerde lamba parçası yok.
-- **Islak yolda tutuş:** Yağmurda yol tutuşu değişmiyor.

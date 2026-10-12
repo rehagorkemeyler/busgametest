@@ -33,7 +33,7 @@ namespace AnkaraBus.UI
         private readonly List<Image> hatKartlari = new List<Image>();
         private readonly List<Image> kaplamaDugmeleri = new List<Image>();
         private readonly Image[] zamanDugmeleri = new Image[OyunSecimi.ZamanAdlari.Length];
-        private readonly Image[] havaDugmeleri = new Image[2];
+        private readonly Image[] havaDugmeleri = new Image[3];
         private readonly Image[] kaliteDugmeleri = new Image[GrafikAyarlari.SeviyeAdlari.Length];
         private GameObject yukleniyor;
         private Text yukleniyorYazi;
@@ -163,9 +163,9 @@ namespace AnkaraBus.UI
             }
             for (int i = 0; i < havaDugmeleri.Length; i++)
             {
-                bool yagmur = i == 1;
-                havaDugmeleri[i] = Dugme(root, yagmur ? "Yağmurlu" : "Açık", new Vector2(0f, 1f), new Vector2(650f + i * 170f, zamanY - 60f),
-                    new Vector2(160f, 70f), 26, () => { OyunSecimi.Yagmur = yagmur; Yenile(); });
+                var hava = (OyunSecimi.Hava)i;
+                havaDugmeleri[i] = Dugme(root, OyunSecimi.HavaAdlari[i], new Vector2(0f, 1f), new Vector2(620f + i * 170f, zamanY - 60f),
+                    new Vector2(160f, 70f), 26, () => { OyunSecimi.SeciliHava = hava; Yenile(); });
             }
 
             // Görüntü kalitesi
@@ -312,7 +312,7 @@ namespace AnkaraBus.UI
             for (int i = 0; i < zamanDugmeleri.Length; i++)
                 zamanDugmeleri[i].color = (int)OyunSecimi.SeciliZaman == i ? Active : Panel;
             for (int i = 0; i < havaDugmeleri.Length; i++)
-                havaDugmeleri[i].color = (i == 1) == OyunSecimi.Yagmur ? Active : Panel;
+                havaDugmeleri[i].color = (int)OyunSecimi.SeciliHava == i ? Active : Panel;
             for (int i = 0; i < kaliteDugmeleri.Length; i++)
                 kaliteDugmeleri[i].color = (int)GrafikAyarlari.Mevcut == i ? Active : Panel;
         }

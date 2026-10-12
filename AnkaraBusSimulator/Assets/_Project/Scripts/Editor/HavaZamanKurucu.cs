@@ -38,7 +38,9 @@ namespace AnkaraBus.EditorTools
         public static void EksikseKur()
         {
             if (AssetDatabase.LoadAssetAtPath<Material>(HavaKlasoru + "M_AnkaraPalet_Gece.mat") != null
-                && AssetDatabase.LoadAssetAtPath<GameObject>(HavaKlasoru + "Yagmur.prefab") != null)
+                && AssetDatabase.LoadAssetAtPath<GameObject>(HavaKlasoru + "Yagmur.prefab") != null
+                && AssetDatabase.LoadAssetAtPath<Material>(HavaKlasoru + "M_AnkaraPalet_Karli.mat") != null
+                && AssetDatabase.LoadAssetAtPath<GameObject>(HavaKlasoru + "Kar.prefab") != null)
                 return;
             Debug.Log("[HavaZaman] Resources/Hava eksik, kuruluyor.");
             MalzemeleriKur();
@@ -86,9 +88,29 @@ namespace AnkaraBus.EditorTools
             EditorUtility.SetDirty(yagmurMalzeme);
             YagmurPrefabi(yagmurMalzeme);
 
+            // kar: karlı palet (tools/hava/karli_palet.py üretir: çim, kaldırım, çatı beyaz, asfalt ıslak), gece kopyası, kar tanesi
+            var karliDoku = PaletDokusunuHazirla(HavaKlasoru + "T_AnkaraPalet_Karli.png");
+            if (karliDoku != null)
+            {
+                var karli = Kopya(palet, "M_AnkaraPalet_Karli");
+                KarliYap(karli, karliDoku);
+                var geceKarli = Kopya(palet, "M_AnkaraPalet_GeceKarli");
+                KarliYap(geceKarli, karliDoku);
+                Pencereli(geceKarli, pencere);
+            }
+            else
+                Debug.LogWarning("[HavaZaman] T_AnkaraPalet_Karli.png yok (python tools/hava/karli_palet.py); karda yollar karsız kalır.");
+            var tane = DokuKaydet(HavaKlasoru + "T_KarTanesi.png", KarTanesiDokusu(), false);
+            var karMalzeme = Malzeme("M_Kar", "Universal Render Pipeline/Particles/Unlit");
+            Saydam(karMalzeme);
+            karMalzeme.SetTexture("_BaseMap", tane);
+            Renk(karMalzeme, new Color(1f, 1f, 1f, 0.9f));
+            EditorUtility.SetDirty(karMalzeme);
+            KarPrefabi(karMalzeme);
+
             SisVaryantlariniTut();
             AssetDatabase.SaveAssets();
-            Debug.Log("[HavaZaman] Malzemeler ve yağmur prefabı kuruldu: " + HavaKlasoru);
+            Debug.Log("[HavaZaman] Malzemeler, yağmur ve kar prefabları kuruldu: " + HavaKlasoru);
         }
 
         [MenuItem("Ankara Bus/Akşam ve Gece Işığını Bake Et/Hat 1")]
@@ -250,6 +272,88 @@ namespace AnkaraBus.EditorTools
         }
 
         /// <summary>İnce dikey damla izi: ortası opak, kenarları ve uçları saydam.</summary>
+        /// <summary>Palet dokusu gibi içe aktarır (nokta süzgeç, sıkıştırmasız, mipmap yok); yoksa null.</summary>
+        private static Texture2D PaletDokusunuHazirla(string yol)
+        {
+            if (AssetImporter.GetAtPath(yol) is TextureImporter imp)
+            {
+                imp.filterMode = FilterMode.Point;
+                imp.mipmapEnabled = false;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(yol);
+        }
+
+        private static void KarliYap(Material m, Texture2D doku)
+        {
+            if (m.HasProperty("_BaseMap"))
+                m.SetTexture("_BaseMap", doku);
+            if (m.HasProperty("_MainTex"))
+                m.SetTexture("_MainTex", doku);
+            if (m.HasProperty("_Smoothness"))
+                m.SetFloat("_Smoothness", 0.15f);
+            EditorUtility.SetDirty(m);
+        }
+
+        /// <summary>Yumuşak kenarlı kar tanesi (beyaz daire, kenara doğru saydam).</summary>
+        private static Texture2D KarTanesiDokusu()
+        {
+            const int n = 32;
+            var t = new Texture2D(n, n, TextureFormat.RGBA32, false);
+            for (int y = 0; y < n; y++)
+                for (int x = 0; x < n; x++)
+                {
+                    float dx = (x + 0.5f) / n * 2f - 1f, dy = (y + 0.5f) / n * 2f - 1f;
+                    float a = Mathf.Clamp01(1f - Mathf.Sqrt(dx * dx + dy * dy));
+                    t.SetPixel(x, y, new Color(1f, 1f, 1f, a * a));
+                }
+            return t;
+        }
+
+        /// <summary>Kameranın 10 m üstünde 50×50 m alandan yavaşça süzülen kar (dünya uzayında, kamerayı izler; rüzgârla salınır).</summary>
+        private static void KarPrefabi(Material malzeme)
+        {
+            var go = new GameObject("Kar");
+            try
+            {
+                var ps = go.AddComponent<ParticleSystem>();
+                var main = ps.main;
+                main.loop = true;
+                main.startLifetime = 9f;
+                main.startSpeed = new ParticleSystem.MinMaxCurve(0.9f, 1.6f);
+                main.startSize = new ParticleSystem.MinMaxCurve(0.04f, 0.11f);
+                main.startColor = new Color(1f, 1f, 1f, 0.9f);
+                main.gravityModifier = 0.02f;
+                main.maxParticles = 2500;
+                main.simulationSpace = ParticleSystemSimulationSpace.World;
+                main.playOnAwake = true;
+                main.prewarm = true;
+                var emission = ps.emission;
+                emission.rateOverTime = 280f;
+                var shape = ps.shape;
+                shape.shapeType = ParticleSystemShapeType.Box;
+                shape.scale = new Vector3(50f, 50f, 0.1f);
+                shape.rotation = new Vector3(90f, 0f, 0f); // kutunun ileri yönü aşağı
+                var noise = ps.noise;
+                noise.enabled = true;
+                noise.strength = 0.7f;
+                noise.frequency = 0.25f;
+                noise.scrollSpeed = 0.2f;
+                noise.quality = ParticleSystemNoiseQuality.Low;
+                var r = go.GetComponent<ParticleSystemRenderer>();
+                r.renderMode = ParticleSystemRenderMode.Billboard;
+                r.sharedMaterial = malzeme;
+                r.shadowCastingMode = ShadowCastingMode.Off;
+                r.receiveShadows = false;
+                PrefabUtility.SaveAsPrefabAsset(go, HavaKlasoru + "Kar.prefab");
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+            }
+        }
+
         private static Texture2D DamlaDokusu()
         {
             const int w = 8, h = 64;

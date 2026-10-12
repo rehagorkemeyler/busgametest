@@ -163,7 +163,7 @@ def siniflandir(o, mats):
         if n.length < 0.5 or not (abs(c.x) < 1.32 and 0.3 < c.z < 2.95):
             return False
         if abs(c.x) < (1.24 if korukte(c.y) else ic_x) and c.z < 2.9 and ic_y[0] < c.y < ic_y[1]:
-            if korukte(c.y) and abs(c.x) >= ic_x and n.x * c.x > 0:
+            if korukte(c.y) and abs(c.x) >= ic_x and n.x * (1 if c.x > 0 else -1) > 0.5:
                 return False  # körük ağzında yan duvarın dış yüzü (dışarı bakıyor)
             return True
         return agac.ray_cast(c + n * 0.003, n, 4.0)[0] is not None

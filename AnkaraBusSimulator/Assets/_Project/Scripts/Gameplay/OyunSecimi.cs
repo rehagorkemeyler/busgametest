@@ -60,11 +60,26 @@ namespace AnkaraBus.Gameplay
             set { PlayerPrefs.SetInt("Zaman", (int)value); PlayerPrefs.Save(); }
         }
 
+        public enum Hava { Acik, Yagmur, Kar }
+
+        public static readonly string[] HavaAdlari = { "Açık", "Yağmurlu", "Karlı" };
+
+        /// <summary>Hava (yağış, sis, yol tutuşu). Hat sahnesinde HavaVeZaman uygular. Eski kayıt "Yagmur" (0/1) okunur.</summary>
+        public static Hava SeciliHava
+        {
+            get => PlayerPrefs.HasKey("Hava")
+                ? (Hava)Mathf.Clamp(PlayerPrefs.GetInt("Hava", 0), 0, HavaAdlari.Length - 1)
+                : PlayerPrefs.GetInt("Yagmur", 0) == 1 ? Hava.Yagmur : Hava.Acik;
+            set { PlayerPrefs.SetInt("Hava", (int)value); PlayerPrefs.Save(); }
+        }
+
         public static bool Yagmur
         {
-            get => PlayerPrefs.GetInt("Yagmur", 0) == 1;
-            set { PlayerPrefs.SetInt("Yagmur", value ? 1 : 0); PlayerPrefs.Save(); }
+            get => SeciliHava == Hava.Yagmur;
+            set => SeciliHava = value ? Hava.Yagmur : Hava.Acik;
         }
+
+        public static bool Kar => SeciliHava == Hava.Kar;
 
         public static string EnIyiPuanAnahtari(string hatNumarasi) =>
             "EnIyiPuan_" + (string.IsNullOrEmpty(hatNumarasi) ? "Hat" : hatNumarasi);

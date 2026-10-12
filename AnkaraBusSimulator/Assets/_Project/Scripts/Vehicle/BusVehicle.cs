@@ -55,6 +55,11 @@ namespace AnkaraBus.Vehicle
         private float brake;
         private float steer;
 
+        /// <summary>Havaya göre yol tutuşu çarpanı (1 kuru, yağmur 0,85, kar 0,6); HavaVeZaman ayarlar,
+        /// bütün otobüslerin teker sürtünme sertliğine bir sonraki fizik adımında uygulanır.</summary>
+        public static float HavaTutusu { get; set; } = 1f;
+        private float uygulananTutus = 1f;
+
         public BusPhysicsSpec Spec => definition != null ? definition.physics : fallbackSpec;
         public BusDefinition Definition => definition;
 
@@ -162,6 +167,23 @@ namespace AnkaraBus.Vehicle
             EngineRpm = spec.idleRpm;
         }
 
+        private void TutusuUygula(BusPhysicsSpec spec)
+        {
+            uygulananTutus = HavaTutusu;
+            foreach (var w in wheels)
+            {
+                var c = w.collider;
+                if (c == null)
+                    continue;
+                var ileri = c.forwardFriction;
+                ileri.stiffness = spec.tireGrip * HavaTutusu;
+                c.forwardFriction = ileri;
+                var yan = c.sidewaysFriction;
+                yan.stiffness = spec.tireGrip * HavaTutusu;
+                c.sidewaysFriction = yan;
+            }
+        }
+
         private static WheelFrictionCurve Friction(float extSlip, float extValue, float asymSlip, float asymValue, float stiffness)
         {
             return new WheelFrictionCurve
@@ -197,6 +219,8 @@ namespace AnkaraBus.Vehicle
         public void Step(float dt)
         {
             var spec = Spec;
+            if (!Mathf.Approximately(uygulananTutus, HavaTutusu))
+                TutusuUygula(spec);
             float speedKmh = SpeedKmh;
 
             // Kapılar açıkken: gaz kesilir, fren tutulur
