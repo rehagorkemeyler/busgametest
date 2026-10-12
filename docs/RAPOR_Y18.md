@@ -29,7 +29,7 @@
 | 5. Kalite | Yüksek ↔ Düşük: kanat merkezleri 1–6 mm içinde aynı, kapalı ve açık ✔ |
 | 6. Yolcular | Üç durakta inen kapı başına [0,4,2,3], [0,0,1,3], [1,1,2,1]: 2–4. kapılardan iniyor ✔ (ön kapı sayımı biniş kuyruğu). Biniş ön kapıdan (BusPassengers tasarımı). |
 | 6. Ses | Kapı 1–3 ✔. **Kapı 4 sessizdi** (BusAudio'da 3 klip) → **düzeltildi**: fazladan kapı son klibi çalar (`BusAudio.OnDoor`). |
-| 6. Kapı kamerası | Durakta (sığınak engeli) kamera gövdeye yapışıyor; **açılan ön kanat (öne kayıyor) görüntünün yarısını kapatıyor** (`acik_kapi_kamerasi`). BMC'de sorun yok. → Y19 |
+| 6. Kapı kamerası | Durakta (sığınak engeli) kamera gövdeye yapışıyor; **açılan ön kanat (öne kayıyor) görüntünün yarısını kapatıyor** (`acik_kapi_kamerasi`). BMC'de sorun yok. 13 Ekim iki deneme (ışın kaynağını burnun önüne almak → kamera aynanın arkasında; gövdeye yaklaşınca yükselmek → tavan kenarı görüntüyü kaplıyor, BMC de bozuldu) geri alındı. Açık sorun. |
 | 7. A32 | **Yapılmadı.** |
 
 **BMC ve Millennium kapıları:** üçü/ikisi Rotate, açılıp kapanıyor, sesler her kapıda ✔ (`bmc_acik_kapi2`, `caio_acik_kapi1`). Yeni sorun görülmedi.
@@ -42,7 +42,7 @@
 | Kalite | Yüksek ↔ Düşük: lambalar kaybolmuyor ✔ |
 | Körük | Arka gövde lambaları arka gövdeye göre 0,0 cm kayma ✔ |
 | **Dolgu ışığı binaları aydınlatıyordu** | Otobüs kadrajda değilken dolgu açık/kapalı ortalama parlaklık farkı gece 0,146–0,158, akşam 0,074–0,080 (bina renderer'larında bit 6 yok ama ışık yine de etkiliyordu). → **Düzeltildi**: `HavaVeZaman.DolguIsigi` ışığa `UniversalAdditionalLightData` ekleyip `renderingLayers = 1<<6`. Sonra fark **0,0000** ✔ |
-| Şiddet | Düzeltmeden sonra otobüs biraz sönük (kırmızı seçiliyor, `gece_mb_otobus_dolgu_acik/kapali`). 0,55/0,3 denenecekti, **yapılmadı**; değerler 0,4/0,22 kaldı. |
+| Şiddet | Düzeltmeden sonra 0,4/0,22'de otobüs biraz sönüktü. **13 Ekim: gece 0,55, akşam 0,3** yapıldı; binalara etkisi yine yok (fark 0,0000 / −0,0007), otobüs kadrajda fark gece 0,015 → 0,020; mavi kaplama gece seçiliyor. |
 | Kaplama rengi | Kırmızı, mavi, Özel Halk gece yandan seçiliyor (`gece_mb_*_yan_sag`); yan camlar sıcak yanıyor ama **opak bej panel** gibi (içerisi görünmüyor) → Y19 |
 | FPS (Mac) | Dolgu açık/kapalı 60/60 (vsync sınırı, anlamsız). A32 yapılmadı. |
 

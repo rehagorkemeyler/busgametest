@@ -284,7 +284,7 @@ namespace AnkaraBus.Gameplay
             var isik = new GameObject("OtobusDolguIsigi").AddComponent<Light>();
             isik.type = LightType.Directional;
             isik.color = new Color(1f, 0.88f, 0.74f);
-            isik.intensity = zaman == OyunSecimi.Zaman.Gece ? 0.4f : 0.22f;
+            isik.intensity = zaman == OyunSecimi.Zaman.Gece ? 0.55f : 0.3f;   // Y18: rendering layer düzelince 0,4/0,22 sönük kaldı
             isik.shadows = LightShadows.None;
             isik.renderingLayerMask = (int)bit;
             // URP ışığın katmanını ek ışık verisinden okur: yalnız Light.renderingLayerMask ile binalar da aydınlanıyordu (Y18)

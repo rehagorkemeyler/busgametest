@@ -282,4 +282,4 @@ Sıra etkiye göre:
 7. **İç mekân (`conecto_ic.py`, Y18 eylem planı madde 3):** yan paneller açık krem, pencere altı koyu gri bant, tavan ışık şeritleri (gece
    emissive), zeminde kapı önlerinde sarı şerit.
 **Yerel (bulut değil):** kapı kamerası durakta açılan ön kanatla kapanıyor (`acik_kapi_kamerasi`) → `BusCameraRig.KapiEngeli` kamerayı
-gövdeden en az ~0,5 m dışarıda ve biraz yukarıda tutsun; dolgu ışığı şiddeti (0,4/0,22 sönük, 0,55/0,3 denenecek); A32 gece FPS.
+gövdeden en az ~0,5 m dışarıda ve biraz yukarıda tutsun (13 Ekim'de iki basit deneme tutmadı, bkz. RAPOR_Y18; başka açı gerek); dolgu ışığı şiddeti 0,55/0,3 yapıldı; A32 gece FPS.
