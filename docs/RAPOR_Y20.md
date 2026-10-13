@@ -130,5 +130,4 @@ duvarından geçiyordu (`s24_sundurma_once_bmc18_inis_yan`). Hat 1 duraklarında
 
 ## 8. APK
 - Test (`Builds/AnkaraBus_y11_test.apk`) ve oyun (`Builds/AnkaraBus.apk`, `~/Desktop/AnkaraOtobus.apk`) APK'ları hatasız. Oyun APK'sı sundurma düzeltmesini içeriyor, `~/Desktop/AnkaraOtobus.apk`'ye kopyalandı.
-- **S24'te şu an test APK'sı kurulu:** son derlemeden sonra telefon adb'den düştü, oyun APK'sı kurulamadı. Bağlanınca kurulacak
-  (`adb install -r Builds/AnkaraBus.apk`).
+- Testlerden sonra S24'e oyun APK'sı (sundurma düzeltmesi dahil) geri kuruldu; telefonda test APK'sı kalmadı.
