@@ -362,3 +362,17 @@ Yapılacaklar:
    arka gövdenin başında yok, ön gövdede tam).
 6. BMC ve BMC körüklüde değişiklik yok (kurucu değişti: bir kez yeniden kurup gözle bak).
 Rapor `docs/RAPOR_Y19.md`'ye ekle, commit, **push**, `git log origin/Ozan -1` ile doğrula.
+
+### Y20 — yerel (hazırlık): yolcu modelleri buluta (kullanıcı, 13 Ekim)
+Kullanıcı yeni yolcu modelleri istiyor; binen yolcu otobüste **koltuğa oturacak**. Kaynak Mac'te `~/Downloads`:
+`Ultimate Modular Men…03T201618Z-1-001.zip` (54,5 MB) ve `Ultimate Modular Women…3T201653Z-1-001.zip` (45,7 MB) (büyük olasılıkla
+Quaternius "Ultimate Modular Men/Women Pack"). Bulut dosyaları göremiyor: repoya koy.
+1. `git pull --rebase origin Ozan`. İki zip'i `tools/kaynak/karakterler/erkek/` ve `.../kadin/` altına aç (**Assets'in dışına**: Unity
+   içe aktarmasın; bulut Blender'da işleyip mobil modelleri kendisi Assets'e koyacak).
+2. Yalnız şunları tut: **FBX** (yoksa glTF/GLB, o da yoksa .blend) karakter dosyaları, **dokular** (png/jpg), **lisans/okubeni**
+   dosyaları (License.txt, Readme vb.). OBJ ve aynı modelin diğer biçimlerini sil (repo şişmesin). `.zip`'in kendisini koyma.
+3. `tools/kaynak/karakterler/ICERIK.md`: klasör ağacı (`find . -type f | sort`), her dosyanın boyutu, lisans dosyasının **tam metni**,
+   paketin adı/sürümü/kaynağı (biliniyorsa URL), paket animasyon içeriyor mu (FBX'lerde animasyon adları: Unity'de bir FBX'i seçip
+   Animation sekmesindeki klip listesi — özellikle **Sit/Sitting/Idle/Walk** var mı).
+4. Büyük dosyalar Git LFS ile gider (`.gitattributes` fbx/glb/png kapsıyor; `git check-attr -a <dosya>` ile bak, kapsamıyorsa
+   `git lfs track` ekle). Commit, **push**, `git log origin/Ozan -1` ile doğrula. Push'tan sonra kullanıcıya "push edildi" de.
