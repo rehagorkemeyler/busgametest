@@ -68,8 +68,14 @@ namespace AnkaraBus.Passengers
             Oyna(DBekle, 0f);
         }
 
-        /// <summary>Hedefe (dünya) yürür; varınca 'arrived' çağrılır.</summary>
-        public void WalkTo(Vector3 destination, Action arrived) => Yuru(new[] { new Nokta(null, destination) }, arrived);
+        /// <summary>Hedefe (dünya) yürür; arada durak sundurması gibi bir engel varsa köşesinden dolaşır. Varınca 'arrived' çağrılır.</summary>
+        public void WalkTo(Vector3 destination, Action arrived)
+        {
+            var noktalar = new List<Nokta>();
+            foreach (var p in YayaYolu.Yol(transform.position, destination))
+                noktalar.Add(new Nokta(null, p));
+            Yuru(noktalar, arrived);
+        }
 
         /// <summary>Noktaları sırayla yürür; sonuncusuna varınca 'arrived' çağrılır.</summary>
         public void Yuru(IEnumerable<Nokta> noktalar, Action arrived)

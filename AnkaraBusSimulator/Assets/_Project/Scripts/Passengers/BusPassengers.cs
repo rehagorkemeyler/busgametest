@@ -265,7 +265,8 @@ namespace AnkaraBus.Passengers
         {
             var p = doors.DoorCenter(door) + transform.right * 0.8f;
             p.y = transform.position.y;
-            return p;
+            // durak sundurmasının (çarpışma kutusu) içine düşüyorsa açık önüne, otobüsle sundurma arasındaki şeride (Y20)
+            return YayaYolu.Disari(p);
         }
 
         private float Distance(Passenger p) => (p.transform.position - DoorOutside(0)).sqrMagnitude;

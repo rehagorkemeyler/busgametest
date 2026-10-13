@@ -409,3 +409,22 @@ Yapılacaklar:
 5. Performans: A32 Düşük ve S24 Yüksek, Hat 1, otobüs dolu (≥ 20 görünen yolcu) gündüz FPS, önce/sonra (eski yolcularla Y19 değerleri).
    Kabul: A32'de en çok 3 FPS kayıp. Değilse `BusPassengers.MaxGorunur`'u düşür ve yaz.
 Rapor: `docs/RAPOR_Y20.md`, commit, **push**, `git log origin/Ozan -1` ile doğrula.
+
+### Y20 — bulut için: Millennium koltuk noktaları, yolcu boyu, yolcu kamerası (yerel bulgu, 13 Ekim)
+Ayrıntı: `docs/RAPOR_Y20.md`, ölçüm listesi `docs/gorseller/y20/koltuk_denetimi.txt`, yakın görüntüler `docs/gorseller/y20/koltuk_*.jpg`.
+1. **Millennium koltuk noktaları (iki versiyon):** Millennium II'de 38 koltuğun 21'i, körüklüde 51'in 29'u yanlış — yolcu havada, iki koltuk
+   arasındaki sarı borunun üstünde, sırt sırta koltukların sırtlıkları arasında ya da ön kapıdaki bilet makinesinin yanında (sürücü bölmesi)
+   oturuyor. Yanlışlar: Millennium II `Koltuk_05–11, 14, 15, 18, 20, 21, 22, 27–32, 37, 38`; körüklü `Koltuk_05–11, 14, 15, 18, 20–22,
+   27–31, 33–35, 40–45, 50, 51`. Doğrular (minder +0,45): Millennium II 01–04, 12, 13, 16, 17, 19, 23–26, 33–36. Muhtemel neden:
+   `koltuk_cikar.py` "sırtlıktan koltuk" yolu sırtlığın arka yüzünü de koltuk önü sayıyor (arkaya bakan sahte koltuklar) ve kapı/bölme
+   panellerini koltuk sanıyor. Kabul: yerelde `Y20Kurulum.KoltukBatch` her koltukta minder−kök 0,45 ± 0,08 ve yakın görüntüde yolcu minderde.
+   BMC ve BMC 18 doğru, dokunma.
+2. **Yolcu boyu:** Bekle'de E 1,85–1,88 m, K 1,82–1,85 m (saç dahil); beklenen ~1,7 m ve kadınlar daha kısa. Öneri: E ~0,93, K ~0,89 ölçek
+   (oturuş pozunda `KOLTUK_Y`/`OTUR_GERI` ölçekle birlikte tutarlı kalsın; koltuk noktaları kök = minder önü zemin olduğu için oturuş
+   yüksekliği değişmemeli). Ayrıca Otur pozunda ayakkabı tabanı kökün 6 cm altında.
+3. **Yolcu kamerası BMC'de oturan yolcunun kafasında:** `BusCameraRig.interiorPosition` (0,45 / 2,0 / −1,2) BMC `Koltuk_12`'nin kafa hizasına
+   denk geliyor (`docs/gorseller/y20/s24_bmc_Normal_oturdu_yolcu.jpg`). Kamerayı koridora (x 0) al ya da kameranın 0,5 m yakınındaki koltuğu
+   kullanma.
+4. **Görünen sınır < koltuk sayısı (bilgi / tasarım kararı):** Düşük 12 ve Normal 20'de ayakta tutunan hiç olmuyor, körüklülerde arka gövdeye
+   kimse oturmuyor (`BosKoltuk` kapının gövdesine +400). İstenirse binenlerin bir kısmı arka gövdeye/ayakta yönlendirilsin.
+Yerel doğrulama: `KoltukBatch` + prefabları yeniden kur + telefonda `-e gorev yolcu`.

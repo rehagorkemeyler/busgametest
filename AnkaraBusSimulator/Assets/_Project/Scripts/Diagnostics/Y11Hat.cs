@@ -77,6 +77,13 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<KorukTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "yolcu")
+            {
+                // Y20: yolcular koltuğa oturuyor mu (biniş, viraj, iniş), görüntüler, yolcu gizli/görünür FPS; dört otobüs (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<YolcuTesti>();
+                return;
+            }
             if (Y10Baslatici.Gorev == "gece")
             {
                 // Y18: gece lambaları, dolgu ışığı (rendering layer), kaplamalar, fren, kalite, FPS; Conecto → BMC → Millennium

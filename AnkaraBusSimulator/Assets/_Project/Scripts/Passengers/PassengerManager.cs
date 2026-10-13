@@ -155,6 +155,9 @@ namespace AnkaraBus.Passengers
             {
                 var spot = Ground(s.lineOrigin + s.lineDirection * Random.Range(-5f, 5f) +
                                   s.roadSide * -Random.Range(0f, 0.9f), s.lineOrigin.y);
+                // sundurmanın altındaysa (çarpışma kutusu) açık önüne yakın beklesin: arkaya doğru dağıtma, yoksa binerken arka duvardan çıkar
+                if (YayaYolu.Icinde(spot) != null)
+                    spot = Ground(s.lineOrigin + s.lineDirection * Vector3.Dot(spot - s.lineOrigin, s.lineDirection), s.lineOrigin.y);
                 var p = Get(spot, Quaternion.LookRotation(s.roadSide));
                 if (p == null)
                     return;

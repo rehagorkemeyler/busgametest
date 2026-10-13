@@ -1,0 +1,229 @@
+# Y20 koltuk denetimi (Y20Kurulum.KoltukBatch, 13 Ekim 2026)
+# yerel = otobüs kökünün uzayında (m). minder−kök: koltuk noktasının 0,13 m gerisinden aşağı dikey ışının vurduğu en üst yüzey − kök (beklenen 0,45).
+# zemin−kök: kökün altındaki yüzey − kök (ayaklar; beklenen ≤ 0). '!!' = ölçüt dışı.
+# BMC ve BMC 18'deki '!!' (zemin−kök 0,07–0,19) YANLIŞ ALARM: ışın koltuk ayağına/basamağa çarpıyor, görüntüde yolcu doğru oturuyor.
+# Millennium'lardaki '!!' koltuklar görüntüyle doğrulandı: havada / boru üstünde / sırt sırta koltuk arasında / sürücü bölmesinde.
+
+[Y20] BMC_Procity_12LF: 26 koltuk, 12 ayakta
+  Koltuk_01: yerel=(0.55,0.70,3.57) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.07 koridor.x=0.00
+  Koltuk_02: yerel=(0.96,0.70,3.57) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.07 koridor.x=0.00
+  Koltuk_03 !!: yerel=(-0.94,0.79,3.42) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.19 koridor.x=0.00
+  Koltuk_04 !!: yerel=(-0.53,0.79,3.42) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.19 koridor.x=0.00
+  Koltuk_05: yerel=(-0.53,0.80,2.37) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_06: yerel=(-0.94,0.80,2.37) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_07: yerel=(0.96,0.40,2.08) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.05 koridor.x=0.00
+  Koltuk_08: yerel=(0.56,0.40,2.08) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.05 koridor.x=0.00
+  Koltuk_09: yerel=(1.00,0.40,1.35) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_10: yerel=(0.55,0.40,1.35) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_11: yerel=(0.96,0.82,-0.92) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_12: yerel=(0.52,0.82,-0.92) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_13: yerel=(0.54,0.82,-1.56) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_14: yerel=(0.94,0.82,-1.56) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_15 !!: yerel=(0.52,0.82,-2.19) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_16 !!: yerel=(0.96,0.82,-2.19) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_17 !!: yerel=(-0.91,0.82,-2.20) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_18 !!: yerel=(-0.51,0.82,-2.20) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_19 !!: yerel=(-0.51,0.82,-3.23) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_20 !!: yerel=(-0.91,0.82,-3.23) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_21 !!: yerel=(0.94,0.82,-3.26) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_22 !!: yerel=(0.54,0.82,-3.26) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_23: yerel=(-0.91,0.82,-3.88) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_24: yerel=(-0.50,0.82,-3.88) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_25: yerel=(0.39,0.78,-5.22) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.35 koridor.x=0.00
+  Koltuk_26: yerel=(0.79,0.78,-5.22) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.35 koridor.x=0.00
+  Ayakta_01: yerel=(0.00,0.45,4.07) gövde=ön zemin−nokta=0.00
+  Ayakta_02: yerel=(0.00,0.45,3.32) gövde=ön zemin−nokta=0.00
+  Ayakta_03: yerel=(0.00,0.45,2.57) gövde=ön zemin−nokta=0.00
+  Ayakta_04: yerel=(0.00,0.45,1.82) gövde=ön zemin−nokta=0.00
+  Ayakta_05: yerel=(0.00,0.45,1.07) gövde=ön zemin−nokta=0.00
+  Ayakta_06: yerel=(0.00,0.45,0.32) gövde=ön zemin−nokta=0.00
+  Ayakta_07: yerel=(0.00,0.45,-0.43) gövde=ön zemin−nokta=0.00
+  Ayakta_08: yerel=(0.00,0.45,-1.18) gövde=ön zemin−nokta=0.00
+  Ayakta_09: yerel=(0.00,0.45,-1.93) gövde=ön zemin−nokta=0.00
+  Ayakta_10: yerel=(0.00,0.45,-2.68) gövde=ön zemin−nokta=0.00
+  Ayakta_11: yerel=(0.00,0.45,-3.43) gövde=ön zemin−nokta=0.00
+  Ayakta_12: yerel=(0.00,0.45,-4.18) gövde=ön zemin−nokta=0.00
+  sorunlu nokta: 10
+[Y20] Caio_Millennium_II: 38 koltuk, 13 ayakta
+  Koltuk_01: yerel=(-0.95,1.04,4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.14 koridor.x=0.00
+  Koltuk_02: yerel=(-0.50,1.04,4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.62 koridor.x=0.00
+  Koltuk_03: yerel=(0.50,1.04,3.93) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.62 koridor.x=0.00
+  Koltuk_04: yerel=(0.95,1.04,3.93) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_05 !!: yerel=(-0.49,0.91,3.36) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.49 koridor.x=0.00
+  Koltuk_06 !!: yerel=(-0.95,1.06,3.31) yön=arkaya gövde=ön minder−kök=0.16 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_07 !!: yerel=(0.50,0.91,3.26) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.49 koridor.x=0.00
+  Koltuk_08 !!: yerel=(-0.49,1.10,2.48) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_09 !!: yerel=(-0.95,1.10,2.48) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_10 !!: yerel=(0.96,1.10,2.38) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_11 !!: yerel=(0.50,1.10,2.38) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_12: yerel=(0.50,0.97,1.99) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.54 koridor.x=0.00
+  Koltuk_13: yerel=(0.91,0.97,1.99) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.54 koridor.x=0.00
+  Koltuk_14 !!: yerel=(0.92,0.84,1.33) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=0.22 koridor.x=0.00
+  Koltuk_15 !!: yerel=(0.51,0.84,1.33) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=0.22 koridor.x=0.00
+  Koltuk_16: yerel=(-0.92,0.45,0.78) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_17: yerel=(-0.51,0.45,0.78) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_18 !!: yerel=(-0.50,0.42,0.12) yön=arkaya gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_19: yerel=(-0.89,0.45,-0.13) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_20 !!: yerel=(-0.89,0.42,-0.79) yön=arkaya gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_21 !!: yerel=(0.75,0.42,-0.96) yön=sola gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_22 !!: yerel=(0.70,0.60,-1.44) yön=öne gövde=ön minder−kök=-0.18 (-) zemin−kök=-0.18 koridor.x=0.00
+  Koltuk_23: yerel=(0.49,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_24: yerel=(0.94,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_25: yerel=(-0.95,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_26: yerel=(-0.50,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_27 !!: yerel=(0.49,0.90,-3.07) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_28 !!: yerel=(-0.49,0.90,-3.07) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_29 !!: yerel=(0.93,1.20,-3.12) yön=arkaya gövde=ön minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_30 !!: yerel=(-0.95,1.20,-3.12) yön=arkaya gövde=ön minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_31 !!: yerel=(0.49,1.20,-3.93) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=NaN koridor.x=0.00
+  Koltuk_32 !!: yerel=(-0.49,1.20,-3.93) yön=arkaya gövde=ön minder−kök=-0.13 (-) zemin−kök=-0.13 koridor.x=0.00
+  Koltuk_33: yerel=(0.94,1.03,-4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_34: yerel=(-0.93,1.03,-4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_35: yerel=(0.94,1.03,-4.79) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_36: yerel=(-0.93,1.03,-4.79) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_37 !!: yerel=(-0.92,0.90,-5.45) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.45 koridor.x=0.00
+  Koltuk_38 !!: yerel=(0.93,0.98,-5.50) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.52 koridor.x=0.00
+  Ayakta_01: yerel=(0.00,0.42,4.53) gövde=ön zemin−nokta=0.00
+  Ayakta_02: yerel=(0.00,0.42,3.78) gövde=ön zemin−nokta=0.00
+  Ayakta_03: yerel=(0.00,0.42,3.03) gövde=ön zemin−nokta=0.00
+  Ayakta_04: yerel=(0.00,0.42,2.28) gövde=ön zemin−nokta=0.00
+  Ayakta_05: yerel=(0.00,0.49,1.53) gövde=ön zemin−nokta=0.00
+  Ayakta_06: yerel=(0.00,0.42,0.78) gövde=ön zemin−nokta=0.00
+  Ayakta_07: yerel=(0.00,0.42,0.03) gövde=ön zemin−nokta=0.00
+  Ayakta_08: yerel=(0.00,0.42,-0.73) gövde=ön zemin−nokta=0.00
+  Ayakta_09: yerel=(0.00,0.42,-1.48) gövde=ön zemin−nokta=0.00
+  Ayakta_10: yerel=(0.00,1.06,-2.23) gövde=ön zemin−nokta=0.00
+  Ayakta_11: yerel=(0.00,0.42,-2.98) gövde=ön zemin−nokta=0.00
+  Ayakta_12: yerel=(0.00,0.42,-3.73) gövde=ön zemin−nokta=0.00
+  Ayakta_13: yerel=(0.00,0.42,-4.48) gövde=ön zemin−nokta=0.00
+  sorunlu nokta: 21
+[Y20] BMC_Procity_18: 38 koltuk, 17 ayakta
+  Koltuk_01: yerel=(0.55,0.70,3.57) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.07 koridor.x=0.00
+  Koltuk_02: yerel=(0.96,0.70,3.57) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.07 koridor.x=0.00
+  Koltuk_03 !!: yerel=(-0.94,0.79,3.42) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.19 koridor.x=0.00
+  Koltuk_04 !!: yerel=(-0.53,0.79,3.42) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.19 koridor.x=0.00
+  Koltuk_05: yerel=(-0.53,0.80,2.37) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_06: yerel=(-0.94,0.80,2.37) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_07: yerel=(0.96,0.40,2.08) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.05 koridor.x=0.00
+  Koltuk_08: yerel=(0.56,0.40,2.08) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.05 koridor.x=0.00
+  Koltuk_09: yerel=(1.00,0.40,1.35) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_10: yerel=(0.55,0.40,1.35) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.01 koridor.x=0.00
+  Koltuk_11: yerel=(0.96,0.82,-0.92) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_12: yerel=(0.52,0.82,-0.92) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_13: yerel=(0.54,0.82,-1.56) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_14: yerel=(0.94,0.82,-1.56) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_15 !!: yerel=(0.52,0.82,-2.19) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_16 !!: yerel=(0.96,0.82,-2.19) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_17 !!: yerel=(-0.91,0.82,-2.20) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_18 !!: yerel=(-0.51,0.82,-2.20) yön=öne gövde=ön minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_19 !!: yerel=(-0.51,0.82,-3.23) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_20 !!: yerel=(-0.91,0.82,-3.23) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_21 !!: yerel=(0.94,0.82,-3.26) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_22 !!: yerel=(0.54,0.82,-3.26) yön=arkaya gövde=ön minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_23: yerel=(0.96,0.82,-6.22) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_24: yerel=(0.52,0.82,-6.22) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_25: yerel=(0.54,0.82,-6.86) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_26: yerel=(0.94,0.82,-6.86) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_27 !!: yerel=(0.52,0.82,-7.49) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_28 !!: yerel=(0.96,0.82,-7.49) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.09 koridor.x=0.00
+  Koltuk_29 !!: yerel=(-0.91,0.82,-7.50) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_30 !!: yerel=(-0.51,0.82,-7.50) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_31 !!: yerel=(-0.51,0.82,-8.53) yön=arkaya gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_32 !!: yerel=(-0.91,0.82,-8.53) yön=arkaya gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.14 koridor.x=0.00
+  Koltuk_33 !!: yerel=(0.94,0.82,-8.56) yön=arkaya gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_34 !!: yerel=(0.54,0.82,-8.56) yön=arkaya gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=0.08 koridor.x=0.00
+  Koltuk_35: yerel=(-0.91,0.82,-9.18) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_36: yerel=(-0.50,0.82,-9.18) yön=öne gövde=ArkaGovde minder−kök=0.44 (-) zemin−kök=-0.05 koridor.x=0.00
+  Koltuk_37: yerel=(0.39,0.78,-10.52) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.35 koridor.x=0.00
+  Koltuk_38: yerel=(0.79,0.78,-10.52) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.35 koridor.x=0.00
+  Ayakta_01: yerel=(0.00,0.45,4.07) gövde=ön zemin−nokta=0.00
+  Ayakta_02: yerel=(0.00,0.45,3.32) gövde=ön zemin−nokta=0.00
+  Ayakta_03: yerel=(0.00,0.45,2.57) gövde=ön zemin−nokta=0.00
+  Ayakta_04: yerel=(0.00,0.45,1.82) gövde=ön zemin−nokta=0.00
+  Ayakta_05: yerel=(0.00,0.45,1.07) gövde=ön zemin−nokta=0.00
+  Ayakta_06: yerel=(0.00,0.45,0.32) gövde=ön zemin−nokta=0.00
+  Ayakta_07: yerel=(0.00,0.45,-0.43) gövde=ön zemin−nokta=0.00
+  Ayakta_08: yerel=(0.00,0.45,-1.18) gövde=ön zemin−nokta=0.00
+  Ayakta_09: yerel=(0.00,0.45,-1.93) gövde=ön zemin−nokta=0.00
+  Ayakta_10: yerel=(0.00,0.45,-2.68) gövde=ön zemin−nokta=0.00
+  Ayakta_11: yerel=(0.00,0.45,-4.93) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_12: yerel=(0.00,0.45,-5.68) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_13: yerel=(0.00,0.45,-6.43) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_14: yerel=(0.00,0.45,-7.18) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_15: yerel=(0.00,0.45,-7.93) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_16: yerel=(0.00,0.45,-8.68) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_17: yerel=(0.00,0.45,-9.43) gövde=ArkaGovde zemin−nokta=0.00
+  sorunlu nokta: 18
+[Y20] Caio_Millennium_II_G: 51 koltuk, 20 ayakta
+  Koltuk_01: yerel=(-0.95,1.04,4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.14 koridor.x=0.00
+  Koltuk_02: yerel=(-0.50,1.04,4.03) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.62 koridor.x=0.00
+  Koltuk_03: yerel=(0.50,1.04,3.93) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.62 koridor.x=0.00
+  Koltuk_04: yerel=(0.95,1.04,3.93) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_05 !!: yerel=(-0.49,0.91,3.36) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.49 koridor.x=0.00
+  Koltuk_06 !!: yerel=(-0.95,1.06,3.31) yön=arkaya gövde=ön minder−kök=0.16 (-) zemin−kök=0.12 koridor.x=0.00
+  Koltuk_07 !!: yerel=(0.50,0.91,3.26) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.49 koridor.x=0.00
+  Koltuk_08 !!: yerel=(-0.49,1.10,2.48) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_09 !!: yerel=(-0.95,1.10,2.48) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_10 !!: yerel=(0.96,1.10,2.38) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_11 !!: yerel=(0.50,1.10,2.38) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.68 koridor.x=0.00
+  Koltuk_12: yerel=(0.50,0.97,1.99) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.54 koridor.x=0.00
+  Koltuk_13: yerel=(0.91,0.97,1.99) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.54 koridor.x=0.00
+  Koltuk_14 !!: yerel=(0.92,0.84,1.33) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=0.22 koridor.x=0.00
+  Koltuk_15 !!: yerel=(0.51,0.84,1.33) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=0.22 koridor.x=0.00
+  Koltuk_16: yerel=(-0.92,0.45,0.78) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_17: yerel=(-0.51,0.45,0.78) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_18 !!: yerel=(-0.50,0.42,0.12) yön=arkaya gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_19: yerel=(-0.89,0.45,-0.13) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_20 !!: yerel=(-0.89,0.42,-0.79) yön=arkaya gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_21 !!: yerel=(0.75,0.42,-0.96) yön=sola gövde=ön minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_22 !!: yerel=(0.70,0.60,-1.44) yön=öne gövde=ön minder−kök=-0.18 (-) zemin−kök=-0.18 koridor.x=0.00
+  Koltuk_23: yerel=(0.49,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_24: yerel=(0.94,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_25: yerel=(-0.95,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_26: yerel=(-0.50,1.03,-2.41) yön=öne gövde=ön minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_27 !!: yerel=(0.49,0.90,-3.07) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_28 !!: yerel=(-0.49,0.90,-3.07) yön=arkaya gövde=ön minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_29 !!: yerel=(0.93,1.20,-3.12) yön=arkaya gövde=ön minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_30 !!: yerel=(-0.95,1.20,-3.12) yön=arkaya gövde=ön minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_31 !!: yerel=(-0.50,0.59,-5.65) yön=arkaya gövde=ArkaGovde minder−kök=-0.17 (-) zemin−kök=-0.17 koridor.x=0.00
+  Koltuk_32: yerel=(-0.89,0.45,-5.83) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.02 koridor.x=0.00
+  Koltuk_33 !!: yerel=(-0.89,0.42,-6.49) yön=arkaya gövde=ArkaGovde minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_34 !!: yerel=(0.75,0.42,-6.66) yön=sola gövde=ArkaGovde minder−kök=0.00 (-) zemin−kök=0.00 koridor.x=0.00
+  Koltuk_35 !!: yerel=(0.70,0.60,-7.14) yön=öne gövde=ArkaGovde minder−kök=-0.18 (-) zemin−kök=-0.18 koridor.x=0.00
+  Koltuk_36: yerel=(0.49,1.03,-8.11) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_37: yerel=(0.94,1.03,-8.11) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_38: yerel=(-0.95,1.03,-8.11) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_39: yerel=(-0.50,1.03,-8.11) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_40 !!: yerel=(0.49,0.90,-8.77) yön=arkaya gövde=ArkaGovde minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_41 !!: yerel=(-0.49,0.90,-8.77) yön=arkaya gövde=ArkaGovde minder−kök=NaN (-) zemin−kök=-0.48 koridor.x=0.00
+  Koltuk_42 !!: yerel=(0.93,1.20,-8.82) yön=arkaya gövde=ArkaGovde minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_43 !!: yerel=(-0.95,1.20,-8.82) yön=arkaya gövde=ArkaGovde minder−kök=0.01 (-) zemin−kök=0.03 koridor.x=0.00
+  Koltuk_44 !!: yerel=(0.49,1.20,-9.63) yön=arkaya gövde=ArkaGovde minder−kök=NaN (-) zemin−kök=NaN koridor.x=0.00
+  Koltuk_45 !!: yerel=(-0.49,1.20,-9.63) yön=arkaya gövde=ArkaGovde minder−kök=-0.13 (-) zemin−kök=-0.13 koridor.x=0.00
+  Koltuk_46: yerel=(0.94,1.03,-9.73) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_47: yerel=(-0.93,1.03,-9.73) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_48: yerel=(0.94,1.03,-10.49) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_49: yerel=(-0.93,1.03,-10.49) yön=öne gövde=ArkaGovde minder−kök=0.45 (-) zemin−kök=-0.61 koridor.x=0.00
+  Koltuk_50 !!: yerel=(-0.92,0.90,-11.15) yön=arkaya gövde=ArkaGovde minder−kök=NaN (-) zemin−kök=-0.45 koridor.x=0.00
+  Koltuk_51 !!: yerel=(0.93,0.98,-11.20) yön=arkaya gövde=ArkaGovde minder−kök=NaN (-) zemin−kök=-0.52 koridor.x=0.00
+  Ayakta_01: yerel=(0.00,0.42,4.53) gövde=ön zemin−nokta=0.00
+  Ayakta_02: yerel=(0.00,0.42,3.78) gövde=ön zemin−nokta=0.00
+  Ayakta_03: yerel=(0.00,0.42,3.03) gövde=ön zemin−nokta=0.00
+  Ayakta_04: yerel=(0.00,0.42,2.28) gövde=ön zemin−nokta=0.00
+  Ayakta_05: yerel=(0.00,0.49,1.53) gövde=ön zemin−nokta=0.00
+  Ayakta_06: yerel=(0.00,0.42,0.78) gövde=ön zemin−nokta=0.00
+  Ayakta_07: yerel=(0.00,0.42,0.03) gövde=ön zemin−nokta=0.00
+  Ayakta_08: yerel=(0.00,0.42,-0.73) gövde=ön zemin−nokta=0.00
+  Ayakta_09: yerel=(0.00,0.42,-1.48) gövde=ön zemin−nokta=0.00
+  Ayakta_10: yerel=(0.00,1.06,-2.23) gövde=ön zemin−nokta=0.00
+  Ayakta_11: yerel=(0.00,0.42,-2.98) gövde=ön zemin−nokta=0.00
+  Ayakta_12: yerel=(0.00,0.42,-5.23) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_13: yerel=(0.00,0.42,-5.98) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_14: yerel=(0.00,0.42,-6.73) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_15: yerel=(0.00,0.42,-7.48) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_16: yerel=(0.00,0.42,-8.23) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_17: yerel=(0.00,0.42,-8.98) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_18: yerel=(0.00,0.42,-9.73) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_19: yerel=(0.00,0.42,-10.48) gövde=ArkaGovde zemin−nokta=0.00
+  Ayakta_20: yerel=(0.00,0.46,-11.23) gövde=ArkaGovde zemin−nokta=0.00
+  sorunlu nokta: 29
