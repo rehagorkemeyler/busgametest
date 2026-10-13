@@ -37,7 +37,14 @@ namespace AnkaraBus.Passengers
 
         public static PassengerManager Instance { get; private set; }
 
-        private void Awake() => Instance = this;
+        // Y20: Quaternius karakterleri (YolcuKurucu → Resources/Yolcular); varsa sahnedeki eski modellerin yerine kullanılır
+        private GameObject[] karakterler = new GameObject[0];
+
+        private void Awake()
+        {
+            Instance = this;
+            karakterler = Resources.LoadAll<GameObject>("Yolcular");
+        }
 
         private void OnDestroy()
         {
@@ -113,10 +120,12 @@ namespace AnkaraBus.Passengers
                 p.gameObject.SetActive(true);
                 return p;
             }
-            if (models == null || models.Length == 0)
+            bool yeni = karakterler.Length > 0;
+            var liste = yeni ? karakterler : models;
+            if (liste == null || liste.Length == 0)
                 return null;
-            var go = Instantiate(models[Random.Range(0, models.Length)], position, rotation, transform);
-            if (paletteMaterial != null)
+            var go = Instantiate(liste[Random.Range(0, liste.Length)], position, rotation, transform);
+            if (!yeni && paletteMaterial != null)
                 foreach (var r in go.GetComponentsInChildren<Renderer>())
                 {
                     r.sharedMaterial = paletteMaterial;
@@ -133,6 +142,7 @@ namespace AnkaraBus.Passengers
             if (passenger == null)
                 return;
             passenger.Stand(passenger.transform.forward);
+            passenger.transform.SetParent(transform, true);
             passenger.gameObject.SetActive(false);
             pool.Push(passenger);
         }

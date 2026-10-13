@@ -376,3 +376,36 @@ Quaternius "Ultimate Modular Men/Women Pack"). Bulut dosyaları göremiyor: repo
    Animation sekmesindeki klip listesi — özellikle **Sit/Sitting/Idle/Walk** var mı).
 4. Büyük dosyalar Git LFS ile gider (`.gitattributes` fbx/glb/png kapsıyor; `git check-attr -a <dosya>` ile bak, kapsamıyorsa
    `git lfs track` ekle). Commit, **push**, `git log origin/Ozan -1` ile doğrula. Push'tan sonra kullanıcıya "push edildi" de.
+
+### Y20 — yerel: yeni yolcular oturuyor (bulut, 13 Ekim)
+Önce `git pull --rebase origin Ozan`. Bulut Quaternius yolcularını (CC0, 14 karakter: 8 erkek, 6 kadın) ve koltuk sistemini hazırladı.
+- `Passengers/Quaternius/Yolcu_E_*.fbx`, `Yolcu_K_*.fbx` (iskelet + tek mesh, malzeme `M_Yolcu`, doku `Textures/yolcu_palet.png`),
+  `Yolcu_E_Animasyon.fbx`, `Yolcu_K_Animasyon.fbx` (klipler **Bekle, Yuru, Otur, Tutun**; aynı cinsiyetin bütün karakterlerinde aynı
+  iskelet → Generic rig). Üretim: `tools/blender/yolcu_quaternius.py`. Önizleme: `docs/gorseller/y20_bulut/`.
+- Koltuklar: `tools/blender/koltuk_cikar.py` → `Buses/<klasör>/<Ad>_koltuklar.json` (BMC 26, BMC 18: 38, Millennium 38,
+  Millennium körüklü 51 koltuk; ayakta 12/17/13/20 yer). `OtobusKurucu.SetupKoltuklar` prefabda `Koltuk_NN` / `Ayakta_NN` noktaları
+  (körüklüde mafsalın gerisindekiler ArkaGovde altında) ve `OtobusKoltuklari` bileşeni kurar.
+- Kod: `Passenger` (Animator: Bekle/Yuru/Otur/Tutun, otobüs uzayında yol noktaları, `Oturt`, `Tutunarak`), `BusPassengers` (binen
+  yolcu ön kapıdan girip koridordan boş koltuğa yürür ve oturur; koltuk yoksa koridorda tutunur; inen yolcu kalkıp en yakın açık kapıdan
+  iner; körüklüde mafsaldan geçer), `PassengerManager` (`Resources/Yolcular` varsa onları kullanır; duraklardaki ve yaya geçitlerindeki
+  yayalar da yeni karakterler). Görünen yolcu: Düşük 12, Normal 20, Yüksek 30 (fazlası yalnız sayı). Yeni: `Editor/YolcuKurucu.cs`,
+  `Passengers/OtobusKoltuklari.cs`.
+
+Yapılacaklar:
+1. Unity'yi aç, derleme hatası varsa düzelt (bulut derleyemedi; yaz). **Ankara Bus → Yolcu Karakterlerini Kur**: `Resources/Yolcular/`
+   altında 14 prefab, `Passengers/Quaternius/Yolcu_E.controller`, `Yolcu_K.controller` (dört durum, klipler bağlı), `M_Yolcu` (URP/Lit,
+   palet, noktasal). Konsol uyarılarını yaz. Bir prefabı sahneye sürükle: boy ~1,7 m mi, **yüzü +Z'ye mi bakıyor** (yürürken geri geri
+   gidiyorsa `Passenger`'a/ prefaba Y 180° düzeltmesi gerekir: model kökünün altındaki iskelet düğümüne; nasıl düzelttiğini yaz).
+   Animator'de dört durumu tek tek oynat (Bekle, Yuru, Otur, Tutun): kollar/bacaklar doğru mu (T-poz kalan kemik yok).
+2. Dört otobüs prefabını yeniden kur (BMC, Millennium, BMC 18, Millennium körüklü): konsolda "N koltuk, M ayakta yer" satırları; prefabda
+   `OtobusKoltuklari` ve `Koltuk_NN` noktaları (Scene görünümünde koltukların üstünde mi, yönleri koridora/öne doğru mu; körüklüde arka
+   gövdedekiler ArkaGovde altında).
+3. Oyunda (Hat 1, dört otobüs, Normal ve Düşük): durakta kapıları aç → binen yolcular ön kapıdan girip koridordan koltuğa yürüyor ve
+   **oturuyor** mu (koltuğun içinde/havada değil, yüzü doğru yöne); koltuk dolunca ayakta tutunanlar; sonraki durakta inenler kalkıp
+   kapıya yürüyüp iniyor mu; otobüs giderken oturanlar yerinde mi (titreme/kayma yok); körüklüde arka gövde koltuklarına mafsaldan
+   geçiliyor mu, virajda arka gövdedeki yolcular gövdeyle dönüyor mu. Duraktaki bekleyenler ve yaya geçidindekiler yeni karakterler mi.
+   Kokpit ve yolcu kamerası görüntüleri (`docs/gorseller/y20/`).
+4. Koltuk noktası yanlışsa (havada/gömük/ters): hangi otobüs, hangi `Koltuk_NN` (Scene'de seçip konum) → rapora; bulut JSON'u düzeltir.
+5. Performans: A32 Düşük ve S24 Yüksek, Hat 1, otobüs dolu (≥ 20 görünen yolcu) gündüz FPS, önce/sonra (eski yolcularla Y19 değerleri).
+   Kabul: A32'de en çok 3 FPS kayıp. Değilse `BusPassengers.MaxGorunur`'u düşür ve yaz.
+Rapor: `docs/RAPOR_Y20.md`, commit, **push**, `git log origin/Ozan -1` ile doğrula.

@@ -22,3 +22,10 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
 - Piper TTS (https://github.com/rhasspy/piper), ses modeli `tr_TR-dfki-medium` (https://huggingface.co/rhasspy/piper-voices).
 - Veri kümesi: DFKI MARY TTS Türkçe (https://github.com/marytts/dfki-ot-data/) — **CC BY-NC-SA 4.0** (ticari olmayan kullanım;
   oyun satılacaksa bu sesler değiştirilmeli). Üretim: `tools/ses/anons_tr.py`, `tools/ses/anonslar.py` (`Resources/Anonslar/`).
+
+## Yolcular: Quaternius — Ultimate Modular Men (Feb 2022) ve Ultimate Modular Women (April 2022)
+
+- Model: **Quaternius** — https://quaternius.com , https://www.patreon.com/quaternius
+- Lisans: **CC0 1.0** (kamu malı; kaynak göstermek zorunlu değil) — https://creativecommons.org/publicdomain/zero/1.0/
+- Değişiklikler: 14 kıyafet seçildi, parçalar tek mesh'e ve ortak renk paletine birleştirildi, Bekle/Yürü klipleri T-poz iskelete
+  aktarıldı, oturma ve tutunma pozları eklendi (`tools/blender/yolcu_quaternius.py`). Kaynak: `tools/kaynak/karakterler/` (ICERIK.md).

@@ -6,7 +6,7 @@ zeminde, ön +Z, sağ +X), OtobusKurucu prefabda "Koltuklar" noktalarını burad
     yon      yolcunun baktığı yön (sırtlıktan mindere)
     on       koltuğun önünde, zeminde (yolcu buradan oturur / kalkar)
     koridor  koridorda (x = 0), koltuğun hizasında, zeminde
-  ayakta: [[x,y,z]]  koridorda, tavan borusunun altında boş yerler (koltuklar dolunca tutunarak durulur)
+  ayakta: [{p: [x,y,z]}]  koridorda, tavan borusunun altında boş yerler (koltuklar dolunca tutunarak durulur)
 Yöntem: koltuk kumaşı malzemesinin (BMC: tapiterie, Millennium: bancos) yukarı bakan yüzleri kümelenir (minder); genişse
 (çift koltuk) 0,45 m'lik oturaklara bölünür; minderin üstünde kalan dikey kumaş yüzleri sırtlıktır, yön sırtlıktan mindere
 (en yakın eksene oturtulur). Zemin yükseklikleri yukarıdan aşağı ışınla.
@@ -199,7 +199,7 @@ def main():
             koridor.y = ky if ky is not None else on.y
             koltuklar.append({"p": [round(p.x, 3), round(p.y, 3), round(p.z, 3)], "yon": [yon.x, 0.0, yon.z],
                               "on": [round(on.x, 3), round(on.y, 3), round(on.z, 3)],
-                              "koridor": [round(koridor.x, 3), round(koridor.y, 3), round(koridor.z, 3)], "sirttan": True})
+                              "koridor": [round(koridor.x, 3), round(koridor.y, 3), round(koridor.z, 3)]})
 
     # aynı oturağı iki küme bulduysa (minder iki parça) birini at
     tekil = []
@@ -226,7 +226,7 @@ def main():
                 continue
             if any(abs(Vector(k["on"]).x - x) < 0.3 and abs(Vector(k["on"]).z - z) < 0.35 for k in koltuklar):
                 continue
-            ayakta.append([round(x, 3), round(y, 3), round(z, 3)])
+            ayakta.append({"p": [round(x, 3), round(y, 3), round(z, 3)]})
         z -= AYAKTA_ARALIK
     json.dump({"kaynak": args.fbx.split("/")[-1], "koltuklar": koltuklar, "ayakta": ayakta}, open(args.out, "w"), indent=1)
     print(f"koltuk {len(koltuklar)}, ayakta {len(ayakta)} → {args.out}")

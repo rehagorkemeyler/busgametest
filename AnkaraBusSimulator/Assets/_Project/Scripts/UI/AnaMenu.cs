@@ -52,6 +52,7 @@ namespace AnkaraBus.UI
             "Değişiklik: Ankara kaplamaları, mobil sadeleştirme, körüklü versiyon\n\n" +
             "BMC Procity 12LF: Proton Bus Simulator modu (izinle)\n" +
             "Körüklü versiyon (BMC Procity 18) bu modelden türetildi\n\n" +
+            "Yolcular: Quaternius · Ultimate Modular Men / Women (CC0) · quaternius.com\n\n" +
             "Kapatmak için dokun";
         private bool basladi;
 

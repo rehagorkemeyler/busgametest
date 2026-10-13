@@ -11,6 +11,9 @@ namespace AnkaraBus.Passengers
     /// önce inenler arka kapılardan iner, sonra bekleyenler ön kapıdan biner (Türkiye usulü).
     /// İniş-biniş sürerken RouteTracker durağı tamamlamaz (IsBusy).
     /// PassengerManager oyuncunun otobüsüne bunu kendisi ekler.
+    /// Y20: otobüste koltuk noktaları varsa (OtobusKoltuklari) binen yolcu kapıdan girip koridordan boş bir koltuğa yürür ve
+    /// oturur (koltuklar doluysa koridorda tutunarak durur); inen yolcu koltuğundan kalkıp en yakın açık kapıdan iner.
+    /// Görünen yolcu sayısı kaliteyle sınırlı (Düşük 12, Normal 20, Yüksek 30); fazlası yalnız sayıda tutulur.
     /// </summary>
     public class BusPassengers : MonoBehaviour
     {
@@ -26,6 +29,12 @@ namespace AnkaraBus.Passengers
         private BusDoorController doors;
         private int servedIndex = -1;
         private int walking;
+        private OtobusKoltuklari koltuklar;
+        private AnkaraBus.Vehicle.KorukluOtobus koruklu;
+        private readonly List<Passenger> icerde = new List<Passenger>();
+
+        private static int MaxGorunur => GrafikAyarlari.Mevcut == KaliteSeviyesi.Dusuk ? 12
+            : GrafikAyarlari.Mevcut == KaliteSeviyesi.Normal ? 20 : 30;
 
         public int Onboard => onboard;
         public int Capacity => capacity;
@@ -40,6 +49,8 @@ namespace AnkaraBus.Passengers
             tracker = GetComponent<RouteTracker>();
             telemetry = GetComponent<IVehicleTelemetry>();
             doors = GetComponentInChildren<BusDoorController>();
+            koltuklar = GetComponent<OtobusKoltuklari>();
+            koruklu = GetComponent<AnkaraBus.Vehicle.KorukluOtobus>();
             var vehicle = GetComponent<BusVehicle>();
             if (vehicle != null && vehicle.Definition != null)
                 capacity = vehicle.Definition.passengerCapacity;
@@ -67,16 +78,36 @@ namespace AnkaraBus.Passengers
             int alight = lastStop ? onboard : Random.Range(0, Mathf.Min(onboard, 10) + 1);
             for (int i = 0; i < alight && Time.time < deadline; i++)
             {
-                int door = PickExitDoor();
+                var away = manager.SidewalkPoint(stop, Random.Range(-6f, 6f)) + transform.right * Random.Range(1f, 3f);
+                // görünen bir yolcu varsa (oturan/ayakta) o kalkıp iner; yoksa kapıda belirir
+                var icerdeki = icerde.Count > 0 ? icerde[Random.Range(0, icerde.Count)] : null;
+                int door = icerdeki != null ? PickExitDoor(icerdeki.transform.position) : PickExitDoor(transform.position);
                 if (door < 0)
-                    break;
-                var p = manager.Get(DoorOutside(door), Quaternion.LookRotation(transform.right));
-                if (p == null)
                     break;
                 SetOnboard(onboard - 1);
                 walking++;
-                var away = manager.SidewalkPoint(stop, Random.Range(-6f, 6f)) + transform.right * Random.Range(1f, 3f);
-                p.WalkTo(away, () => { walking--; manager.Release(p); });
+                if (icerdeki != null)
+                {
+                    icerde.Remove(icerdeki);
+                    var yol = InisYolu(icerdeki, door);
+                    koltuklar.Birak(icerdeki);
+                    var inen = icerdeki;
+                    inen.Yuru(yol, () =>
+                    {
+                        inen.transform.SetParent(manager.transform, true);
+                        inen.WalkTo(away, () => { walking--; manager.Release(inen); });
+                    });
+                }
+                else
+                {
+                    var p = manager.Get(DoorOutside(door), Quaternion.LookRotation(transform.right));
+                    if (p == null)
+                    {
+                        walking--;
+                        break;
+                    }
+                    p.WalkTo(away, () => { walking--; manager.Release(p); });
+                }
                 yield return new WaitForSeconds(interval);
             }
 
@@ -94,7 +125,8 @@ namespace AnkaraBus.Passengers
                 {
                     walking--;
                     SetOnboard(onboard + 1);
-                    manager.Release(passenger);
+                    if (!Yerles(passenger, 0))
+                        manager.Release(passenger);
                 });
                 yield return new WaitForSeconds(interval);
             }
@@ -104,15 +136,128 @@ namespace AnkaraBus.Passengers
             IsBusy = false;
         }
 
-        private int PickExitDoor()
+        /// <summary>Yolcuya en yakın açık iniş kapısı (ön kapı dışındakiler; hiçbiri açık değilse ön kapı).</summary>
+        private int PickExitDoor(Vector3 yakin)
         {
-            var open = new List<int>();
+            int enIyi = -1;
+            float en = float.MaxValue;
             for (int i = 1; i < doors.DoorCount; i++)
-                if (doors.IsDoorOpen(i))
-                    open.Add(i);
-            if (open.Count > 0)
-                return open[Random.Range(0, open.Count)];
+            {
+                if (!doors.IsDoorOpen(i))
+                    continue;
+                float d = (doors.DoorCenter(i) - yakin).sqrMagnitude + Random.Range(0f, 2f);
+                if (d < en)
+                {
+                    en = d;
+                    enIyi = i;
+                }
+            }
+            if (enIyi >= 0)
+                return enIyi;
             return doors.IsDoorOpen(0) ? 0 : -1;
+        }
+
+        // ------------------------------------------------------------ otobüs içi (Y20)
+
+        /// <summary>Kapıdan giren yolcuyu boş koltuğa (yoksa ayakta yere) yürütür. Yer yoksa ya da görünen sayı dolduysa false.</summary>
+        private bool Yerles(Passenger p, int door)
+        {
+            if (koltuklar == null || icerde.Count >= MaxGorunur)
+                return false;
+            var kapiUzay = Uzay(doors.DoorCenter(door));
+            var yol = new List<Passenger.Nokta>();
+            KapidanKoridora(yol, door, kapiUzay);
+            var koltuk = koltuklar.BosKoltuk(doors.DoorCenter(door), kapiUzay);
+            if (koltuk != null)
+            {
+                koltuk.yolcu = p;
+                Gecis(yol, kapiUzay, koltuk.Uzay);
+                yol.Add(new Passenger.Nokta(koltuk.Uzay, koltuk.koridor));
+                yol.Add(new Passenger.Nokta(koltuk.Uzay, koltuk.on));
+                p.transform.SetParent(kapiUzay, true);
+                icerde.Add(p);
+                var k = koltuk;
+                p.Yuru(yol, () => p.Oturt(k.nokta));
+                return true;
+            }
+            var yer = koltuklar.BosAyakta(doors.DoorCenter(door));
+            if (yer == null)
+                return false;
+            yer.yolcu = p;
+            Gecis(yol, kapiUzay, yer.Uzay);
+            var hedef = yer.Uzay.InverseTransformPoint(yer.nokta.position);
+            yol.Add(new Passenger.Nokta(yer.Uzay, new Vector3(0f, hedef.y, hedef.z)));
+            p.transform.SetParent(kapiUzay, true);
+            icerde.Add(p);
+            var y = yer;
+            p.Yuru(yol, () => p.Tutunarak(y.nokta));
+            return true;
+        }
+
+        /// <summary>Koltuğundan/yerinden kapının dışına yol (son nokta dünyada, kapının önünde).</summary>
+        private List<Passenger.Nokta> InisYolu(Passenger p, int door)
+        {
+            var yol = new List<Passenger.Nokta>();
+            Transform uzay = transform;
+            foreach (var k in koltuklar.Koltuklar)
+                if (k.yolcu == p)
+                {
+                    uzay = k.Uzay;
+                    yol.Add(new Passenger.Nokta(uzay, k.on));
+                    yol.Add(new Passenger.Nokta(uzay, k.koridor));
+                }
+            foreach (var a in koltuklar.Ayakta)
+                if (a.yolcu == p)
+                    uzay = a.Uzay;
+            p.transform.SetParent(uzay, true);
+            var kapiUzay = Uzay(doors.DoorCenter(door));
+            Gecis(yol, uzay, kapiUzay);
+            var ters = new List<Passenger.Nokta>();
+            KapidanKoridora(ters, door, kapiUzay);
+            ters.Reverse();
+            yol.AddRange(ters);
+            yol.Add(new Passenger.Nokta(null, DoorOutside(door)));
+            return yol;
+        }
+
+        /// <summary>Kapının iç tarafı ve koridordaki hizası (kapının gövdesinin uzayında).</summary>
+        private void KapidanKoridora(List<Passenger.Nokta> yol, int door, Transform uzay)
+        {
+            var yerel = uzay.InverseTransformPoint(doors.DoorCenter(door));
+            float y = koltuklar.KoridorY(uzay, yerel.z);
+            float isaret = Mathf.Sign(yerel.x == 0f ? 1f : yerel.x);
+            yol.Add(new Passenger.Nokta(uzay, new Vector3(isaret * 0.55f, y, yerel.z)));
+            yol.Add(new Passenger.Nokta(uzay, new Vector3(0f, y, yerel.z)));
+        }
+
+        /// <summary>Körüklüde bir gövdeden ötekine koridor boyunca mafsalın iki yanından geçiş noktaları.</summary>
+        private void Gecis(List<Passenger.Nokta> yol, Transform nereden, Transform nereye)
+        {
+            if (koruklu == null || koruklu.ArkaGovde == null || nereden == nereye)
+                return;
+            var arka = koruklu.ArkaGovde.transform;
+            float mz = transform.InverseTransformPoint(arka.position).z;    // mafsal (ön gövde uzayında)
+            var on = new Passenger.Nokta(transform, new Vector3(0f, koltuklar.KoridorY(transform, mz + 0.7f), mz + 0.7f));
+            var geri = new Passenger.Nokta(arka, new Vector3(0f, koltuklar.KoridorY(arka, -0.7f), -0.7f));
+            if (nereden == transform)
+            {
+                yol.Add(on);
+                yol.Add(geri);
+            }
+            else
+            {
+                yol.Add(geri);
+                yol.Add(on);
+            }
+        }
+
+        /// <summary>Dünya noktasının bulunduğu gövde: körüklüde mafsalın gerisi arka gövde.</summary>
+        private Transform Uzay(Vector3 dunya)
+        {
+            if (koruklu == null || koruklu.ArkaGovde == null)
+                return transform;
+            var arka = koruklu.ArkaGovde.transform;
+            return arka.InverseTransformPoint(dunya).z < 0f ? arka : transform;
         }
 
         /// <summary>Kapının dışında, yerdeki nokta (kapılar otobüsün sağında).</summary>

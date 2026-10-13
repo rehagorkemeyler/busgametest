@@ -230,6 +230,7 @@ namespace AnkaraBus.EditorTools
                 SetupDoors(root, parts, arka);
                 if (tanim.Koruklu)
                     SetupKoruklu(root, arka, parts);
+                SetupKoltuklar(root, arka);
 
                 foreach (var pair in parts)
                     if (pair.Key.StartsWith("Lamba_"))
@@ -673,6 +674,79 @@ namespace AnkaraBus.EditorTools
             smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.enabled = false;
             return true;
+        }
+
+        [System.Serializable]
+        private class KoltukJson
+        {
+            public float[] p, yon, on, koridor;
+        }
+
+        [System.Serializable]
+        private class AyaktaJson
+        {
+            public float[] p;
+        }
+
+        [System.Serializable]
+        private class KoltuklarJson
+        {
+            public KoltukJson[] koltuklar;
+            public AyaktaJson[] ayakta;
+        }
+
+        private static Vector3 V(float[] a) => a != null && a.Length >= 3 ? new Vector3(a[0], a[1], a[2]) : Vector3.zero;
+
+        /// <summary>
+        /// Yolcu koltukları ve ayakta yerler (Y20): tools/blender/koltuk_cikar.py'nin "&lt;Ad&gt;_koltuklar.json"ından.
+        /// Noktalar kökün (ön gövde) ya da körüklüde mafsalın gerisindekiler ArkaGovde'nin çocuğu: oturan yolcu kendi gövdesiyle gider.
+        /// </summary>
+        private static void SetupKoltuklar(GameObject root, Rigidbody arka)
+        {
+            string yol = Folder + aktif.Ad + "_koltuklar.json";
+            if (!System.IO.File.Exists(yol))
+            {
+                Debug.LogWarning("[OtobusKurucu] Koltuk dosyası yok (yolcular oturmaz): " + yol);
+                return;
+            }
+            var veri = JsonUtility.FromJson<KoltuklarJson>(System.IO.File.ReadAllText(yol));
+            var bilesen = root.AddComponent<AnkaraBus.Passengers.OtobusKoltuklari>();
+            var so = new SerializedObject(bilesen);
+            float mafsalZ = arka != null ? root.transform.InverseTransformPoint(arka.transform.position).z : float.MinValue;
+
+            Transform Govde(Vector3 p) => arka != null && p.z < mafsalZ ? arka.transform : root.transform;
+            Vector3 Yerel(Transform uzay, Vector3 p) => uzay.InverseTransformPoint(root.transform.TransformPoint(p));
+
+            var koltuklar = so.FindProperty("koltuklar");
+            koltuklar.arraySize = veri.koltuklar?.Length ?? 0;
+            for (int i = 0; i < koltuklar.arraySize; i++)
+            {
+                var k = veri.koltuklar[i];
+                var p = V(k.p);
+                var uzay = Govde(p);
+                var nokta = new GameObject($"Koltuk_{i + 1:00}").transform;
+                nokta.SetParent(uzay, false);
+                nokta.localPosition = Yerel(uzay, p);
+                var yon = uzay.InverseTransformDirection(root.transform.TransformDirection(V(k.yon)));
+                nokta.localRotation = Quaternion.LookRotation(yon.sqrMagnitude > 1e-4f ? yon : Vector3.forward, Vector3.up);
+                var e = koltuklar.GetArrayElementAtIndex(i);
+                e.FindPropertyRelative("nokta").objectReferenceValue = nokta;
+                e.FindPropertyRelative("on").vector3Value = Yerel(uzay, V(k.on));
+                e.FindPropertyRelative("koridor").vector3Value = Yerel(uzay, V(k.koridor));
+            }
+            var ayakta = so.FindProperty("ayakta");
+            ayakta.arraySize = veri.ayakta?.Length ?? 0;
+            for (int i = 0; i < ayakta.arraySize; i++)
+            {
+                var p = V(veri.ayakta[i].p);
+                var uzay = Govde(p);
+                var nokta = new GameObject($"Ayakta_{i + 1:00}").transform;
+                nokta.SetParent(uzay, false);
+                nokta.localPosition = Yerel(uzay, p);
+                ayakta.GetArrayElementAtIndex(i).FindPropertyRelative("nokta").objectReferenceValue = nokta;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+            Debug.Log($"[OtobusKurucu] {aktif.Ad}: {koltuklar.arraySize} koltuk, {ayakta.arraySize} ayakta yer");
         }
 
         private static void SetupSteeringWheel(Transform root, BusVehicle vehicle, Dictionary<string, Transform> parts)
