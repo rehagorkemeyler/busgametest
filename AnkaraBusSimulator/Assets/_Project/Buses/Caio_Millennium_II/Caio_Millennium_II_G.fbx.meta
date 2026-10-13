@@ -7,6 +7,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_AynaCam
+    second: {fileID: 2100000, guid: 540e2364c07a64040b95fe8d7858c457, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_AynaGovde
+    second: {fileID: 2100000, guid: da2b30e6712124100b5f23d5a36511f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Golge
     second: {fileID: 2100000, guid: bf24d2a30617f4e72a8ec7fba17066f0, type: 2}
   - first:
@@ -29,6 +39,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: M_KorukTabla
     second: {fileID: 2100000, guid: 5264b96c490c44208b43c3a25fba3489, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Zemin
+    second: {fileID: 2100000, guid: aa1b0013b7c0f48798f6acd67dca0231, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

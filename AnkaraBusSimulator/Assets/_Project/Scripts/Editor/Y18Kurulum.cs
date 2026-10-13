@@ -127,13 +127,17 @@ namespace AnkaraBus.EditorTools
                 for (float z = olcu.On - 2f; z > -olcu.Arka + 1f; z -= 3f)
                     Ciz($"asagi_z{z:F0}", o.transform.TransformPoint(0f, 2.3f, z), o.transform.TransformPoint(0f, 0f, z));
                 Ciz("alttan", o.transform.TransformPoint(0f, -6f, 0f), o.transform.TransformPoint(0f, 1f, 0f));
-                // aynalar: sol ve sağ ön köşe, önden ve yandan
+                // aynalar: sol ve sağ ön köşe, önden ve yandan; her kaplamada (ayna kaplamadan bağımsız olmalı)
+                var kaplama = o.GetComponent<AnkaraBus.Vehicle.BusLivery>();
+                int kAdet = kaplama != null ? Mathf.Max(1, kaplama.Count) : 1;
+                for (int k = 0; k < kAdet; k++)
                 foreach (float x in new[] { -1f, 1f })
                 {
+                    kaplama?.Select(k);
                     var ayna = o.transform.TransformPoint(x * (olcu.YariGenislik + 0.3f), 2.1f, olcu.On - 0.2f);
                     cam.fieldOfView = 35f;
-                    Ciz($"ayna_{(x < 0 ? "sol" : "sag")}_on", ayna + o.transform.forward * 2.5f + Vector3.up * 0.3f, ayna);
-                    Ciz($"ayna_{(x < 0 ? "sol" : "sag")}_arka", ayna - o.transform.forward * 2.5f + o.transform.right * x * 0.8f, ayna);
+                    Ciz($"k{k}_ayna_{(x < 0 ? "sol" : "sag")}_on", ayna + o.transform.forward * 2.5f + Vector3.up * 0.3f, ayna);
+                    Ciz($"k{k}_ayna_{(x < 0 ? "sol" : "sag")}_arka", ayna - o.transform.forward * 2.5f + o.transform.right * x * 0.8f, ayna);
                     cam.fieldOfView = 70f;
                 }
                 Object.DestroyImmediate(o);

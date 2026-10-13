@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7790802585396698582}
-  - {fileID: 4201735034655250777}
+  - {fileID: 8703999080034194077}
   m_Father: {fileID: 774130319309543267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7943622831195199477
@@ -209,7 +209,7 @@ Transform:
   - {fileID: 5357083165666346147}
   - {fileID: 3932625846637295714}
   - {fileID: 2642310155420625511}
-  - {fileID: 8703999080034194077}
+  - {fileID: 9173414298756608791}
   - {fileID: 361139866389546653}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,8 +624,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 2.812414, z: 10.005531}
-  m_Center: {x: 0, y: 1.836207, z: 1.0527649}
+  m_Size: {x: 2.5, y: 2.812414, z: 10.005532}
+  m_Center: {x: 0, y: 1.836207, z: 1.0527654}
 --- !u!1 &1958919225046646417
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +656,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8703999080034194077}
+  m_Father: {fileID: 9173414298756608791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5393153245462337969
 WheelCollider:
@@ -697,7 +697,7 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1 &3278454174890929575
+--- !u!1 &3737867561601735959
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -705,7 +705,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4201735034655250777}
+  - component: {fileID: 9173414298756608791}
   m_Layer: 0
   m_Name: Tekerlekler
   m_TagString: Untagged
@@ -713,22 +713,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4201735034655250777
+--- !u!4 &9173414298756608791
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3278454174890929575}
+  m_GameObject: {fileID: 3737867561601735959}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1715959547941239276}
-  - {fileID: 9223089237731234870}
-  m_Father: {fileID: 2642310155420625511}
+  - {fileID: 2002429522890813908}
+  - {fileID: 6194488734021575985}
+  - {fileID: 6086798831222161815}
+  - {fileID: 5788986951941213660}
+  m_Father: {fileID: 774130319309543267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4763754544551687285
 GameObject:
@@ -760,7 +762,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4201735034655250777}
+  m_Father: {fileID: 8703999080034194077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &2831155538381800502
 WheelCollider:
@@ -862,7 +864,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8703999080034194077}
+  m_Father: {fileID: 9173414298756608791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5900184320282271929
 WheelCollider:
@@ -1028,7 +1030,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4201735034655250777}
+  m_Father: {fileID: 8703999080034194077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4993884856605061087
 WheelCollider:
@@ -1099,7 +1101,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8703999080034194077}
+  m_Father: {fileID: 9173414298756608791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &6670903978785875211
 WheelCollider:
@@ -1170,7 +1172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8703999080034194077}
+  m_Father: {fileID: 9173414298756608791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &269943685335686364
 WheelCollider:
@@ -1240,11 +1242,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2002429522890813908}
-  - {fileID: 6194488734021575985}
-  - {fileID: 6086798831222161815}
-  - {fileID: 5788986951941213660}
-  m_Father: {fileID: 774130319309543267}
+  - {fileID: 1715959547941239276}
+  - {fileID: 9223089237731234870}
+  m_Father: {fileID: 2642310155420625511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9186492994436364177
 GameObject:

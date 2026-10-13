@@ -104,3 +104,19 @@ Conecto'nun kullandığı kod (plug kapı kurulumu, kapı noktaları, Conecto la
 - Kod: `Gameplay/HavaVeZaman.cs` (değişiklik geri alındı, net değişiklik yok), `Editor/OtobusKurucu.cs`, `Vehicle/HatTabelasi.cs`,
   `Vehicle/KorukluOtobus.cs` (yorum); yeni `Diagnostics/KorukTesti.cs`; `KapiTesti`, `GeceTesti`, `TabelaTesti`, `Y11Hat`, `Y10Baslatici`, `Editor/Y18Kurulum.cs`
 - Prefablar ve varlıklar: `BMC_Procity_18.*`, `Caio_Millennium_II_G.*`, `*_KorukDeri.asset`, `M_Koruk*.mat`, `OtobusKatalogu.asset`
+
+## Ek (13 Ekim, akşam): bulutun Millennium zemini, aynalar ve EGO düzeltmesi (8a13490, 685e39c, b0ad225)
+- `BuildAllBatch` (dört prefab): hata yok; uyarılar yalnız bilinenler (`M_mepibis`, BMC 18 `Govde_On` kendini kesen poligon — BMC 18 değişmedi,
+  prefab farkı yalnız fileID sırası). `Materials/`: yeni `M_Zemin` (dokulu), `M_AynaGovde`, `M_AynaCam`.
+- **Zemin (`ZeminBatch`, macenta = delik), içeriden aşağı bakış:**
+  | | önce | sonra |
+  |---|---|---|
+  | Millennium | %26–44 | **%0–4** |
+  | Millennium körüklü | %20–38 | **%0–1,2** |
+  | BMC / BMC 18 (karşılaştırma) | %0–8 | aynı |
+  Zemin gri, kaymaz desenli (`zemin_sonra_Caio_Millennium_II_asagi_z1`; kalan macenta yan camlardan). Oyunda körüklü Millennium yolcu
+  kamerası gündüz (Normal) ve gece (Düşük): zemin gri, siyah değil, koltuk ve direkler zeminde ✔ (`sonra_caiog_gunduz_ic_yolcu_zemin`,
+  `sonra_caiog_gece_dusuk_yolcu_zemin`).
+- **Aynalar:** üç kaplamada ayna cam/gövdesi koyu gri, kaplama değişince desen değişmiyor ✔ (`zemin_sonra_Caio_Millennium_II_k1_ayna_sol_arka`, mavi kaplama).
+- **Körüklüde EGO:** arka gövdenin başında kesik yazı yok (düz gövde rengi) ✔ (`sonra_koruk_caiog_ego_yok`). Mafsal, kalite geçişi öncekiyle aynı.
+- Açık kalan (bulut): BMC 18 körük üst köşesinde sivri çıkıntı (GOREVLER madde 4).
