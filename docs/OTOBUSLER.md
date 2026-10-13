@@ -33,6 +33,11 @@ Kaynaklar: docs/KREDILER.md.
 - Sürüş testi (Editor, otomatik pilot, Hat 1): 5/5 durak, takılma yok, 2 çarpışma (trafik aracı öne/arkaya). BMC aynı testte 0 çarpışma.
   `Unity -batchmode ... -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1OtobusBatch -otobus 1`.
 
+## Millennium iç zemini ve aynaları (Y19)
+- `tools/blender/millennium_duzelt.py` (millennium_donustur.py çıktısına bir kez, mobil ve tam kalite; körüklü bundan sonra
+  `koruklu_yap.py` ile): zemin kaynakta aşağı bakıyordu → yukarı bakan `M_Zemin` kopyası (`Textures/zemin.png`) + süpürgelik;
+  aynalar `M_AynaGovde` / `M_AynaCam` (kaplamadan bağımsız). Körüklüde sol yandaki EGO paneli arka gövdede yok (`arka_uv_temizle`).
+
 ## Körüklü versiyonlar: BMC Procity 18 ve Caio Millennium II körüklü (Y19)
 
 Plan: `docs/PLAN_Y19_KORUKLU.md`. Conecto'nun yerine (menüden çıktı, kurulabilir durumda). Tek gövdelinin kendi dokulu

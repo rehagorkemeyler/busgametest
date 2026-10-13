@@ -333,3 +333,29 @@ Görüntüler `docs/gorseller/y19/zemin_*.jpg`. Kullanıcı: "Mercedes otobüsle
 3. **Körüklü Millennium:** arka gövdenin başındaki "EGO" yazısı körükle kesiliyor (`koruk_caiog_ego_kesik.jpg`; planın 4. adımındaki
    atlas tekrarı). Kaplamada yazıyı kesimden uzağa al ya da arka gövde başında yazısız bölge.
 Yerel doğrulama: `ZeminBatch` (macenta oranı) + prefabları yeniden kur + `koruk` görevi.
+
+### Y19 — yerel doğrulama: Millennium zemini, aynalar, körüklüde EGO (bulut, 13 Ekim)
+Bulut "Y19 — bulut için: Mercedes otobüslerinde zemin ve ayna" maddelerini yaptı (üç commit). Önce `git pull --rebase origin Ozan`.
+- **Zemin:** kaynakta zemin vardı ama yüzleri **aşağı bakıyordu** (malzemesi düz siyah `pretoreal`; içeriden arka yüz çizilmediği için
+  delik/siyah). `tools/blender/millennium_duzelt.py`: yukarı bakan dokulu kopya (`M_Zemin`, `Textures/zemin.png`, gri kaymaz desen) ve
+  alçak zeminin opak duvara değen kenarlarında süpürgelik. Blender'da (macenta dünya, arka yüz gizli, içeriden aşağı, z 1/−2/−4,5/4/2)
+  delik oranı **%33–64 → %0–0,1**; körüklüde (z 1/−2/−6,5/−9/4) %0–0,1. Önce/sonra: `docs/gorseller/y19_bulut/millennium_zemin_once_sonra.jpg`.
+- **Aynalar:** ayna kafaları, kolları ve sağ aynanın tavan kolu `M_caroserie_Koyu`'dan (kaplama dokusu) `M_AynaGovde` (siyaha yakın
+  plastik) ve `M_AynaCam`'a (koyu gri, parlak; arkaya bakan yüzler). `millennium_ayna_sol.jpg`, `millennium_ayna_sag.jpg`.
+- **Körüklüde kesik EGO:** `koruklu_yap.py` arka gövdede sol yandaki EGO panelini düz gövde rengine bağlar (sol yanda panel yalnız ön
+  gövdede). `millennium_g_sol_ego_yok.jpg`. Körüklü Millennium yeni zemin/aynalarla yeniden üretildi.
+- Kurucu: `M_Zemin` ve `M_Koruk` dokusu içe aktarmada bulunamazsa `Textures/`'tan atanır (`OtobusKurucu.EkDokular`).
+
+Yapılacaklar:
+1. Unity'yi aç (dört FBX yeniden içe aktarılır; konsol uyarılarını yaz). **Caio Millennium Prefabını Kur** ve **Caio Millennium II
+   (Körüklü) Prefabını Kur**. `Materials/`: yeni `M_Zemin` (dokulu: zemin.png), `M_AynaGovde`, `M_AynaCam`; gömülü malzeme kalmadı.
+2. `Y18Kurulum.ZeminBatch` (macenta): Millennium ve Millennium körüklüde içeriden aşağı bakış delik oranı. Kabul: BMC gibi %0–8, delik
+   yalnız kapı basamaklarında. Görüntüler `docs/gorseller/y19/zemin_*` (önce/sonra yan yana).
+3. Zemin oyunda: gündüz ve gece yolcu kamerası, Düşük ve Yüksek kalite (iki modelde de): zemin gri, desenli, siyah değil; süpürgelik
+   duvar diplerinde (sol BRT kapı camlarının altında yok, sağ kapı basamakları açık); koltuklar ve direkler zeminde (havada değil).
+4. Aynalar: üç kaplamada (kırmızı, mavi, Özel Halk) ayna gövdesi koyu/siyah, kaplama değişince desen değişmiyor; kokpit
+   kamerasından aynaya bakınca cam koyu gri. `ayna_sol_arka` açısıyla önce/sonra.
+5. `koruk` görevi: körüklü Millennium sol yan körük yakın — arka gövdenin başında kesik EGO yok; üç kaplamada (mavide kurdele amblemi de
+   arka gövdenin başında yok, ön gövdede tam).
+6. BMC ve BMC körüklüde değişiklik yok (kurucu değişti: bir kez yeniden kurup gözle bak).
+Rapor `docs/RAPOR_Y19.md`'ye ekle, commit, **push**, `git log origin/Ozan -1` ile doğrula.
