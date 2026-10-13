@@ -332,7 +332,10 @@ Görüntüler `docs/gorseller/y19/zemin_*.jpg`. Kullanıcı: "Mercedes otobüsle
    gövdesi koyu gri/siyah plastik, ayna camı yansıtıcı koyu gri olsun, kaplamadan bağımsız.
 3. **Körüklü Millennium:** arka gövdenin başındaki "EGO" yazısı körükle kesiliyor (`koruk_caiog_ego_kesik.jpg`; planın 4. adımındaki
    atlas tekrarı). Kaplamada yazıyı kesimden uzağa al ya da arka gövde başında yazısız bölge.
-Yerel doğrulama: `ZeminBatch` (macenta oranı) + prefabları yeniden kur + `koruk` görevi.
+4. **BMC 18 körük:** körük kırıkken (mafsal ~30°) dış köşenin üstünde körük derisi tavanın üstüne sivri çıkıntı yapıyor
+   (`docs/gorseller/y19/kapi_bmc18_korukte_acik_kapi3.jpg`, sol üst). Deri ağırlıkları/tavan kenarı halkası (`OtobusKurucu.KorukDerisi`
+   veya `koruklu_yap.py` körük üst kenarı).
+Yerel doğrulama: `ZeminBatch` (macenta oranı) + prefabları yeniden kur + `koruk` görevi. Ayrıntı: `docs/RAPOR_Y19.md`.
 
 ### Y19 — yerel doğrulama: Millennium zemini, aynalar, körüklüde EGO (bulut, 13 Ekim)
 Bulut "Y19 — bulut için: Mercedes otobüslerinde zemin ve ayna" maddelerini yaptı (üç commit). Önce `git pull --rebase origin Ozan`.
