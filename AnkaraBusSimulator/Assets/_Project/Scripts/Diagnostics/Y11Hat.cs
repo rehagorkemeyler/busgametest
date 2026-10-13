@@ -69,6 +69,14 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<KapiTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "koruk")
+            {
+                // Y19: körüklü BMC ve Millennium görünüm, kalite, mafsal kararlılığı, körük bükülmesi (fırlama bekçisi yanında)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<KorukluTesti>();
+                gameObject.AddComponent<KorukTesti>();
+                return;
+            }
             if (Y10Baslatici.Gorev == "gece")
             {
                 // Y18: gece lambaları, dolgu ışığı (rendering layer), kaplamalar, fren, kalite, FPS; Conecto → BMC → Millennium

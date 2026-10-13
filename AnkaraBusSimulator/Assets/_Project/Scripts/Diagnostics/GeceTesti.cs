@@ -18,7 +18,7 @@ namespace AnkaraBus.Diagnostics
     public class GeceTesti : MonoBehaviour
     {
         private static int sira = -1;
-        private static readonly int[] Otobusler = { 2, 0, 1 };
+        private static readonly int[] Otobusler = { 2, 3, 0, 1 };   // Y19: önce iki körüklü (bütün adımlar), sonra tek gövdeliler
 
         private BusVehicle bus;
         private BusCameraRig rig;
@@ -45,10 +45,10 @@ namespace AnkaraBus.Diagnostics
             rig = FindAnyObjectByType<BusCameraRig>();
             cam = rig.GetComponentInChildren<Camera>() ?? Camera.main;
             olcu = OtobusOlcusu.Olc(bus);
-            otobus = bus.name.Split('_')[0].ToLowerInvariant();
+            otobus = KapiTesti.KisaAd(bus.name);
             etiket = $"{OyunSecimi.SeciliZaman}{(OyunSecimi.SeciliHava != OyunSecimi.Hava.Acik ? "_" + OyunSecimi.SeciliHava : "")}".ToLowerInvariant();
             bus.Handbrake = true;
-            bool tam = sira == 0;
+            bool tam = bus.GetComponent<KorukluOtobus>() != null;
             var dolgu = GameObject.Find("OtobusDolguIsigi")?.GetComponent<Light>();
 
             Log($"BASLA otobüs={bus.Definition?.displayName} zaman={OyunSecimi.SeciliZaman} hava={OyunSecimi.SeciliHava} kalite={GrafikAyarlari.Mevcut} cihaz={SystemInfo.deviceModel}");
@@ -74,9 +74,11 @@ namespace AnkaraBus.Diagnostics
             // fren: stop lambası (gece ve gündüz)
             var input = bus.GetComponent<BusInput>();
             var fren = Bul("Lamba_Fren");
+            var frenArka = Bul("Lamba_Fren_Arka");
             input.AutoBrake = 1f;
             yield return new WaitForSeconds(0.5f);
-            Log($"{otobus} fren: Lamba_Fren={(fren == null ? "YOK" : fren.activeInHierarchy ? "yanıyor" : "SÖNÜK")} fren={bus.Brake:F2}");
+            Log($"{otobus} fren: Lamba_Fren={(fren == null ? "YOK" : fren.activeInHierarchy ? "yanıyor" : "SÖNÜK")} " +
+                $"Lamba_Fren_Arka={(frenArka == null ? "yok" : frenArka.activeInHierarchy ? "yanıyor" : "SÖNÜK")} fren={bus.Brake:F2}");
             yield return Cek("frende_arka", ArkaKamera(7f), ArkaNokta());
             input.AutoBrake = 0f;
             yield return new WaitForSeconds(0.5f);
@@ -278,7 +280,12 @@ namespace AnkaraBus.Diagnostics
         private IEnumerator Korukte(KorukluOtobus kor, BusInput input)
         {
             var arka = kor.ArkaGovde.transform;
-            var adlar = new[] { "Lamba_Park_Arka", "Lamba_Fren", "Lamba_Pencere_Arka", "Lamba_IcSerit_Arka" };
+            // arka gövdedeki lambalar: adı Lamba_ ile başlayıp _Arka ile biten parçalar (Y19 körüklüler) ve Conecto'nun Lamba_Fren'i
+            var adlarList = new List<string>();
+            foreach (var t in Parcalar())
+                if (t.name.StartsWith("Lamba_") && (t.name.EndsWith("_Arka") || t.name == "Lamba_Fren") && !adlarList.Contains(t.name))
+                    adlarList.Add(t.name);
+            var adlar = adlarList.ToArray();
             var once = new Dictionary<string, Vector3>();
             foreach (var a in adlar)
             {

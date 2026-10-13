@@ -8,7 +8,7 @@ namespace AnkaraBus.Vehicle
     /// Prefabda arka gövde kökün çocuğudur; oyun başlayınca sahne köküne alınır (iç içe Rigidbody olmasın).
     /// Görseller kökteki Model altında kalır (kalite modeli ve kaplama böyle çalışır): arka gövde parçaları her karede
     /// arka Rigidbody'nin pozuna taşınır, körük mafsal açısının yarısı kadar döner.
-    /// Kurulum: Editor/OtobusKurucu (Mercedes Conecto). Ayrıntı: docs/OTOBUSLER.md
+    /// Kurulum: Editor/OtobusKurucu (BMC Procity 18, Millennium II körüklü). Ayrıntı: docs/OTOBUSLER.md
     /// </summary>
     [RequireComponent(typeof(BusVehicle))]
     public class KorukluOtobus : MonoBehaviour

@@ -27,8 +27,6 @@ namespace AnkaraBus.EditorTools
             public System.Action<BusPhysicsSpec> Fizik;
             // körüklü: iki gövde (Govde_On / Govde_Arka, mafsal Govde_Arka'nın pivotunda), 6 teker, kapı parçası yok
             public bool Koruklu;
-            // kapı parçası olmayan modelde kapı noktaları (otobüs yerel; z < MafsalZ olanlar arka gövdede)
-            public Vector3[] KapiNoktalari;
             // dokusuz gövde parçasının (ön/arka yüz) kaplamaya göre rengi (Kaplamalar sırasıyla)
             public string RenkMalzeme;
             // kaplamadaki ikinci dokunun (Kaplamalar.roof) gideceği malzeme adı parçası; boşsa BusLivery'nin varsayılanı (cngtank)
@@ -37,8 +35,6 @@ namespace AnkaraBus.EditorTools
             public Vector3? MotorKonumu;
             // model başka otobüsün klasöründe (körüklü versiyonlar: tools/blender/koruklu_yap.py; malzeme, doku ve kaplamalar ortak)
             public string Klasor;
-            // körüklü: Conecto'nun plug kapıları (conecto_kapilar.py); değilse kaynağın menteşeli kanatları (SetupDoors)
-            public bool PlugKapi;
             // körüklü: arka gövdenin ağırlık merkezi (mafsala göre)
             public Vector3? ArkaAgirlik;
             public string Folder => "Assets/_Project/Buses/" + (Klasor ?? Ad) + "/";
@@ -78,42 +74,6 @@ namespace AnkaraBus.EditorTools
             Fizik = f => { f.wheelRadius = 0.525f; f.maxSteerAngle = 48f; },
         };
 
-        // Mercedes O530G Conecto (körüklü, 18,2 m): tools/blender/conecto_donustur.py, kaplama tools/kaplama_conecto.py
-        private static readonly Tanim Conecto = new Tanim
-        {
-            Ad = "MB_Conecto_G", GorunenAd = "Mercedes-Benz O530G Conecto (körüklü)", Uretici = "Mercedes-Benz",
-            Kapasite = 150,
-            Koruklu = true,
-            PlugKapi = true,
-            Kaplamalar = new[]
-            {
-                ("EGO kırmızı", "Textures/caroserie.png", "Textures/onarka.png"),
-                ("EGO mavi", "Textures/Kaplamalar/ego_mavi.png", "Textures/Kaplamalar/onarka_mavi.png"),
-                ("Özel Halk", "Textures/Kaplamalar/ozel_halk.png", "Textures/Kaplamalar/onarka_ozel.png"),
-            },
-            // ön/arka yüz (ön cam, tabela, plaka, stoplar) ayrı dokuda: BusLivery'nin ikinci doku yuvası (roofModule)
-            IkinciMalzeme = "onarka",
-            RenkMalzeme = "M_Govde",
-            Renkler = new[]
-            {
-                new Color(0.84f, 0.11f, 0.13f), new Color(0.11f, 0.25f, 0.63f), new Color(0.2f, 0.59f, 0.87f),
-            },
-            // kanatsız eski FBX için: sağdaki 4 kapının ortası (kaynak y aralıkları + 2,87 m; conecto_donustur.KAPILAR).
-            // Kanatlı FBX'te (tools/blender/conecto_kapilar.py: Kapi_1_1 … Kapi_4_2) SetupPlugKapilar kullanılır.
-            KapiNoktalari = new[]
-            {
-                new Vector3(1.3f, 1.0f, 7.78f), new Vector3(1.3f, 1.0f, 1.89f),
-                new Vector3(1.3f, 1.0f, -4.23f), new Vector3(1.3f, 1.0f, -7.43f),
-            },
-            MotorKonumu = new Vector3(0f, 1.0f, -8.2f),
-            // 18 t (arka gövde %40), ağırlık merkezi ön ile orta aks arasında; dingil 5,9 m (BMC gibi)
-            Fizik = f =>
-            {
-                f.wheelRadius = 0.51f; f.maxSteerAngle = 45f; f.massKg = 18000f; f.trailerMassRatio = 0.4f;
-                f.centerOfMass = new Vector3(0f, 0.6f, 2.6f);
-            },
-        };
-
         // Körüklü versiyonlar (Y19, docs/PLAN_Y19_KORUKLU.md): tek gövdelinin kendi modelinden tools/blender/koruklu_yap.py ile;
         // model, malzemeler ve kaplamalar tek gövdelinin klasöründe ortak.
         // BMC Procity 18: ön gövde 9,4 m (ön kapı, orta kapı, ön aks, orta aks), körük 0,9 m (mafsal z −4,0), arka gövde 6,7 m
@@ -151,7 +111,7 @@ namespace AnkaraBus.EditorTools
             },
         };
 
-        /// <summary>Oyunda seçilebilen otobüsler, menüdeki sırayla (OyunSecimi.Otobus). Conecto (Y12–Y18) Y19'da körüklü
+        /// <summary>Oyunda seçilebilen otobüsler, menüdeki sırayla (OyunSecimi.Otobus). Conecto (Y12–Y18) kaldırıldı (13 Ekim); körüklü
         /// BMC ve Millennium'la değiştirildi: menüden çıktı, kurulabilir durumda bırakıldı.</summary>
         private static readonly Tanim[] Katalog = { Bmc, Millennium, BmcKoruklu, MillenniumKoruklu };
 
@@ -191,9 +151,6 @@ namespace AnkaraBus.EditorTools
 
         [MenuItem("Ankara Bus/Caio Millennium Prefabını Kur")]
         public static void BuildMillennium() => Build(Millennium);
-
-        [MenuItem("Ankara Bus/Mercedes Conecto (Körüklü) Prefabını Kur")]
-        public static void BuildConecto() => Build(Conecto);
 
         [MenuItem("Ankara Bus/BMC Procity 18 (Körüklü) Prefabını Kur")]
         public static void BuildBmcKoruklu() => Build(BmcKoruklu);
@@ -270,12 +227,7 @@ namespace AnkaraBus.EditorTools
                 Rigidbody arka = tanim.Koruklu ? SetupArkaGovde(root, body, parts) : null;
                 SetupWheels(root.transform, vehicle, parts, definition.physics, arka);
                 SetupSteeringWheel(root.transform, vehicle, parts);
-                if (tanim.PlugKapi && parts.ContainsKey("Kapi_1_1"))
-                    SetupPlugKapilar(root, arka, parts);
-                else if (tanim.KapiNoktalari != null && !parts.ContainsKey("Kapi_1_1"))
-                    SetupKapiNoktalari(root, arka, tanim.KapiNoktalari);
-                else
-                    SetupDoors(root, parts, arka);
+                SetupDoors(root, parts, arka);
                 if (tanim.Koruklu)
                     SetupKoruklu(root, arka, parts);
 
@@ -474,8 +426,6 @@ namespace AnkaraBus.EditorTools
                 var material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
                 if (material.name.EndsWith("_Cam"))
                     MakeGlass(material);
-                else if (LambaMaskeleri.TryGetValue(material.name, out var maske))
-                    LambaMalzemesi(material, maske);
                 else if (material.name == "M_Koruk" && material.GetTexture("_BaseMap") == null)
                 {
                     // körüklü (koruklu_yap.py): kauçuk körük dokusu
@@ -488,35 +438,6 @@ namespace AnkaraBus.EditorTools
                     }
                 }
             }
-        }
-
-        // Conecto gece lambaları (tools/blender/conecto_lambalar.py): malzeme → maske dokusu (null: düz renk)
-        private static readonly Dictionary<string, string> LambaMaskeleri = new Dictionary<string, string>
-        {
-            { "M_LambaPencere", "Textures/gece_yan.png" }, { "M_LambaPark", "Textures/gece_onarka.png" },
-            { "M_LambaFren", "Textures/gece_fren.png" }, { "M_LambaIc", null },
-        };
-
-        /// <summary>Kendi ışığıyla parlayan lamba yüzü: URP/Unlit (ışıktan, gece prob/ay ışığından etkilenmez), maskenin
-        /// saydam yerleri alfa kesmeyle atılır. Parçalar gündüz kapalı (Lamba_*), HavaVeZaman gece açar.</summary>
-        private static void LambaMalzemesi(Material m, string maske)
-        {
-            var shader = Shader.Find("Universal Render Pipeline/Unlit");
-            if (shader == null)
-                return;
-            m.shader = shader;
-            var doku = maske != null ? AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + maske) : null;
-            m.SetTexture("_BaseMap", doku);
-            m.SetColor("_BaseColor", maske != null ? Color.white : new Color(1f, 0.98f, 0.94f));
-            bool kes = doku != null;
-            m.SetFloat("_AlphaClip", kes ? 1f : 0f);
-            m.SetFloat("_Cutoff", 0.5f);
-            if (kes)
-                m.EnableKeyword("_ALPHATEST_ON");
-            else
-                m.DisableKeyword("_ALPHATEST_ON");
-            m.renderQueue = kes ? (int)UnityEngine.Rendering.RenderQueue.AlphaTest : -1;
-            EditorUtility.SetDirty(m);
         }
 
         private static void MakeGlass(Material m)
@@ -656,92 +577,15 @@ namespace AnkaraBus.EditorTools
             return rb;
         }
 
-        /// <summary>Kapı parçası olmayan modelde kapılar: hareketsiz "kanat" noktaları (yolcular buraya yürür).</summary>
-        private static void SetupKapiNoktalari(GameObject root, Rigidbody arka, Vector3[] noktalar)
-        {
-            var controller = root.AddComponent<BusDoorController>();
-            var so = new SerializedObject(controller);
-            var groups = so.FindProperty("doors");
-            groups.arraySize = noktalar.Length;
-            float mafsalZ = arka != null ? root.transform.InverseTransformPoint(arka.transform.position).z : float.MinValue;
-            for (int i = 0; i < noktalar.Length; i++)
-            {
-                var nokta = new GameObject($"Kapi_{i + 1}");
-                nokta.transform.SetParent(arka != null && noktalar[i].z < mafsalZ ? arka.transform : root.transform, false);
-                nokta.transform.position = root.transform.TransformPoint(noktalar[i]);
-                var door = nokta.AddComponent<BusDoor>();
-                var dso = new SerializedObject(door);
-                dso.FindProperty("motion").enumValueIndex = (int)BusDoor.Motion.Slide;
-                dso.FindProperty("openPositionOffset").vector3Value = Vector3.zero;
-                dso.FindProperty("duration").floatValue = 1.2f;
-                dso.ApplyModifiedPropertiesWithoutUndo();
-                var group = groups.GetArrayElementAtIndex(i);
-                group.FindPropertyRelative("name").stringValue = i == 0 ? "Ön kapı" : $"{i + 1}. kapı";
-                var leaves = group.FindPropertyRelative("leaves");
-                leaves.arraySize = 1;
-                leaves.GetArrayElementAtIndex(0).objectReferenceValue = door;
-            }
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
-
-        /// <summary>
-        /// Conecto: modeldeki Kapi_N_1 (öndeki) / Kapi_N_2 (arkadaki) kanatları "plug" kapı olur: önce dışarı çıkar, sonra
-        /// gövde boyunca kayar (öndeki öne, arkadaki geriye). Mafsalın gerisindeki kapıların kanatları arka gövdeyi izler.
-        /// </summary>
-        private static void SetupPlugKapilar(GameObject root, Rigidbody arka, Dictionary<string, Transform> parts)
-        {
-            const float Disari = 0.09f, Kayma = 0.6f;
-            var controller = root.AddComponent<BusDoorController>();
-            var so = new SerializedObject(controller);
-            var groups = so.FindProperty("doors");
-            groups.arraySize = 0;
-            float mafsalZ = arka != null ? root.transform.InverseTransformPoint(arka.transform.position).z : float.MinValue;
-            for (int no = 1; no <= 4; no++)
-            {
-                var leaves = new List<BusDoor>();
-                for (int k = 1; k <= 2; k++)
-                {
-                    if (!parts.TryGetValue($"Kapi_{no}_{k}", out var leaf))
-                        continue;
-                    // kanat yönleri otobüs ekseninde: dışarı +x (kapılar sağda), öndeki kanat +z, arkadaki −z
-                    Vector3 disari = new Vector3(Disari, 0f, 0f);
-                    Vector3 acik = disari + new Vector3(0f, 0f, k == 1 ? Kayma : -Kayma);
-                    Vector3 Yerel(Vector3 v) => leaf.parent != null
-                        ? leaf.parent.InverseTransformVector(root.transform.TransformVector(v)) : root.transform.TransformVector(v);
-                    var door = leaf.gameObject.AddComponent<BusDoor>();
-                    var dso = new SerializedObject(door);
-                    dso.FindProperty("motion").enumValueIndex = (int)BusDoor.Motion.Plug;
-                    dso.FindProperty("plugOutOffset").vector3Value = Yerel(disari);
-                    dso.FindProperty("openPositionOffset").vector3Value = Yerel(acik);
-                    dso.FindProperty("duration").floatValue = 1.6f;
-                    if (arka != null && root.transform.InverseTransformPoint(LeafCenter(leaf)).z < mafsalZ)
-                        dso.FindProperty("takip").objectReferenceValue = arka.transform;
-                    dso.ApplyModifiedPropertiesWithoutUndo();
-                    leaves.Add(door);
-                }
-                if (leaves.Count == 0)
-                    continue;
-                int i = groups.arraySize++;
-                var group = groups.GetArrayElementAtIndex(i);
-                group.FindPropertyRelative("name").stringValue = no == 1 ? "Ön kapı" : $"{no}. kapı";
-                var leafList = group.FindPropertyRelative("leaves");
-                leafList.arraySize = leaves.Count;
-                for (int j = 0; j < leaves.Count; j++)
-                    leafList.GetArrayElementAtIndex(j).objectReferenceValue = leaves[j];
-            }
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
-
         private static void SetupKoruklu(GameObject root, Rigidbody arka, Dictionary<string, Transform> parts)
         {
             var k = root.AddComponent<KorukluOtobus>();
             var so = new SerializedObject(k);
             so.FindProperty("arkaGovde").objectReferenceValue = arka;
             var gorseller = new List<Transform>();
-            // arka gövdedeki her parça (adı _Arka ile biter: gövde, gölge, lambalar) arka gövdeyle birlikte hareket eder;
-            // Conecto'nun stop lambası (conecto_lambalar.py) eki taşımaz
+            // arka gövdedeki her parça (adı _Arka ile biter: gövde, gölge, lambalar) arka gövdeyle birlikte hareket eder
             foreach (var pair in parts)
-                if (pair.Key.EndsWith("_Arka") || (aktif.PlugKapi && pair.Key == "Lamba_Fren"))
+                if (pair.Key.EndsWith("_Arka"))
                     gorseller.Add(pair.Value);
             var list = so.FindProperty("arkaGorseller");
             list.arraySize = gorseller.Count;
@@ -777,7 +621,7 @@ namespace AnkaraBus.EditorTools
         /// </summary>
         private static bool KorukDerisi(GameObject root, Rigidbody arka, Transform koruk)
         {
-            if (aktif.PlugKapi || arka == null)
+            if (arka == null)
                 return false;
             var filter = koruk.GetComponent<MeshFilter>();
             var renderer = koruk.GetComponent<MeshRenderer>();

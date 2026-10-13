@@ -51,7 +51,7 @@ namespace AnkaraBus.Diagnostics
             tabela = bus.GetComponent<HatTabelasi>();
             tracker = bus.GetComponent<RouteTracker>();
             olcu = OtobusOlcusu.Olc(bus);
-            otobus = bus.name.Split('_')[0].ToLowerInvariant();
+            otobus = KapiTesti.KisaAd(bus.name);
             hat = SceneManager.GetActiveScene().name.StartsWith("Hat1") ? "hat1" : "hat2";
             var livery = bus.GetComponent<BusLivery>();
             var kor = bus.GetComponent<KorukluOtobus>();
@@ -147,7 +147,7 @@ namespace AnkaraBus.Diagnostics
             Log($"BITTI {otobus} {hat}");
             rig.enabled = true;
             otobusSayisi++;
-            if (otobusSayisi < 3)
+            if (otobusSayisi < 4)   // Y19: dört otobüs (iki körüklü)
             {
                 OyunSecimi.Otobus = otobusSayisi;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -172,8 +172,8 @@ namespace AnkaraBus.Diagnostics
         {
             cam.transform.SetPositionAndRotation(konum, Quaternion.LookRotation(bak - konum, Vector3.up));
             yield return null;
-            yield return new WaitForEndOfFrame();
-            Y11Hat.Kaydet($"y16_tabela_{hat}_{otobus}_{OyunSecimi.SeciliZaman.ToString().ToLowerInvariant()}_{ad}.png");
+            yield return Goruntu.KareSonu();
+            Goruntu.Kaydet(cam, $"y16_tabela_{hat}_{otobus}_{OyunSecimi.SeciliZaman.ToString().ToLowerInvariant()}_{ad}.png");
         }
 
         // HatTabelasi iç durumu (yalnızca test)

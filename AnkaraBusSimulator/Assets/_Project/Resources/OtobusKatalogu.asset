@@ -15,4 +15,5 @@ MonoBehaviour:
   otobusler:
   - {fileID: 11400000, guid: eb115bc7d18894923aac62276ac758c4, type: 2}
   - {fileID: 11400000, guid: 8e7c7e5fc18a84762a04e4129dad0030, type: 2}
-  - {fileID: 11400000, guid: 97b68753c4d5c4bd4b213b45f87cad50, type: 2}
+  - {fileID: 11400000, guid: 74bb205cc5cc3413185f00a7cb223b90, type: 2}
+  - {fileID: 11400000, guid: 708c47676d0c74e458633f70ca21a525, type: 2}

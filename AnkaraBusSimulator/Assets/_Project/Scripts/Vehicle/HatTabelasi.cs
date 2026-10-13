@@ -6,14 +6,14 @@ namespace AnkaraBus.Vehicle
     /// <summary>
     /// Otobüsün LED hat tabelası (nokta matris, LedYazi). Ön tabela: "1 ATAKULE" ile "1 KIZILAY AVM - ATAKULE" dönüşümlü
     /// (sığmayan kayar), hat bitince "SERVİS DIŞI", rotasız (menü vitrini) "ANKARA". Arka tabela: hat numarası.
-    /// Yerleşim otobüs tanımına göre (Yerlesimler): BMC ve Conecto'da tabela yüzeyine konan ince bir levha (Sprite);
+    /// Yerleşim otobüs tanımına göre (Yerlesimler): BMC'de tabela yüzeyine konan ince bir levha (Sprite);
     /// Millennium'da modelin kendi tabela malzemesinin ("vmatrix", kaynakta "RESERVADO") dokusu değiştirilir.
     /// BusVehicle.Awake ekler; prefab kurulumu gerekmez.
     /// </summary>
     public class HatTabelasi : MonoBehaviour
     {
         private const int OnGenislik = 128;   // nokta
-        private const int ArkaGenislik = 52;   // en/boy ≈ 3,3 (Conecto arka tabela kutusu 0,56 × 0,17 m)
+        private const int ArkaGenislik = 52;   // en/boy ≈ 3,3 
         private const float SayfaSuresi = 4f;
         private const float KaymaHizi = 24f;  // nokta / sn
 
@@ -84,16 +84,6 @@ namespace AnkaraBus.Vehicle
                             new Levha { konum = new Vector3(0f, 2.847f, -12.149f), normal = Vector3.back, en = 0.29f, arka = true, arkaGovdede = true },
                             new Levha { konum = new Vector3(1.218f, 1.315f, 4.161f), normal = Vector3.right, en = 0.29f, boy = 0.295f, arka = true },
                             new Levha { konum = new Vector3(-1.217f, 1.315f, 2.731f), normal = Vector3.left, en = 0.29f, boy = 0.295f, arka = true },
-                        },
-                    };
-                case "MB_Conecto_G":
-                    // ön: dokudaki tabela kutusu (x ±0,98, y 2,50–2,74), yüzey 15° geriye yatık; arka: sağ üst küçük tabela
-                    return new Yerlesim
-                    {
-                        levhalar = new[]
-                        {
-                            new Levha { konum = new Vector3(0f, 2.623f, 8.730f), normal = new Vector3(0f, 0.27f, 0.96f), en = 1.96f },
-                            new Levha { konum = new Vector3(0.68f, 2.465f, -9.235f), normal = Vector3.back, en = 0.56f, arka = true, arkaGovdede = true },
                         },
                     };
                 default:

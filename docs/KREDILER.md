@@ -12,14 +12,6 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
   (`tools/blender/millennium_donustur.py`); körüklü versiyon bu modelden türetildi (`tools/blender/koruklu_yap.py`).
   Model hayran çalışmasıdır; marka adları tanıtım amaçlı.
 
-## Mercedes-Benz O530G Conecto (körüklü) — Y19'dan beri oyunda değil (dosyalar duruyor)
-
-- Model: **"Zort"** — https://sketchfab.com/privatetrs1
-- Kaynak: https://sketchfab.com/3d-models/mercedes-benz-conecto-ceb9e135aedc4b60a8d815fb54920129
-- Lisans: **CC BY 4.0** — http://creativecommons.org/licenses/by/4.0/
-- Değişiklikler: dokular kaynakta yoktu; yan yüzlere yeni UV, düz renk malzemeler, ön/arka gövde, körük ve teker ayrımı,
-  sadeleştirme (`tools/blender/conecto_donustur.py`).
-
 ## BMC Procity 12LF
 
 - Proton Bus Simulator modu; üreticisinden izin alınarak kullanılıyor (docs/OTOBUS_BMC_PROCITY.md).

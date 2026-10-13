@@ -1001,7 +1001,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: 90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!4 &6372991083248180805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d59b571366a94634862fe8eaa74b21b, type: 3}
@@ -1027,7 +1029,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: 90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!1 &7356205612964717437 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4174184728758262483, guid: 7d59b571366a94634862fe8eaa74b21b, type: 3}
@@ -1048,7 +1052,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: -90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!1 &8797130595551458106 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6490110064545723756, guid: 7d59b571366a94634862fe8eaa74b21b, type: 3}
@@ -1069,4 +1075,6 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: -90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}

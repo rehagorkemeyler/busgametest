@@ -321,7 +321,7 @@ Görüntüler `docs/gorseller/y19/zemin_*.jpg`. Kullanıcı: "Mercedes otobüsle
 (delikten otobüsün altındaki koyu yol/gölge).
 1. **Zemin yok — bütün Mercedes otobüsleri:** Caio Millennium II ve Millennium II körüklü (içeriden aşağı bakışta görüntünün %26–44'ü
    delik: koltuklar, direkler, sarı tutunma şeridi parçası ve kapı basamağı havada; `zemin_Caio_Millennium_II_asagi_z1.jpg`,
-   `zemin_Caio_Millennium_II_G_asagi_z-8.jpg`); Conecto (menüde değil) de kontrol edilsin. Karşılaştırma: BMC %0–8 (yalnız açık
+   `zemin_Caio_Millennium_II_G_asagi_z-8.jpg`). (Conecto 13 Ekim'de projeden kaldırıldı, kullanıcı kararı.) Karşılaştırma: BMC %0–8 (yalnız açık
    kapı basamağı; `zemin_BMC_Procity_12LF_asagi_z1.jpg`). Muhtemel neden: `millennium_donustur.py` zemin parçasını/malzemesini düşürüyor
    (Millennium malzeme listesinde zemin malzemesi yok) ya da zemin yüzlerinin normali aşağı bakıyor. Mobil ve tam kalite FBX, tek
    gövdeli ve körüklü (`koruklu_yap.py` kaynağı tek gövdeli olduğu için düzeltme oradan körüklüye geçer).

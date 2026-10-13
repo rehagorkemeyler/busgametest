@@ -1002,7 +1002,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: -90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!1 &1473804174361484739 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4174184728758262483, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}
@@ -1023,7 +1025,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: -90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!1 &1682325680008845012 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4233803359305535940, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}
@@ -1044,7 +1048,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: 90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!4 &3031791776908157179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}
@@ -1070,7 +1076,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: 90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!1 &3461754027037968504 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7092271104050163864, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}
@@ -1091,7 +1099,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: 90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!4 &3642020906159616468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6984342757040818492, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}
@@ -1122,7 +1132,9 @@ MonoBehaviour:
   motion: 0
   openEulerOffset: {x: 0, y: -90, z: 0}
   openPositionOffset: {x: 0, y: 0, z: 0.8}
+  plugOutOffset: {x: 0.08, y: 0, z: 0}
   duration: 1.4
+  takip: {fileID: 0}
 --- !u!4 &6311343486308595234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8795471272371089714, guid: 48f6f74861cbc4c1499d15d75d1956d5, type: 3}

@@ -21,7 +21,7 @@ namespace AnkaraBus.Diagnostics
     public class KapiTesti : MonoBehaviour
     {
         private static int sira = -1;
-        private static readonly int[] Otobusler = { 2, 0, 1 };
+        private static readonly int[] Otobusler = { 2, 3, 0, 1 };   // Y19: önce iki körüklü (bütün adımlar), sonra tek gövdeliler
 
         private BusVehicle bus;
         private BusCameraRig rig;
@@ -52,9 +52,9 @@ namespace AnkaraBus.Diagnostics
             kapilar = bus.GetComponentInChildren<BusDoorController>();
             kor = bus.GetComponent<KorukluOtobus>();
             olcu = OtobusOlcusu.Olc(bus);
-            otobus = bus.name.Split('_')[0].ToLowerInvariant();
+            otobus = KisaAd(bus.name);
             bus.Handbrake = true;
-            bool tam = sira == 0;   // Conecto: bütün adımlar; BMC ve Millennium: kısa tur
+            bool tam = bus.GetComponent<KorukluOtobus>() != null;   // körüklüler: bütün adımlar; tek gövdeliler: kısa tur
 
             Log($"BASLA otobüs={bus.Definition?.displayName} zaman={OyunSecimi.SeciliZaman} kalite={GrafikAyarlari.Mevcut} cihaz={SystemInfo.deviceModel}");
             Yapi();
@@ -323,7 +323,7 @@ namespace AnkaraBus.Diagnostics
             // havuzdan gelen yolcular: bir önceki bakışta etkin olmayan her yolcu yeni inen sayılır
             var gorulen = new HashSet<Passenger>(FindObjectsByType<Passenger>());
             var inen = new int[kapilar.DoorCount];
-            int binen = 0, binenOnKapi = 0;
+            int binen = 0;
             int ilkIcerideki = yolcular.Onboard;
             kapilar.ToggleAll();
             rig.enabled = false;
@@ -462,7 +462,8 @@ namespace AnkaraBus.Diagnostics
             Log($"{otobus} körük açık: mafsal={kor.MafsalAcisi:F0}° " +
                 string.Join(" ", arkaKanatlar.ConvertAll(d => $"{d.name} açık-kapalı={V(ilk[d] - kapali[d])} titreme(3 sn en büyük)={sapma[d] * 1000f:F1} mm")));
             yield return Cek("korukte_acik_kapi3", Korukten(2), kapilar.DoorCenter(2));
-            yield return Cek("korukte_acik_kapi4", Korukten(3), kapilar.DoorCenter(3));
+            if (kapilar.DoorCount > 3)
+                yield return Cek("korukte_acik_kapi4", Korukten(3), kapilar.DoorCenter(3));
             yield return Cek("korukte_acik_kapi2_3", bus.transform.TransformPoint(7f, 3f, -1f), kor.ArkaGovde.position + Vector3.up * 1.2f);
             yield return Cek("korukte_acik_ust", bus.transform.TransformPoint(7f, 9f, -4f), arka.position);
             for (int i = 2; i < kapilar.DoorCount; i++)
@@ -496,6 +497,15 @@ namespace AnkaraBus.Diagnostics
 
         private static string Ad(string s) => s == null ? "-" :
             s.ToLowerInvariant().Replace(' ', '_').Replace('ı', 'i').Replace('ğ', 'g').Replace('ü', 'u').Replace('ş', 's').Replace('ö', 'o').Replace('ç', 'c').Replace("i̇", "i");
+
+        /// <summary>Dosya adı için kısa otobüs adı: bmc, bmc18, caio, caiog, mb.</summary>
+        public static string KisaAd(string ad)
+        {
+            ad = ad.ToLowerInvariant();
+            if (ad.StartsWith("bmc")) return ad.Contains("18") ? "bmc18" : "bmc";
+            if (ad.StartsWith("caio")) return ad.EndsWith("_g") ? "caiog" : "caio";
+            return ad.Split('_')[0];
+        }
     }
 
     /// <summary>Test görüntüsü: kamerayı 1280×720 RenderTexture'a çizip persistentDataPath'e (Editor'de Builds/Y18) PNG yazar.
