@@ -32,6 +32,9 @@ OTOBUSLER = {
                 # tavandaki CNG kutusu kaynakta z 0,4 … 4,3: kuyruğu arka gövdenin başına düşüyor (kesik çıkıntı) → silinir
                 arka_sil=[("M_cngtank", 1.2)]),
     "millennium": dict(ad="Caio_Millennium_II_G", on_kesim=-4.00, arka_bas=0.80, mafsal=-4.45, koruk_boy=0.90,
+                       # sol yandaki EGO paneli (kaplama_millennium.py, doku px 795–1060 × 850–990) arka gövdenin başında
+                       # körükle kesiliyordu: arka gövdede panel yüzleri düz gövde rengine (doku px 1300, 960) bağlanır
+                       arka_uv_temizle=[("caroserie", (795, 850, 1060, 990), (1300, 960), 2048)],
                        arka_kapilar=[("Kapi_2", "Kapi_3")]),
 }
 MAFSAL_Y = 1.0            # mafsal (Govde_Arka, Koruk pivotu) yerden yüksekliği
@@ -206,6 +209,29 @@ def cati_yamasi(obj, z0, z1, yari_en=0.98):
     bm.to_mesh(obj.data)
     bm.free()
     print(f"  {obj.name}: çatı yaması y {y:.3f}, z {z0:.2f} … {z1:.2f}")
+
+
+def uv_temizle(obj, mad, alan, hedef, boy):
+    """Adında mad geçen malzemeli yüzlerden UV'si dokuda alan (px: x0, y0, x1, y1) içine değenlerin bütün köşelerini hedef
+    piksele (düz gövde rengi) bağlar: kaplamadaki bir yazı/panel bu gövdede görünmez."""
+    x0, y0, x1, y1 = alan
+    hu, hv = (hedef[0] + 0.5) / boy, 1 - (hedef[1] + 0.5) / boy
+    adlar = [m.name if m else "" for m in obj.data.materials]
+    idx = {i for i, a in enumerate(adlar) if mad in a}
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    uv = bm.loops.layers.uv.active
+    n = 0
+    for f in bm.faces:
+        if f.material_index not in idx:
+            continue
+        if any(x0 <= lo[uv].uv.x * boy <= x1 and y0 <= (1 - lo[uv].uv.y) * boy <= y1 for lo in f.loops):
+            for lo in f.loops:
+                lo[uv].uv = (hu, hv)
+            n += 1
+    bm.to_mesh(obj.data)
+    bm.free()
+    print(f"  {obj.name}: {mad} dokusunda {alan} bölgesi temizlendi ({n} yüz)")
 
 
 def kaydir(obj, dz):
@@ -488,6 +514,8 @@ def main():
         malzeme_sil(arka, mad, c["arka_bas"] - boy, 1e9)
         cati_yamasi(arka, c["arka_bas"] - boy - 0.05, c["arka_bas"])
     kes_arka = kes(arka, c["arka_bas"], False)
+    for mad, alan, hedef, boy in c.get("arka_uv_temizle", []):
+        uv_temizle(arka, mad, alan, hedef, boy)
     kaydir(arka, dz)
     kes_arka = [Vector((p.x, p.y - dz, p.z)) for p in kes_arka]
     print(f"kesit köşeleri: ön {len(kes_on)}, arka {len(kes_arka)}")
