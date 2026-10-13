@@ -314,3 +314,22 @@ kataloğu güncelledi. Conecto menüden çıktı (dosyaları duruyor, kurucu men
    Kabul: körüklü, tek gövdeliden en fazla 5 FPS düşük. Değilse rapora çokgen/çizim sayısıyla yaz (bulut arka gövde iç mekânını sadeleştirir).
 8. APK: menüde dört otobüs, Krediler'de körüklü satırları.
 Rapor: `docs/RAPOR_Y19.md` (her madde, ekran görüntüleri `docs/gorseller/y19/`), commit, **push**, `git log origin/Ozan -1` ile doğrula.
+
+### Y19 — bulut için: Mercedes otobüslerinde zemin ve ayna (yerel bulgu + kullanıcı, 13 Ekim)
+Yerel denetim: zeminsiz, macenta arka planlı sahnede otobüs içeriden aşağıya çizildi (`Y18Kurulum.ZeminBatch`; macenta = delik).
+Görüntüler `docs/gorseller/y19/zemin_*.jpg`. Kullanıcı: "Mercedes otobüslerinin hepsinin zemini yok", oyunda zemin **siyah** görünüyor
+(delikten otobüsün altındaki koyu yol/gölge).
+1. **Zemin yok — bütün Mercedes otobüsleri:** Caio Millennium II ve Millennium II körüklü (içeriden aşağı bakışta görüntünün %26–44'ü
+   delik: koltuklar, direkler, sarı tutunma şeridi parçası ve kapı basamağı havada; `zemin_Caio_Millennium_II_asagi_z1.jpg`,
+   `zemin_Caio_Millennium_II_G_asagi_z-8.jpg`); Conecto (menüde değil) de kontrol edilsin. Karşılaştırma: BMC %0–8 (yalnız açık
+   kapı basamağı; `zemin_BMC_Procity_12LF_asagi_z1.jpg`). Muhtemel neden: `millennium_donustur.py` zemin parçasını/malzemesini düşürüyor
+   (Millennium malzeme listesinde zemin malzemesi yok) ya da zemin yüzlerinin normali aşağı bakıyor. Mobil ve tam kalite FBX, tek
+   gövdeli ve körüklü (`koruklu_yap.py` kaynağı tek gövdeli olduğu için düzeltme oradan körüklüye geçer).
+   Kabul: içeriden aşağı bakışta delik yalnız kapı basamaklarında (BMC gibi), zemin dokulu (kaymaz desen / gri), oyunda siyah değil.
+2. **Yan aynalar dokusuz/yanlış doku — Millennium (iki versiyon):** ayna gövdesinde kaplama atlasından rastgele bölge (kırmızı üstünde
+   koyu şekiller, yazı parçaları) görünüyor, kaplama değişince desen de değişiyor (`zemin_Caio_Millennium_II_ayna_sol_arka.jpg`;
+   BMC'de koyu gri, doğru: `zemin_BMC_Procity_12LF_ayna_sol_arka.jpg`). Aynanın UV'si/malzemesi kaplama malzemesine bağlanmış; ayna
+   gövdesi koyu gri/siyah plastik, ayna camı yansıtıcı koyu gri olsun, kaplamadan bağımsız.
+3. **Körüklü Millennium:** arka gövdenin başındaki "EGO" yazısı körükle kesiliyor (`koruk_caiog_ego_kesik.jpg`; planın 4. adımındaki
+   atlas tekrarı). Kaplamada yazıyı kesimden uzağa al ya da arka gövde başında yazısız bölge.
+Yerel doğrulama: `ZeminBatch` (macenta oranı) + prefabları yeniden kur + `koruk` görevi.
