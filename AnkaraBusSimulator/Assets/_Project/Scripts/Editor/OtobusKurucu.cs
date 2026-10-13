@@ -381,6 +381,12 @@ namespace AnkaraBus.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        // koruklu_yap.py (körük kauçuğu) ve millennium_duzelt.py (iç zemin) malzemeleri → doku
+        private static readonly Dictionary<string, string> EkDokular = new Dictionary<string, string>
+        {
+            { "M_Koruk", "Textures/koruk.png" }, { "M_Zemin", "Textures/zemin.png" },
+        };
+
         /// <summary>
         /// Gömülü materyalleri Materials/ klasörüne çıkarır (bir kez) ve adı _Cam ile bitenleri saydam cam yapar.
         /// </summary>
@@ -426,13 +432,13 @@ namespace AnkaraBus.EditorTools
                 var material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
                 if (material.name.EndsWith("_Cam"))
                     MakeGlass(material);
-                else if (material.name == "M_Koruk" && material.GetTexture("_BaseMap") == null)
+                else if (EkDokular.TryGetValue(material.name, out var ekDoku) && material.GetTexture("_BaseMap") == null)
                 {
-                    // körüklü (koruklu_yap.py): kauçuk körük dokusu
-                    var korukDoku = AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + "Textures/koruk.png");
-                    if (korukDoku != null)
+                    // FBX son işlemlerinin eklediği dokulu malzemeler (doku FBX'te adıyla geçer; içe aktarmada bulunamazsa)
+                    var doku = AssetDatabase.LoadAssetAtPath<Texture2D>(Folder + ekDoku);
+                    if (doku != null)
                     {
-                        material.SetTexture("_BaseMap", korukDoku);
+                        material.SetTexture("_BaseMap", doku);
                         material.SetColor("_BaseColor", Color.white);
                         EditorUtility.SetDirty(material);
                     }
