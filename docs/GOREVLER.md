@@ -454,3 +454,46 @@ Yapılacaklar:
    ayakta tutunan var mı; Millennium platform koltuklarına çıkış (yolcu koridordan platforma yürürken havada/basamağın içinden geçiyorsa
    görüntüyle yaz, düzeltme bulutta); oturan yolcuların bacakları koltuğun önünde zemine basıyor mu. Görüntüler `docs/gorseller/y20b/`.
 Rapor: `docs/RAPOR_Y20.md`'ye "Y20b" bölümü, commit, **push**, `git log origin/Ozan -1` ile doğrula.
+
+### H3 — yerel: Hat 408 Kızılay → Güneşevler ve yeni Hat 2 (gerçek coğrafya; bulut, 14 Ekim)
+Önce `git pull --rebase origin Ozan` (LFS: ~95 MB yeni FBX). Kullanıcının isteği: harita Kızılay'dan Güneşevler'e, binalar ve duraklar
+gerçeğe benzesin, harita kenarları (özellikle Kızılay–Ulus) görünmesin. Plan `docs/PLAN_HAT3_408.md`, sonuç
+`docs/HAT3_KIZILAY_GUNESEVLER.md` (önizlemeler `docs/gorseller/hat3/`). Bütün aşamalar bulutta bitti; bu ilk yerel test.
+
+Ne değişti:
+- `Maps/Hat3/`: 352 parça FBX (`Parcalar/H3_i_j.fbx` 250 m, `H3U_i_j.fbx` 1 km uzak şehir), `Textures/`, `Hat3_Yerlesim.json`,
+  `Hat3_Harita.png` (mini harita). `Maps/Hat2/Hat2_Yerlesim.json` artık aynı gerçek harita (ilk dört durak); eski Hat 2 parçaları
+  kullanılmıyor (silmeyin, `harita_hat2.py` yeniden üretebilir). Hat 1 değişmedi.
+- Yeni kod: `Editor/Hat3Parcalari.cs` (kurulum, `Hat3Malzemeler`, `Hat3IceAktarma` FBX ayarları), `Harita/ParcaAkisi.cs`,
+  `Harita/HaritaDokusu.cs`. Değişen: `HaritaKurucu` (parçalar, Hat 3 menüsü, Hat 2/3'te güneş gerçek zamanlı), `HatSahneKurucu`
+  (`Hat3SahneKurucu`, `BuildBatch`), `HatCarpismalari`, `HatIsikBake` (parçalı haritayı bake etmez), `YayaGecitleri` (Hat 2/3'te yok),
+  `MiniHarita` (hazır doku), `TrafficSpawner` (oyuncu çevresinden seçim), `OyunSecimi`/`AnaMenu` (408 kartı, 3 kart sıkışık düzen,
+  krediler), `AndroidBuild` (Hat 3 sahnesi), `HavaVeZaman`/`ZamanAyarlari` (bulvar lambası parlaması), `Resources/Anonslar` (14 durak).
+- Bulut Unity'de derleyemedi; .NET + Unity 2021 referanslarıyla denetlendi (yeni dosyalarda hata yok, Unity 6 API'leri hariç).
+
+Yapılacaklar:
+1. Unity'yi aç; derleme hatası varsa düzelt ve yaz. İlk açılışta 352 FBX içe aktarılır (süreyi yaz). `Maps/Hat3/Materials/` altında
+   13 malzeme (`M_H3_Asfalt` … `M_H3_Yaprak`: alfa kesmeli, çift yüzlü) oluşmalı; FBX'lerin malzemeleri bunlara bağlı mı (pembe yok)?
+2. **Ankara Bus → Hat 3 Sahnesini Kur**, sonra **Hat 2 Sahnesini Kur** (ikisinde de bake YOK; Hat 2 için eski bake menülerini çalıştırma).
+   Konsol: "[Hat 3] 352 parça kuruldu", eksik FBX/model uyarıları. Hiyerarşi: `Hat3_KizilayGunesevler` altında Yol, Zemin, Binalar,
+   Agaclar, SimgeYapilar, Ufuk, Lambalar, Duraklar, Hat_408 (18 durak), Trafik (56 şerit, 10 ışık).
+3. Editörde/Play'de kontrol (her maddeye görüntü, `docs/gorseller/h3_yerel/`):
+   - Otobüs yolda (yoldan düşme, arazinin yolu delmesi, parça sınırında çatlak/delik yok); bordür, kaldırım, şerit çizgileri, yaya geçitleri.
+   - Köprüler: Sıhhiye demiryolu ve Celal Bayar köprüleri, Opera'da Talatpaşa, Aydınlıkevler'de Turgut Özal 2 Blv. otobüsün üstünden
+     geçiyor; otobüs (körüklü dahil) tavana değmeden geçiyor mu (en dar açıklık hesapta 5,2 m). Dışkapı'da güzergâh köprüde.
+   - Mehmet Akif Ersoy yokuşu (%7–9) dolu otobüsle çıkılıyor mu.
+   - Binalar: havada/gömük, yanlış yöne bakan (içi görünen) cephe, pembe malzeme; LOD geçişi göze batıyor mu; yaprak kartları.
+   - Simge yapılar: Zafer Anıtı Ulus Meydanı'nda, Emek İşhanı/Kızılay AVM/Güvenlik Anıtı Kızılay'da (otobüsün arkasında), Hitit, Opera,
+     camiler ve minareler, Kale surları (Ulus'tan doğuda), üst geçitler (merdiven kulesi yolda değil mi).
+   - **Harita kenarı**: Kızılay–Ulus arasında ve her yerde ufukta boşluk/harita sonu görünüyor mu (gündüz/akşam/yağmur); uzak şehir
+     halkası sise karışıyor mu; parça açılıp kapanırken (ParcaAkisi) gözle görülür belirme var mı.
+   - Duraklar: 18 durakta otobüs sağ şeritte durunca durak sayılıyor mu, yolcular biniyor/iniyor mu, durak sundurması kaldırımda mı;
+     anonslar (yeni 14 durak) çalıyor mu; LED tabela "408 GÜNEŞEVLER"; mini harita (hazır doku + sarı güzergâh) doğru mu.
+   - Trafik: araçlar otobüs çevresinde görünüyor mu (9 km'de kaybolmamalı), kırmızıda duruyor mu, çapraz yollardan araç geçiyor mu,
+     T kavşaklarda dönen araçlar ana şeride düzgün katılıyor mu.
+4. Hattı baştan sona sür (otomatik pilot/sürüş testi varsa onunla): süre, puan, takılınan yer (konum + görüntü).
+5. Performans (S24 Yüksek ve Normal, A32 Düşük; gündüz): Kızılay, Ulus, Dışkapı, Altınpark, Güneşevler'de FPS, çizim çağrısı, üçgen,
+   bellek (PerfProbe). Kabul: S24 60, A32 ≥ 30 FPS. Değilse `ParcaAkisi.Yaricap` ve ağaç/bina LOD eşikleri (`Hat3Parcalari`: 0,35 ve
+   0,42) ile dene ve yaz.
+6. Menü: üç hat kartı ekrana sığıyor mu (1080p ve telefon), 408 kartı seçilip sahne açılıyor mu; Oyun APK'sı (üç hat) S24'e kur.
+Rapor: `docs/RAPOR_H3.md` (bulguları dosya/konum/görüntüyle; düzeltmeleri bulut yapar), commit, **push**, `git log origin/Ozan -1`.

@@ -29,3 +29,14 @@ Oyundaki CC BY lisanslı modeller kaynak gösterilerek kullanılır. Oyunda ana 
 - Lisans: **CC0 1.0** (kamu malı; kaynak göstermek zorunlu değil) — https://creativecommons.org/publicdomain/zero/1.0/
 - Değişiklikler: 14 kıyafet seçildi, parçalar tek mesh'e ve ortak renk paletine birleştirildi, Bekle/Yürü klipleri T-poz iskelete
   aktarıldı, oturma ve tutunma pozları eklendi (`tools/blender/yolcu_quaternius.py`). Kaynak: `tools/kaynak/karakterler/` (ICERIK.md).
+
+## Hat 2 ve Hat 408 haritası (gerçek coğrafya)
+
+- Yollar, bina ayak izleri, parklar, su yüzeyleri, duraklar, trafik ışıkları: **© OpenStreetMap katkıcıları**, lisans **ODbL 1.0**
+  (https://www.openstreetmap.org/copyright). Ham veri `tools/harita/veri/osm_hat408.json.gz` (API 0.6 karoları, 14 Ekim 2026);
+  oyundaki harita bu veriden üretilmiş bir eserdir (`tools/harita/hat3`).
+- Arazi yükseklikleri: **AWS Terrain Tiles** (Mapzen; SRTM — NASA, Copernicus DEM ve diğer kaynaklar),
+  https://registry.opendata.aws/terrain-tiles/ — kaynak göstererek serbest.
+- 408 hattının durak listesi ve sırası: **EGO Genel Müdürlüğü** hareket saatleri sayfası (ego.gov.tr).
+- Binaların cepheleri, ağaçlar, simge yapılar prosedürel/elle üretildi; fotoğraf ve uydu görüntüsü yalnız referans olarak
+  incelendi, oyuna girmedi.

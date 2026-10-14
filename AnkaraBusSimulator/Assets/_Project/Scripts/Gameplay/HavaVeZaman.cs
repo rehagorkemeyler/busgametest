@@ -213,7 +213,7 @@ namespace AnkaraBus.Gameplay
             var parcalar = new List<CombineInstance>();
             foreach (var grup in Gruplar("Lambalar"))
                 foreach (Transform lamba in grup)
-                    foreach (var bas in ZamanAyarlari.LambaBaslari)
+                    foreach (var bas in lamba.name.StartsWith("Lamba_Bulvar") ? ZamanAyarlari.LambaBaslariBulvar : ZamanAyarlari.LambaBaslari)
                         parcalar.Add(new CombineInstance
                         {
                             mesh = kure,

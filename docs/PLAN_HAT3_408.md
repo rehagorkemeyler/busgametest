@@ -61,6 +61,12 @@ bilgisi). Güzergâhta OSM'de 16 trafik ışığı, 18 yaya geçidi.
 4. **Mobil bütçe** (PERFORMANS.md): görünür alanda < 300k üçgen hedefi, < 150 draw call (Hat 1 Kızılay ölçümü 279–643 DC);
    harita parçalara bölünür, uzak parçalar kapanır, binalar parça başına tek mesh + LOD.
 
+## Durum (14 Ekim, bulut)
+
+Bütün aşamalar (A0–A7) tamam, yerel test bekliyor (A8). Ayrıntı ve önizlemeler: `docs/HAT3_KIZILAY_GUNESEVLER.md`.
+Plandan farklar: Hat 2 de bu haritaya taşındı (ilk dört durak; eski stilize Hat 2'nin harita kenarları görünüyordu); durak cepleri
+yok (otobüs sağ şeritte, Kızılay/Ulus'taki gibi); çapraz trafik yalnız ışıklı kavşaklarda; ışık bake'i yok.
+
 ## Aşamalar
 
 ### A0 — Veri ✔ (bu commit)

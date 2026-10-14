@@ -207,6 +207,7 @@ def main():
     ap.add_argument("--yaricap", type=float, default=700)
     ap.add_argument("--genislik", type=int, default=1280)
     ap.add_argument("--dokular", default=None)
+    ap.add_argument("--sadece", default=None, help="yalnız bu parçalar: 'i_j,i_j' (FBX)")
     args = ap.parse_args(argv)
     sahne_temizle()
     katmanlar = [parcalari_yukle(on) for on in ("yol", "bina", "agac", "simge", "donati")]
@@ -218,6 +219,10 @@ def main():
         cikti = os.path.join(args.fbx, "Parcalar")
         os.makedirs(cikti, exist_ok=True)
         anahtarlar = sorted(set().union(*[set(kat) for kat in katmanlar]))
+        if args.sadece:
+            sec = {tuple(int(v) for v in a.split("_")) for a in args.sadece.split(",")}
+            anahtarlar = [k for k in anahtarlar if k in sec]
+            ufuk = {}
         for k in anahtarlar:
             for o in list(bpy.data.objects):
                 bpy.data.objects.remove(o, do_unlink=True)

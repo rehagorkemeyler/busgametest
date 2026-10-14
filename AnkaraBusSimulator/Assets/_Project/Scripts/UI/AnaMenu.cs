@@ -53,6 +53,8 @@ namespace AnkaraBus.UI
             "BMC Procity 12LF: Proton Bus Simulator modu (izinle)\n" +
             "Körüklü versiyon (BMC Procity 18) bu modelden türetildi\n\n" +
             "Yolcular: Quaternius · Ultimate Modular Men / Women (CC0) · quaternius.com\n\n" +
+            "Hat 2–408 haritası: © OpenStreetMap katkıcıları (ODbL) · openstreetmap.org/copyright\n" +
+            "Arazi: AWS Terrain Tiles (SRTM/NASA, Copernicus) · durak listesi: EGO Genel Müdürlüğü\n\n" +
             "Kapatmak için dokun";
         private bool basladi;
 

@@ -267,14 +267,20 @@ class Simgeler:
                 for i in range(len(xz) - 1):
                     V, _, F = yonlu_duvar(kx[i], kx[i + 1], dy - 0.8, dy - 0.8, dy + 1.2, dy + 1.2, nn[i] * yon)
                     self.pc.ekle_dunya("H3_Bordur@SimgeYapilar", V, beton, F)
-            # merdivenler: iki uçta yola dik değil, geçit yönünde 10 m eğik rampa
+            # iki uçta merdiven/asansör kulesi (Ankara üst geçitlerinde olduğu gibi), asfaltın dışında
             for uc, ic in ((0, 1), (-1, -2)):
                 a = xz[uc]
                 yonv = a - xz[ic]
                 yonv /= np.linalg.norm(yonv)
-                b = a + yonv * 9.0
-                ya = float(self.ar.y(b[0], b[1])[0])
-                V, UV, F = serit(np.array([a, b]), np.array([dy, ya]), 1.2, 1.2)
+                for ek in np.arange(1.8, 12.0, 1.0):
+                    c = a + yonv * ek
+                    if not shapely.contains_xy(A, c[0], c[1]):
+                        break
+                yg = float(self.ar.y(c[0], c[1])[0])
+                aci = math.atan2(yonv[1], yonv[0])
+                self.kutu("H3_Bordur@SimgeYapilar", c[0], c[1], 3.4, 3.4, yg - 0.5, dy + 2.6, aci, beton, (0.5, 0.5))
+                # kuleyle tabliye arası köprü
+                V, UV, F = serit(np.array([a, c]), np.array([dy, dy]), 1.5, 1.5)
                 self.pc.ekle_dunya("H3_Bordur@SimgeYapilar", V, UV, F)
             sayi += 1
         print(f"  yaya üst geçidi {sayi}")

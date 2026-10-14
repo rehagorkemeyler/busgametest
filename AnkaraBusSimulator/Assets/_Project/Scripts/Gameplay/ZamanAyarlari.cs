@@ -94,6 +94,11 @@ namespace AnkaraBus.Gameplay
         {
             new Vector3(-0.63f, 3.78f, 0f), new Vector3(0f, 4.08f, 0f), new Vector3(0.63f, 3.78f, 0f),
         };
+        /// <summary>Çift kollu bulvar lambasının (Props/Lamba_Bulvar, 9 m; Hat 2–3 sokakları) fenerleri.</summary>
+        public static readonly Vector3[] LambaBaslariBulvar =
+        {
+            new Vector3(-1.7f, 8.7f, 0f), new Vector3(1.7f, 8.7f, 0f),
+        };
         /// <summary>Gece fener camlarını kaplayan parlama küresinin boyu.</summary>
         public static readonly Vector3 LambaParlamaBoyu = new Vector3(0.3f, 0.5f, 0.3f);
         public static readonly Color LambaRengi = new Color(1f, 0.72f, 0.42f); // sodyum buharlı
