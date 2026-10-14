@@ -33,6 +33,25 @@ namespace AnkaraBus.EditorTools
     }
 
     /// <summary>
+    /// Hat 3 sahnesi (EGO 408 Kızılay → Güneşevler, gerçek coğrafya; docs/PLAN_HAT3_408.md). Işık bake'i yok (9 km).
+    /// Menü: Ankara Bus > Hat 3 Sahnesini Kur
+    /// </summary>
+    public static class Hat3SahneKurucu
+    {
+        public const string ScenePath = "Assets/_Project/Scenes/Hat3_KizilayGunesevler.unity";
+
+        [MenuItem("Ankara Bus/Hat 3 Sahnesini Kur")]
+        public static void Build() => HatSahneKurucu.Kur(ScenePath, HaritaKurucu.BuildHat3, "Hat 3");
+
+        /// <summary>Komut satırı: -executeMethod AnkaraBus.EditorTools.Hat3SahneKurucu.BuildBatch</summary>
+        public static void BuildBatch()
+        {
+            Build();
+            EditorApplication.Exit(0);
+        }
+    }
+
+    /// <summary>
     /// Bir hattın sahnesini sıfırdan kurar: harita (HaritaKurucu), otobüs başlangıç noktasında, kamera,
     /// dokunmatik arayüz, RouteTracker → hattın rotası, BusHud. Sahneyi Build Settings'e ekler.
     /// Sahne yeniden kurulunca ışık bake'i silinir; ardından HatIsikBake çalıştırılmalı.

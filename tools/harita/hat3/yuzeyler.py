@@ -162,12 +162,24 @@ def main():
                 else:
                     sec = ~shapely.contains_xy(A, dis_x, dis_z)       # kaldırımın dış kenarı (asfalta değmeyen)
                 ya, yb = yh(a[:, 0], a[:, 1]), yh(b[:, 0], b[:, 1])
-                for k in np.nonzero(sec)[0]:
+                # düz ve aynı türden ardışık parçalar birleştirilir (≤ 24 m, yön farkı < 4°, kot farkı küçük)
+                tt = (b - a) / np.maximum(np.linalg.norm(b - a, axis=1, keepdims=True), 1e-9)
+                k = 0
+                idx = np.nonzero(sec)[0]
+                while k < len(idx):
+                    bas = son = idx[k]
+                    while k + 1 < len(idx) and idx[k + 1] == son + 1 and np.dot(tt[bas], tt[son + 1]) > 0.9976 and \
+                            np.linalg.norm(b[son + 1] - a[bas]) < 24 and \
+                            abs((yb[son + 1] - ya[bas]) - (yb[son] - ya[bas]) * np.linalg.norm(b[son + 1] - a[bas]) /
+                                max(np.linalg.norm(b[son] - a[bas]), 1e-6)) < 0.04:
+                        k += 1
+                        son = idx[k]
+                    k += 1
+                    p0, p1, y0, y1 = a[bas], b[son], ya[bas], yb[son]
                     if g_kenar is A:     # asfalttan kaldırıma yükselen yüz: asfalta (içeri) bakar
-                        V, UV, Fc = yonlu_duvar(a[k], b[k], ya[k], yb[k], ya[k] + ust_ek, yb[k] + ust_ek, -n[k], 1.0)
+                        V, UV, Fc = yonlu_duvar(p0, p1, y0, y1, y0 + ust_ek, y1 + ust_ek, -n[bas], 1.0)
                     else:                # kaldırımın dış kenarı: dışarı bakar
-                        V, UV, Fc = yonlu_duvar(a[k], b[k], ya[k] + alt_ek, yb[k] + alt_ek, ya[k] + ust_ek,
-                                                yb[k] + ust_ek, n[k], 1.0)
+                        V, UV, Fc = yonlu_duvar(p0, p1, y0 + alt_ek, y1 + alt_ek, y0 + ust_ek, y1 + ust_ek, n[bas], 1.0)
                     pc.ekle_dunya("H3_Bordur", V, UV, Fc)
     print(f"  bordürler ({time.time() - t0:.0f} sn)")
 

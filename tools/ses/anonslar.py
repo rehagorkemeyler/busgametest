@@ -21,7 +21,11 @@ import wave
 import numpy as np
 
 DURAKLAR = ["Kızılay AVM", "Meclis", "Kuğulu Park", "Cinnah", "Atakule",   # Hat 1
-            "Kızılay", "Sıhhiye", "Opera", "Ulus"]                         # Hat 2
+            "Kızılay", "Sıhhiye", "Opera", "Ulus",                         # Hat 2
+            # Hat 3 (EGO 408 Kızılay → Güneşevler; Kızılay, Sıhhiye, Opera, Ulus yukarıda)
+            "Yıba Çarşısı", "Dışkapı Hastanesi", "Veteriner Fakültesi", "Çağdaş Sokak",
+            "Atatürk Anadolu İmam Hatip Lisesi", "Altınpark", "Subayevleri", "Hasköy Akşemsettin Camii", "Pazar Yeri",
+            "Esenevler Anadolu Lisesi", "Çeyizciler", "Çiçek Taksi", "Güneşevler Spor Tesisleri", "Güneşevler"]
 # TTS'in doğru okuması için yazılış (ekranda/dosya adında asıl ad kullanılır)
 # (Whisper ile denendi: "Sıradaki durak: Ulus" → "buluz", virgülle doğru; AVM, Atakule, Cinnah, Sıhhiye ayrı yazılınca doğru)
 OKUNUS = {"Kızılay AVM": "Kızılay Ave Me", "Atakule": "Ata kule", "Cinnah": "Cinnâh", "Sıhhiye": "Sıhiye"}
@@ -105,11 +109,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--eksik", action="store_true", help="yalnız dosyası olmayan durakları üret (var olanlar değişmez)")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
-    yaz(os.path.join(args.out, "gong.wav"), gong())
-    yaz(os.path.join(args.out, "hat_sonu.wav"), konus(args.model, HAT_SONU))
+    if not args.eksik:
+        yaz(os.path.join(args.out, "gong.wav"), gong())
+        yaz(os.path.join(args.out, "hat_sonu.wav"), konus(args.model, HAT_SONU))
     for ad in DURAKLAR:
+        if args.eksik and os.path.exists(os.path.join(args.out, f"sonraki_{anons_adi(ad)}.wav")):
+            continue
         okunus = OKUNUS.get(ad, ad)
         yaz(os.path.join(args.out, f"sonraki_{anons_adi(ad)}.wav"), konus(args.model, f"Sıradaki durak, {okunus}."))
         yaz(os.path.join(args.out, f"sonraki_son_{anons_adi(ad)}.wav"),

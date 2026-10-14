@@ -19,6 +19,7 @@ namespace AnkaraBus.EditorTools
         private const string SkpPrefix = "SKP/"; // tools/blender/skp_donustur.py çıktıları
         private const string Hat1Path = MapsRoot + "Hat1/Hat1_Yerlesim.json";
         private const string Hat2Path = MapsRoot + "Hat2/Hat2_Yerlesim.json";
+        private const string Hat3Path = MapsRoot + "Hat3/Hat3_Yerlesim.json";
         private static string label = "Hat 1";
         private const string PalettePath = "Assets/_Project/Materials/T_AnkaraPalet.png";
         private const string MaterialPath = "Assets/_Project/Materials/M_AnkaraPalet.mat";
@@ -90,6 +91,24 @@ namespace AnkaraBus.EditorTools
             public SignalHead[] heads;
         }
 
+        /// <summary>Hat 3 harita parçası (tools/harita/hat3/yerlesim.py; Hat3Parcalari kurar).</summary>
+        [Serializable]
+        public class ParcaBilgi
+        {
+            public string ad;
+            public string model;
+            public float[] pos;
+            public bool uzak;
+        }
+
+        [Serializable]
+        public class HaritaDokusuBilgi
+        {
+            public string dosya;
+            public float[] min;
+            public float pikselMetre;
+        }
+
         [Serializable]
         private class Layout
         {
@@ -101,6 +120,8 @@ namespace AnkaraBus.EditorTools
             public Stop[] stops;
             public Lane[] lanes;
             public Signal[] signals;
+            public ParcaBilgi[] parcalar;
+            public HaritaDokusuBilgi haritaDokusu;
         }
 
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
@@ -108,6 +129,17 @@ namespace AnkaraBus.EditorTools
 
         [MenuItem("Ankara Bus/Hat 2 Haritasını Kur")]
         public static void BuildHat2() => BuildFrom(Hat2Path, "Hat2_KizilayUlus", "Hat 2");
+
+        /// <summary>Hat 3 (EGO 408 Kızılay → Güneşevler): gerçek coğrafyalı, parçalı harita (docs/PLAN_HAT3_408.md).
+        /// Işık bake'i yok: güneş gerçek zamanlı.</summary>
+        [MenuItem("Ankara Bus/Hat 3 Haritasını Kur")]
+        public static void BuildHat3()
+        {
+            BuildFrom(Hat3Path, "Hat3_KizilayGunesevler", "Hat 3");
+            foreach (var light in UnityEngine.Object.FindObjectsByType<Light>())
+                if (light.type == LightType.Directional)
+                    light.lightmapBakeType = LightmapBakeType.Realtime;
+        }
 
         /// <summary>Bir hattın yerleşim dosyasından haritayı açık sahneye kurar.</summary>
         public static void BuildFrom(string layoutPath, string rootName, string hatLabel)
@@ -155,7 +187,9 @@ namespace AnkaraBus.EditorTools
                 EditorUtility.ClearProgressBar();
             }
 
-            HatCarpismalari.Ekle(root.transform); // binalar, simge yapılar, duraklar
+            if (layout.parcalar != null && layout.parcalar.Length > 0)
+                Hat3Parcalari.Kur(root.transform, layout.parcalar, layout.haritaDokusu);
+            HatCarpismalari.Ekle(root.transform); // binalar, simge yapılar, duraklar (Hat 3 parçaları kendi çarpışmasıyla)
             BuildRoute(root.transform, layout);
             BuildTraffic(root.transform, layout, material);
             BuildPassengers(root.transform, material);

@@ -43,6 +43,9 @@ namespace AnkaraBus.Traffic
             if (FindAnyObjectByType<YayaGecitleri>() != null || FindAnyObjectByType<BusRoute>() == null
                 || FindAnyObjectByType<TrafficLane>() == null)
                 return;
+            // Hat 3: yaya geçitleri OSM'den haritaya çizili (tools/harita/hat3/yuzeyler.py); durak sonrası geçit eklenmez
+            if (FindAnyObjectByType<AnkaraBus.Harita.ParcaAkisi>() != null)
+                return;
             new GameObject("YayaGecitleri").AddComponent<YayaGecitleri>();
         }
 

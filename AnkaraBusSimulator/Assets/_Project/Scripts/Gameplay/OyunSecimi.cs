@@ -23,6 +23,7 @@ namespace AnkaraBus.Gameplay
         {
             new Hat { numara = "1", ad = "Kızılay AVM – Atakule", duraklar = "Kızılay · Meclis · Kuğulu Park · Cinnah · Atakule", sahne = "Hat1_KizilayAtakule" },
             new Hat { numara = "2", ad = "Kızılay – Ulus", duraklar = "Kızılay · Sıhhiye · Opera · Ulus", sahne = "Hat2_KizilayUlus" },
+            new Hat { numara = "408", ad = "Kızılay – Güneşevler", duraklar = "Kızılay · Ulus · Dışkapı · Altınpark · Hasköy · Güneşevler (18 durak, 8,9 km)", sahne = "Hat3_KizilayGunesevler" },
         };
 
         private const string HatKey = "SeciliHat";

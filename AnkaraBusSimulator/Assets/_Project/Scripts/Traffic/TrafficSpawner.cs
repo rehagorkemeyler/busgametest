@@ -34,6 +34,12 @@ namespace AnkaraBus.Traffic
         private TrafficLane[] lanes;
         private float retryTimer;
 
+        // şerit örnekleri (20 m'de bir): büyük haritada (Hat 3, 9 km) rastgele şerit/konum çoğunlukla oyuncudan
+        // uzağa düşüyordu, araçlar kayboluyordu; yeniden konumlandırma yalnız oyuncunun çevresindeki örneklerden seçer
+        private const float OrnekAraligi = 20f;
+        private readonly List<(TrafficLane lane, float d, Vector3 p)> ornekler = new List<(TrafficLane, float, Vector3)>();
+        private readonly List<int> adaylar = new List<int>();
+
         private void Start()
         {
             lanes = GetComponentsInChildren<TrafficLane>();
@@ -51,6 +57,12 @@ namespace AnkaraBus.Traffic
             }
             if (lanes.Length == 0 || vehicles == null || vehicles.Length == 0)
                 return;
+            foreach (var lane in lanes)
+                for (float d = 0f; d < lane.Length * 0.9f; d += OrnekAraligi)
+                {
+                    lane.Sample(d, out var p, out _);
+                    ornekler.Add((lane, d, p));
+                }
 
             for (int i = 0; i < count; i++)
             {
@@ -136,16 +148,33 @@ namespace AnkaraBus.Traffic
         private void Recycle(TrafficCar car, bool initial)
         {
             float minDistance = initial ? 25f : minSpawnDistance;
+            adaylar.Clear();
+            if (player != null)
+            {
+                Vector3 pp = player.position;
+                for (int i = 0; i < ornekler.Count; i++)
+                {
+                    float sq = (ornekler[i].p - pp).sqrMagnitude;
+                    if (sq >= minDistance * minDistance && sq <= maxDistance * maxDistance)
+                        adaylar.Add(i);
+                }
+            }
             for (int attempt = 0; attempt < 20; attempt++)
             {
-                var lane = lanes[Random.Range(0, lanes.Length)];
-                float d = Random.Range(0f, lane.Length * 0.9f);
-                lane.Sample(d, out var position, out _);
+                TrafficLane lane;
+                float d;
                 if (player != null)
                 {
-                    float sq = (position - player.position).sqrMagnitude;
-                    if (sq < minDistance * minDistance || sq > maxDistance * maxDistance)
-                        continue;
+                    if (adaylar.Count == 0)
+                        break;
+                    var o = ornekler[adaylar[Random.Range(0, adaylar.Count)]];
+                    lane = o.lane;
+                    d = Mathf.Clamp(o.d + Random.Range(0f, OrnekAraligi), 0f, lane.Length * 0.9f);
+                }
+                else
+                {
+                    lane = lanes[Random.Range(0, lanes.Length)];
+                    d = Random.Range(0f, lane.Length * 0.9f);
                 }
                 if (Crowded(lane, d, car))
                     continue;

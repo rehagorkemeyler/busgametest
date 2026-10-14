@@ -102,6 +102,9 @@ namespace AnkaraBus.EditorTools
                 {
                     if (mf.sharedMesh == null || mf.GetComponent<Collider>() != null || mf.GetComponent<LODGroup>() != null)
                         continue;
+                    // Hat 3 parçaları (birleşik ağlar, Hat3Parcalari) kendi çarpışmasıyla gelir
+                    if (mf.name.StartsWith("H3_") || mf.name.StartsWith("H3U_"))
+                        continue;
                     // LOD'lu modelde yalnızca en ayrıntılı (LOD0) ya da LOD'suz parça
                     if (mf.name.Contains("_LOD") && !mf.name.EndsWith("_LOD0"))
                         continue;

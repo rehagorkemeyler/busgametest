@@ -151,6 +151,19 @@ namespace AnkaraBus.UI
 
         private void DokuyuCiz()
         {
+            // Hat 3: önceden çizilmiş harita dokusu (yollar, binalar, parklar); üstüne yalnız güzergâh ve duraklar
+            var hazir = FindAnyObjectByType<AnkaraBus.Harita.HaritaDokusu>();
+            if (hazir != null && hazir.doku != null && hazir.doku.isReadable)
+            {
+                dunyaMin = hazir.min;
+                pikselMetre = hazir.pikselMetre;
+                w = hazir.doku.width;
+                h = hazir.doku.height;
+                piksel = hazir.doku.GetPixels32();
+                RotaVeDuraklar();
+                DokuyuOlustur();
+                return;
+            }
             var seritler = FindObjectsByType<TrafficLane>();
             var binalar = new List<(Vector3[] kose, bool agac)>();
             foreach (var grup in Gruplar("Binalar", "SimgeYapilar", "Duraklar"))
@@ -206,19 +219,30 @@ namespace AnkaraBus.UI
                     onceki = p;
                 }
             }
+            RotaVeDuraklar();
+            DokuyuOlustur();
+        }
+
+        private void RotaVeDuraklar()
+        {
+            // haritanın ölçeği küçükse (Hat 3, 0,4 px/m) güzergâh ve duraklar en az 2–3 piksel görünsün
+            float k = Mathf.Max(1f, 1f / pikselMetre);
             var yol = rehber.Yol;
             for (int i = 1; i < yol.Count; i++)
-                Cizgi(yol[i - 1], yol[i], 2.6f, Rota);
+                Cizgi(yol[i - 1], yol[i], Mathf.Max(2.6f, 2.2f * k), Rota);
             var route = rehber.Tracker.Route;
             for (int i = 0; i < route.StopCount; i++)
             {
                 var stop = route.GetStop(i);
                 if (stop == null)
                     continue;
-                Daire(stop.transform.position, 7f, Kenar);
-                Daire(stop.transform.position, 5f, DurakRengi);
+                Daire(stop.transform.position, Mathf.Max(7f, 3.5f * k), Kenar);
+                Daire(stop.transform.position, Mathf.Max(5f, 2.5f * k), DurakRengi);
             }
+        }
 
+        private void DokuyuOlustur()
+        {
             doku = new Texture2D(w, h, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
             doku.SetPixels32(piksel);
             doku.Apply(false, true); // CPU kopyası bırakılır

@@ -48,7 +48,8 @@ namespace AnkaraBus.EditorTools
         public static void MenuKameraBuild() => Build(Mode.MenuKamera, OyunSahneleri, MenuKameraApkPath);
 
         public const string OyunApkPath = "Builds/AnkaraBus.apk";
-        private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath };
+        private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath,
+                                                            Hat3SahneKurucu.ScenePath };
 
         /// <summary>Oynanabilir build: ana menü + Hat 1 + Hat 2, ölçüm ya da otomatik pilot eklenmez.</summary>
         [MenuItem("Ankara Bus/Android/Oyun APK'sı")]
@@ -95,7 +96,7 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Android/Sürüş Testi APK'sı")]
         public static void DriveTestBuildMenu() => DriveTestBuild();
 
-        private static readonly string[] DriveTestScenes = { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath };
+        private static readonly string[] DriveTestScenes = { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath };
 
         public static void DriveTestBuild() => Build(Mode.DriveTest, DriveTestScenes, DriveTestApkPath);
 
