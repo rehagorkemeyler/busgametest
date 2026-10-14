@@ -307,6 +307,8 @@ namespace AnkaraBus.EditorTools
             if (!assetPath.StartsWith(Parcalar))
                 return;
             var mi = (ModelImporter)assetImporter;
+            // tek çocuklu FBX'lerde (H3U_*_Ufuk) Unity kök düğümü çocukla birleştirmesin: Kur() grupları çocuk adından bulur
+            mi.preserveHierarchy = true;
             mi.importCameras = false;
             mi.importLights = false;
             mi.importAnimation = false;

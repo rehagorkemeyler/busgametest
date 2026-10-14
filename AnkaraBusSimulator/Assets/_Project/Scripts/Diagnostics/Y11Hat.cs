@@ -84,6 +84,13 @@ namespace AnkaraBus.Diagnostics
                 gameObject.AddComponent<YolcuTesti>();
                 return;
             }
+            if (Y10Baslatici.Gorev == "h3")
+            {
+                // H3: Hat 408 duraklar, anons, FPS, ufuk, trafik, köprüler, yokuş (yalnızca bu hat)
+                Time.timeScale = 1f;
+                gameObject.AddComponent<H3Testi>();
+                return;
+            }
             if (Y10Baslatici.Gorev == "gece")
             {
                 // Y18: gece lambaları, dolgu ışığı (rendering layer), kaplamalar, fren, kalite, FPS; Conecto → BMC → Millennium

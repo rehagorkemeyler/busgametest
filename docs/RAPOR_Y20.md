@@ -131,3 +131,20 @@ duvarından geçiyordu (`s24_sundurma_once_bmc18_inis_yan`). Hat 1 duraklarında
 ## 8. APK
 - Test (`Builds/AnkaraBus_y11_test.apk`) ve oyun (`Builds/AnkaraBus.apk`, `~/Desktop/AnkaraOtobus.apk`) APK'ları hatasız. Oyun APK'sı sundurma düzeltmesini içeriyor, `~/Desktop/AnkaraOtobus.apk`'ye kopyalandı.
 - Testlerden sonra S24'e oyun APK'sı (sundurma düzeltmesi dahil) geri kuruldu; telefonda test APK'sı kalmadı.
+
+## Y20b — yerel doğrulama (15 Ekim 2026): Millennium koltukları, yolcu boyu, yolcu kamerası
+Görüntüler `docs/gorseller/y20b/`, koltuk listesi `docs/gorseller/y20b/koltuk_denetimi.txt`.
+1. **Derleme hatası yok.** Yolcu Karakterlerini Kur: 14 prefab. Prefablar yeniden kuruldu: BMC 26/12, **Millennium 30 koltuk / 13 ayakta**,
+   BMC 18 38/17, **Millennium körüklü 39 / 19** ✔.
+2. **KarakterBatch:** Bekle boyu E 1,72–1,75 m (Punk saçla 1,82), K 1,62–1,65 m (Punk 1,73) ✔. Otur'da ayak tabanı kökün E −1/−2 cm, K 0 cm ✔ (`karakter_hepsi_onden`).
+3. **KoltukBatch:** dört otobüste minder−kök **0,44–0,45** (hepsi 0,45 ± 0,08 içinde) ✔. Millennium'larda bütün koltuklar öne bakıyor,
+   yolcular minderde (`Caio_Millennium_II_onden_arkaya`, `_G_arkadan_one`, `_koridor_z-5`). "Sorunlu" işaretleri yalnız zemin ışını:
+   BMC/BMC 18 Koltuk_03,04,15–22 (+27–34) (Y20'deki gibi ışın koltuk ayağına çarpıyor) ve Millennium arka kanepe Koltuk_26–30
+   (körüklü 35–39, kök y 1,51, zemin−kök +0,23): görüntüde ayaklar platformda, yanlış koltuk yok (`Caio_Millennium_II_Koltuk_28_sorun`).
+4. **Telefon (S24, Yüksek, gündüz, `-e gorev yolcu`):**
+   - Yolcu kamerası: dört otobüste kamera kimsenin kafasında değil ✔ (`s24_*_oturdu_yolcu`). BMC 18'de ayakta tutunan bir yolcu kameranın ~0,4 m önünde (kafa yakın plan, içinde değil).
+   - Oturan / tutunan: BMC 24/6, Millennium 27/3, BMC 18 23/7, Millennium körüklü 24/6; takılan 0, koltuğa uzaklık 0.
+   - **Körüklülerde arka gövdeye oturan var:** BMC 18 2, Millennium körüklü 3 ✔ (önceden 0). Ayakta tutunan dört otobüste var ✔.
+   - Oturanların bacakları koltuğun önünden zemine iniyor ✔ (`s24_caio_Yuksek_oturdu_arkadan_one`, `s24_bmc_Yuksek_oturdu_arkadan_one`).
+   - Millennium platform koltuklarına çıkış: havada/basamak içinden yürüyen görülmedi, ama yürüyüş anını yakalayan görüntü yok (`s24_caio_Yuksek_binis_arkadan_one`: platformdan koridora bakış).
+   - FPS: her durumda 60,0 (1% düşük 58,8–59,6), yolcularla GPU +1,5–3 ms.

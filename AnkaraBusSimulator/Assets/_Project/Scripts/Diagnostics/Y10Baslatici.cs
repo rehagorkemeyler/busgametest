@@ -8,7 +8,7 @@ namespace AnkaraBus.Diagnostics
     /// <summary>
     /// Test başlatıcısı: zamanı, havayı ve kaliteyi ayarlayıp görevi başlatır. Android'de ayarlar
     /// intent ile verilebilir: am start ... -e gorev olcum|y10|menu|koruklu|kamera|egim|hiz|tabela|anons|kar|tutus|kapi|gece|koruk -e zaman Gunduz|Aksam|Gece -e yagmur 0|1 -e hava Acik|Yagmur|Kar -e kalite 0|1|2
-    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü; koruklu: KorukluTesti). -e otobus 0|1|2 -e kaplama N (Y17: hava yagmur'u ezer)
+    /// (olcum: Hat 1'de PerfBenchmark; y10: otomatik pilot + Y10Gozlemci, Hat 1 → Hat 2; menu: menü ekran görüntüsü; koruklu: KorukluTesti). -e otobus 0|1|2 -e kaplama N (Y17: hava yagmur'u ezer) -e sahne Hat3_KizilayGunesevler (ilk sahne) -e adim (H3Testi)
     /// </summary>
     public class Y10Baslatici : MonoBehaviour
     {
@@ -65,6 +65,8 @@ namespace AnkaraBus.Diagnostics
                 if (!string.IsNullOrEmpty(Al("otobus")) && int.TryParse(Al("otobus"), out int ot)) OyunSecimi.Otobus = ot;
                 if (System.Enum.TryParse(Al("hava") ?? "", true, out OyunSecimi.Hava h)) hava = h;
                 if (!string.IsNullOrEmpty(Al("kaplama")) && int.TryParse(Al("kaplama"), out int kp)) OyunSecimi.Kaplama = kp;
+                if (!string.IsNullOrEmpty(Al("sahne"))) ilkSahne = Al("sahne");
+                if (!string.IsNullOrEmpty(Al("adim"))) H3Testi.Adim = Al("adim");
             }
             catch (System.Exception e)
             {

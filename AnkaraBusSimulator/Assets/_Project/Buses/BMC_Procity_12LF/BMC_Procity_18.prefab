@@ -519,7 +519,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4544427524474815999}
+  m_Father: {fileID: 1646272048119522882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &7760270442638746680
 WheelCollider:
@@ -807,7 +807,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4544427524474815999}
+  m_Father: {fileID: 1646272048119522882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &3863400880447328715
 WheelCollider:
@@ -1004,7 +1004,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3640283642813743992}
-  - {fileID: 3841283785605261340}
+  - {fileID: 4544427524474815999}
   - {fileID: 7321209946547307919}
   - {fileID: 3945297213144598403}
   - {fileID: 7421622945980521340}
@@ -1336,39 +1336,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4146418266715541537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3697760243957473094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3841283785605261340}
-  m_Layer: 0
-  m_Name: Tekerlekler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3841283785605261340
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3697760243957473094}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4185262064802313631}
-  - {fileID: 1048338849448499541}
-  m_Father: {fileID: 6922965943770664173}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3716456355544169429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,7 +1428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3841283785605261340}
+  m_Father: {fileID: 4544427524474815999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5597425857488639280
 WheelCollider:
@@ -1594,7 +1561,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4544427524474815999}
+  m_Father: {fileID: 1646272048119522882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &5823321449090629051
 WheelCollider:
@@ -1882,7 +1849,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4544427524474815999}
+  m_Father: {fileID: 1646272048119522882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &2756953210484837391
 WheelCollider:
@@ -2295,6 +2262,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4146418266715541537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7266946381387160668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1646272048119522882}
+  m_Layer: 0
+  m_Name: Tekerlekler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1646272048119522882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266946381387160668}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2495518074971285913}
+  - {fileID: 7501634697164632634}
+  - {fileID: 5263806519784733703}
+  - {fileID: 7760090622390029284}
+  m_Father: {fileID: 4146418266715541537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7697549180129956846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,7 +2389,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3841283785605261340}
+  m_Father: {fileID: 4544427524474815999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &2592940169612481478
 WheelCollider:
@@ -2474,7 +2476,7 @@ Transform:
   - {fileID: 9051670252916470861}
   - {fileID: 1767284421952578976}
   - {fileID: 6922965943770664173}
-  - {fileID: 4544427524474815999}
+  - {fileID: 1646272048119522882}
   - {fileID: 5121234942039571767}
   - {fileID: 7508490131874367674}
   - {fileID: 6802275146669042266}
@@ -3048,11 +3050,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2495518074971285913}
-  - {fileID: 7501634697164632634}
-  - {fileID: 5263806519784733703}
-  - {fileID: 7760090622390029284}
-  m_Father: {fileID: 4146418266715541537}
+  - {fileID: 4185262064802313631}
+  - {fileID: 1048338849448499541}
+  m_Father: {fileID: 6922965943770664173}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8831249411014337440
 GameObject:

@@ -1,0 +1,320 @@
+[H3] hiyerarşi: SimgeYapilar(105) Duraklar(18) Lambalar(250) Yol(234) Zemin(180) Binalar(359) Agaclar(123) Ufuk(61) Hat_408(18) Trafik(66) Yolcular(0) OtobusBaslangic(0)
+[H3] rota Hat_408 hat=408 'Kızılay – Güneşevler' durak=18 şerit=56 ışık=10 spawner=1
+[H3] renderer=1472 pembe/null=0 
+[H3] malzemeler: M_H3_Cephe×429, M_H3_Cati×418, M_AnkaraPalet×338, M_H3_Bordur×266, M_H3_Zemin×237, M_H3_Cizgi×211, M_H3_Asfalt×173, M_H3_Kaldirim×173, M_H3_Refuj×143, M_H3_Govde×123, M_H3_Yaprak×123, M_H3_Cim×116, Lamba_Nostaljik_00×75, Lamba_Nostaljik_02×75, Lamba_Nostaljik_03×75, Lamba_Nostaljik_07×75, Lamba_Nostaljik_04×75, Lamba_Nostaljik_06×75, Lamba_Nostaljik_05×75, M_H3_Su×42, EmekIshani_00×1, EmekIshani_01×1, EmekIshani_02×1, EmekIshani_03×1, EmekIshani_04×1, EmekIshani_06×1, EmekIshani_07×1, EmekIshani_08×1, EmekIshani_09×1, EmekIshani_10×1, EmekIshani_11×1, EmekIshani_12×1, EmekIshani_13×1, EmekIshani_31×1, EmekIshani_14×1, EmekIshani_15×1, EmekIshani_16×1, EmekIshani_17×1, EmekIshani_18×1, EmekIshani_33×1, EmekIshani_32×1, EmekIshani_28×1, EmekIshani_29×1, EmekIshani_27×1, EmekIshani_26×1, EmekIshani_25×1, EmekIshani_05×1, EmekIshani_19×1, EmekIshani_20×1, EmekIshani_21×1, EmekIshani_22×1, EmekIshani_23×1, EmekIshani_30×1, EmekIshani_24×1, KizilayAVM_01×1, KizilayAVM_02×1, KizilayAVM_07×1, KizilayAVM_03×1, KizilayAVM_04×1, KizilayAVM_05×1, KizilayAVM_06×1, GuvenlikAniti_04×1, GuvenlikAniti_02×1, GuvenlikAniti_01×1, GuvenlikAniti_03×1
+[H3] FBX malzeme bağları: Hat3/Materials×2574
+[H3] duraklar: Kızılay | Sıhhiye | Opera | Ulus | Yıba Çarşısı | Dışkapı Hastanesi | Veteriner Fakültesi | Çağdaş Sokak | Atatürk Anadolu İmam Hatip Lisesi | Altınpark | Subayevleri | Hasköy Akşemsettin Camii | Pazar Yeri | Esenevler Anadolu Lisesi | Çeyizciler | Çiçek Taksi | Güneşevler Spor Tesisleri | Güneşevler
+[H3] anons klibi eksik: yok
+[H3] güzergâh: 1843 nokta, 9133 m; otobüs başlangıcı (-6.47, -0.29, -11.95)
+[H3] yol yüzeyi: örnek=5506 yol_yok=161 arazi_üstte=14; güzergâh altındaki yol malzemesi: M_H3_Asfalt×4730, M_H3_Refuj×315, M_H3_Kaldirim×286, M_H3_Cizgi×14
+[H3] güzergâh kesitleri (142):
+[H3]   K00 güzergâh Kaldirim üstünde: s=350–362 (14 m) @(69,-9.1,334) Kızılay+344m en yakın asfalt 3.5 m solda
+[H3]   K01 güzergâh Refuj üstünde: s=389–399 (12 m) @(73,-9.9,371) Kızılay+381m en yakın asfalt 2.0 m sağda
+[H3]   K02 güzergâh Refuj üstünde: s=434–435 (3 m) @(69,-10.3,410) Sıhhiye+362m en yakın asfalt 1.0 m sağda
+[H3]   K03 güzergâh Refuj üstünde: s=472–482 (12 m) @(69,-9.4,453) Sıhhiye+321m en yakın asfalt 1.5 m sağda
+[H3]   K04 güzergâh Refuj üstünde: s=514–521 (10 m) @(60,-7.4,491) Sıhhiye+281m en yakın asfalt 3.5 m sağda
+[H3]   K05 güzergâh Kaldirim üstünde: s=803–813 (12 m) @(7,-12.6,774) Sıhhiye+8m en yakın asfalt 2.0 m solda
+[H3]   K06 güzergâh Kaldirim üstünde: s=825–838 (15 m) @(2,-12.5,797) Sıhhiye+30m en yakın asfalt 2.0 m solda
+[H3]   K07 güzergâh Kaldirim üstünde: s=1395–1405 (12 m) @(-30,-7.0,1324) Opera+132m en yakın asfalt 1.0 m solda
+[H3]   K08 güzergâh Kaldirim üstünde: s=1418–1426 (10 m) @(-26,-6.9,1344) Opera+111m en yakın asfalt 1.0 m solda
+[H3]   K09 güzergâh Kaldirim üstünde: s=1621–1624 (5 m) @(-11,-7.6,1541) Opera+87m en yakın asfalt 7.0 m sağda
+[H3]   K10 DELİK: s=1626–1629 (5 m) @(-10,-7.4,1546) Opera+91m en yakın asfalt 8.0 m sağda ışın: 
+[H3]   K11 güzergâh Kaldirim üstünde: s=1631–1631 (2 m) @(-11,-7.4,1549) Opera+94m en yakın asfalt 5.0 m sağda
+[H3]   K12 güzergâh Kaldirim üstünde: s=1641–1655 (17 m) @(-12,-7.4,1565) Opera+111m en yakın asfalt 4.5 m solda
+[H3]   K13 güzergâh Refuj üstünde: s=1913–1950 (39 m) @(-13,1.7,1844) Ulus+101m en yakın asfalt 4.5 m solda
+[H3]   K14 güzergâh Refuj üstünde: s=1972–1987 (17 m) @(-12,3.4,1889) Ulus+56m en yakın asfalt 4.5 m solda
+[H3]   K15 güzergâh Kaldirim üstünde: s=1991–2009 (20 m) @(-12,3.7,1909) Ulus+36m en yakın asfalt 4.5 m solda
+[H3]   K16 güzergâh Kaldirim üstünde: s=2137–2156 (22 m) @(-2,6.7,2049) Ulus+106m en yakın asfalt 6.0 m solda
+[H3]   K17 güzergâh Refuj üstünde: s=2165–2170 (7 m) @(8,8.0,2065) Ulus+123m en yakın asfalt 3.0 m solda
+[H3]   K18 güzergâh Kaldirim üstünde: s=2178–2185 (9 m) @(5,7.7,2079) Ulus+136m en yakın asfalt 6.0 m solda
+[H3]   K19 YOL YOK (arazi): s=2186–2190 (6 m) @(1,7.1,2085) Ulus+141m en yakın asfalt 7.0 m solda ışın: Zemin/Zemin-0.2
+[H3]   K20 güzergâh Kaldirim üstünde: s=2191–2198 (9 m) @(-3,6.9,2090) Ulus+146m en yakın asfalt 7.0 m solda
+[H3]   K21 güzergâh Kaldirim üstünde: s=2213–2224 (13 m) @(-2,7.0,2112) Ulus+168m en yakın asfalt 2.0 m solda
+[H3]   K22 güzergâh Kaldirim üstünde: s=2234–2246 (14 m) @(0,7.0,2132) Ulus+189m en yakın asfalt 2.0 m solda
+[H3]   K23 güzergâh Kaldirim üstünde: s=2388–2402 (16 m) @(8,4.8,2285) Ulus+341m en yakın asfalt 4.0 m solda
+[H3]   K24 güzergâh Kaldirim üstünde: s=2410–2425 (17 m) @(7,4.9,2309) Ulus+365m en yakın asfalt 2.5 m solda
+[H3]   K25 güzergâh Kaldirim üstünde: s=2455–2469 (16 m) @(9,5.2,2350) Ulus+406m en yakın asfalt 5.5 m solda
+[H3]   K26 güzergâh Refuj üstünde: s=2477–2494 (19 m) @(10,5.2,2375) Ulus+431m en yakın asfalt 5.5 m solda
+[H3]   K27 güzergâh Refuj üstünde: s=2629–2647 (20 m) @(34,2.9,2517) Yıba Çarşısı+329m en yakın asfalt 5.0 m solda
+[H3]   K28 güzergâh Refuj üstünde: s=2654–2668 (17 m) @(42,2.6,2540) Yıba Çarşısı+305m en yakın asfalt 6.0 m solda
+[H3]   K29 güzergâh Kaldirim üstünde: s=3192–3195 (5 m) @(302,-5.9,2998) Yıba Çarşısı+224m en yakın asfalt 0.5 m solda
+[H3]   K30 güzergâh Kaldirim üstünde: s=3382–3387 (7 m) @(365,-5.3,3175) Dışkapı Hastanesi+319m en yakın asfalt 3.0 m sağda
+[H3]   K31 güzergâh Refuj üstünde: s=3399–3400 (3 m) @(374,-5.0,3187) Dışkapı Hastanesi+305m en yakın asfalt 0.5 m solda
+[H3]   K32 güzergâh Refuj üstünde: s=3412–3415 (5 m) @(377,-4.9,3201) Dışkapı Hastanesi+291m en yakın asfalt 1.0 m solda
+[H3]   K33 güzergâh Refuj üstünde: s=3427–3435 (10 m) @(371,-5.0,3215) Dışkapı Hastanesi+282m en yakın asfalt 3.5 m solda
+[H3]   K34 güzergâh Refuj üstünde: s=3488–3491 (5 m) @(386,-5.2,3271) Dışkapı Hastanesi+227m en yakın asfalt 0.5 m solda
+[H3]   K35 güzergâh Refuj üstünde: s=3504–3521 (19 m) @(398,-5.4,3292) Dışkapı Hastanesi+203m en yakın asfalt 3.0 m solda
+[H3]   K36 güzergâh Kaldirim üstünde: s=3533–3543 (12 m) @(410,-5.7,3313) Dışkapı Hastanesi+179m en yakın asfalt 1.0 m solda
+[H3]   K37 güzergâh Kaldirim üstünde: s=3643–3651 (10 m) @(476,-7.2,3397) Dışkapı Hastanesi+72m en yakın asfalt 0.5 m solda
+[H3]   K38 güzergâh Kaldirim üstünde: s=3667–3673 (8 m) @(491,-7.5,3415) Dışkapı Hastanesi+48m en yakın asfalt 0.5 m solda
+[H3]   K39 güzergâh Refuj üstünde: s=4314–4314 (2 m) @(896,-1.9,3915) Veteriner Fakültesi+226m en yakın asfalt 0.5 m sağda
+[H3]   K40 güzergâh Kaldirim üstünde: s=4346–4349 (5 m) @(920,-1.4,3937) Veteriner Fakültesi+257m en yakın asfalt 1.5 m solda
+[H3]   K41 güzergâh Kaldirim üstünde: s=4366–4372 (8 m) @(926,-2.6,3958) Veteriner Fakültesi+278m en yakın asfalt 3.0 m solda
+[H3]   K42 güzergâh Kaldirim üstünde: s=4419–4424 (7 m) @(955,-4.1,3998) Veteriner Fakültesi+328m en yakın asfalt 5.5 m solda
+[H3]   K43 YOL YOK (arazi): s=4426–4427 (3 m) @(960,-4.1,3999) Veteriner Fakültesi+331m en yakın asfalt 6.0 m solda ışın: Zemin/Zemin-0.3
+[H3]   K44 DELİK: s=4429–4429 (2 m) @(963,-4.1,4001) Veteriner Fakültesi+334m en yakın asfalt 5.5 m solda ışın: 
+[H3]   K45 güzergâh Kaldirim üstünde: s=4431–4435 (6 m) @(966,-4.1,4003) Veteriner Fakültesi+338m en yakın asfalt 4.5 m solda
+[H3]   K46 güzergâh Refuj üstünde: s=5018–5025 (10 m) @(1329,-3.6,4442) Atatürk Anadolu İmam Hatip Lisesi+5m en yakın asfalt 1.0 m solda
+[H3]   K47 güzergâh Refuj üstünde: s=5035–5043 (10 m) @(1342,-3.7,4454) Atatürk Anadolu İmam Hatip Lisesi+23m en yakın asfalt 1.0 m solda
+[H3]   K48 güzergâh Refuj üstünde: s=5157–5164 (10 m) @(1425,-3.7,4536) Atatürk Anadolu İmam Hatip Lisesi+140m en yakın asfalt 1.0 m solda
+[H3]   K49 güzergâh Refuj üstünde: s=5176–5182 (8 m) @(1440,-3.5,4550) Atatürk Anadolu İmam Hatip Lisesi+160m en yakın asfalt 1.0 m solda
+[H3]   K50 güzergâh Refuj üstünde: s=5390–5394 (6 m) @(1580,3.7,4703) Altınpark+142m en yakın asfalt 0.5 m solda
+[H3]   K51 güzergâh Kaldirim üstünde: s=5410–5410 (2 m) @(1591,4.5,4717) Altınpark+124m en yakın asfalt 0.5 m solda
+[H3]   K52 güzergâh Kaldirim üstünde: s=6166–6178 (15 m) @(2017,27.5,5343) Subayevleri+57m en yakın asfalt 4.0 m solda
+[H3]   K53 güzergâh Refuj üstünde: s=6187–6203 (18 m) @(2035,27.3,5358) Subayevleri+79m en yakın asfalt 4.0 m solda
+[H3]   K54 güzergâh Refuj üstünde: s=6230–6235 (7 m) @(2061,26.9,5380) Subayevleri+114m en yakın asfalt 5.5 m solda
+[H3]   K55 YOL YOK (arazi): s=6237–6242 (8 m) @(2068,26.8,5379) Subayevleri+119m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K56 güzergâh Refuj üstünde: s=6244–6246 (4 m) @(2072,26.8,5381) Subayevleri+124m en yakın asfalt 5.5 m solda
+[H3]   K57 güzergâh Refuj üstünde: s=6254–6254 (2 m) @(2081,26.8,5387) Subayevleri+134m en yakın asfalt 5.0 m solda
+[H3]   K58 YOL YOK (arazi): s=6256–6266 (12 m) @(2087,26.6,5390) Subayevleri+141m en yakın asfalt 7.0 m solda ışın: Zemin/Zemin+0.0
+[H3]   K59 güzergâh Refuj üstünde: s=6267–6272 (7 m) @(2092,26.3,5396) Subayevleri+148m en yakın asfalt 6.0 m solda
+[H3]   K60 güzergâh Refuj üstünde: s=6389–6403 (17 m) @(2202,21.8,5448) Hasköy Akşemsettin Camii+37m en yakın asfalt 4.5 m solda
+[H3]   K61 güzergâh Refuj üstünde: s=6410–6426 (18 m) @(2223,20.9,5458) Hasköy Akşemsettin Camii+15m en yakın asfalt 5.5 m solda
+[H3]   K62 güzergâh Refuj üstünde: s=6558–6565 (9 m) @(2342,12.3,5513) Hasköy Akşemsettin Camii+118m en yakın asfalt 0.5 m solda
+[H3]   K63 güzergâh Refuj üstünde: s=6604–6607 (5 m) @(2362,12.2,5474) Hasköy Akşemsettin Camii+129m en yakın asfalt 3.5 m solda
+[H3]   K64 YOL YOK (arazi): s=6609–6619 (12 m) @(2361,12.3,5466) Hasköy Akşemsettin Camii+129m en yakın asfalt 6.0 m solda ışın: Zemin/Zemin+0.1
+[H3]   K65 güzergâh Refuj üstünde: s=6620–6620 (2 m) @(2364,12.5,5460) Hasköy Akşemsettin Camii+132m en yakın asfalt 3.0 m solda
+[H3]   K66 güzergâh Refuj üstünde: s=6629–6629 (2 m) @(2368,12.5,5452) Hasköy Akşemsettin Camii+136m en yakın asfalt 3.5 m solda
+[H3]   K67 YOL YOK (arazi): s=6630–6642 (14 m) @(2371,12.4,5447) Hasköy Akşemsettin Camii+140m en yakın asfalt 7.0 m solda ışın: Zemin/Zemin-0.1
+[H3]   K68 güzergâh Refuj üstünde: s=6644–6645 (3 m) @(2377,12.2,5442) Hasköy Akşemsettin Camii+147m en yakın asfalt 2.0 m solda
+[H3]   K69 güzergâh Refuj üstünde: s=6669–6671 (4 m) @(2389,12.2,5421) Hasköy Akşemsettin Camii+163m en yakın asfalt 3.0 m solda
+[H3]   K70 YOL YOK (arazi): s=6673–6683 (12 m) @(2388,12.3,5412) Hasköy Akşemsettin Camii+165m en yakın asfalt 5.0 m solda ışın: Zemin/Zemin-0.2
+[H3]   K71 güzergâh Refuj üstünde: s=6684–6684 (2 m) @(2390,12.6,5407) Hasköy Akşemsettin Camii+169m en yakın asfalt 3.5 m solda
+[H3]   K72 güzergâh Refuj üstünde: s=6693–6693 (2 m) @(2394,12.6,5399) Hasköy Akşemsettin Camii+176m en yakın asfalt 3.0 m solda
+[H3]   K73 YOL YOK (arazi): s=6694–6706 (14 m) @(2397,12.5,5394) Hasköy Akşemsettin Camii+181m en yakın asfalt 6.0 m solda ışın: Zemin/Zemin-0.1
+[H3]   K74 güzergâh Refuj üstünde: s=6708–6709 (3 m) @(2403,12.4,5388) Hasköy Akşemsettin Camii+189m en yakın asfalt 2.5 m solda
+[H3]   K75 güzergâh Refuj üstünde: s=6740–6742 (4 m) @(2417,12.8,5361) Hasköy Akşemsettin Camii+214m en yakın asfalt 3.5 m solda
+[H3]   K76 YOL YOK (arazi): s=6743–6752 (11 m) @(2418,13.0,5355) Hasköy Akşemsettin Camii+217m en yakın asfalt 3.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K77 güzergâh Refuj üstünde: s=6753–6753 (2 m) @(2420,13.4,5349) Pazar Yeri+219m en yakın asfalt 2.0 m solda
+[H3]   K78 güzergâh Refuj üstünde: s=6762–6762 (2 m) @(2424,13.4,5341) Pazar Yeri+210m en yakın asfalt 2.5 m solda
+[H3]   K79 YOL YOK (arazi): s=6763–6773 (12 m) @(2427,13.3,5336) Pazar Yeri+204m en yakın asfalt 4.5 m solda ışın: Zemin/Zemin-0.1
+[H3]   K80 güzergâh Refuj üstünde: s=6775–6777 (4 m) @(2431,13.2,5331) Pazar Yeri+197m en yakın asfalt 3.0 m solda
+[H3]   K81 güzergâh Refuj üstünde: s=6814–6826 (14 m) @(2450,13.8,5293) Pazar Yeri+156m en yakın asfalt 2.0 m solda
+[H3]   K82 güzergâh Refuj üstünde: s=6836–6847 (13 m) @(2460,14.2,5273) Pazar Yeri+135m en yakın asfalt 2.0 m solda
+[H3]   K83 güzergâh Refuj üstünde: s=6944–6947 (5 m) @(2507,16.4,5182) Pazar Yeri+50m en yakın asfalt 2.5 m solda
+[H3]   K84 YOL YOK (arazi): s=6949–6958 (12 m) @(2508,16.8,5174) Pazar Yeri+49m en yakın asfalt 4.0 m solda ışın: Zemin/Zemin+0.0
+[H3]   K85 güzergâh Refuj üstünde: s=6960–6961 (3 m) @(2511,17.2,5168) Pazar Yeri+47m en yakın asfalt 3.0 m solda
+[H3]   K86 güzergâh Refuj üstünde: s=6968–6968 (2 m) @(2516,17.2,5161) Pazar Yeri+45m en yakın asfalt 1.0 m solda
+[H3]   K87 YOL YOK (arazi): s=6970–6978 (10 m) @(2518,17.1,5157) Pazar Yeri+45m en yakın asfalt 4.5 m solda ışın: Zemin/Zemin-0.2
+[H3]   K88 güzergâh Refuj üstünde: s=6980–6983 (5 m) @(2524,17.1,5152) Pazar Yeri+43m en yakın asfalt 2.5 m solda
+[H3]   K89 güzergâh Refuj üstünde: s=7085–7093 (10 m) @(2601,17.7,5222) Esenevler Anadolu Lisesi+44m en yakın asfalt 1.0 m solda
+[H3]   K90 güzergâh Refuj üstünde: s=7108–7116 (10 m) @(2617,18.0,5238) Esenevler Anadolu Lisesi+21m en yakın asfalt 1.0 m solda
+[H3]   K91 güzergâh Refuj üstünde: s=7175–7178 (5 m) @(2662,19.1,5280) Esenevler Anadolu Lisesi+41m en yakın asfalt 3.0 m solda
+[H3]   K92 YOL YOK (arazi): s=7180–7190 (12 m) @(2669,19.4,5281) Esenevler Anadolu Lisesi+47m en yakın asfalt 6.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K93 güzergâh Refuj üstünde: s=7192–7193 (3 m) @(2675,20.0,5284) Esenevler Anadolu Lisesi+54m en yakın asfalt 4.0 m solda
+[H3]   K94 güzergâh Refuj üstünde: s=7200–7200 (2 m) @(2682,20.1,5289) Esenevler Anadolu Lisesi+62m en yakın asfalt 2.0 m solda
+[H3]   K95 YOL YOK (arazi): s=7202–7212 (13 m) @(2688,19.9,5292) Esenevler Anadolu Lisesi+69m en yakın asfalt 6.5 m solda ışın: Zemin/Zemin+0.1
+[H3]   K96 güzergâh Refuj üstünde: s=7214–7217 (5 m) @(2693,19.8,5300) Esenevler Anadolu Lisesi+78m en yakın asfalt 4.0 m solda
+[H3]   K97 güzergâh Refuj üstünde: s=7267–7269 (4 m) @(2735,20.1,5327) Çeyizciler+56m en yakın asfalt 2.0 m solda
+[H3]   K98 YOL YOK (arazi): s=7271–7284 (15 m) @(2744,20.3,5325) Çeyizciler+49m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin-0.1
+[H3]   K99 güzergâh Refuj üstünde: s=7286–7286 (2 m) @(2752,20.6,5330) Çeyizciler+40m en yakın asfalt 4.0 m solda
+[H3]   K100 güzergâh Refuj üstünde: s=7294–7294 (2 m) @(2759,20.6,5333) Çeyizciler+32m en yakın asfalt 6.5 m solda
+[H3]   K101 YOL YOK (arazi): s=7296–7307 (13 m) @(2765,20.6,5336) Çeyizciler+26m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K102 güzergâh Refuj üstünde: s=7309–7312 (5 m) @(2770,20.5,5345) Çeyizciler+17m en yakın asfalt 4.0 m solda
+[H3]   K103 güzergâh Refuj üstünde: s=7369–7384 (17 m) @(2827,21.7,5368) Çeyizciler+45m en yakın asfalt 2.0 m solda
+[H3]   K104 güzergâh Kaldirim üstünde: s=7398–7401 (5 m) @(2849,22.4,5375) Çiçek Taksi+52m en yakın asfalt 0.5 m solda
+[H3]   K105 güzergâh Kaldirim üstünde: s=7481–7496 (17 m) @(2912,25.2,5317) Çiçek Taksi+92m en yakın asfalt 3.0 m solda
+[H3]   K106 güzergâh Kaldirim üstünde: s=7519–7528 (11 m) @(2929,25.4,5326) Çiçek Taksi+89m en yakın asfalt 4.5 m solda
+[H3]   K107 güzergâh Kaldirim üstünde: s=7618–7623 (7 m) @(2865,23.0,5390) Çiçek Taksi+30m en yakın asfalt 1.0 m solda
+[H3]   K108 güzergâh Refuj üstünde: s=7884–7896 (15 m) @(3102,37.0,5376) Çiçek Taksi+214m en yakın asfalt 2.5 m solda
+[H3]   K109 güzergâh Kaldirim üstünde: s=7906–7916 (12 m) @(3122,38.0,5369) Çiçek Taksi+235m en yakın asfalt 3.0 m solda
+[H3]   K110 güzergâh Kaldirim üstünde: s=8113–8117 (6 m) @(3312,45.0,5308) Çiçek Taksi+433m en yakın asfalt 0.5 m solda
+[H3]   K111 güzergâh Refuj üstünde: s=8135–8138 (5 m) @(3333,45.8,5301) Çiçek Taksi+455m en yakın asfalt 0.5 m solda
+[H3]   K112 güzergâh Refuj üstünde: s=8216–8219 (5 m) @(3404,49.4,5275) Güneşevler Spor Tesisleri+380m en yakın asfalt 4.5 m solda
+[H3]   K113 YOL YOK (arazi): s=8221–8231 (12 m) @(3409,50.2,5267) Güneşevler Spor Tesisleri+373m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin-0.3
+[H3]   K114 güzergâh Refuj üstünde: s=8232–8232 (2 m) @(3414,50.4,5265) Güneşevler Spor Tesisleri+368m en yakın asfalt 6.0 m solda
+[H3]   K115 güzergâh Refuj üstünde: s=8241–8241 (2 m) @(3423,50.5,5262) Güneşevler Spor Tesisleri+359m en yakın asfalt 5.0 m solda
+[H3]   K116 YOL YOK (arazi): s=8242–8253 (14 m) @(3428,50.7,5260) Güneşevler Spor Tesisleri+353m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K117 güzergâh Refuj üstünde: s=8255–8256 (3 m) @(3436,51.1,5263) Güneşevler Spor Tesisleri+346m en yakın asfalt 2.5 m solda
+[H3]   K118 güzergâh Refuj üstünde: s=8395–8397 (4 m) @(3565,57.6,5220) Güneşevler Spor Tesisleri+211m en yakın asfalt 3.0 m solda
+[H3]   K119 YOL YOK (arazi): s=8399–8410 (13 m) @(3569,58.2,5212) Güneşevler Spor Tesisleri+205m en yakın asfalt 8.0 m solda ışın: Zemin/Zemin-0.2
+[H3]   K120 güzergâh Refuj üstünde: s=8412–8412 (2 m) @(3576,58.5,5210) Güneşevler Spor Tesisleri+197m en yakın asfalt 5.5 m solda
+[H3]   K121 güzergâh Refuj üstünde: s=8420–8420 (2 m) @(3583,58.6,5207) Güneşevler Spor Tesisleri+189m en yakın asfalt 4.5 m solda
+[H3]   K122 YOL YOK (arazi): s=8422–8434 (14 m) @(3590,58.8,5205) Güneşevler Spor Tesisleri+182m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin-0.1
+[H3]   K123 güzergâh Refuj üstünde: s=8436–8438 (4 m) @(3598,59.4,5207) Güneşevler Spor Tesisleri+175m en yakın asfalt 3.0 m solda
+[H3]   K124 güzergâh Refuj üstünde: s=8514–8517 (5 m) @(3672,63.6,5184) Güneşevler Spor Tesisleri+98m en yakın asfalt 3.5 m solda
+[H3]   K125 YOL YOK (arazi): s=8519–8530 (13 m) @(3678,64.3,5179) Güneşevler Spor Tesisleri+90m en yakın asfalt 5.0 m solda ışın: Zemin/Zemin-0.2
+[H3]   K126 güzergâh Kaldirim üstünde: s=8539–8540 (3 m) @(3692,64.9,5174) Güneşevler Spor Tesisleri+75m en yakın asfalt 3.5 m solda
+[H3]   K127 YOL YOK (arazi): s=8542–8549 (10 m) @(3698,65.1,5173) Güneşevler Spor Tesisleri+69m en yakın asfalt 6.0 m solda ışın: Zemin/Zemin-0.1
+[H3]   K128 güzergâh Kaldirim üstünde: s=8551–8553 (4 m) @(3704,65.4,5173) Güneşevler Spor Tesisleri+63m en yakın asfalt 3.5 m solda
+[H3]   K129 güzergâh Kaldirim üstünde: s=8573–8581 (10 m) @(3727,66.5,5168) Güneşevler Spor Tesisleri+40m en yakın asfalt 1.0 m solda
+[H3]   K130 güzergâh Kaldirim üstünde: s=8593–8601 (10 m) @(3746,67.4,5162) Güneşevler Spor Tesisleri+20m en yakın asfalt 1.0 m solda
+[H3]   K131 güzergâh Kaldirim üstünde: s=8715–8725 (12 m) @(3858,72.4,5124) Güneşevler Spor Tesisleri+99m en yakın asfalt 1.5 m solda
+[H3]   K132 güzergâh Kaldirim üstünde: s=8737–8748 (13 m) @(3879,73.3,5117) Güneşevler Spor Tesisleri+121m en yakın asfalt 1.5 m solda
+[H3]   K133 güzergâh Kaldirim üstünde: s=8817–8824 (10 m) @(3951,76.7,5090) Güneşevler Spor Tesisleri+198m en yakın asfalt 1.0 m solda
+[H3]   K134 güzergâh Kaldirim üstünde: s=8836–8847 (13 m) @(3972,77.6,5082) Güneşevler Spor Tesisleri+220m en yakın asfalt 1.0 m solda
+[H3]   K135 güzergâh Kaldirim üstünde: s=8941–8954 (15 m) @(4070,83.5,5046) Güneşevler+170m en yakın asfalt 2.0 m solda
+[H3]   K136 güzergâh Kaldirim üstünde: s=8966–8977 (13 m) @(4092,85.0,5039) Güneşevler+146m en yakın asfalt 2.5 m solda
+[H3]   K137 güzergâh Kaldirim üstünde: s=9028–9040 (14 m) @(4152,89.5,5025) Güneşevler+86m en yakın asfalt 1.5 m solda
+[H3]   K138 güzergâh Refuj üstünde: s=9050–9061 (13 m) @(4173,90.7,5020) Güneşevler+65m en yakın asfalt 1.5 m solda
+[H3]   K139 güzergâh Refuj üstünde: s=9093–9096 (5 m) @(4210,92.3,5012) Güneşevler+34m en yakın asfalt 3.5 m solda
+[H3]   K140 YOL YOK (arazi): s=9098–9108 (12 m) @(4214,92.6,5005) Güneşevler+26m en yakın asfalt 7.5 m solda ışın: Zemin/Zemin+0.0
+[H3]   K141 güzergâh Refuj üstünde: s=9110–9111 (3 m) @(4220,93.0,5001) Güneşevler+20m en yakın asfalt 6.0 m solda
+[H3] üst geçen yapılar (otobüs üstünde, 9):
+[H3]   s=526–648 (122 m) açıklık orta=2.21 yan(±1,25)=1.38 m H3_0_2_Yol(Yol) @(56,-9.6,502) Sıhhiye+270m
+[H3]   s=845–848 (3 m) açıklık orta=5.09 yan(±1,25)=5.09 m H3_-1_3_SimgeYapilar(SimgeYapilar) @(-5,-12.5,810) Sıhhiye+44m
+[H3]   s=1240–1248 (8 m) açıklık orta=0.38 yan(±1,25)=0.17 m H3_0_4_Yol(Yol) @(-84,-6.8,1174) Opera+289m
+[H3]   s=1263–1286 (23 m) açıklık orta=4.70 yan(±1,25)=4.70 m H3_-1_4_Yol(Yol) @(-76,-7.2,1195) Opera+266m
+[H3]   s=4060–4063 (3 m) açıklık orta=4.88 yan(±1,25)=4.88 m H3_2_14_SimgeYapilar(SimgeYapilar) @(746,-3.9,3713) Veteriner Fakültesi+26m
+[H3]   s=4371–4392 (21 m) açıklık orta=4.24 yan(±1,25)=4.23 m H3_3_15_Yol(Yol) @(927,-2.9,3960) Veteriner Fakültesi+280m
+[H3]   s=4394–4416 (22 m) açıklık orta=2.64 yan(±1,25)=2.47 m H3_4_15_Yol(Yol) @(939,-2.5,3981) Veteriner Fakültesi+304m
+[H3]   s=5045–5050 (5 m) açıklık orta=4.79 yan(±1,25)=4.79 m H3_5_17_SimgeYapilar(SimgeYapilar) @(1346,-3.8,4460) Atatürk Anadolu İmam Hatip Lisesi+30m
+[H3]   s=5511–5514 (3 m) açıklık orta=7.74 yan(±1,25)=7.74 m H3_6_19_SimgeYapilar(SimgeYapilar) @(1651,10.7,4801) Altınpark+21m
+[H3] en dik çıkış (20 m): %9.2 s=8977 (4098.13, 85.47, 5039.49) (Güneşevler+141m); %7 üstü örnek: 78, %10 üstü: 0
+[H3]   dik: %9.2 s=8977 (Güneşevler+141m)
+[H3]   BASAMAK s=528 -8.15→-8.78 (55.92, -9.63, 501.99) (Sıhhiye+270m)
+[H3]   BASAMAK s=529 -8.78→-9.56 (55.62, -9.82, 502.79) (Sıhhiye+269m)
+[H3]   BASAMAK s=531 -9.56→-10.04 (55.18, -10.12, 504.74) (Sıhhiye+267m)
+[H3]   BASAMAK s=533 -10.04→-10.70 (54.74, -10.43, 506.69) (Sıhhiye+265m)
+[H3]   BASAMAK s=534 -10.70→-11.01 (54.53, -10.57, 507.61) (Sıhhiye+264m)
+[H3]   BASAMAK s=2186 7.43→6.98 (1.70, 7.20, 2082.80) (Ulus+139m)
+[H3]   BASAMAK s=2191 6.69→7.00 (0.00, 6.92, 2087.42) (Ulus+144m)
+[H3]   BASAMAK s=3255 -6.99→-6.70 (329.62, -6.38, 3052.41) (Yıba Çarşısı+284m)
+[H3]   BASAMAK s=3299 -6.88→-6.27 (345.65, -6.53, 3093.26) (Yıba Çarşısı+327m)
+[H3]   BASAMAK s=4314 -2.14→-1.77 (896.00, -1.90, 3914.87) (Veteriner Fakültesi+226m)
+[H3]   BASAMAK s=4372 -2.64→-2.89 (926.99, -3.08, 3960.42) (Veteriner Fakültesi+281m)
+[H3]   BASAMAK s=4377 -3.32→-3.01 (928.85, -3.06, 3965.06) (Veteriner Fakültesi+286m)
+[H3]   BASAMAK s=4396 -2.73→-2.36 (938.88, -2.53, 3980.97) (Veteriner Fakültesi+304m)
+[H3]   BASAMAK s=4426 -4.04→-4.46 (960.21, -4.12, 3999.07) (Veteriner Fakültesi+331m)
+[H3]   BASAMAK s=6256 26.97→26.54 (2082.81, 26.78, 5387.52) (Subayevleri+136m)
+[H3]   BASAMAK s=6620 12.42→12.68 (2363.99, 12.55, 5460.50) (Hasköy Akşemsettin Camii+132m)
+[H3]   BASAMAK s=6630 12.70→12.37 (2368.44, 12.52, 5451.54) (Hasköy Akşemsettin Camii+137m)
+[H3]   BASAMAK s=6684 12.14→12.70 (2390.36, 12.55, 5407.26) (Hasköy Akşemsettin Camii+169m)
+[H3]   BASAMAK s=6694 12.75→12.32 (2394.80, 12.58, 5398.31) (Hasköy Akşemsettin Camii+177m)
+[H3]   BASAMAK s=6763 13.57→13.17 (2424.65, 13.40, 5340.36) (Pazar Yeri+209m)
+[H3]   BASAMAK s=6970 17.40→16.93 (2516.79, 17.19, 5159.88) (Pazar Yeri+45m)
+[H3]   BASAMAK s=7192 19.73→20.10 (2675.32, 20.01, 5284.43) (Esenevler Anadolu Lisesi+54m)
+[H3]   BASAMAK s=7286 20.34→20.76 (2751.83, 20.62, 5329.87) (Çeyizciler+40m)
+[H3]   BASAMAK s=8232 50.24→50.57 (3414.18, 50.42, 5265.36) (Güneşevler Spor Tesisleri+368m)
+[H3]   BASAMAK s=8242 50.69→50.38 (3423.61, 50.53, 5262.04) (Güneşevler Spor Tesisleri+358m)
+[H3]   BASAMAK s=8255 50.85→51.22 (3436.26, 51.10, 5263.04) (Güneşevler Spor Tesisleri+346m)
+[H3]   BASAMAK s=8412 58.29→58.65 (3575.59, 58.51, 5209.52) (Güneşevler Spor Tesisleri+197m)
+[H3]   BASAMAK s=8436 59.05→59.56 (3598.17, 59.37, 5207.10) (Güneşevler Spor Tesisleri+175m)
+[H3]   BASAMAK s=8966 84.30→84.67 (4087.61, 84.56, 5040.25) (Güneşevler+151m)
+[H3]   BASAMAK s=9098 92.44→92.07 (4211.49, 92.37, 5009.00) (Güneşevler+31m)
+[H3]   BASAMAK s=9110 92.76→93.23 (4219.87, 93.01, 5000.78) (Güneşevler+20m)
+[H3] durak 00 Kızılay: nokta zemini=Yol/M_H3_Asfalt y=-0.05; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.38 yana=4.7 m
+[H3] durak 01 Sıhhiye: nokta zemini=Yol/M_H3_Asfalt y=-0.02; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.40 yana=4.7 m
+[H3] durak 02 Opera: nokta zemini=Yol/M_H3_Asfalt y=-0.04; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.36 yana=4.8 m
+[H3] durak 03 Ulus: nokta zemini=Yol/M_H3_Asfalt y=-0.05; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.33 yana=4.8 m
+[H3] durak 04 Yıba Çarşısı: nokta zemini=Yol/M_H3_Asfalt y=-0.09; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.35 yana=4.8 m
+[H3] durak 05 Dışkapı Hastanesi: nokta zemini=Yol/M_H3_Asfalt y=-0.03; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.34 yana=4.8 m
+[H3] durak 06 Veteriner Fakültesi: nokta zemini=Yol/M_H3_Asfalt y=-0.06; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.34 yana=4.7 m
+[H3] durak 07 Çağdaş Sokak: nokta zemini=Yol/M_H3_Asfalt y=-0.03; sundurma EGO_Durak 4 m: Yol/M_H3_Refuj taban−zemin=-0.31 yana=4.7 m
+[H3] durak 08 Atatürk Anadolu İmam Hatip Lisesi: nokta zemini=Yol/M_H3_Asfalt y=-0.05; sundurma EGO_Durak 4 m: Yol/M_H3_Refuj taban−zemin=-0.37 yana=4.7 m
+[H3] durak 09 Altınpark: nokta zemini=Yol/M_H3_Asfalt y=-0.08; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.24 yana=4.8 m
+[H3] durak 10 Subayevleri: nokta zemini=Yol/M_H3_Asfalt y=-0.05; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.34 yana=4.7 m
+[H3] durak 11 Hasköy Akşemsettin Camii: nokta zemini=Yol/M_H3_Asfalt y=-0.04; sundurma EGO_Durak 4 m: Yol/M_H3_Refuj taban−zemin=-0.38 yana=4.8 m
+[H3] durak 12 Pazar Yeri: nokta zemini=Yol/M_H3_Asfalt y=-0.07; sundurma EGO_Durak 4 m: Zemin/M_H3_Zemin taban−zemin=+0.31 yana=4.8 m
+[H3] durak 13 Esenevler Anadolu Lisesi: nokta zemini=Yol/M_H3_Asfalt y=-0.09; sundurma EGO_Durak 4 m: Zemin/M_H3_Zemin taban−zemin=+0.04 yana=4.8 m
+[H3] durak 14 Çeyizciler: nokta zemini=Yol/M_H3_Asfalt y=-0.42; sundurma EGO_Durak 4 m: Zemin/M_H3_Zemin taban−zemin=+0.09 yana=4.8 m
+[H3] durak 15 Çiçek Taksi: nokta zemini=Yol/M_H3_Asfalt y=-0.04; sundurma EGO_Durak 4 m: Zemin/M_H3_Zemin taban−zemin=+0.30 yana=4.8 m
+[H3] durak 16 Güneşevler Spor Tesisleri: nokta zemini=Yol/M_H3_Asfalt y=-0.02; sundurma EGO_Durak 4 m: Zemin/M_H3_Zemin taban−zemin=-0.08 yana=4.7 m
+[H3] durak 17 Güneşevler: nokta zemini=Yol/M_H3_Asfalt y=-0.05; sundurma EGO_Durak 4 m: Yol/M_H3_Kaldirim taban−zemin=-0.35 yana=4.7 m
+[H3] simge yapılar (105):
+  EmekIshani @(10,2.9,-361) boy=81 Kızılay+362m
+  KizilayAVM @(-118,2.1,-213) boy=77 Kızılay+243m
+  GuvenlikAniti @(-104,2.4,-368) boy=8 Kızılay+380m
+  ZaferAniti @(13,7.8,2039) boy=12 Ulus+99m
+  HititGunesKursu @(50,-9.4,369) boy=11 Kızılay+375m
+  OperaBinasi @(-99,-12.0,1324) boy=19 Opera+154m
+  H3_-8_13_SimgeYapilar @(-1832,-26.6,3425) boy=1 Yıba Çarşısı+2094m
+  H3_-8_14_SimgeYapilar @(-1762,-26.6,3502) boy=1 Yıba Çarşısı+2052m
+  H3_-7_14_SimgeYapilar @(-1607,-26.6,3546) boy=1 Yıba Çarşısı+1923m
+  H3_-6_8_SimgeYapilar @(-1277,-24.2,2069) boy=1 Ulus+1266m
+  H3_-6_14_SimgeYapilar @(-1378,-26.6,3658) boy=3 Yıba Çarşısı+1764m
+  H3_-6_15_SimgeYapilar @(-1278,-24.0,3757) boy=1 Yıba Çarşısı+1728m
+  H3_-5_7_SimgeYapilar @(-1191,-24.2,1993) boy=1 Ulus+1175m
+  H3_-5_8_SimgeYapilar @(-1223,-24.2,2047) boy=1 Ulus+1210m
+  H3_-5_14_SimgeYapilar @(-1229,-26.6,3711) boy=1 Yıba Çarşısı+1662m
+  H3_-5_15_SimgeYapilar @(-914,-26.6,3988) boy=3 Dışkapı Hastanesi+1531m
+  H3_-5_16_SimgeYapilar @(-1015,-26.6,4013) boy=1 Dışkapı Hastanesi+1634m
+  H3_-4_5_SimgeYapilar @(-897,-15.1,1450) boy=2 Opera+880m
+  H3_-4_16_SimgeYapilar @(-864,-26.6,4054) boy=1 Dışkapı Hastanesi+1510m
+  H3_-3_-2_SimgeYapilar @(-506,9.1,-452) boy=1 Kızılay+674m
+  H3_-3_5_SimgeYapilar @(-582,-16.8,1489) boy=1 Opera+565m
+  H3_-3_6_SimgeYapilar @(-582,-16.8,1510) boy=1 Opera+567m
+  H3_-3_16_SimgeYapilar @(-618,-26.6,4124) boy=1 Dışkapı Hastanesi+1321m
+  H3_-2_-2_SimgeYapilar @(-487,9.1,-423) boy=1 Kızılay+640m
+  H3_-2_4_SimgeYapilar @(-373,-21.9,1084) boy=5 Sıhhiye+493m
+  H3_-2_5_SimgeYapilar @(-366,-18.0,1482) boy=2 Opera+349m
+  H3_-2_6_SimgeYapilar @(-365,-18.0,1561) boy=1 Opera+363m
+  H3_-2_7_SimgeYapilar @(-313,-13.0,1938) boy=1 Ulus+297m
+  H3_-2_16_SimgeYapilar @(-418,-26.6,4221) boy=1 Dışkapı Hastanesi+1212m
+  H3_-2_17_SimgeYapilar @(-284,-26.6,4294) boy=1 Dışkapı Hastanesi+1164m
+  H3_-1_-2_SimgeYapilar @(-98,1.5,-345) boy=1 Kızılay+355m
+  H3_-1_2_SimgeYapilar @(-41,-12.8,585) boy=14 Sıhhiye+188m
+  H3_-1_3_SimgeYapilar @(-39,-13.4,800) boy=9 Sıhhiye+55m
+  H3_-1_4_SimgeYapilar @(-152,-14.4,1142) boy=1 Opera+340m
+  H3_-1_5_SimgeYapilar @(-173,-14.2,1493) boy=1 Opera+160m
+  H3_-1_17_SimgeYapilar @(-187,-26.6,4395) boy=1 Veteriner Fakültesi+1158m
+  H3_-1_18_SimgeYapilar @(-58,-26.6,4559) boy=1 Veteriner Fakültesi+1165m
+  H3_0_0_SimgeYapilar @(9,-4.9,147) boy=8 Kızılay+150m
+  H3_0_1_SimgeYapilar @(57,-10.8,464) boy=7 Sıhhiye+307m
+  H3_0_2_SimgeYapilar @(57,-13.5,569) boy=15 Sıhhiye+205m
+  H3_0_3_SimgeYapilar @(1,-13.4,810) boy=9 Sıhhiye+44m
+  H3_0_5_SimgeYapilar @(57,-8.3,1492) boy=2 Opera+83m
+  H3_0_6_SimgeYapilar @(78,-6.8,1502) boy=1 Opera+107m
+  H3_0_18_SimgeYapilar @(153,-26.6,4611) boy=9 Veteriner Fakültesi+1069m
+  H3_1_12_SimgeYapilar @(308,-7.3,3166) boy=1 Dışkapı Hastanesi+358m
+  H3_1_18_SimgeYapilar @(384,-18.1,4631) boy=1 Çağdaş Sokak+867m
+  H3_2_-3_SimgeYapilar @(506,29.1,-645) boy=1 Kızılay+821m
+  H3_2_1_SimgeYapilar @(689,-5.8,299) boy=1 Kızılay+756m
+  H3_2_6_SimgeYapilar @(680,49.8,1672) boy=48 Opera+736m
+  H3_2_7_SimgeYapilar @(649,26.3,1873) boy=46 Ulus+672m
+  H3_2_8_SimgeYapilar @(683,16.8,2039) boy=41 Ulus+707m
+  H3_2_14_SimgeYapilar @(735,-4.7,3720) boy=9 Veteriner Fakültesi+30m
+  H3_2_18_SimgeYapilar @(574,-18.1,4636) boy=1 Çağdaş Sokak+699m
+  H3_2_27_SimgeYapilar @(746,-33637.0,6772) boy=1 Hasköy Akşemsettin Camii+33714m — H3_2_27_SimgeYapilar: köşe 71, -1000 m altında 71 (M_H3_Su:51 M_H3_Bordur:78)
+  H3_3_6_SimgeYapilar @(844,79.0,1662) boy=36 Opera+893m
+  H3_3_7_SimgeYapilar @(858,57.1,1876) boy=56 Ulus+881m
+  H3_3_8_SimgeYapilar @(855,41.7,2036) boy=53 Ulus+879m
+  H3_3_19_SimgeYapilar @(841,-13.4,4787) boy=1 Atatürk Anadolu İmam Hatip Lisesi+595m
+  H3_3_20_SimgeYapilar @(907,-4.0,5211) boy=1 Altınpark+853m
+  H3_3_21_SimgeYapilar @(904,-33616.2,5344) boy=33613 Atatürk Anadolu İmam Hatip Lisesi+16836m — H3_3_21_SimgeYapilar: köşe 47, -1000 m altında 24 (M_H3_Bordur:36)
+  H3_3_22_SimgeYapilar @(953,-33616.2,5532) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33632m — H3_3_22_SimgeYapilar: köşe 32, -1000 m altında 32 (M_H3_Bordur:48)
+  H3_3_25_SimgeYapilar @(956,-33639.7,6318) boy=17 Atatürk Anadolu İmam Hatip Lisesi+33682m — H3_3_25_SimgeYapilar: köşe 238, -1000 m altında 238 (M_H3_Su:96 M_H3_Bordur:204 M_H3_Cephe:102)
+  H3_3_27_SimgeYapilar @(754,-33637.0,6772) boy=1 Hasköy Akşemsettin Camii+33714m — H3_3_27_SimgeYapilar: köşe 24, -1000 m altında 24 (M_H3_Bordur:36)
+  H3_4_1_SimgeYapilar @(1088,2.1,499) boy=1 Sıhhiye+1116m
+  H3_4_2_SimgeYapilar @(1088,2.1,508) boy=1 Sıhhiye+1114m
+  H3_4_22_SimgeYapilar @(1074,-33616.2,5673) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33636m — H3_4_22_SimgeYapilar: köşe 56, -1000 m altında 56 (M_H3_Bordur:84)
+  H3_4_23_SimgeYapilar @(1148,-33616.2,5869) boy=2186 Atatürk Anadolu İmam Hatip Lisesi+32551m — H3_4_23_SimgeYapilar: köşe 234, -1000 m altında 234 (M_H3_Bordur:300 M_H3_Su:96)
+  H3_4_24_SimgeYapilar @(1207,-33616.2,6014) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33649m — H3_4_24_SimgeYapilar: köşe 60, -1000 m altında 60 (M_H3_Bordur:90)
+  H3_4_25_SimgeYapilar @(1014,-33639.7,6367) boy=17 Atatürk Anadolu İmam Hatip Lisesi+33684m — H3_4_25_SimgeYapilar: köşe 160, -1000 m altında 160 (M_H3_Cephe:240)
+  H3_5_17_SimgeYapilar @(1338,-5.6,4468) boy=10 Atatürk Anadolu İmam Hatip Lisesi+32m
+  H3_5_22_SimgeYapilar @(1496,-33616.2,5740) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33638m — H3_5_22_SimgeYapilar: köşe 4, -1000 m altında 4 (M_H3_Bordur:6)
+  H3_5_23_SimgeYapilar @(1420,-33616.2,5875) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33643m — H3_5_23_SimgeYapilar: köşe 160, -1000 m altında 160 (M_H3_Bordur:240)
+  H3_5_24_SimgeYapilar @(1298,-33616.2,6011) boy=1 Atatürk Anadolu İmam Hatip Lisesi+33649m — H3_5_24_SimgeYapilar: köşe 36, -1000 m altında 36 (M_H3_Bordur:54)
+  H3_6_19_SimgeYapilar @(1700,7.2,4821) boy=15 Altınpark+36m
+  H3_6_22_SimgeYapilar @(1468,-33616.2,5743) boy=33611 Altınpark+16849m — H3_6_22_SimgeYapilar: köşe 961, -1000 m altında 586 (M_H3_Su:708 M_H3_Bordur:522)
+  H3_6_23_SimgeYapilar @(1516,-33616.2,5770) boy=33609 Hasköy Akşemsettin Camii+16850m — H3_6_23_SimgeYapilar: köşe 24, -1000 m altında 4 (M_H3_Bordur:6)
+  H3_7_0_SimgeYapilar @(1923,78.2,132) boy=19 Kızılay+1935m
+  H3_7_1_SimgeYapilar @(1989,78.2,258) boy=1 Kızılay+2012m
+  H3_7_18_SimgeYapilar @(1981,7.1,4705) boy=1 Altınpark+337m
+  H3_7_19_SimgeYapilar @(1922,7.2,4854) boy=6 Altınpark+261m
+  H3_7_22_SimgeYapilar @(1863,-33616.2,5667) boy=1 Hasköy Akşemsettin Camii+33638m — H3_7_22_SimgeYapilar: köşe 144, -1000 m altında 144 (M_H3_Bordur:216)
+  H3_7_23_SimgeYapilar @(1998,-33616.2,5769) boy=1 Hasköy Akşemsettin Camii+33638m — H3_7_23_SimgeYapilar: köşe 4, -1000 m altında 4 (M_H3_Bordur:6)
+  H3_8_0_SimgeYapilar @(2007,78.2,232) boy=1 Kızılay+2026m
+  H3_8_1_SimgeYapilar @(2022,78.2,280) boy=1 Kızılay+2047m
+  H3_8_18_SimgeYapilar @(2116,7.1,4696) boy=4 Altınpark+469m
+  H3_8_19_SimgeYapilar @(2115,7.8,4884) boy=7 Subayevleri+446m
+  H3_8_21_SimgeYapilar @(2172,21.8,5456) boy=9 Hasköy Akşemsettin Camii+62m
+  H3_8_23_SimgeYapilar @(2136,-33616.2,5800) boy=33274 Hasköy Akşemsettin Camii+17003m — H3_8_23_SimgeYapilar: köşe 92, -1000 m altında 16 (M_H3_Bordur:24)
+  H3_9_18_SimgeYapilar @(2333,10.9,4708) boy=3 Pazar Yeri+522m
+  H3_9_19_SimgeYapilar @(2318,10.9,4775) boy=7 Pazar Yeri+470m
+  H3_9_23_SimgeYapilar @(2367,-33637.0,5833) boy=33291 Hasköy Akşemsettin Camii+17015m — H3_9_23_SimgeYapilar: köşe 176, -1000 m altında 152 (M_H3_Bordur:228)
+  H3_10_23_SimgeYapilar @(2501,-33637.0,5963) boy=1 Hasköy Akşemsettin Camii+33661m — H3_10_23_SimgeYapilar: köşe 314, -1000 m altında 314 (M_H3_Su:312 M_H3_Bordur:312)
+  H3_10_24_SimgeYapilar @(2572,-33637.0,6071) boy=1 Hasköy Akşemsettin Camii+33663m — H3_10_24_SimgeYapilar: köşe 72, -1000 m altında 72 (M_H3_Bordur:108)
+  H3_10_25_SimgeYapilar @(2646,-33637.0,6374) boy=1 Hasköy Akşemsettin Camii+33671m — H3_10_25_SimgeYapilar: köşe 146, -1000 m altında 146 (M_H3_Su:204 M_H3_Bordur:114)
+  H3_10_26_SimgeYapilar @(2656,-33637.0,6552) boy=1 Hasköy Akşemsettin Camii+33676m — H3_10_26_SimgeYapilar: köşe 196, -1000 m altında 196 (M_H3_Bordur:294)
+  H3_11_26_SimgeYapilar @(2925,-33637.0,6582) boy=1 Çeyizciler+33680m — H3_11_26_SimgeYapilar: köşe 24, -1000 m altında 24 (M_H3_Bordur:36)
+  H3_12_25_SimgeYapilar @(3190,-33637.0,6492) boy=1 Çeyizciler+33679m — H3_12_25_SimgeYapilar: köşe 28, -1000 m altında 28 (M_H3_Bordur:42)
+  H3_12_26_SimgeYapilar @(3040,-33637.0,6549) boy=1 Çeyizciler+33680m — H3_12_26_SimgeYapilar: köşe 85, -1000 m altında 85 (M_H3_Su:81 M_H3_Bordur:84)
+  H3_13_25_SimgeYapilar @(3257,-33637.0,6497) boy=1 Çeyizciler+33680m — H3_13_25_SimgeYapilar: köşe 4, -1000 m altında 4 (M_H3_Bordur:6)
+  H3_13_26_SimgeYapilar @(3382,-33637.0,6614) boy=1 Çeyizciler+33686m — H3_13_26_SimgeYapilar: köşe 124, -1000 m altında 124 (M_H3_Bordur:186)
+  H3_14_26_SimgeYapilar @(3554,-33637.0,6742) boy=1 Çiçek Taksi+33695m — H3_14_26_SimgeYapilar: köşe 20, -1000 m altında 20 (M_H3_Bordur:30)
+  H3_14_27_SimgeYapilar @(3626,-33637.0,6763) boy=1 Çiçek Taksi+33697m — H3_14_27_SimgeYapilar: köşe 201, -1000 m altında 201 (M_H3_Su:273 M_H3_Bordur:162)
+  H3_14_28_SimgeYapilar @(3719,-33637.0,7014) boy=1 Çiçek Taksi+33710m — H3_14_28_SimgeYapilar: köşe 40, -1000 m altında 40 (M_H3_Bordur:60)
+  H3_15_27_SimgeYapilar @(3863,-33637.0,6997) boy=1 Çiçek Taksi+33713m — H3_15_27_SimgeYapilar: köşe 12, -1000 m altında 12 (M_H3_Bordur:18)
+  H3_15_28_SimgeYapilar @(3858,-33637.0,7011) boy=1 Çiçek Taksi+33714m — H3_15_28_SimgeYapilar: köşe 72, -1000 m altında 72 (M_H3_Bordur:108)
+[H3] editör görüntüleri: /Users/ozzy/busgametest/AnkaraBusSimulator/Assets/../Builds/H3/editor
