@@ -22,6 +22,7 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "harita"))
 from hat3 import kok  # noqa: E402
 from hat3.mesh import PARCA  # noqa: E402
+from hat3.ufuk import PARCA_UFUK  # noqa: E402
 
 # malzeme → (grup, önizleme rengi (doğrusal), doku dosyası)
 MALZEMELER = {
@@ -113,10 +114,10 @@ def parcalari_yukle(on_ek):
     return out
 
 
-def parca_nesneleri(k, katmanlar, doku_klasoru=None, gruplar_sec=None):
+def parca_nesneleri(k, katmanlar, doku_klasoru=None, gruplar_sec=None, boyut=PARCA, ad_on="H3"):
     """Bir parçanın grup nesneleri: {grup: nesne}. Köşeler parça merkezine göre (nesne konumu merkezde)."""
     i, j = k
-    cx, cz = (i + 0.5) * PARCA, (j + 0.5) * PARCA
+    cx, cz = (i + 0.5) * boyut, (j + 0.5) * boyut
     gruplar = {}
     for kat in katmanlar:
         for mal, (V, UV, F) in kat.get(k, {}).items():
@@ -129,7 +130,7 @@ def parca_nesneleri(k, katmanlar, doku_klasoru=None, gruplar_sec=None):
             gruplar.setdefault(grup, []).append((mal, V, UV, F))
     out = {}
     for grup, liste in gruplar.items():
-        o = nesne(f"H3_{i}_{j}_{grup}", liste, doku_klasoru)
+        o = nesne(f"{ad_on}_{i}_{j}_{grup}", liste, doku_klasoru)
         o.location = (-cx, -cz, 0)
         out[grup] = o
     return out
@@ -139,7 +140,7 @@ def sahne_temizle():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
 
-def render(args, katmanlar, doku_klasoru):
+def render(args, katmanlar, ufuk, doku_klasoru):
     sc = bpy.context.scene
     sc.render.engine = "CYCLES"           # sunucuda GPU/EGL yok
     sc.cycles.samples = 24
@@ -166,10 +167,13 @@ def render(args, katmanlar, doku_klasoru):
         for o in list(bpy.data.objects):
             if o.type == "MESH":
                 bpy.data.objects.remove(o, do_unlink=True)
+        gorunen = ("Yol", "Zemin", "Binalar", "BinalarUzak", "SimgeYapilar", "Agaclar", "Lambalar", "Duraklar", "Ufuk")
         for k in set().union(*[set(kat) for kat in katmanlar]):
             if math.hypot((k[0] + 0.5) * PARCA - x, (k[1] + 0.5) * PARCA - z) < args.yaricap:
-                parca_nesneleri(k, katmanlar, doku_klasoru, ("Yol", "Zemin", "Binalar", "BinalarUzak", "SimgeYapilar",
-                                                             "Agaclar", "Lambalar", "Duraklar"))
+                parca_nesneleri(k, katmanlar, doku_klasoru, gorunen)
+        for k in ufuk:
+            if math.hypot((k[0] + 0.5) * PARCA_UFUK - x, (k[1] + 0.5) * PARCA_UFUK - z) < 2600:
+                parca_nesneleri(k, [ufuk], doku_klasoru, gorunen, PARCA_UFUK, "H3U")
         # Unity yaw (0 = +z kuzey, saat yönü) → Blender
         cam.location = (-x, -z, y)
         cam.rotation_euler = (math.radians(90 + pitch), 0, math.radians(180 - yaw))
@@ -188,10 +192,11 @@ def main():
     ap.add_argument("--dokular", default=None)
     args = ap.parse_args(argv)
     sahne_temizle()
-    katmanlar = [parcalari_yukle(on) for on in ("yol", "bina", "agac", "simge", "donati", "ufuk")]
+    katmanlar = [parcalari_yukle(on) for on in ("yol", "bina", "agac", "simge", "donati")]
+    ufuk = parcalari_yukle("ufuk")
     if args.render:
         os.makedirs(args.render, exist_ok=True)
-        render(args, katmanlar, args.dokular)
+        render(args, katmanlar, ufuk, args.dokular)
     if args.fbx:
         cikti = os.path.join(args.fbx, "Parcalar")
         os.makedirs(cikti, exist_ok=True)
@@ -209,7 +214,20 @@ def main():
                                      apply_scale_options="FBX_SCALE_ALL", axis_forward="-Z", axis_up="Y",
                                      bake_space_transform=True, mesh_smooth_type="FACE", path_mode="STRIP",
                                      object_types={"MESH"})
-        print(f"{len(anahtarlar)} parça FBX → {cikti}")
+        for k in sorted(ufuk):
+            for o in list(bpy.data.objects):
+                bpy.data.objects.remove(o, do_unlink=True)
+            for m in list(bpy.data.meshes):
+                bpy.data.meshes.remove(m)
+            nes = parca_nesneleri(k, [ufuk], None, None, PARCA_UFUK, "H3U")
+            bpy.ops.object.select_all(action="DESELECT")
+            for o in nes.values():
+                o.select_set(True)
+            bpy.ops.export_scene.fbx(filepath=os.path.join(cikti, f"H3U_{k[0]}_{k[1]}.fbx"), use_selection=True,
+                                     apply_scale_options="FBX_SCALE_ALL", axis_forward="-Z", axis_up="Y",
+                                     bake_space_transform=True, mesh_smooth_type="FACE", path_mode="STRIP",
+                                     object_types={"MESH"})
+        print(f"{len(anahtarlar)} parça + {len(ufuk)} uzak parça FBX → {cikti}")
 
 
 if __name__ == "__main__":
