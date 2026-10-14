@@ -34,7 +34,16 @@ MALZEMELER = {
     "H3_Cim": ("Zemin", (0.1, 0.2, 0.05), "cim.png"),
     "H3_Cephe": ("Binalar", (0.6, 0.55, 0.48), "cephe_atlas.png"),
     "H3_Cati": ("Binalar", (0.3, 0.28, 0.27), "cati_atlas.png"),
+    "H3_Carpisma": ("BinalarCarpisma", (1, 0, 1), None),
 }
+
+
+def grup_ve_taban(mal):
+    """'H3_Cephe@BinalarLOD1' → ('BinalarLOD1', 'H3_Cephe'); '@' yoksa MALZEMELER'deki grup."""
+    if "@" in mal:
+        taban, grup = mal.split("@", 1)
+        return grup, taban
+    return MALZEMELER.get(mal, ("Diger",))[0], mal
 
 
 def malzeme(ad, doku_klasoru=None):
@@ -61,6 +70,7 @@ def nesne(ad, parcalar, doku_klasoru=None):
     n = 0
     mats = []
     for mal, V, UV, F in parcalar:
+        mal = grup_ve_taban(mal)[1]
         if mal not in mats:
             mats.append(mal)
         Vs.append(np.stack([-V[:, 0], -V[:, 2], V[:, 1]], 1))     # Unity (x,y,z) → Blender (-x, -z, y)
@@ -99,14 +109,16 @@ def parcalari_yukle(on_ek):
     return out
 
 
-def parca_nesneleri(k, katmanlar, doku_klasoru=None):
+def parca_nesneleri(k, katmanlar, doku_klasoru=None, gruplar_sec=None):
     """Bir parçanın grup nesneleri: {grup: nesne}. Köşeler parça merkezine göre (nesne konumu merkezde)."""
     i, j = k
     cx, cz = (i + 0.5) * PARCA, (j + 0.5) * PARCA
     gruplar = {}
     for kat in katmanlar:
         for mal, (V, UV, F) in kat.get(k, {}).items():
-            grup = MALZEMELER.get(mal, ("Diger",))[0]
+            grup = grup_ve_taban(mal)[0]
+            if gruplar_sec is not None and grup not in gruplar_sec:
+                continue
             V = V.copy()
             V[:, 0] -= cx
             V[:, 2] -= cz
@@ -152,7 +164,8 @@ def render(args, katmanlar, doku_klasoru):
                 bpy.data.objects.remove(o, do_unlink=True)
         for k in set().union(*[set(kat) for kat in katmanlar]):
             if math.hypot((k[0] + 0.5) * PARCA - x, (k[1] + 0.5) * PARCA - z) < args.yaricap:
-                parca_nesneleri(k, katmanlar, doku_klasoru)
+                parca_nesneleri(k, katmanlar, doku_klasoru, ("Yol", "Zemin", "Binalar", "BinalarUzak", "SimgeYapilar",
+                                                             "Agaclar", "Lambalar", "Duraklar"))
         # Unity yaw (0 = +z kuzey, saat yönü) → Blender
         cam.location = (-x, -z, y)
         cam.rotation_euler = (math.radians(90 + pitch), 0, math.radians(180 - yaw))

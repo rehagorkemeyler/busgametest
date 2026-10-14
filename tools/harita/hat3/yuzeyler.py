@@ -39,6 +39,37 @@ RASTER = 2.5           # arazi yumuşatma rasterı (m)
 YUMUSAK = 35.0         # arazinin yola oturduğu mesafe
 
 
+def arazi_y(dogal, yol_y, mesafe):
+    """Son arazi kotu: doğal arazi yollara YUMUSAK m içinde yumuşakça oturur; yolun altında yol − 0,3."""
+    w = np.clip(1 - mesafe / YUMUSAK, 0, 1)
+    w = w * w * (3 - 2 * w)
+    yv = dogal + (yol_y + 0.08 - dogal) * w
+    return np.where(mesafe <= 0.1, yol_y - 0.3, yv)
+
+
+class SonArazi:
+    """Binalar ve donatı için arazi kotu (yuzeyler.py'nin kaydettiği mesafe rasterı ile)."""
+
+    def __init__(self):
+        d = np.load(os.path.join(kok.ISLEM, "arazi.npz"))
+        self.ar = Arazi(d["H"], float(d["x0"]), float(d["z0"]), float(d["hucre"]))
+        self.yh = Yukseklik(d["dugum_xz"], d["dugum_y"], d["dugum_fark"])
+        r = np.load(os.path.join(kok.ISLEM, "mesafe.npz"))
+        self.mesafe, self.mx0, self.mz0 = r["mesafe"], float(r["x0"]), float(r["z0"])
+
+    def y(self, x, z):
+        x, z = np.atleast_1d(x), np.atleast_1d(z)
+        ri = np.clip(((z - self.mz0) / RASTER).astype(int), 0, self.mesafe.shape[0] - 1)
+        rj = np.clip(((x - self.mx0) / RASTER).astype(int), 0, self.mesafe.shape[1] - 1)
+        return arazi_y(self.ar.y(x, z), self.yh(x, z), self.mesafe[ri, rj])
+
+    def yol_mesafesi(self, x, z):
+        x, z = np.atleast_1d(x), np.atleast_1d(z)
+        ri = np.clip(((z - self.mz0) / RASTER).astype(int), 0, self.mesafe.shape[0] - 1)
+        rj = np.clip(((x - self.mx0) / RASTER).astype(int), 0, self.mesafe.shape[1] - 1)
+        return self.mesafe[ri, rj]
+
+
 class Yukseklik:
     """Zemin seviyesindeki yol düğümlerinden yükseklik (ters uzaklık ağırlıklı)."""
 
@@ -311,6 +342,7 @@ def main():
                 yesil.append(shapely.Polygon(ns).buffer(0))
     yesil_m = np.asarray(raster(yesil)) > 0
     koridor_m = np.asarray(raster([koridor.buffer(15)])) > 0
+    np.savez_compressed(os.path.join(kok.ISLEM, "mesafe.npz"), mesafe=mesafe.astype(np.float32), x0=x0, z0=z0)
     print(f"  raster {nx}×{nz} ({time.time() - t0:.0f} sn)")
 
     H_HUCRE = 10.0
@@ -327,10 +359,7 @@ def main():
             dogal = ar.y(gx, gz)
             yol_y = yh(gx, gz)
             dd = mesafe[ri, rj]
-            w = np.clip(1 - dd / YUMUSAK, 0, 1)
-            w = w * w * (3 - 2 * w)
-            yv = dogal + (yol_y + 0.08 - dogal) * w
-            yv = np.where(dd <= 0.1, yol_y - 0.3, yv)
+            yv = arazi_y(dogal, yol_y, dd)
             cm = cukur_m[ri, rj]
             if cm.any():
                 # alt geçit çukuru: en yakın katmanlı (aşağıdaki) yol düğümünün kotu
@@ -350,8 +379,11 @@ def main():
                     cj = min(int((cx - x0) / RASTER), nx - 1)
                     if not koridor_m[ci, cj]:
                         continue
-                    # tümüyle yolun altında kalan hücreyi atla (görünmez)
-                    if all(dd[k] <= 0.1 for k in q) and yol_m[ci, cj]:
+                    # tümüyle yolun altında kalan hücreyi atla (görünmez): hücredeki bütün raster pikselleri yol olmalı
+                    r0 = int((gz[v0] - z0) / RASTER)
+                    c0 = int((gx[v0] - x0) / RASTER)
+                    blok = yol_m[max(r0, 0):r0 + int(H_HUCRE / RASTER) + 1, max(c0, 0):c0 + int(H_HUCRE / RASTER) + 1]
+                    if blok.size and blok.all():
                         continue
                     F_.append((q[0], q[1], q[2], yesil_m[ci, cj]))
                     F_.append((q[0], q[2], q[3], yesil_m[ci, cj]))

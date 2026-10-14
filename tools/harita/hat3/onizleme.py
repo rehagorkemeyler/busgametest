@@ -64,6 +64,31 @@ def ciz(x, z, r, out, px=1400, ekstra=None):
     im.save(out)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and sys.argv[1] != "kamera":
     a = sys.argv[1:]
     ciz(float(a[0]), float(a[1]), float(a[2]), a[3], int(a[4]) if len(a) > 4 else 1400)
+
+
+def kameralar(s_liste, yan=1.5, boy=2.4, ileri=12.0):
+    """Güzergâhta s (m) noktalarından sürücü gözü kameraları: "x,y,z,yaw,pitch" (Unity; yaw kuzeyden saat yönü)."""
+    import math
+    from shapely.geometry import LineString
+    from .yuzeyler import Yukseklik
+    d = np.load(os.path.join(kok.ISLEM, "arazi.npz"))
+    yh = Yukseklik(d["dugum_xz"], d["dugum_y"], d["dugum_fark"])
+    g = kok.guzergah()
+    G = LineString([kok.yerel(*p) for p in g["yol"]])
+    out = []
+    for s in s_liste:
+        p, q = G.interpolate(s), G.interpolate(s + ileri)
+        tx, tz = q.x - p.x, q.y - p.y
+        L = math.hypot(tx, tz) or 1
+        x, z = p.x + tz / L * yan, p.y - tx / L * yan        # sağa yan m (sağ şeritte)
+        y = float(yh(x, z)[0]) + boy
+        yaw = math.degrees(math.atan2(tx, tz))
+        out.append(f"{x:.1f},{y:.1f},{z:.1f},{yaw:.1f},-2")
+    return out
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "kamera":
+    print(" ".join(f'--kamera="{k}"' for k in kameralar([float(v) for v in sys.argv[2:]])))
