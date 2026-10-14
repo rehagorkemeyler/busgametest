@@ -35,6 +35,8 @@ MALZEMELER = {
     "H3_Cephe": ("Binalar", (0.6, 0.55, 0.48), "cephe_atlas.png"),
     "H3_Cati": ("Binalar", (0.3, 0.28, 0.27), "cati_atlas.png"),
     "H3_Carpisma": ("BinalarCarpisma", (1, 0, 1), None),
+    "H3_Govde": ("Agaclar", (0.2, 0.15, 0.1), "agac_govde.png"),
+    "H3_Yaprak": ("Agaclar", (0.1, 0.2, 0.05), "agac_yaprak.png"),
 }
 
 
@@ -61,6 +63,8 @@ def malzeme(ad, doku_klasoru=None):
         tex = m.node_tree.nodes.new("ShaderNodeTexImage")
         tex.image = img
         m.node_tree.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+        if ad == "H3_Yaprak":
+            m.node_tree.links.new(tex.outputs["Alpha"], bsdf.inputs["Alpha"])
     return m
 
 
@@ -184,7 +188,7 @@ def main():
     ap.add_argument("--dokular", default=None)
     args = ap.parse_args(argv)
     sahne_temizle()
-    katmanlar = [parcalari_yukle(on) for on in ("yol", "bina", "simge", "donati")]
+    katmanlar = [parcalari_yukle(on) for on in ("yol", "bina", "agac", "simge", "donati", "ufuk")]
     if args.render:
         os.makedirs(args.render, exist_ok=True)
         render(args, katmanlar, args.dokular)
