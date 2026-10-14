@@ -36,6 +36,7 @@ MALZEMELER = {
     "H3_Cephe": ("Binalar", (0.6, 0.55, 0.48), "cephe_atlas.png"),
     "H3_Cati": ("Binalar", (0.3, 0.28, 0.27), "cati_atlas.png"),
     "H3_Carpisma": ("BinalarCarpisma", (1, 0, 1), None),
+    "H3_Su": ("SimgeYapilar", (0.05, 0.12, 0.15), "su.png"),
     "H3_Govde": ("Agaclar", (0.2, 0.15, 0.1), "agac_govde.png"),
     "H3_Yaprak": ("Agaclar", (0.1, 0.2, 0.05), "agac_yaprak.png"),
 }
@@ -174,6 +175,22 @@ def render(args, katmanlar, ufuk, doku_klasoru):
         for k in ufuk:
             if math.hypot((k[0] + 0.5) * PARCA_UFUK - x, (k[1] + 0.5) * PARCA_UFUK - z) < 2600:
                 parca_nesneleri(k, [ufuk], doku_klasoru, gorunen, PARCA_UFUK, "H3U")
+        # hazır modeller (simge_items.json)
+        items_yol = os.path.join(kok.ISLEM, "simge_items.json")
+        if os.path.exists(items_yol):
+            import json
+            maps = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..",
+                                "AnkaraBusSimulator", "Assets", "_Project", "Maps")
+            for it in json.load(open(items_yol, encoding="utf-8")):
+                ux, uy, uz = it["pos"]
+                if math.hypot(ux - x, uz - z) > args.yaricap:
+                    continue
+                once = set(bpy.data.objects)
+                bpy.ops.import_scene.fbx(filepath=os.path.join(maps, it["model"] + ".fbx"))
+                for ob in set(bpy.data.objects) - once:
+                    if ob.parent is None:
+                        ob.location = (-ux, -uz, uy)
+                        ob.rotation_euler.z = -math.radians(it["rotY"])
         # Unity yaw (0 = +z kuzey, saat yönü) → Blender
         cam.location = (-x, -z, y)
         cam.rotation_euler = (math.radians(90 + pitch), 0, math.radians(180 - yaw))

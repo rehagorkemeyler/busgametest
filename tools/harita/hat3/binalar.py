@@ -98,12 +98,26 @@ def cati_uv(hucre, u, v):
     return np.stack([c / 2 + eps + (0.5 - 2 * eps) * u, 1 - (r + 1) / 2 + eps + (0.5 - 2 * eps) * v], -1)
 
 
+def _haric():
+    yol = os.path.join(kok.ISLEM, "simge_haric.json")
+    return set(json.load(open(yol))) if os.path.exists(yol) else set()
+
+
+HARIC = _haric()      # simgeler.py: yerine hazır model konan OSM binaları
+# adı bilinen tarihî/kamu binaları (Ulus): kesme taş ya da kamu cephesi
+AD_STIL = {"Bankası": "ulus_tas", "Müzesi": "ulus_tas", "Han": "ulus_tas", "Palas": "ulus_tas", "Valiliği": "ulus_tas",
+           "Çarşısı": "kamu", "Postane": "ulus_tas", "PTT": "ulus_tas", "Hastanesi": "kurum", "Fakültesi": "kurum"}
+
+
 def bina_listesi(o, koridor):
     out = []
     xy = o["xy"]
     for wid, w in o["ways"].items():
         t = w["t"]
-        if "building" not in t or t["building"] in ATLA or t.get("location") == "underground":
+        if "building" not in t or t["building"] in ATLA or t.get("location") == "underground" or \
+                t.get("layer", "0").lstrip("+").lstrip("-").isdigit() and t.get("layer", "0").startswith("-"):
+            continue
+        if wid in HARIC:
             continue
         ns = [xy[n] for n in w["n"] if n in xy]
         if len(ns) < 4:
@@ -140,7 +154,7 @@ def kat_sayisi(wid, t, pg, bolge, tur):
     for k in ("building:levels", "levels"):
         if k in t:
             try:
-                return max(1, int(round(float(t[k].split(";")[0].replace(",", ".")))))
+                return max(1, int(round(float(t[k].split(";")[0].split("-")[-1].replace(",", ".")))))
             except ValueError:
                 pass
     if "height" in t:
@@ -175,6 +189,10 @@ def kat_sayisi(wid, t, pg, bolge, tur):
 
 def stil_sec(wid, t, bolge, tur):
     u = hash01(wid, "stil")
+    ad = t.get("name", "")
+    for anahtar_, st in AD_STIL.items():
+        if anahtar_ in ad:
+            return st
     if tur in ("school", "kindergarten", "hospital", "university", "college", "dormitory"):
         return "kurum"
     if tur in ("public", "government", "civic", "train_station"):

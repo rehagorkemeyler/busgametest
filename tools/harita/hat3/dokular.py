@@ -370,6 +370,9 @@ def main():
     kaydet(doku_duz(rng, (168, 166, 160), 256, 6, 6), os.path.join(a.out, "bordur.png"))
     kaydet(doku_zemin(rng), os.path.join(a.out, "zemin.png"))
     kaydet(doku_cim(rng), os.path.join(a.out, "cim.png"))
+    su = doku_duz(rng, (52, 92, 104), 256, 3, 6)
+    su += np.sin(np.arange(256) / 256 * 2 * np.pi * 12)[None, :, None] * 5
+    kaydet(su, os.path.join(a.out, "su.png"))
     atlas(a.out)
     cati_atlas(a.out)
 
