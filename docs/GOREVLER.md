@@ -428,3 +428,29 @@ Ayrıntı: `docs/RAPOR_Y20.md`, ölçüm listesi `docs/gorseller/y20/koltuk_dene
 4. **Görünen sınır < koltuk sayısı (bilgi / tasarım kararı):** Düşük 12 ve Normal 20'de ayakta tutunan hiç olmuyor, körüklülerde arka gövdeye
    kimse oturmuyor (`BosKoltuk` kapının gövdesine +400). İstenirse binenlerin bir kısmı arka gövdeye/ayakta yönlendirilsin.
 Yerel doğrulama: `KoltukBatch` + prefabları yeniden kur + telefonda `-e gorev yolcu`.
+
+### Y20 — yerel doğrulama: Millennium koltukları, yolcu boyu, yolcu kamerası (bulut, 14 Ekim)
+Önce `git pull --rebase origin Ozan`. Bulutun yaptıkları (yukarıdaki "Y20 — bulut için" maddeleri):
+1. **Millennium koltukları:** `koltuk_cikar.py`'de neden sırtlık yolu değil, minder filtresiydi: arka platformdaki sıralar ve arka kanepe
+   minderleri 1,6–2,0 m yükseklikte, eski üst sınır 1,6 m'ydi; kaçan koltukların yerine sırtlıktan sahte (arkaya bakan) koltuklar
+   üretiliyordu. Şimdi üst sınır 2,3 m, sırtlık yolu kapalı (`--sirttan` ile isteğe bağlı). Yeni JSON'lar: Millennium II **30 koltuk**,
+   13 ayakta; Millennium körüklü **39 koltuk**, 19 ayakta; hepsi öne bakıyor. BMC ve BMC 18 aynı çıktı (dosyalar değişmedi).
+   Platformdaki koltuklarda kök platform zemininde (y 1,04–1,51); yolcu koridordan (0,42) koltuk önüne yürürken yükselir.
+2. **Yolcu boyu:** `YolcuKurucu` karakter ve animasyon FBX'lerine `globalScale` verir: E 0,93 (~1,72 m), K 0,89 (~1,64 m).
+   `Yolcu_E/K_Animasyon.fbx` yeniden üretildi: Otur pozu ölçeği bilerek kuruldu (oyunda kalça yine kök + 0,53 m, 0,10 m geride) ve
+   baldır açısı bileği ayaktaki yüksekliğe indirecek şekilde hesaplanıyor (Blender ölçümü: taban E −0,01, K +0,004 m; eskiden −0,05).
+3. **Yolcu kamerası:** kamera konumu değişmedi; `BusCameraRig.SetTarget` otobüsün `OtobusKoltuklari.KameraYerel`ini verir, kameranın
+   yatayda 0,5 m yakınındaki koltuk/ayakta yer kullanılmaz (BMC ve BMC 18'de `Koltuk_12`, `Koltuk_13` ve bir ayakta yer).
+4. **Dağılım:** `BosKoltuk` puanı artık mesafe + 0–12 m rastgele (+3 başka gövde); binenlerin %15'i koltuk boş olsa da ayakta tutunur
+   (`BusPassengers.AyaktaOlasiligi`). Körüklülerde arka gövdeye de oturulmalı.
+
+Yapılacaklar:
+1. Unity'yi aç, derleme hatası varsa düzelt (yaz). **Ankara Bus → Yolcu Karakterlerini Kur** (FBX'ler 0,93/0,89 ölçekle yeniden
+   aktarılır), sonra dört otobüs prefabını yeniden kur (konsolda Millennium "30 koltuk, 13 ayakta", körüklü "39 koltuk, 19 ayakta").
+2. `Y20Kurulum.KarakterBatch`: Bekle boyu E ~1,70–1,75, K ~1,60–1,66 m mi; Otur'da ayak tabanı kökün ±2 cm'inde mi.
+3. `Y20Kurulum.KoltukBatch`: dört otobüste her koltukta minder−kök 0,45 ± 0,08, havada/gömük yolcu yok; Millennium yakın görüntülerinde
+   yolcular minderde, yüzleri öne (`docs/gorseller/y20/` eski görüntülerle karşılaştır). Yanlış koltuk varsa `Koltuk_NN` + konum yaz.
+4. Telefonda (S24) `-e gorev yolcu`, dört otobüs: yolcu kamerasında kamera kimsenin kafasında değil; körüklülerde arka gövdeye oturan ve
+   ayakta tutunan var mı; Millennium platform koltuklarına çıkış (yolcu koridordan platforma yürürken havada/basamağın içinden geçiyorsa
+   görüntüyle yaz, düzeltme bulutta); oturan yolcuların bacakları koltuğun önünde zemine basıyor mu. Görüntüler `docs/gorseller/y20b/`.
+Rapor: `docs/RAPOR_Y20.md`'ye "Y20b" bölümü, commit, **push**, `git log origin/Ozan -1` ile doğrula.
