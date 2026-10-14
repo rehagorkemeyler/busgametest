@@ -24,6 +24,10 @@ namespace AnkaraBus.EditorTools
         private const string Cikti = "Assets/_Project/Resources/Yolcular";
         private static readonly string[] Durumlar = { "Bekle", "Yuru", "Otur", "Tutun" };
 
+        /// <summary>İçe aktarma ölçeği (paketin karakterleri ~1,85 m → E ~1,72, K ~1,64 m). yolcu_quaternius.py OLCEK ile aynı olmalı:
+        /// Otur pozu bu ölçekle kalça koltuk + 8 cm'de, tabanlar zeminde olacak şekilde kuruldu.</summary>
+        public static float Olcek(string kod) => kod == "K" ? 0.89f : 0.93f;
+
         [MenuItem("Ankara Bus/Yolcu Karakterlerini Kur")]
         public static void Kur()
         {
@@ -37,7 +41,7 @@ namespace AnkaraBus.EditorTools
                     Debug.LogError("[YolcuKurucu] Animasyon dosyası yok: " + animYol);
                     return;
                 }
-                Ayarla(animYol, mat, true);
+                Ayarla(animYol, kod, mat, true);
                 denetleyiciler[kod] = Denetleyici(kod, animYol);
             }
             if (!AssetDatabase.IsValidFolder(Cikti))
@@ -49,8 +53,9 @@ namespace AnkaraBus.EditorTools
                 string ad = Path.GetFileNameWithoutExtension(yol);
                 if (ad.EndsWith("_Animasyon"))
                     continue;
-                Ayarla(yol, mat, false);
-                Prefab(yol, ad, denetleyiciler[ad.Substring(6, 1)]);
+                string kod = ad.Substring(6, 1);
+                Ayarla(yol, kod, mat, false);
+                Prefab(yol, ad, denetleyiciler[kod]);
                 sayi++;
             }
             AssetDatabase.SaveAssets();
@@ -89,9 +94,11 @@ namespace AnkaraBus.EditorTools
             return mat;
         }
 
-        private static void Ayarla(string yol, Material mat, bool animasyon)
+        private static void Ayarla(string yol, string kod, Material mat, bool animasyon)
         {
             var imp = (ModelImporter)AssetImporter.GetAtPath(yol);
+            // karakter ve animasyon dosyası aynı ölçekte: kliplerin konum eğrileri de ölçeklenir
+            imp.globalScale = Olcek(kod);
             imp.animationType = ModelImporterAnimationType.Generic;
             imp.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
             imp.importAnimation = animasyon;

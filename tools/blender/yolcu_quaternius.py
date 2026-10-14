@@ -8,8 +8,9 @@ ortak Animations.fbx aynı iskeleti (79 kemik) paylaşır. Çıktı (Unity Gener
   Textures/yolcu_palet.png      bütün karakterlerin renkleri (paket düz renk malzeme kullanıyor; her malzeme bir hücre)
 Pakette oturma animasyonu yok: Otur ve Tutun pozları burada üretilir (Idle_Neutral'ın ilk karesinden, kemik yönleri dünya uzayında
 verilerek). İskeletin ayakları IK için köke bağlı (Foot.L/R, Root'un çocuğu): oturuşta ayak kemikleri dizin altına ayrıca taşınır.
-Oturuşta kalça (UpperLeg başı) koltuk yüksekliğinin ~8 cm üstünde ve karakterin kökünden OTUR_GERI kadar geride: Unity'de oturan
-yolcunun kökü koltuk noktasına (minderin önü-ortası, zemin seviyesi) konur (OtobusKoltuklari).
+Oturuşta kalça (UpperLeg başı) koltuk yüksekliğinin ~8 cm üstünde ve karakterin kökünden OTUR_GERI kadar geride, ayak tabanları
+kök yüksekliğinde: Unity'de oturan yolcunun kökü koltuk noktasına (minderin önü-ortası, zemin seviyesi) konur (OtobusKoltuklari).
+Karakterler Unity'de OLCEK ile küçültülür (YolcuKurucu); oturuş ölçülerinin hepsi ölçekten sonraki (oyundaki) değerlerdir.
 
 Kullanım:
     Blender -b --factory-startup --python yolcu_quaternius.py -- --kaynak tools/kaynak/karakterler \
@@ -35,6 +36,9 @@ PARCALAR = ("Head", "Body", "Legs", "Feet")
 KLIPLER = {"Idle_Neutral": "Bekle", "Walk": "Yuru"}
 KOLTUK_Y = 0.45            # oturuşta uyluk altının yüksekliği (m, karakter kökünden)
 OTUR_GERI = 0.10           # kalça eklemi kökün bu kadar gerisinde (+y Blender = karakterin arkası)
+# Unity'de içe aktarma ölçeği (YolcuKurucu.Olcek ile aynı olmalı): paketin karakterleri ~1,85 m, yolcular E ~1,72 / K ~1,62 m.
+# Otur pozu bu ölçeği bilerek kurulur: oyunda (ölçekten sonra) kalça yine koltuk + 8 cm'de, tabanlar zeminde.
+OLCEK = {"E": 0.93, "K": 0.89}
 PALET_HUCRE, PALET_N = 4, 16   # 16 × 16 hücre, 64 px
 
 
@@ -127,12 +131,14 @@ def yeniden_hedefle(kaynak, hedef, eylemler):
     return sonuc
 
 
-def otur_kur(arm):
+def otur_kur(arm, olcek):
     p = arm.pose.bones
-    # kalça (iki UpperLeg başı ortası) hedef: koltuk + 8 cm, OTUR_GERI kadar geride
+    # ayak bileğinin ayaktaki yüksekliği (taban zeminde): oturuşta da bilek bu yükseklikte olmalı
+    bilek_y = (p["Foot.L"].head.z + p["Foot.R"].head.z) / 2
+    # kalça (iki UpperLeg başı ortası) hedef: koltuk + 8 cm, OTUR_GERI kadar geride (oyundaki ölçekten önceki birimle)
     sol, sag = p["UpperLeg.L"].head.copy(), p["UpperLeg.R"].head.copy()
     orta = (sol + sag) / 2
-    hedef = Vector((orta.x, OTUR_GERI, KOLTUK_Y + 0.08))
+    hedef = Vector((orta.x, OTUR_GERI / olcek, (KOLTUK_Y + 0.08) / olcek))
     fark = hedef - orta
     for ad in ("Body",):
         tasi(arm, ad, p[ad].matrix.translation + fark)
@@ -140,7 +146,10 @@ def otur_kur(arm):
     for yan, isaret in (("L", 1), ("R", -1)):
         yon_ver(arm, f"UpperLeg.{yan}", (0.06 * isaret, -1.0, -0.12))
         diz = p[f"UpperLeg.{yan}"].tail.copy()
-        yon_ver(arm, f"LowerLeg.{yan}", (0.0, -0.18, -1.0))
+        # baldır: bilek ayaktaki yüksekliğe insin (taban zeminde); yetmiyorsa dik (ayak sarkar)
+        boy = p[f"LowerLeg.{yan}"].length
+        dikey = min(1.0, max(0.0, (diz.z - bilek_y) / boy))
+        yon_ver(arm, f"LowerLeg.{yan}", (0.0, -math.sqrt(1.0 - dikey * dikey), -dikey))
         bilek = p[f"LowerLeg.{yan}"].tail.copy()
         tasi(arm, f"Foot.{yan}", bilek)
         yon_ver(arm, f"Foot.{yan}", (0.05 * isaret, -1.0, -0.05))
@@ -295,7 +304,7 @@ def main():
             e.name = "k_" + ad
             e.use_fake_user = True
             eylemler[ad] = e
-        eylemler["Otur"] = poz_eylemi(kaynak, "k_Otur", otur_kur, eylemler["Bekle"])
+        eylemler["Otur"] = poz_eylemi(kaynak, "k_Otur", lambda a: otur_kur(a, OLCEK[kod]), eylemler["Bekle"])
         eylemler["Tutun"] = poz_eylemi(kaynak, "k_Tutun", tutun_kur, eylemler["Bekle"])
         for e in list(bpy.data.actions):
             if e not in eylemler.values():
