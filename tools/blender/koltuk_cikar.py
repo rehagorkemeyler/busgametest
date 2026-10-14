@@ -29,6 +29,7 @@ OTUR_Y = 0.45          # minder üstü − kök
 ONE = 0.13             # kök minder ortasının bu kadar önünde
 KUME = 0.10            # minder yüzlerini birleştirme mesafesi (m)
 AYAKTA_ARALIK = 0.75
+MINDER_UST = 2.3
 HATA = False
 
 
@@ -49,6 +50,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--ayakta_z", default=None, help="ayakta yerlerin z aralığı (ör. -5,4)")
     ap.add_argument("--hata", action="store_true")
+    ap.add_argument("--sirttan", action="store_true", help="minderi kumaş olmayan koltukları sırtlıktan bul (deneysel)")
     args = ap.parse_args(argv)
     global HATA
     HATA = args.hata
@@ -89,7 +91,8 @@ def main():
         return None
 
     # minderler: yukarı bakan kumaş yüzleri, birbirine KUME'den yakın olanlar tek küme
-    ust = [k for k in kumas if k[1].y > 0.7 and 0.3 < k[0].y < 1.6]
+    # Millennium'da arka sıralar yüksek platformda: minder 2,0 m'ye kadar (Y20: 1,6 sınırı üç sırayı kaçırıyordu)
+    ust = [k for k in kumas if k[1].y > 0.7 and 0.3 < k[0].y < MINDER_UST]
     kumeler = []
     for c, n, a, vs in ust:
         hedef = None
@@ -143,9 +146,10 @@ def main():
                               "yon": [yon.x, 0.0, yon.z],
                               "on": [round(on.x, 3), round(on.y, 3), round(on.z, 3)],
                               "koridor": [round(koridor.x, 3), round(koridor.y, 3), round(koridor.z, 3)]})
-    # sırtlıktan koltuk (minderi kumaş olmayan koltuklar, Millennium): öne bakan dikey kumaş yüzleri kümelenir; minder sırtlığın
-    # alt kenarının hizasında, 22 cm önünde
-    dik = [k for k in kumas if abs(k[1].y) < 0.35 and 0.5 < k[0].y < 1.9 and k[2] > 0.0005]
+    # sırtlıktan koltuk (minderi kumaş olmayan koltuklar için, --sirttan ile): öne bakan dikey kumaş yüzleri kümelenir; minder
+    # sırtlığın alt kenarının hizasında, 22 cm önünde. Y20: Millennium'da yalnız sahte koltuk üretti (sırtlığın arka yüzü, kapı
+    # ve sürücü bölmesi panelleri) — minder sınırı düzelince gerek kalmadı, varsayılan kapalı.
+    dik = [] if not args.sirttan else [k for k in kumas if abs(k[1].y) < 0.35 and 0.5 < k[0].y < 1.9 and k[2] > 0.0005]
     sirtlar = []
     for c, n, a, vs in dik:
         yatay = Vector((n.x, 0, n.z))
