@@ -159,6 +159,8 @@ namespace AnkaraBus.Passengers
 
         // ------------------------------------------------------------ otobüs içi (Y20)
 
+        private const float AyaktaOlasiligi = 0.15f;
+
         /// <summary>Kapıdan giren yolcuyu boş koltuğa (yoksa ayakta yere) yürütür. Yer yoksa ya da görünen sayı dolduysa false.</summary>
         private bool Yerles(Passenger p, int door)
         {
@@ -167,7 +169,9 @@ namespace AnkaraBus.Passengers
             var kapiUzay = Uzay(doors.DoorCenter(door));
             var yol = new List<Passenger.Nokta>();
             KapidanKoridora(yol, door, kapiUzay);
-            var koltuk = koltuklar.BosKoltuk(doors.DoorCenter(door), kapiUzay);
+            // bazı yolcular boş koltuk olsa da ayakta kalır (kısa yolculuk)
+            bool ayakta = Random.value < AyaktaOlasiligi && koltuklar.BosAyakta(doors.DoorCenter(door)) != null;
+            var koltuk = ayakta ? null : koltuklar.BosKoltuk(doors.DoorCenter(door), kapiUzay);
             if (koltuk != null)
             {
                 koltuk.yolcu = p;

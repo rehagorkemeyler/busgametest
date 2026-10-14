@@ -51,7 +51,7 @@ namespace AnkaraBus.Passengers
             return fark.sqrMagnitude < KameraBoslugu * KameraBoslugu;
         }
 
-        /// <summary>Verilen noktaya (dünya) en yakın boş koltuk; tercihen verilen gövdede. Yoksa null.</summary>
+        /// <summary>Verilen noktaya (dünya) yakın, rastgele bir boş koltuk; tercihen verilen gövdede. Yoksa null.</summary>
         public Koltuk BosKoltuk(Vector3 yakin, Transform tercihUzay = null)
         {
             Koltuk enIyi = null;
@@ -60,10 +60,10 @@ namespace AnkaraBus.Passengers
             {
                 if (k.yolcu != null || k.nokta == null || KamerayaYakin(k.nokta))
                     continue;
-                float puan = (k.nokta.position - yakin).sqrMagnitude;
+                // yakın koltuk biraz önde ama yolcular otobüse dağılsın (körüklüde arka gövdeye de geçilsin)
+                float puan = Vector3.Distance(k.nokta.position, yakin) + UnityEngine.Random.Range(0f, 12f);
                 if (tercihUzay != null && k.Uzay != tercihUzay)
-                    puan += 400f;                // önce kapının olduğu gövde (körüklüde)
-                puan += UnityEngine.Random.Range(0f, 6f);   // hep en öndeki koltuk dolmasın
+                    puan += 3f;                 // kapının olduğu gövde biraz önde
                 if (puan < enIyiPuan)
                 {
                     enIyiPuan = puan;
