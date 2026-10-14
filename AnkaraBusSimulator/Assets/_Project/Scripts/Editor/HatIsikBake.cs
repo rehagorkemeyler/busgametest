@@ -40,6 +40,12 @@ namespace AnkaraBus.EditorTools
             EnableLightmapUVs();
 
             var scene = EditorSceneManager.OpenScene(scenePath);
+            if (Object.FindAnyObjectByType<AnkaraBus.Harita.ParcaAkisi>() != null)
+            {
+                // gerçek coğrafyalı parçalı harita (Hat 2, Hat 3; 9 km): bake edilmez, güneş gerçek zamanlı
+                Debug.LogWarning($"[HatBake] {scene.name}: parçalı harita, ışık bake'i yapılmaz (güneş gerçek zamanlı).");
+                return true;
+            }
             SetupSun();
             SetupLightmapScales();
             SetupLightProbes();

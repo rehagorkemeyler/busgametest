@@ -1,7 +1,7 @@
 """
 A6/A7 — Hat 3 yerleşim dosyası (HaritaKurucu şeması + parçalar) ve mini harita dokusu.
 
-Maps/Hat3/Hat3_Yerlesim.json:
+Maps/Hat3/Hat3_Yerlesim.json (ve aynı haritada Hat 2: Maps/Hat2/Hat2_Yerlesim.json, ilk dört durak):
     lineNumber "408", lineName, spawnPos, spawnRotY
     items     hazır modeller (simgeler.py), lambalar (Lambalar), durak sundurmaları (Duraklar)
     stops     18 durak: güzergâhta durağın izdüşümü, sağ şeridin kaldırıma yakın yarısında (kaldırım ≤ 7 m sağda)
@@ -219,7 +219,101 @@ def main():
                     lanes.append(ln)
                     parca_no += 1
             bas = None
-    print(f"  şerit {len(lanes)} (gidiş {len(gidis)})")
+    # çapraz trafik: ışıklı kavşakta güzergâhı kesen OSM yolları boyunca ±CAPRAZ m, grup 1
+    CAPRAZ = 120.0
+    cap_sayi = 0
+    tum_yollar = [(LineString(d["dugum_xz"][sr["d"]]), sr) for sr in geo["seritler"]
+                  if not sr["guzergah"] and sr["sinif"] in ("trunk", "primary", "secondary", "tertiary", "unclassified",
+                                                            "residential", "primary_link", "secondary_link", "trunk_link")]
+    agac_t = shapely.STRtree([gg for gg, _ in tum_yollar])
+    for k, s0 in enumerate(isik_s):
+        i = min(int((s0 + 10) / ADIM), len(P) - 1)
+        c = Point(P[i])
+        yaw_r = T[i]
+        goruldu = set()
+        for j in agac_t.query(c.buffer(25)):
+            gg, sr = tum_yollar[j]
+            if sr["id"] in goruldu or gg.distance(c) > 25:
+                continue
+            # güzergâha dik sayılır (yön farkı > 45°)
+            t0 = gg.project(c)
+            a_, b_ = gg.interpolate(max(t0 - 5, 0)), gg.interpolate(min(t0 + 5, gg.length))
+            yv = np.array([b_.x - a_.x, b_.y - a_.y])
+            if np.linalg.norm(yv) < 1 or abs(np.dot(yv / np.linalg.norm(yv), yaw_r)) > 0.7:
+                continue
+            goruldu.add(sr["id"])
+            yonler = [False] if sr["tek"] else [False, True]
+            for ters in yonler:
+                ss_ = np.arange(max(t0 - CAPRAZ, 0), min(t0 + CAPRAZ, gg.length), ADIM)
+                if len(ss_) < 6:
+                    continue
+                pts = np.array([gg.interpolate(v).coords[0] for v in ss_])
+                if sr["ters"]:
+                    pts = pts[::-1]
+                if ters:
+                    pts = pts[::-1]
+                tt = np.gradient(pts, axis=0)
+                tt /= np.maximum(np.linalg.norm(tt, axis=1, keepdims=True), 1e-9)
+                nn = np.stack([tt[:, 1], -tt[:, 0]], 1)
+                of = (sr["genislik"] / 2 - 1.7) if sr["tek"] else sr["genislik"] / 4
+                pts = pts + nn * max(of, 0.0)
+                ys = y_at(pts) + 0.02
+                uz = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(pts, axis=0), axis=1))])
+                # durma çizgisi: güzergâh yolunun kenarından 4 m önce
+                dmin = int(np.argmin(np.linalg.norm(pts - P[i], axis=1)))
+                durma = max(uz[dmin] - (W[i] / 2 + 6.0), 0.0)
+                if durma < 10:
+                    continue
+                ad = f"Capraz_{k + 1:02d}_{sr['id']}_{int(ters)}"
+                # ışık başı: çapraz yolun sağında, durma çizgisinde, gelen trafiğe bakar (şerit kısaltılmadan önce)
+                q = pts[dmin] + nn[dmin] * 3.5 - tt[dmin] * (W[i] / 2 + 5)
+                yawq = math.degrees(math.atan2(tt[dmin][0], tt[dmin][1]))
+                ln = {"name": ad, "limitKmh": 40.0, "points": [], "exits": [], "stopLine": round(float(durma), 1),
+                      "group": 1, "signal": f"K{k + 1:02d}"}
+                # T kavşak (yol güzergâhta bitiyor): durma çizgisinden sonra sağa dönüp en yakın uygun şeride bağlanır
+                devam = uz[-1] - uz[dmin]
+                if devam < 30:
+                    son = int(np.searchsorted(uz, durma + 3.0))
+                    pts, ys, uz = pts[:son + 1], ys[:son + 1], uz[:son + 1]
+                    p0, t0v = pts[-1], tt[min(son, len(tt) - 1)]
+                    hedef = None
+                    for hl in lanes:
+                        if not (hl["name"].startswith("Gidis_1") or hl["name"].startswith("Donus_1")):
+                            continue
+                        hp = np.array(hl["points"]).reshape(-1, 3)[:, [0, 2]]
+                        dd = np.linalg.norm(hp - p0, axis=1)
+                        m = int(np.argmin(dd))
+                        if dd[m] > 30 or m + 4 >= len(hp):
+                            continue
+                        ht = hp[min(m + 1, len(hp) - 1)] - hp[max(m - 1, 0)]
+                        ht /= np.linalg.norm(ht) or 1
+                        capraz = t0v[0] * ht[1] - t0v[1] * ht[0]
+                        if capraz < -0.5 and (hedef is None or dd[m] < hedef[0]):
+                            hedef = (dd[m], hl, m, hp, ht)
+                    if hedef is not None:
+                        _, hl, m, hp, ht = hedef
+                        huz = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(hp, axis=0), axis=1))])
+                        m2 = int(np.searchsorted(huz, huz[m] + 12.0))
+                        m2 = min(m2, len(hp) - 1)
+                        q2 = hp[m2]
+                        kontrol = p0 + t0v * np.linalg.norm(q2 - p0) * 0.5
+                        bz = np.array([(1 - u) ** 2 * p0 + 2 * (1 - u) * u * kontrol + u ** 2 * q2 for u in np.linspace(0, 1, 9)])
+                        bys = y_at(bz) + 0.02
+                        donus = {"name": ad + "_Don", "limitKmh": 25.0,
+                                 "points": [round(float(v), 2) for xyz in zip(bz[:, 0], bys, bz[:, 1]) for v in xyz],
+                                 "exits": [{"target": hl["name"], "at": round(float(np.sum(np.linalg.norm(np.diff(bz, axis=0), axis=1))) - 0.3, 1),
+                                            "targetAt": round(float(huz[m2]), 1), "probability": 1.0}],
+                                 "stopLine": -1.0, "group": 0, "signal": ""}
+                        ln["exits"].append({"target": donus["name"], "at": round(float(uz[-1]) - 0.3, 1), "targetAt": 0.0,
+                                            "probability": 1.0})
+                        lanes.append(donus)
+                ln["points"] = [round(float(v), 2) for xyz in zip(pts[:, 0], ys, pts[:, 1]) for v in xyz]
+                lanes.append(ln)
+                signals[k]["heads"].append({"model": "Props/Trafik_Lambasi",
+                                            "pos": [round(q[0], 2), round(float(ar.y(*q)[0]) + 0.15, 2), round(q[1], 2)],
+                                            "rotY": round((yawq + 180) % 360, 1), "group": 1})
+                cap_sayi += 1
+    print(f"  şerit {len(lanes)} (gidiş {len(gidis)}, çapraz {cap_sayi})")
 
     # --- duraklar
     stops = []
@@ -316,6 +410,15 @@ def main():
     }
     yol = os.path.join(args.maps, "Hat3", "Hat3_Yerlesim.json")
     json.dump(yerlesim, open(yol, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    # Hat 2 (Kızılay → Ulus) aynı gerçek haritada: ilk dört durak (Kızılay, Sıhhiye, Opera, Ulus). Eski stilize Hat 2
+    # (harita_hat2.py) harita kenarları görünüyordu (kullanıcı, 14 Ekim).
+    hat2 = dict(yerlesim)
+    hat2["lineNumber"], hat2["lineName"] = "2", "Kızılay – Ulus"
+    hat2["stops"] = stops[:4]
+    assert [st["name"] for st in hat2["stops"]] == ["Kızılay", "Sıhhiye", "Opera", "Ulus"]
+    os.makedirs(os.path.join(args.maps, "Hat2"), exist_ok=True)
+    json.dump(hat2, open(os.path.join(args.maps, "Hat2", "Hat2_Yerlesim.json"), "w", encoding="utf-8"), ensure_ascii=False,
+              separators=(",", ":"))
     print(f"{yol}: {len(items)} öğe, {len(stops)} durak, {len(lanes)} şerit, {len(signals)} ışık, {len(parcalar)} parça; "
           f"harita dokusu {w}×{h}")
 

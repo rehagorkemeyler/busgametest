@@ -127,8 +127,21 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
         public static void Build() => BuildFrom(Hat1Path, "Hat1_KizilayAtakule", "Hat 1");
 
+        /// <summary>Hat 2 (Kızılay → Ulus): Hat 3'ün gerçek coğrafyalı haritasında ilk dört durak (tools/harita/hat3/yerlesim.py).
+        /// Eski stilize Hat 2 (harita_hat2.py) harita kenarları görünüyordu. Işık bake'i yok.</summary>
         [MenuItem("Ankara Bus/Hat 2 Haritasını Kur")]
-        public static void BuildHat2() => BuildFrom(Hat2Path, "Hat2_KizilayUlus", "Hat 2");
+        public static void BuildHat2()
+        {
+            BuildFrom(Hat2Path, "Hat2_KizilayUlus", "Hat 2");
+            GunesGercekZamanli();
+        }
+
+        private static void GunesGercekZamanli()
+        {
+            foreach (var light in UnityEngine.Object.FindObjectsByType<Light>())
+                if (light.type == LightType.Directional)
+                    light.lightmapBakeType = LightmapBakeType.Realtime;
+        }
 
         /// <summary>Hat 3 (EGO 408 Kızılay → Güneşevler): gerçek coğrafyalı, parçalı harita (docs/PLAN_HAT3_408.md).
         /// Işık bake'i yok: güneş gerçek zamanlı.</summary>
@@ -136,9 +149,7 @@ namespace AnkaraBus.EditorTools
         public static void BuildHat3()
         {
             BuildFrom(Hat3Path, "Hat3_KizilayGunesevler", "Hat 3");
-            foreach (var light in UnityEngine.Object.FindObjectsByType<Light>())
-                if (light.type == LightType.Directional)
-                    light.lightmapBakeType = LightmapBakeType.Realtime;
+            GunesGercekZamanli();
         }
 
         /// <summary>Bir hattın yerleşim dosyasından haritayı açık sahneye kurar.</summary>
