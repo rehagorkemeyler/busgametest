@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 # tools/skp/skp_to_glb.py için openskp ortamı (git satır sonu yorumu desteklemez)
 .venv-skp/
+tools/harita/veri/_islem/

@@ -27,7 +27,7 @@ Hat 1 ve Hat 2 "kısaltılmış, stilize" haritalardı (sabit 20 m'lik yol parç
 | # | Durak (EGO no) | Rakım | Kaynak |
 |---|---|---|---|
 | 1 | Kızılay (11621) | 869 | OSM |
-| 2 | Sıhhiye (30010) | 855 | ✱ (OSM'de bu numara yok; köprünün güneyi, kuzey yönü) |
+| 2 | Sıhhiye (30010) | 856 | ✱ (OSM'de bu numara yok; demiryolu köprüsünün kuzeyi, Hacettepe Mh.) |
 | 3 | Opera (30384) | 861 | OSM |
 | 4 | Ulus (30391) | 872 | OSM |
 | 5 | Yıba Çarşısı (30039) | 872 | OSM |

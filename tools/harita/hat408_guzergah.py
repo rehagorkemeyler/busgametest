@@ -25,7 +25,7 @@ import math
 # (EGO no, ad, lat, lon, yaklaşık mı) — Kızılay → Güneşevler (408 dönüş yönü, sıra 67–84)
 DURAKLAR = [
     (11621, "Kızılay", None, None, False),
-    (30010, "Sıhhiye", 39.92935, 32.85445, True),      # OSM'de 30010 yok; kuzey yönü cep, Sıhhiye köprüsünün güneyi
+    (30010, "Sıhhiye", 39.93030, 32.85448, True),      # OSM'de 30010 yok; kuzey yönü, demiryolu köprüsünün kuzeyi (Hacettepe Mh.)
     (30384, "Opera", None, None, False),
     (30391, "Ulus", None, None, False),
     (30039, "Yıba Çarşısı", None, None, False),
