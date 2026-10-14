@@ -36,6 +36,21 @@ namespace AnkaraBus.Passengers
         public IReadOnlyList<Koltuk> Koltuklar => koltuklar;
         public IReadOnlyList<AyaktaYer> Ayakta => ayakta;
 
+        /// <summary>Yolcu kamerasının konumu (otobüs kökünün uzayında; BusCameraRig verir). Yakınındaki koltuk ve ayakta yerlere
+        /// yolcu konmaz: kamera oturanın kafasının içinde kalıyordu (BMC Koltuk_12).</summary>
+        public Vector3? KameraYerel { get; set; }
+
+        private const float KameraBoslugu = 0.5f;
+
+        private bool KamerayaYakin(Transform nokta)
+        {
+            if (KameraYerel == null)
+                return false;
+            var fark = transform.InverseTransformPoint(nokta.position) - KameraYerel.Value;
+            fark.y = 0f;
+            return fark.sqrMagnitude < KameraBoslugu * KameraBoslugu;
+        }
+
         /// <summary>Verilen noktaya (dünya) en yakın boş koltuk; tercihen verilen gövdede. Yoksa null.</summary>
         public Koltuk BosKoltuk(Vector3 yakin, Transform tercihUzay = null)
         {
@@ -43,7 +58,7 @@ namespace AnkaraBus.Passengers
             float enIyiPuan = float.MaxValue;
             foreach (var k in koltuklar)
             {
-                if (k.yolcu != null || k.nokta == null)
+                if (k.yolcu != null || k.nokta == null || KamerayaYakin(k.nokta))
                     continue;
                 float puan = (k.nokta.position - yakin).sqrMagnitude;
                 if (tercihUzay != null && k.Uzay != tercihUzay)
@@ -64,7 +79,7 @@ namespace AnkaraBus.Passengers
             float enIyiPuan = float.MaxValue;
             foreach (var a in ayakta)
             {
-                if (a.yolcu != null || a.nokta == null)
+                if (a.yolcu != null || a.nokta == null || KamerayaYakin(a.nokta))
                     continue;
                 float puan = (a.nokta.position - yakin).sqrMagnitude + UnityEngine.Random.Range(0f, 4f);
                 if (puan < enIyiPuan)

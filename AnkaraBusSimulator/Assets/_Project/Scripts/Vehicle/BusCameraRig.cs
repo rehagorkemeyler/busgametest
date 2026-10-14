@@ -117,6 +117,9 @@ namespace AnkaraBus.Vehicle
             distance = TakipMesafesi;
             if (vehicle != null)
             {
+                var koltuklar = vehicle.GetComponent<AnkaraBus.Passengers.OtobusKoltuklari>();
+                if (koltuklar != null)
+                    koltuklar.KameraYerel = YolcuKonumu;     // yolcu kameranın olduğu koltuğa oturmasın
                 yaw = vehicle.transform.eulerAngles.y;
                 SnapChase();
             }
