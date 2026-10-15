@@ -318,29 +318,72 @@ def main():
     tunel_id = {w["id"]: (w["t"].get("tunnel") not in (None, "no") or w["t"].get("location") == "underground")
                 for w in json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))}
     tavan_say = [0]
+    # güzergâh eksenleri: güzergâh dışı katmanlı şerit (paralel rampa) güzergâhın asfaltına binmesin, o yanda daralır
+    # (Aydınlıkevler ikiz rampası güzergâh şeridinin üstünde 0,5–1,4 m basamak yapıyordu)
+    guz_eks = []
+    for sr in geo["seritler"]:
+        if sr["guzergah"]:
+            pp = P[sr["d"]]
+            guz_eks.append((LineString(pp), sr["genislik"] / 2,
+                            np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(pp, axis=0), axis=1))]), Y[sr["d"]]))
+    guz_ids = {sr["id"] for sr in geo["seritler"] if sr["guzergah"]}
+    guz_agac = shapely.STRtree([g[0] for g in guz_eks])
+    daralan = 0
     for k_kp, kp in enumerate(geo["katmanli"]):
         xz, y = yogunlastir(kp["xz"], kp["y"], 4.0)
         W = kp["genislik"]
         kal = min(kp["kaldirim"], KOPRU_KALDIRIM)       # köprü/yarmada dar yürüme yolu (7 m'lik bulvar kaldırımı komşu şeritlere biniyordu)
-        V, UV, Fc = serit(xz, y, W / 2, W / 2, y_ek=0.0, uv_v=0.125, uv_u=(0, W * 0.125))
+        t = np.gradient(xz, axis=0)
+        t /= np.maximum(np.linalg.norm(t, axis=1, keepdims=True), 1e-9)
+        nrm = np.stack([t[:, 1], -t[:, 0]], 1)
+        sol_a = np.full(len(xz), W / 2)
+        sag_a = np.full(len(xz), W / 2)
+        if kp["id"] not in guz_ids:
+            for i in range(len(xz)):
+                pt = Point(xz[i])
+                for j in guz_agac.query(pt, predicate="dwithin", distance=W / 2 + 8.0):
+                    g, hw, Lg, Yg = guz_eks[j]
+                    sp = g.project(pt)
+                    q = np.asarray(g.interpolate(sp).coords[0])
+                    v = q - xz[i]
+                    dist = float(np.linalg.norm(v))
+                    if dist < 0.5:
+                        continue
+                    q2 = np.asarray(g.interpolate(min(sp + 1.0, g.length)).coords[0]) - np.asarray(g.interpolate(max(sp - 1.0, 0)).coords[0])
+                    hiza = abs(float(np.dot(q2, t[i]))) / (np.linalg.norm(q2) + 1e-9)
+                    dy_ = abs(float(np.interp(sp, Lg, Yg)) - y[i])
+                    if hiza < 0.8 or dy_ > 3.0 or dy_ < 0.25:      # aynı kotta örtüşme zararsız (daraltmak delik açıyordu)
+                        continue
+                    izin = max(dist - hw + 0.05, 0.3)
+                    if float(np.dot(v, nrm[i])) > 0:
+                        sag_a[i] = min(sag_a[i], izin)
+                    else:
+                        sol_a[i] = min(sol_a[i], izin)
+            if (sol_a < W / 2).any() or (sag_a < W / 2).any():
+                daralan += 1
+        V, UV, Fc = serit(xz, y, sol_a[:, None], sag_a[:, None], y_ek=0.0, uv_v=0.125, uv_u=(0, W * 0.125))
         pc.ekle_dunya("H3_Asfalt", V, UV, Fc)
         zemin_y = ar.y(xz[:, 0], xz[:, 1])
         yukari = kp["fark"].max() > 0.3
         kenar = W / 2 + max(kal, 0.6)
+        dar_sol, dar_sag = sol_a < W / 2 - 0.01, sag_a < W / 2 - 0.01
         if kal > 0 or yukari:
             for yon in (-1, 1):
-                sol, sag = (kenar, -W / 2) if yon < 0 else (-W / 2, kenar)
+                if yon < 0:
+                    dis_ = np.where(dar_sol, sol_a, kenar)
+                    sol, sag = dis_[:, None], -sol_a[:, None]
+                else:
+                    dis_ = np.where(dar_sag, sag_a, kenar)
+                    sol, sag = -sag_a[:, None], dis_[:, None]
                 V, UV, Fc = serit(xz, y + BORDUR, sol, sag, uv_v=0.5)
                 pc.ekle_dunya("H3_Kaldirim", V, UV, Fc)
-        t = np.gradient(xz, axis=0)
-        t /= np.maximum(np.linalg.norm(t, axis=1, keepdims=True), 1e-9)
-        nrm = np.stack([t[:, 1], -t[:, 0]], 1)
         if yukari:
             # korkuluk (1 m) + tabliye yanı, araziden 1,2 m'den yüksekte
             for yon in (-1, 1):
                 kx = xz + nrm * kenar * yon
+                dar = dar_sol if yon < 0 else dar_sag
                 for i in range(len(xz) - 1):
-                    if max(y[i], y[i + 1]) - max(zemin_y[i], zemin_y[i + 1]) < 1.2:
+                    if max(y[i], y[i + 1]) - max(zemin_y[i], zemin_y[i + 1]) < 1.2 or dar[i] or dar[i + 1]:
                         continue
                     mx, mz = (kx[i] + kx[i + 1]) / 2
                     if baska_yolda(k_kp, mx, mz):
@@ -390,8 +433,9 @@ def main():
             for yon in (-1, 1):
                 kx = xz + nrm * kenar * yon
                 dogal = ar.y(kx[:, 0], kx[:, 1])
+                dar = dar_sol if yon < 0 else dar_sag
                 for i in range(len(xz) - 1):
-                    if max(dogal[i] - y[i], dogal[i + 1] - y[i + 1]) < 0.6:
+                    if max(dogal[i] - y[i], dogal[i + 1] - y[i + 1]) < 0.6 or dar[i] or dar[i + 1]:
                         continue
                     mx, mz = (kx[i] + kx[i + 1]) / 2
                     if baska_yolda(k_kp, mx, mz):
@@ -399,7 +443,7 @@ def main():
                     V, UV, Fc = yonlu_duvar(kx[i], kx[i + 1], y[i] - 0.2, y[i + 1] - 0.2, max(dogal[i], y[i]) + 0.6,
                                             max(dogal[i + 1], y[i + 1]) + 0.6, -nrm[i] * yon)
                     pc.ekle_dunya("H3_Bordur", V, UV, Fc)
-    print(f"  köprü/alt geçit {len(geo['katmanli'])}, tünel tavanı {tavan_say[0]} ({time.time() - t0:.0f} sn)")
+    print(f"  köprü/alt geçit {len(geo['katmanli'])}, tünel tavanı {tavan_say[0]}, güzergâha göre daralan {daralan} ({time.time() - t0:.0f} sn)")
 
     # --- kesik yol uçları: koridor sınırında kesilen asfaltın ucuna beton bariyer (0,9 m; Yol grubunda, çarpışmalı)
     sinir = koridor.boundary

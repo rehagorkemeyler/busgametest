@@ -1,5 +1,5 @@
 {
-"ozet": "Harita denetimi (2026-10-16 00:18): örnek 334534 nokta (2 m), şerit örneği 43122\nnokta sayıları: delik 1, basamak 11850, eğim>%12 8774, açıklık 1–5.0 m 568, çakışma 0,3–1 m 1081, dal<4.2 m 342, şerit asfalt dışı 503/43122, kesik yol ucu 243, uç köşe 0, nesne 1\nkümeler: aciklik 30, delik 1, basamak 702, kesik 211, serit 37, egim 386, nesne 1, dal 15, cakisma 193\n",
+"ozet": "Harita denetimi (2026-10-16 00:54): örnek 334534 nokta (2 m), şerit örneği 43531\nnokta sayıları: delik 5, basamak 11878, eğim>%12 8786, açıklık 1–5.0 m 547, çakışma 0,3–1 m 1013, dal<4.2 m 342, şerit asfalt dışı 503/43531, kesik yol ucu 243, uç köşe 0, nesne 1\nkümeler: aciklik 30, delik 4, basamak 702, kesik 211, serit 37, egim 386, nesne 1, dal 15, cakisma 192\n",
 "kumeler": [
 {
 "tur": "aciklik",
@@ -63,18 +63,6 @@
 },
 {
 "tur": "aciklik",
-"n": 135,
-"x": 958.8,
-"z": 4033.8,
-"y": -8.7,
-"deger": 1.01,
-"ek": "yol",
-"sokak": "Şehit Ömer Halisdemir Bulvarı",
-"durak": "Çağdaş Sokak+347m",
-"guzergah": 10.7
-},
-{
-"tur": "aciklik",
 "n": 1,
 "x": 8.0,
 "z": 148.0,
@@ -96,6 +84,18 @@
 "sokak": "Cinnah Caddesi",
 "durak": "Kuğulu Park+94m",
 "guzergah": 12.0
+},
+{
+"tur": "aciklik",
+"n": 114,
+"x": 956.8,
+"z": 4034.1,
+"y": -8.8,
+"deger": 1.01,
+"ek": "yol",
+"sokak": "Şehit Ömer Halisdemir Bulvarı",
+"durak": "Çağdaş Sokak+348m",
+"guzergah": 12.5
 },
 {
 "tur": "aciklik",
@@ -364,6 +364,30 @@
 {
 "tur": "delik",
 "n": 1,
+"x": 366.0,
+"z": -2656.0,
+"y": 83.8,
+"deger": null,
+"ek": null,
+"sokak": "Cinnah Caddesi",
+"durak": "Kuğulu Park+206m",
+"guzergah": 3.4
+},
+{
+"tur": "delik",
+"n": 1,
+"x": 354.0,
+"z": -2706.0,
+"y": 87.0,
+"deger": null,
+"ek": null,
+"sokak": "Cinnah Caddesi",
+"durak": "Kuğulu Park+258m",
+"guzergah": 4.4
+},
+{
+"tur": "delik",
+"n": 1,
 "x": 114.0,
 "z": -1466.0,
 "y": 29.1,
@@ -372,6 +396,18 @@
 "sokak": "service",
 "durak": "Meclis+355m",
 "guzergah": 21.5
+},
+{
+"tur": "delik",
+"n": 2,
+"x": 2399.0,
+"z": 5552.0,
+"y": 12.9,
+"deger": null,
+"ek": null,
+"sokak": "primary_link",
+"durak": "Hasköy Akşemsettin Camii+184m",
+"guzergah": 64.3
 },
 {
 "tur": "basamak",
@@ -723,14 +759,14 @@
 },
 {
 "tur": "basamak",
-"n": 138,
-"x": 372.3,
-"z": -2635.9,
+"n": 139,
+"x": 372.5,
+"z": -2635.5,
 "y": 82.5,
 "deger": 0.9,
 "ek": null,
 "sokak": "Cinnah Caddesi",
-"durak": "Kuğulu Park+186m",
+"durak": "Kuğulu Park+185m",
 "guzergah": 3.7
 },
 {
@@ -999,6 +1035,18 @@
 },
 {
 "tur": "basamak",
+"n": 65,
+"x": 328.1,
+"z": 3076.7,
+"y": 0.8,
+"deger": 0.56,
+"ek": null,
+"sokak": "Samsun- Ankara Yolu",
+"durak": "Yıba Çarşısı+303m",
+"guzergah": 7.7
+},
+{
+"tur": "basamak",
 "n": 19,
 "x": 3415.4,
 "z": 5283.8,
@@ -1035,27 +1083,15 @@
 },
 {
 "tur": "basamak",
-"n": 59,
-"x": -49.2,
-"z": 1314.4,
-"y": -6.1,
-"deger": 0.55,
+"n": 69,
+"x": -47.4,
+"z": 1322.5,
+"y": -5.9,
+"deger": 0.65,
 "ek": null,
 "sokak": "Atatürk Bulvarı",
-"durak": "Opera+144m",
-"guzergah": 8.0
-},
-{
-"tur": "basamak",
-"n": 54,
-"x": 327.4,
-"z": 3075.6,
-"y": 0.8,
-"deger": 0.53,
-"ek": null,
-"sokak": "Samsun- Ankara Yolu",
-"durak": "Yıba Çarşısı+302m",
-"guzergah": 8.0
+"durak": "Opera+136m",
+"guzergah": 8.3
 },
 {
 "tur": "basamak",
@@ -1083,6 +1119,18 @@
 },
 {
 "tur": "basamak",
+"n": 194,
+"x": 992.7,
+"z": 4077.4,
+"y": -6.4,
+"deger": 0.62,
+"ek": null,
+"sokak": "Şehit Ömer Halisdemir Bulvarı",
+"durak": "Çağdaş Sokak+292m",
+"guzergah": 8.5
+},
+{
+"tur": "basamak",
 "n": 8,
 "x": 2784.0,
 "z": 5362.5,
@@ -1092,18 +1140,6 @@
 "sokak": "126. Sokak",
 "durak": "Çeyizciler+11m",
 "guzergah": 8.8
-},
-{
-"tur": "basamak",
-"n": 188,
-"x": 993.6,
-"z": 4079.3,
-"y": -6.3,
-"deger": 0.47,
-"ek": null,
-"sokak": "Şehit Ömer Halisdemir Bulvarı",
-"durak": "Çağdaş Sokak+290m",
-"guzergah": 8.9
 },
 {
 "tur": "basamak",
@@ -9222,7 +9258,7 @@
 "n": 1,
 "x": 4469.7,
 "z": 4628.3,
-"y": 80.5,
+"y": 80.6,
 "deger": null,
 "ek": null,
 "sokak": "Kibar Ulu Caddesi",
@@ -9366,7 +9402,7 @@
 "n": 1,
 "x": 4222.2,
 "z": 4562.2,
-"y": 78.8,
+"y": 78.6,
 "deger": null,
 "ek": null,
 "sokak": "residential",
@@ -11800,18 +11836,6 @@
 {
 "tur": "egim",
 "n": 6,
-"x": 983.0,
-"z": 4047.7,
-"y": -6.5,
-"deger": 16.69,
-"ek": null,
-"sokak": "Şehit Ömer Halisdemir Bulvarı",
-"durak": "Çağdaş Sokak+321m",
-"guzergah": 0.9
-},
-{
-"tur": "egim",
-"n": 6,
 "x": 933.7,
 "z": 3981.3,
 "y": -10.6,
@@ -11835,6 +11859,18 @@
 },
 {
 "tur": "egim",
+"n": 5,
+"x": 987.6,
+"z": 4052.8,
+"y": -5.9,
+"deger": 15.35,
+"ek": null,
+"sokak": "Şehit Ömer Halisdemir Bulvarı",
+"durak": "Çağdaş Sokak+314m",
+"guzergah": 1.6
+},
+{
+"tur": "egim",
 "n": 9,
 "x": 135.6,
 "z": -3446.0,
@@ -11844,18 +11880,6 @@
 "sokak": "Cinnah Caddesi",
 "durak": "Kırkpınar Sokağı+194m",
 "guzergah": 2.4
-},
-{
-"tur": "egim",
-"n": 5,
-"x": -43.2,
-"z": 1316.0,
-"y": -6.2,
-"deger": 27.82,
-"ek": null,
-"sokak": "Atatürk Bulvarı",
-"durak": "Opera+141m",
-"guzergah": 2.6
 },
 {
 "tur": "egim",
@@ -11907,15 +11931,15 @@
 },
 {
 "tur": "egim",
-"n": 106,
-"x": 379.9,
-"z": -2607.9,
+"n": 108,
+"x": 379.7,
+"z": -2608.8,
 "y": 80.9,
-"deger": 28.12,
+"deger": 27.6,
 "ek": null,
 "sokak": "Cinnah Caddesi",
-"durak": "Kuğulu Park+157m",
-"guzergah": 3.3
+"durak": "Kuğulu Park+158m",
+"guzergah": 3.4
 },
 {
 "tur": "egim",
@@ -12111,6 +12135,18 @@
 },
 {
 "tur": "egim",
+"n": 4,
+"x": 966.5,
+"z": 4016.0,
+"y": -8.6,
+"deger": 24.73,
+"ek": null,
+"sokak": "trunk",
+"durak": "Veteriner Fakültesi+348m",
+"guzergah": 5.9
+},
+{
+"tur": "egim",
 "n": 21,
 "x": -0.1,
 "z": 2122.5,
@@ -12183,6 +12219,18 @@
 },
 {
 "tur": "egim",
+"n": 14,
+"x": -38.9,
+"z": 1351.6,
+"y": -5.2,
+"deger": 29.16,
+"ek": null,
+"sokak": "Atatürk Bulvarı",
+"durak": "Opera+106m",
+"guzergah": 6.6
+},
+{
+"tur": "egim",
 "n": 5,
 "x": 3317.2,
 "z": 5316.8,
@@ -12216,18 +12264,6 @@
 "sokak": "residential",
 "durak": "Çiçek Taksi+11m",
 "guzergah": 7.1
-},
-{
-"tur": "egim",
-"n": 5,
-"x": -35.6,
-"z": 1374.4,
-"y": -4.6,
-"deger": 28.13,
-"ek": null,
-"sokak": "Atatürk Bulvarı",
-"durak": "Opera+83m",
-"guzergah": 7.2
 },
 {
 "tur": "egim",
@@ -12303,14 +12339,14 @@
 },
 {
 "tur": "egim",
-"n": 40,
-"x": 321.4,
-"z": 3064.0,
-"y": 1.0,
-"deger": 26.31,
+"n": 43,
+"x": 322.0,
+"z": 3065.2,
+"y": 0.9,
+"deger": 27.49,
 "ek": null,
 "sokak": "Çankırı Caddesi",
-"durak": "Yıba Çarşısı+289m",
+"durak": "Yıba Çarşısı+290m",
 "guzergah": 9.4
 },
 {
@@ -16647,18 +16683,6 @@
 },
 {
 "tur": "cakisma",
-"n": 7,
-"x": 365.4,
-"z": -2658.6,
-"y": 83.6,
-"deger": 0.34,
-"ek": "yol",
-"sokak": "Cinnah Caddesi",
-"durak": "Kuğulu Park+209m",
-"guzergah": 3.5
-},
-{
-"tur": "cakisma",
 "n": 4,
 "x": -45.0,
 "z": -855.5,
@@ -16683,6 +16707,18 @@
 },
 {
 "tur": "cakisma",
+"n": 3,
+"x": 362.0,
+"z": -2672.0,
+"y": 84.5,
+"deger": 0.34,
+"ek": "yol",
+"sokak": "Cinnah Caddesi",
+"durak": "Kuğulu Park+223m",
+"guzergah": 4.1
+},
+{
+"tur": "cakisma",
 "n": 2,
 "x": 181.0,
 "z": -1693.0,
@@ -16692,18 +16728,6 @@
 "sokak": "Atatürk Bulvarı",
 "durak": "Meclis+591m",
 "guzergah": 4.2
-},
-{
-"tur": "cakisma",
-"n": 1,
-"x": 354.0,
-"z": -2706.0,
-"y": 87.0,
-"deger": 0.42,
-"ek": "yol",
-"sokak": "Cinnah Caddesi",
-"durak": "Kuğulu Park+258m",
-"guzergah": 4.4
 },
 {
 "tur": "cakisma",
@@ -16731,51 +16755,39 @@
 },
 {
 "tur": "cakisma",
-"n": 38,
-"x": -39.4,
-"z": 1345.1,
+"n": 24,
+"x": -39.7,
+"z": 1342.1,
 "y": -5.6,
 "deger": 0.33,
 "ek": "yol",
 "sokak": "Atatürk Bulvarı",
-"durak": "Opera+112m",
-"guzergah": 6.1
+"durak": "Opera+115m",
+"guzergah": 5.9
+},
+{
+"tur": "cakisma",
+"n": 30,
+"x": 318.5,
+"z": 3052.5,
+"y": 0.0,
+"deger": 0.34,
+"ek": "yol",
+"sokak": "Çankırı Caddesi",
+"durak": "Yıba Çarşısı+278m",
+"guzergah": 6.6
 },
 {
 "tur": "cakisma",
 "n": 36,
-"x": 321.4,
-"z": 3058.2,
-"y": 0.1,
-"deger": 0.33,
-"ek": "yol",
-"sokak": "Etlik Caddesi",
-"durak": "Yıba Çarşısı+284m",
-"guzergah": 6.7
-},
-{
-"tur": "cakisma",
-"n": 38,
-"x": 355.3,
-"z": -2188.6,
-"y": 58.1,
+"x": 356.0,
+"z": -2189.6,
+"y": 58.2,
 "deger": 0.3,
 "ek": "yol",
 "sokak": "primary",
-"durak": "Kuğulu Park+268m",
-"guzergah": 9.6
-},
-{
-"tur": "cakisma",
-"n": 262,
-"x": 956.9,
-"z": 4032.3,
-"y": -9.1,
-"deger": 0.3,
-"ek": "yol",
-"sokak": "Şehit Ömer Halisdemir Bulvarı",
-"durak": "Çağdaş Sokak+349m",
-"guzergah": 11.4
+"durak": "Kuğulu Park+267m",
+"guzergah": 10.0
 },
 {
 "tur": "cakisma",
@@ -16800,6 +16812,18 @@
 "sokak": "Atatürk Bulvarı",
 "durak": "Sıhhiye+160m",
 "guzergah": 12.9
+},
+{
+"tur": "cakisma",
+"n": 221,
+"x": 955.3,
+"z": 4033.4,
+"y": -9.1,
+"deger": 0.3,
+"ek": "yol",
+"sokak": "trunk",
+"durak": "Çağdaş Sokak+350m",
+"guzergah": 13.3
 },
 {
 "tur": "cakisma",

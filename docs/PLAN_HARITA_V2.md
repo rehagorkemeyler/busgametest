@@ -225,3 +225,37 @@ Kaynak: OSM ayak izleri + kat bilgisi, Wikimedia Commons fotoğrafları (yalnız
   asfalt/kaldırımı kesilir.
 - Denetim: açıklık < 5 m **2 906 → 912 nokta**; uç köşe 0. Kalan: güzergâh yakınında 6–8 küçük küme (Atakule alt geçidi ağızları,
   Sıhhiye, Dışkapı, Aydınlıkevler), yaya üst geçitleri 4,8 m (→ 5,5 m), %8'den dik 189 katmanlı yol (çoğu güzergâhtan uzak / demiryolu).
+
+### M3–M8 ✔ (15–16 Ekim, yerel)
+**Yükseklik çözücüsü (`arazi.py`)**
+- Paralel bağlama: aynı katmanda, aynı yönde ve izleri üst üste binen güzergâh/komşu yol düğümleri yaylarla bağlanır (kesişmelere
+  100 m'den yakın ve rampa bölgesinde değil): güzergâhın yumuşatması onu yanındaki yoldan 1–2 m ayırıyordu.
+- Güzergâh düğümlerinde rampa gevşetmesi 8 kat (güzergâh yayları 8 kat sert): Meclis alt geçidine 400 m'lik düz "kalas" iniş kalktı.
+- Güzergâh eğim sınırı: hat boyunca |eğim| ≤ max(%8,5, arazinin 50 m ortalama eğimi + %1,5), en az değişiklikle; Atakule hattında
+  alt geçit çıkışı %16,8 → %9 (Cinnah'ın gerçek %12–13'lük yokuşu korunur).
+**Yüzeyler (`yollar.py`, `yuzeyler.py`)**
+- Derin açık yarma (tünel etiketsiz, > 5,5 m aşağıda) üstündeki zemin asfaltı/kaldırımı kesilir (yandaki yolların yüzeyi tavan gibi
+  örtüyordu); güzergâhın zemindeki asfaltı komşu yarmanın kesiminden korunur (Akay'da güzergâh kaldırıma düşüyordu).
+- Kapalı tünel (tunnel=yes, > 4 m aşağıda): beton tavan döşemesi. Güzergâh dışı katmanlı şerit (paralel rampa) güzergâhın asfaltına
+  farklı kotta biniyorsa o yanda daralır (Aydınlıkevler).
+- Şerit yüksekliği hattın kendi OSM yollarının ekseninden (Sıhhiye alt geçidinde şerit üst geçide tırmanıyordu).
+**Simgeler, binalar, donatı (M6)**
+- Atakule kulesi gerçek konumunda (OSM man_made=tower, 125 m model), TBMM ana binası 6 kat taş cephe, bakanlık/elçilik kamu cephesi,
+  Atakule AVM 3 kat; OSM barrier=wall bahçe duvarları (TBMM, büyükelçilikler; güzergâha 250 m, 149 duvar / 15 km; yol kenarında yok).
+  Kuğulu Park ve Botanik Parkı göletleri OSM su alanlarından.
+- Atakule hattında OSM'de yalnız 4 ışık var; güzergâhı aynı kotta dik kesen ana yolların ve "Caddesi" adlı yolların kavşakları da
+  ışık (≥ 150 m arayla): +2 (Bükreş Cd., Mesnevi Cd.).
+**Ufuk (M7)**: 9 geniş açı görüntüde (Atakule, Kızılay, Ulus, Güneşevler; 250–330 m'den) harita kenarı tepe/şehir dokusunda, havada
+nesne ya da düz kenar görünmüyor; DEM doldurma sonrası su yüzeyleri yerel zeminde.
+**Unity (M8)**
+- Hat 2 tamamen silindi (sahne, `Maps/Hat2`, ışık setleri, kurucular, bake menüleri, `harita_hat2.py`, build listesi); eski stilize
+  Hat 1 haritası (`Zemin_Hat1.fbx`, `harita_hat1.py`, lightmap'ler) silindi.
+- `Hat1_KizilayAtakule` = 408 Kızılay → Atakule, Hat 3 ile aynı parçalı harita (`Maps/Hat1/Hat1_Yerlesim.json`), 9 durak, güneş
+  gerçek zamanlı. Menü: iki kart, "408 Kızılay – Atakule" ve "408 Kızılay – Güneşevler"; en iyi puan hat kimliğiyle (`408_atakule`,
+  `408`). Yeni anonslar (Piper TTS): Güvenpark, Farabi, Kırkpınar Sokağı, Pilot Sokağı, Botanik Parkı. HUD'da uzun ad yazısı küçülerek
+  sığar. Editor analizi Hat 1 için `H3_SAHNE=1` (`Builds/H3/editor_hat1`).
+**Son denetim** (`denetim_guncel.txt`): delik 5 tek nokta; güzergâh sürülebilirlik — Güneşevler: yüzey yok 6 m, üst engel 16 m
+(Aydınlıkevler ikiz rampası 10 m), basamak 38 m (21 yer, çoğu < 0,5 m); Atakule: yüzey yok 0, üst engel 11 m (Akay 2 m, Kuğulu alt
+geçit ağzı 10 m), eğim > %13 47 m (Cinnah'ın gerçek yokuşu). Unity analizi: pembe malzeme 0, eksik anons 0, güzergâhta yolsuz nokta
+Hat 1'de 0, Hat 3'te 1.
+Oyun APK'sı derlendi: **230 MB** (önce 206 MB). **Kalan (M9, telefon)**: iki hattın sürüşü, FPS/bellek (A32 yalnız ölçüm).
