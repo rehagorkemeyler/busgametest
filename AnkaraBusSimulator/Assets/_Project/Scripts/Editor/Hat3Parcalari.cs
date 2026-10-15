@@ -217,8 +217,14 @@ namespace AnkaraBus.EditorTools
                     continue;
                 foreach (var r in asset.GetComponentsInChildren<Renderer>(true))
                     foreach (var m in r.sharedMaterials)
-                        if (m != null && !AssetDatabase.GetAssetPath(m).StartsWith(Hat3Malzemeler.Klasor))
+                        // yalnız çizgi içeren küçük parçalarda Blender malzemesiz ağ yazabiliyor (URP varsayılan Lit): onu sayma,
+                        // yoksa her kurulumda 487 FBX yeniden içe aktarılıyordu
+                        if (m != null && !AssetDatabase.GetAssetPath(m).StartsWith(Hat3Malzemeler.Klasor)
+                            && !AssetDatabase.GetAssetPath(m).StartsWith("Packages/"))
+                        {
+                            Debug.Log($"[Hat 3] bağsız malzeme: {parcalar[i].model} / {r.name} / {m.name}");
                             bozuk = true;
+                        }
             }
             if (!bozuk)
                 return;
@@ -287,6 +293,9 @@ namespace AnkaraBus.EditorTools
             int at = ad.IndexOf('@');
             if (at >= 0)
                 ad = ad.Substring(0, at);
+            int nokta = ad.IndexOf('.');            // Blender'ın çoğalan malzeme eki (H3_Cephe.001)
+            if (nokta >= 0)
+                ad = ad.Substring(0, nokta);
             string yol = $"{Klasor}/M_{ad}.mat";
             var m = AssetDatabase.LoadAssetAtPath<Material>(yol);
             if (m != null)

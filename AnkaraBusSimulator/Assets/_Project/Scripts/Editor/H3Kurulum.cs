@@ -21,6 +21,11 @@ namespace AnkaraBus.EditorTools
     {
         private static void Log(string s) => Debug.Log("[H3] " + s);
 
+        // H3_SAHNE=1: Hat 1 (408 Atakule) sahnesi; yoksa Hat 3 (408 Güneşevler)
+        private static bool Hat1 => System.Environment.GetEnvironmentVariable("H3_SAHNE") == "1";
+        private static string SahneYolu => Hat1 ? Hat1SahneKurucu.ScenePath : Hat3SahneKurucu.ScenePath;
+        private static string KokAdi => Hat1 ? "Hat1_KizilayAtakule" : "Hat3_KizilayGunesevler";
+
         private static string Klasor(string ad)
         {
             string k = Path.Combine(Application.dataPath, "..", "Builds", "H3", ad);
@@ -31,7 +36,7 @@ namespace AnkaraBus.EditorTools
         private static string Grup(Transform t)
         {
             for (; t != null; t = t.parent)
-                if (t.parent != null && t.parent.name == "Hat3_KizilayGunesevler")
+                if (t.parent != null && t.parent.name == KokAdi)
                     return t.name;
             return "?";
         }
@@ -93,7 +98,7 @@ namespace AnkaraBus.EditorTools
         /// <summary>Komut satırı: H3_NOKTA="x,z;x,z" noktalarında yukarıdan ışın (arka yüzler dahil/hariç) ve o noktayı içeren renderer'lar.</summary>
         public static void NoktaBatch()
         {
-            EditorSceneManager.OpenScene(Hat3SahneKurucu.ScenePath);
+            EditorSceneManager.OpenScene(SahneYolu);
             Physics.SyncTransforms();
             foreach (var ns in System.Environment.GetEnvironmentVariable("H3_NOKTA").Split(';'))
             {
@@ -106,7 +111,7 @@ namespace AnkaraBus.EditorTools
                         .Select(h => $"{h.collider.name}[{Grup(h.transform)}/{Malzeme(h)}] y={h.point.y:F2} n={h.normal.y:F2}")));
                 }
                 Physics.queriesHitBackfaces = false;
-                var kok = GameObject.Find("Hat3_KizilayGunesevler");
+                var kok = GameObject.Find(KokAdi);
                 foreach (var r in kok.GetComponentsInChildren<MeshRenderer>())
                 {
                     var b = r.bounds;
@@ -141,9 +146,9 @@ namespace AnkaraBus.EditorTools
 
         public static void AnalizBatch()
         {
-            EditorSceneManager.OpenScene(Hat3SahneKurucu.ScenePath);
+            EditorSceneManager.OpenScene(SahneYolu);
             Physics.SyncTransforms();
-            var kok = GameObject.Find("Hat3_KizilayGunesevler");
+            var kok = GameObject.Find(KokAdi);
 
             // ---------------------------------------------------------------- hiyerarşi
             var sb = new StringBuilder("hiyerarşi:");
@@ -449,7 +454,7 @@ namespace AnkaraBus.EditorTools
             var cam = new GameObject("H3Kamera").AddComponent<Camera>();
             cam.fieldOfView = 60f;
             cam.farClipPlane = 5000f;
-            string klasor = Klasor("editor");
+            string klasor = Klasor(Hat1 ? "editor_hat1" : "editor");
             for (int i = 0; i < route.StopCount; i++)
             {
                 var d = route.GetStop(i).transform;

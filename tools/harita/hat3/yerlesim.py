@@ -273,6 +273,37 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0, eksen=No
             p = Point(o["xy"][nid])
             if guz.distance(p) < 15:
                 isiklar.append(guz.project(p))
+    if on_ek:
+        # Atakule hattında OSM'de ışık etiketi çok az (Atatürk Bulvarı ve Cinnah'ta gerçekte her ana kavşakta ışık var): güzergâhı
+        # aynı kotta dik kesen birincil/ikincil/üçüncül yolların ve "Caddesi" adlı yolların (Cinnah'ta Bükreş, Mesnevi) kavşak
+        # düğümleri de ışık sayılır (OSM ışığına ve birbirine ≥ 150 m)
+        osm_s = list(isiklar)
+        F_ = d["dugum_fark"]
+        guz_d = {}
+        for sr in geo["seritler"]:
+            if sr["id"] in guz_id:
+                for k_, n_ in enumerate(sr["d"]):
+                    guz_d[n_] = sr["d"]
+        aday = []
+        for sr in geo["seritler"]:
+            cadde = sr["sinif"] in ("residential", "unclassified") and (sr.get("ad") or "").endswith("Caddesi")
+            if sr["id"] in guz_id or (sr["sinif"] not in ("primary", "secondary", "tertiary") and not cadde):
+                continue
+            for k_, n_ in enumerate(sr["d"]):
+                if n_ not in guz_d or abs(F_[n_]) > 0.3:
+                    continue
+                gd = guz_d[n_]
+                m_ = gd.index(n_)
+                u = d["dugum_xz"][gd[min(m_ + 1, len(gd) - 1)]] - d["dugum_xz"][gd[max(m_ - 1, 0)]]
+                v = d["dugum_xz"][sr["d"][min(k_ + 1, len(sr["d"]) - 1)]] - d["dugum_xz"][sr["d"][max(k_ - 1, 0)]]
+                c = abs(float(np.dot(u, v))) / (np.linalg.norm(u) * np.linalg.norm(v) + 1e-9)
+                pp = Point(d["dugum_xz"][n_])
+                if c < 0.6 and guz.distance(pp) < 15:
+                    aday.append(guz.project(pp))
+        for s_ in sorted(aday):
+            if all(abs(s_ - q) >= 150 for q in isiklar):
+                isiklar.append(s_)
+        print(f"  ışık: OSM {len(osm_s)}, kavşaktan çıkarılan {len(isiklar) - len(osm_s)}")
     isiklar.sort()
     kume = []
     for s in isiklar:
