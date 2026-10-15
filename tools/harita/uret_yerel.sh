@@ -13,6 +13,7 @@ MAPS=${1:-"$KOK/AnkaraBusSimulator/Assets/_Project/Maps"}
 BLENDER=${BLENDER:-/Applications/Blender.app/Contents/MacOS/Blender}
 export HARITA_FONT="$VENV/lib/python3.9/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf"
 PY="$VENV/bin/python"
+export HARITA_DOKULAR="$MAPS/Hat3/Textures"      # agaclar.py ağaç dokuları da çıktı klasörüne
 cd "$KOK/tools/harita"
 for m in arazi yollar yuzeyler; do $PY -m hat3.$m; done
 $PY -m hat3.dokular --out "$MAPS/Hat3/Textures"
