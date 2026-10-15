@@ -29,6 +29,7 @@ namespace AnkaraBus.EditorTools
         public static void Kur(Transform kok, HaritaKurucu.ParcaBilgi[] parcalar, HaritaKurucu.HaritaDokusuBilgi haritaDokusu)
         {
             Hat3Malzemeler.HepsiniKur();
+            MalzemeBaginiDenetle(parcalar);
             var gruplar = new Dictionary<string, Transform>();
             Transform Grup(string ad)
             {
@@ -200,6 +201,38 @@ namespace AnkaraBus.EditorTools
                     Debug.LogWarning("[Hat 3] Mini harita dokusu bulunamadı: " + yol);
             }
             Debug.Log($"[Hat 3] {akis.Count} parça kuruldu" + (eksik > 0 ? $", {eksik} parça FBX'i yok (Maps/Hat3/Parcalar)" : ""));
+        }
+
+        /// <summary>
+        /// FBX'ler Maps/Hat3/Materials'tan önce içe aktarıldıysa (temiz klon) kendi dokusuz malzemelerini almıştır
+        /// (Hat3IceAktarma malzeme bulamadı). Örnek parçalarda malzeme Materials klasöründen değilse bütün parça FBX'leri yeniden içe aktarılır.
+        /// </summary>
+        private static void MalzemeBaginiDenetle(HaritaKurucu.ParcaBilgi[] parcalar)
+        {
+            bool bozuk = false;
+            for (int i = 0; i < parcalar.Length && !bozuk; i += Mathf.Max(1, parcalar.Length / 12))
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<GameObject>(MapsRoot + parcalar[i].model + ".fbx");
+                if (asset == null)
+                    continue;
+                foreach (var r in asset.GetComponentsInChildren<Renderer>(true))
+                    foreach (var m in r.sharedMaterials)
+                        if (m != null && !AssetDatabase.GetAssetPath(m).StartsWith(Hat3Malzemeler.Klasor))
+                            bozuk = true;
+            }
+            if (!bozuk)
+                return;
+            Debug.Log("[Hat 3] Parça FBX'leri malzemelere bağlı değil; yeniden içe aktarılıyor.");
+            AssetDatabase.StartAssetEditing();
+            try
+            {
+                foreach (var p in parcalar)
+                    AssetDatabase.ImportAsset(MapsRoot + p.model + ".fbx", ImportAssetOptions.ForceUpdate);
+            }
+            finally
+            {
+                AssetDatabase.StopAssetEditing();
+            }
         }
 
         /// <summary>Statik bayraklar. BatchingStatic yok: parçalar zaten birleşik ağ (malzeme başına bir çizim); 9 km'lik

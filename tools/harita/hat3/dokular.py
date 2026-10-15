@@ -19,7 +19,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+FONT = os.environ.get("HARITA_FONT", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")  # macOS: matplotlib'in DejaVuSans-Bold.ttf'i
 H = 128          # hücre pikseli
 N = 16           # atlas 16 × 16
 

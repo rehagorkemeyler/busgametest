@@ -163,3 +163,15 @@ Kaynak: OSM ayak izleri + kat bilgisi, Wikimedia Commons fotoğrafları (yalnız
 - APK boyutu (bugün 1,28 GB) büyür; Hat 2 ve eski Hat 1 haritasının silinmesi bir kısmını karşılar. Gerekirse doku sıkıştırma (görünümü
   değiştirmeden) M8'de ölçülür.
 - Üretim süresi: tam üretim + FBX dışa aktarma bu makinede ölçülecek (M0).
+
+## Durum
+
+### M0 ✔ (15 Ekim, yerel)
+- Yerel üretim: `tools/harita/uret_yerel.sh` (Blender 5.2.2 + `tools/harita/.venv`; kurulum adımları betiğin başında). Tam üretim
+  bu makinede **~1 dk** (arazi 9, yollar 9, yüzeyler 11, dokular 1, simgeler 2, binalar 6, ağaçlar 3, ufuk 7, yerleşim 7, FBX 10 sn).
+- Bulut çıktısıyla karşılaştırma: `Hat3_Yerlesim.json` ve `Hat2_Yerlesim.json` **birebir aynı**; 352 FBX'in 340'ı aynı boyutta, 12'si
+  %0,3–2,5 farklı (H3_0_1, 0_5–0_7, 1_6, 7_17, 9_23, 13_19, 13_22, 16_18, 16_19, 17_21; shapely 2.0.7 / Blender 5.2 kayan nokta farkı);
+  dokular piksel düzeyinde aynı, yalnız cephe atlasındaki tabela yazılarında %0,18 piksel kenar yumuşatma farkı (font sürümü).
+  `dokular.py` fontu `HARITA_FONT` ile değiştirilebilir (macOS'ta Linux yolu yok).
+- Unity: `Hat3Parcalari.Kur` FBX'lerin `Maps/Hat3/Materials`'a bağlı olduğunu denetler, değilse bütün parça FBX'lerini yeniden içe
+  aktarır (temiz klonda dokusuz harita sorunu); `preserveHierarchy` kalıcı.
