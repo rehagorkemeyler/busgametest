@@ -132,10 +132,22 @@ def main():
             kavsak.append(Point(P[k]).buffer(18.0))
     kav = ops.unary_union(kavsak)
     kapali = A.buffer(KOSE_R, join_style="round").buffer(-KOSE_R, join_style="round")
-    A = ops.unary_union([A, kapali.intersection(kav)]).buffer(0)
+    # köşe dolgusu katmanlı yolların (köprü, alt geçit yarması) izine taşmasın: tünel ağzının üstüne "kapak" oluyordu
+    kat_iz = ops.unary_union([LineString(kp["xz"]).buffer(kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.5, cap_style="flat")
+                              for kp in katmanli]) if katmanli else Polygon()
+    A = ops.unary_union([A, kapali.intersection(kav).difference(kat_iz)]).buffer(0)
     print(f"  kavşak köşeleri ({time.time() - t0:.0f} sn)")
     S = ops.unary_union(dis + yaya).difference(A).buffer(0)
     print(f"  kaldırım ({time.time() - t0:.0f} sn)")
+    # açık yarma (alt geçide inen, tünel etiketsiz katmanlı parça, zeminden > 0,5 m aşağıda): üstüne taşan zemin asfaltı ve
+    # kaldırımı kesilir (yarmanın kenarında istinat duvarı var). Kapalı tünel (tunnel=yes) kesilmez: üstündeki yol tavandır.
+    etiket = {w["id"]: w["t"] for w in yollar}
+    yarma = [LineString(kp["xz"]).buffer(kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.3, cap_style="flat")
+             for kp in katmanli if np.min(kp["fark"]) < -0.5 and not etiket.get(kp["id"], {}).get("tunnel")]
+    if yarma:
+        Y_ = ops.unary_union(yarma)
+        A = A.difference(Y_).buffer(0)
+        S = S.difference(Y_).buffer(0)
     A = A.intersection(koridor)
     S = S.intersection(koridor)
     # refüj: kaldırımın iki asfalt arasında kalan dar parçaları

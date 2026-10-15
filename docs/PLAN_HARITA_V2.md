@@ -211,3 +211,17 @@ Kaynak: OSM ayak izleri + kat bilgisi, Wikimedia Commons fotoğrafları (yalnız
 - Not: Atakule güzergâhında OSM'den yalnız 2 ışıklı kavşak bulundu (Atatürk Bulvarı'nda gerçekte daha fazla): M5'te ışıklar yol
   ağının kesişen düğümlerinden de aranacak.
 - Unity'ye taşıma M8'de (repodaki Hat3 FBX'leri o zamana kadar değişmez).
+
+### M3 — ara durum (15 Ekim, yerel; sürüyor)
+- `arazi.py` katman modeli yeniden: bütün yollar (güzergâh dahil) OSM'yi izler; hedef yükseklik yalnız `bridge` (+) / `tunnel` (−)
+  etiketli parçalara (OSM `layer` tek başına yükseklik değil, yalnız üst/alt sıralaması — Atatürk Bulvarı'nda alttan geçen yol yüzünden
+  `layer=1` olan parça +6,5 m kalkıyordu). Uçlarda incelme (kavşak ucu 0'dan, düz devam ucu yarıdan %6 ile), rampayı yay sistemi kurar
+  (köprü/tünele 150 m içinde araziye bağlılık 0,2). Bağlantısız kesişmelerde yinelemeli açıklık kısıtı (yüzeyler arası ≥ 6,2 m; üç turda
+  çözülmezse açık iki yola bölünür) — **çözücüde ihlal 0**. Bağlantı/köprü/tünel yolları, bağlandıkları yolun izi içinde (bağlantıya 40 m)
+  o yolun yüksekliğinde.
+- Gerçek düzen: Aydınlıkevler'de güzergâh kavşağın **altından** (tünel), Dışkapı'da **köprüden** (Etlik Cd. altta), Atakule yolunda
+  Atatürk Bulvarı alt geçidi; güzergâh dışı tüneller (Akay çok katlı yer altı kavşağı, metro) çizilmez.
+- `yollar.py`: kavşak köşe dolgusu katmanlı yolların izine taşmaz (alt geçit ağzında "kapak"), açık yarmanın üstüne taşan zemin
+  asfalt/kaldırımı kesilir.
+- Denetim: açıklık < 5 m **2 906 → 912 nokta**; uç köşe 0. Kalan: güzergâh yakınında 6–8 küçük küme (Atakule alt geçidi ağızları,
+  Sıhhiye, Dışkapı, Aydınlıkevler), yaya üst geçitleri 4,8 m (→ 5,5 m), %8'den dik 189 katmanlı yol (çoğu güzergâhtan uzak / demiryolu).

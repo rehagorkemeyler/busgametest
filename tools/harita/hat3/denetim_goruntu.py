@@ -56,7 +56,7 @@ def main():
         arg = [BLENDER, "--background", "--factory-startup", "--python-use-system-env", "--python",
                os.path.join(kok_, "tools", "blender", "harita_hat3.py"), "--", "--render", os.path.abspath(a.out),
                "--motor", "eevee", "--yaricap", "450", "--genislik", "960",
-               "--dokular", os.path.join(kok_, "AnkaraBusSimulator", "Assets", "_Project", "Maps", "Hat3", "Textures"),
+               "--dokular", os.environ.get("HARITA_DOKULAR", os.path.join(kok_, "AnkaraBusSimulator", "Assets", "_Project", "Maps", "Hat3", "Textures")),
                "--adlar", ",".join(adlar[g:g + 10])]
         for k in kameralar[g:g + 10]:
             arg.append(f"--kamera={k}")   # eksi değer seçenek sanılmasın
