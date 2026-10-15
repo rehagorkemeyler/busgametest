@@ -175,3 +175,21 @@ Kaynak: OSM ayak izleri + kat bilgisi, Wikimedia Commons fotoğrafları (yalnız
   `dokular.py` fontu `HARITA_FONT` ile değiştirilebilir (macOS'ta Linux yolu yok).
 - Unity: `Hat3Parcalari.Kur` FBX'lerin `Maps/Hat3/Materials`'a bağlı olduğunu denetler, değilse bütün parça FBX'lerini yeniden içe
   aktarır (temiz klonda dokusuz harita sorunu); `preserveHierarchy` kalıcı.
+
+### M1 ✔ (15 Ekim, yerel) — denetim aracı ve başlangıç ölçümü
+- `tools/harita/hat3/denetim.py` (bütün asfalt 2 m ızgara, 250 bin nokta; ~30 sn) ve `hat3/denetim_goruntu.py` (kümelere Blender
+  EEVEE ile havadan + sürücü gözü görüntü; `harita_hat3.py --motor eevee --adlar`). Rapor `docs/gorseller/harita_v2/denetim_m1.txt`,
+  görüntüler `docs/gorseller/harita_v2/m1/` (`liste.txt`).
+- Başlangıç (bugünkü harita): delik 0 (asfalt çokgeninin içinde), **açıklık < 5 m 53 küme**, basamak 417, eğim > %12 232,
+  **şerit asfalt dışı %16** (3 909 / 25 073 m), **kesik yol ucu 154**, **uç köşe 89 küme**, nesne havada/gömülü 129, ağaç dalı 116.
+- Görüntüyle doğrulanan başlıca sorunlar:
+  - **Kuzey kenarında uçurum** (Hasköy kuzeyi, z > 5 600): DEM karolarında siyah piksel (= −32 768 m "veri yok"); arazi, yollar,
+    binalar ve göletler dik duvarlarla yüzlerce metre aşağı iniyor (`kose_27_yer`, `kose_28_hava`, `egim_12_yer`). M2'de DEM karoları
+    yeniden indirilir/doldurulur.
+  - **Köprüler**: Talatpaşa rampasının duvarı yolun üstünde (`aciklik_01`), Celal Bayar Bulvarı tabliyeleri alttaki yolun
+    0,5–0,6 m üstünde (`aciklik_02`, `_03`: Sıhhiye köprüsünün çıkış yolları), Turgut Özal 2 Blv. rampası yolu kesiyor (`aciklik_00`).
+  - **Şerit binanın içinden** (126. Sokak, `serit_15`), Aydınlıkevler'de şerit tabliyenin kenarında (`serit_17_yer`).
+  - **Kesik yollar**: koridor sınırında asfalt düz zemine/havaya bitiyor (`kesik_20_yer`, `kesik_22_hava`).
+  - **Zemin dokusu** (`zemin.png`) kaldırım taşına benziyor: arazi ile kaldırım ayırt edilmiyor (bütün görüntülerde) → M4'te zemin
+    dokusu yeniden (toprak/çim/kentsel boşluk).
+  - Basamak/eğim kümelerinin bir kısmı kavşaklarda yol yüzeyinin kırık/eğik üçgenleri (`basamak_09_yer`).

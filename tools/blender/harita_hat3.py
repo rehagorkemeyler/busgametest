@@ -143,9 +143,12 @@ def sahne_temizle():
 
 def render(args, katmanlar, ufuk, doku_klasoru):
     sc = bpy.context.scene
-    sc.render.engine = "CYCLES"           # sunucuda GPU/EGL yok
-    sc.cycles.samples = 24
-    sc.cycles.use_denoising = False
+    if args.motor == "eevee":              # yerel (macOS/Metal): hızlı önizleme
+        sc.render.engine = "BLENDER_EEVEE"
+    else:
+        sc.render.engine = "CYCLES"           # sunucuda GPU/EGL yok
+        sc.cycles.samples = 24
+        sc.cycles.use_denoising = False
     sc.view_settings.view_transform = "Standard"
     sc.render.resolution_x, sc.render.resolution_y = args.genislik, int(args.genislik * 9 / 16)
     w = bpy.data.worlds.new("w")
@@ -194,7 +197,8 @@ def render(args, katmanlar, ufuk, doku_klasoru):
         # Unity yaw (0 = +z kuzey, saat yönü) → Blender
         cam.location = (-x, -z, y)
         cam.rotation_euler = (math.radians(90 + pitch), 0, math.radians(180 - yaw))
-        sc.render.filepath = os.path.join(args.render, f"h3_{ki:02d}.png")
+        ad = args.adlar.split(",")[ki] if args.adlar else f"h3_{ki:02d}"
+        sc.render.filepath = os.path.join(args.render, f"{ad}.png")
         bpy.ops.render.render(write_still=True)
 
 
@@ -207,6 +211,8 @@ def main():
     ap.add_argument("--yaricap", type=float, default=700)
     ap.add_argument("--genislik", type=int, default=1280)
     ap.add_argument("--dokular", default=None)
+    ap.add_argument("--motor", default="cycles", help="cycles | eevee")
+    ap.add_argument("--adlar", default=None, help="kameralara sırayla dosya adları: 'a,b,c'")
     ap.add_argument("--sadece", default=None, help="yalnız bu parçalar: 'i_j,i_j' (FBX)")
     args = ap.parse_args(argv)
     sahne_temizle()

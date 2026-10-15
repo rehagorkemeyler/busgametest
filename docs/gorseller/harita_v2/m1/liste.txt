@@ -1,0 +1,40 @@
+aciklik_00: aciklik n=460 değer=0.51 (990, -2.4, 3979) Turgut Özal 2 Bulvarı / Veteriner Fakültesi+335m yol
+aciklik_01: aciklik n=431 değer=0.51 (-79, -6.0, 1208) Talatpaşa Bulvarı / Opera+254m yol
+aciklik_02: aciklik n=302 değer=0.63 (-3, -9.8, 600) Celal Bayar Bulvarı / Sıhhiye+167m yol
+aciklik_03: aciklik n=297 değer=0.51 (436, -3.0, 579) Celal Bayar Bulvarı / Sıhhiye+470m yol
+aciklik_04: aciklik n=231 değer=0.51 (202, -7.5, 596) Celal Bayar Bulvarı / Sıhhiye+261m yol
+basamak_05: basamak n=994 değer=0.84 (1006, -3.3, 4100) Şehit Ömer Halisdemir Bulvarı / Çağdaş Sokak+266m 
+basamak_06: basamak n=768 değer=0.81 (-115, -10.0, 1127) Atatürk Bulvarı / Opera+342m 
+basamak_07: basamak n=583 değer=0.81 (244, -4.6, 2930) Çankırı Caddesi / Yıba Çarşısı+135m 
+basamak_08: basamak n=538 değer=0.6 (2428, 7.1, 5590) Şehit Ömer Halisdemir Bulvarı / Hasköy Akşemsettin Camii+230m 
+basamak_09: basamak n=463 değer=0.67 (1187, -4.2, 4658) secondary / Atatürk Anadolu İmam Hatip Lisesi+258m 
+egim_10: egim n=716 değer=29.85 (-111, -10.3, 1122) Atatürk Bulvarı / Opera+345m 
+egim_11: egim n=589 değer=29.98 (1209, -4.1, 4647) secondary / Atatürk Anadolu İmam Hatip Lisesi+237m 
+egim_12: egim n=522 değer=29.72 (2148, -47.0, 5820) Üçpınar Caddesi / Hasköy Akşemsettin Camii+361m 
+egim_13: egim n=477 değer=29.86 (2513, -5.4, 5667) Şehit Ömer Halisdemir Bulvarı / Hasköy Akşemsettin Camii+343m 
+egim_14: egim n=415 değer=29.47 (172, 9.1, 1144) Talatpaşa Bulvarı / Opera+364m 
+serit_15: serit n=615 değer=None (2709, 20.0, 5293) 126. Sokak / Esenevler Anadolu Lisesi+88m Gidis_1_10
+serit_16: serit n=180 değer=None (15, -11.7, 592) Atatürk Bulvarı / Sıhhiye+176m Gidis_1_02
+serit_17: serit n=166 değer=None (935, -3.4, 3983) Şehit Ömer Halisdemir Bulvarı / Veteriner Fakültesi+304m Gidis_1_09
+serit_18: serit n=159 değer=None (-4, 6.8, 2082) Çankırı Caddesi / Ulus+138m Gidis_1_05
+serit_19: serit n=156 değer=None (3302, 44.5, 5320) Mehmet Akif Ersoy Caddesi / Çiçek Taksi+421m Gidis_1_10
+kesik_20: kesik n=4 değer=None (1461, 8.7, 3937) Turgut Özal 2 Bulvarı / Çağdaş Sokak+453m 
+kesik_21: kesik n=3 değer=None (509, -8.3, 299) Aksu Caddesi / Kızılay+596m 
+kesik_22: kesik n=3 değer=None (-22, -7.8, 3471) Etlik Caddesi / Dışkapı Hastanesi+543m 
+kesik_23: kesik n=3 değer=None (-494, -17.2, 1374) service / Opera+483m 
+kesik_24: kesik n=2 değer=None (4596, 87.4, 4744) residential / Güneşevler+439m 
+kose_25: kose n=8 değer=-8898.72 (2377, 0.0, 5908) 60. Sokak / Hasköy Akşemsettin Camii+463m bina_9_23.pkl H3_Cephe@BinalarUzak 716 köşe
+kose_26: kose n=6 değer=-421.21 (2122, -62.1, 5887) 39. Cadde / Hasköy Akşemsettin Camii+433m simge_8_23.pkl H3_Bordur@SimgeYapilar 72 köşe
+kose_27: kose n=6 değer=-304.24 (1988, 0.0, 5845) secondary / Hasköy Akşemsettin Camii+449m agac_7_23.pkl H3_Govde@Agaclar 21 köşe
+kose_28: kose n=5 değer=-228.56 (2498, -45.9, 5762) primary_link / Hasköy Akşemsettin Camii+395m bina_9_23.pkl H3_Cephe 3020 köşe
+kose_29: kose n=5 değer=-1511.75 (3020, 0.0, 5834) residential / Çiçek Taksi+448m bina_12_23.pkl H3_Cephe@BinalarUzak 164 köşe
+nesne_30: nesne n=3 değer=0.6 (2828, 21.6, 5372) 126. Sokak / Çeyizciler+48m Props/Lamba_Bulvar (havada 0.60 m)
+nesne_31: nesne n=3 değer=0.38 (170, -1.6, 2819) Çankırı Caddesi / Yıba Çarşısı+3m Props/EGO_Durak (havada 0.12 m)
+nesne_32: nesne n=3 değer=0.35 (-22, 3.5, 1946) Atatürk Bulvarı / Ulus+5m Props/EGO_Durak (gömülü 0.29 m)
+nesne_33: nesne n=3 değer=0.29 (1411, -4.1, 4529) Şehit Ömer Halisdemir Bulvarı / Atatürk Anadolu İmam Hatip Lisesi+125m Props/Lamba_Bulvar (gömülü 0.29 m)
+nesne_34: nesne n=3 değer=0.33 (1508, -0.5, 4630) Şehit Ömer Halisdemir Bulvarı / Altınpark+244m Props/Lamba_Bulvar (gömülü 0.33 m)
+dal_35: dal n=80 değer=0.06 (7, -5.9, 605) Celal Bayar Bulvarı / Sıhhiye+161m 
+dal_36: dal n=68 değer=0.23 (53, -5.8, 585) service / Sıhhiye+188m 
+dal_37: dal n=42 değer=2.29 (955, 1.4, 3980) Turgut Özal 2 Bulvarı / Veteriner Fakültesi+313m 
+dal_38: dal n=32 değer=0.16 (543, -3.9, 3969) Fatih Caddesi / Veteriner Fakültesi+323m 
+dal_39: dal n=24 değer=2.99 (439, -6.7, 3952) Turgut Özal 1 Bulvarı / Veteriner Fakültesi+391m 

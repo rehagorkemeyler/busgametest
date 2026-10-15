@@ -98,14 +98,17 @@ class Kume:
     def __init__(self):
         self.h = {}
 
-    def ekle(self, tur, x, z, deger=None, ek=None):
+    def ekle(self, tur, x, z, deger=None, ek=None, y=None):
         x, z = float(x), float(z)          # numpy float32 JSON'a yazılamıyor
         deger = None if deger is None else float(deger)
         k = (tur, int(math.floor(x / 20)), int(math.floor(z / 20)))
-        e = self.h.setdefault(k, {"tur": tur, "n": 0, "x": 0.0, "z": 0.0, "deger": None, "ek": ek})
+        e = self.h.setdefault(k, {"tur": tur, "n": 0, "x": 0.0, "z": 0.0, "y": 0.0, "ny": 0, "deger": None, "ek": ek})
         e["n"] += 1
         e["x"] += x
         e["z"] += z
+        if y is not None:
+            e["y"] += float(y)
+            e["ny"] += 1
         if deger is not None:
             e["deger"] = deger if e["deger"] is None else (min(e["deger"], deger) if tur in ("aciklik", "dal") else max(e["deger"], deger))
 
@@ -132,7 +135,10 @@ class Kume:
             z = sum(g["z"] for g in grup) / n
             ds = [g["deger"] for g in grup if g["deger"] is not None]
             d = (min(ds) if k[0] in ("aciklik", "dal") else max(ds)) if ds else None
-            sonuc.append({"tur": k[0], "n": n, "x": round(x, 1), "z": round(z, 1), "deger": None if d is None else round(float(d), 2),
+            ny = sum(g["ny"] for g in grup)
+            yy = sum(g["y"] for g in grup) / ny if ny else None
+            sonuc.append({"tur": k[0], "n": n, "x": round(x, 1), "z": round(z, 1), "y": None if yy is None else round(yy, 1),
+                          "deger": None if d is None else round(float(d), 2),
                           "ek": grup[0]["ek"]})
         return sonuc
 
@@ -216,27 +222,29 @@ def main():
             return -1
         return gidx[r2 * nx + c2]
     n_basamak = n_egim = 0
+    # yalnız tek katmanlı noktalar: köprü altı/üstü olan noktada komşu yanlış katmana eşlenebiliyor (katman çakışması
+    # zaten "açıklık" denetiminde). Aynı yüzey: komşu farkı < 0,6 m.
     for i, ys in katman.items():
+        if len(ys) != 1:
+            continue
+        yv = ys[0]
         for (di, dj) in ((1, 0), (0, 1)):
             j = komsu(i, di, dj)
             k2 = komsu(i, -di, -dj)
-            if j < 0 or j not in katman:
+            if j < 0 or len(katman.get(j, [])) != 1:
                 continue
-            for yv in ys:
-                yj = min(katman[j], key=lambda v: abs(v - yv))
-                if abs(yj - yv) > 1.0:
-                    continue
-                e = abs(yj - yv) / ADIM
-                if e > EGIM:
-                    n_egim += 1
-                    K.ekle("egim", P[i, 0], P[i, 1], e * 100)
-                if k2 >= 0 and k2 in katman:
-                    yk = min(katman[k2], key=lambda v: abs(v - yv))
-                    if abs(yk - yv) <= 1.0:
-                        kr = abs(yj - 2 * yv + yk)
-                        if kr > KIRILMA:
-                            n_basamak += 1
-                            K.ekle("basamak", P[i, 0], P[i, 1], kr)
+            yj = katman[j][0]
+            if abs(yj - yv) >= 0.6:
+                continue
+            e = abs(yj - yv) / ADIM
+            if e > EGIM:
+                n_egim += 1
+                K.ekle("egim", P[i, 0], P[i, 1], e * 100, y=yv)
+            if k2 >= 0 and len(katman.get(k2, [])) == 1 and abs(katman[k2][0] - yv) < 0.6:
+                kr = abs(yj - 2 * yv + katman[k2][0])
+                if kr > KIRILMA:
+                    n_basamak += 1
+                    K.ekle("basamak", P[i, 0], P[i, 1], kr, y=yv)
     print(f"  basamak {n_basamak}, eğim {n_egim} ({time.time() - t0:.0f} sn)")
 
     # açıklık: yüzeyin üstündeki her şey (yolun diğer katmanı, bina, simge, ağaç gövdesi), ağaç dalı ayrı
@@ -258,14 +266,14 @@ def main():
                     if ad == "yol" and d < 0.5:
                         continue
                     n_ac += 1
-                    K.ekle("aciklik", P[p, 0], P[p, 1], d, ad)
+                    K.ekle("aciklik", P[p, 0], P[p, 1], d, ad, y=yv)
     qi, qt, qy = sorgu(agac(TL), TL, P) if len(TL) else ([], [], [])
     n_dal = 0
     for p, t, yy in zip(qi, qt, qy):
         for yv in katman.get(int(p), []):
             if 0.05 < yy - yv < DAL:
                 n_dal += 1
-                K.ekle("dal", P[p, 0], P[p, 1], yy - yv)
+                K.ekle("dal", P[p, 0], P[p, 1], yy - yv, y=yv)
     print(f"  açıklık {n_ac}, dal {n_dal} ({time.time() - t0:.0f} sn)")
 
     # şeritler asfaltta
@@ -273,8 +281,10 @@ def main():
     shapely.prepare(Ab)
     n_serit = n_serit_kotu = 0
     for ln in yer["lanes"]:
-        pts = np.array(ln["points"], float).reshape(-1, 3)[:, [0, 2]]
-        for a_, b_ in zip(pts[:-1], pts[1:]):
+        p3 = np.array(ln["points"], float).reshape(-1, 3)
+        pts = p3[:, [0, 2]]
+        for si_, (a_, b_) in enumerate(zip(pts[:-1], pts[1:])):
+            pa = (p3[si_], p3[si_ + 1])
             L = np.linalg.norm(b_ - a_)
             if L < 1e-6:
                 continue
@@ -286,7 +296,7 @@ def main():
                 ok = all(shapely.contains_xy(Ab, *(q + sg * o)) for o in (0.0, SERIT_PAY, -SERIT_PAY))
                 if not ok:
                     n_serit_kotu += 1
-                    K.ekle("serit", q[0], q[1], None, ln["name"])
+                    K.ekle("serit", q[0], q[1], None, ln["name"], y=float(np.interp(s, [0, L], [pa[0][1], pa[1][1]])))
     print(f"  şerit {n_serit_kotu}/{n_serit} ({time.time() - t0:.0f} sn)")
 
     # kesik: araç yolu koridor sınırını kesiyor
@@ -330,7 +340,7 @@ def main():
             d = min(ys, key=lambda v: abs(v - yv)) - yv
             if abs(d) > 0.10:
                 n_nesne += 1
-                K.ekle("nesne", it["pos"][0], it["pos"][2], abs(d), f"{it['model']} ({'havada' if d < 0 else 'gömülü'} {abs(d):.2f} m)")
+                K.ekle("nesne", it["pos"][0], it["pos"][2], abs(d), f"{it['model']} ({'havada' if d < 0 else 'gömülü'} {abs(d):.2f} m)", y=yv)
     print(f"  nesne {n_nesne} ({time.time() - t0:.0f} sn)")
 
     # kümeler: en yakın sokak ve durak
@@ -341,7 +351,13 @@ def main():
     hatlar = [LineString(PX[s["d"]]) for s in seritler]
     tr_yol = STRtree(hatlar)
     duraklar = [(s["name"], s["pos"][0], s["pos"][2]) for s in yer["stops"]]
+    from scipy.spatial import cKDTree
+    kat_i = np.array(sorted(katman.keys()))
+    kd = cKDTree(P[kat_i])
     for k in kumeler:
+        if k["y"] is None:          # kesik, köşe: en yakın yol yüzeyi
+            _, j = kd.query([k["x"], k["z"]])
+            k["y"] = round(float(katman[int(kat_i[j])][0]), 1)
         pt = Point(k["x"], k["z"])
         j = tr_yol.nearest(pt)
         k["sokak"] = seritler[j]["ad"] or seritler[j]["sinif"]
