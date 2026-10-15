@@ -37,11 +37,57 @@ SERIT = 3.4
 ISIK_YESIL = (30.0, 15.0)
 
 
-def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
+class YolEkseni:
+    """Şerit yüksekliği: aynı yönde uzanan (|kosinüs| > 0,7) en yakın yol ekseninin (köprü/tünel dahil bütün düğümler) yüksekliği.
+    Zemin düğümlerinden ara değerleme köprü ve alt geçitte şeridi gerçek yolun metrelerce üstünde/altında bırakıyordu."""
+
+    def __init__(self, d):
+        yollar = json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))
+        P, Y = d["dugum_xz"], d["dugum_y"]
+        a, b = [], []
+        for w in yollar:
+            if w["sinif"] == "ray":
+                continue
+            for i, j in zip(w["d"], w["d"][1:]):
+                a.append(i)
+                b.append(j)
+        a, b = np.array(a), np.array(b)
+        self.A, self.B, self.YA, self.YB = P[a], P[b], Y[a], Y[b]
+        u = self.B - self.A
+        self.u = u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-9)
+        self.agac = shapely.STRtree(shapely.linestrings(np.stack([self.A, self.B], axis=1)))
+
+    def y(self, pts, yedek):
+        pts = np.asarray(pts, float)
+        t_ = np.gradient(pts, axis=0) if len(pts) > 1 else np.array([[1.0, 0.0]])
+        t_ /= np.maximum(np.linalg.norm(t_, axis=1, keepdims=True), 1e-9)
+        pi, ki = self.agac.query(shapely.points(pts), predicate="dwithin", distance=8.0)
+        out = np.array(yedek, float).copy()
+        en = np.full(len(pts), np.inf)
+        ab = self.B[ki] - self.A[ki]
+        L2 = np.maximum((ab ** 2).sum(1), 1e-9)
+        tt = np.clip(((pts[pi] - self.A[ki]) * ab).sum(1) / L2, 0, 1)
+        dist = np.linalg.norm(pts[pi] - (self.A[ki] + ab * tt[:, None]), axis=1)
+        hiza = np.abs((self.u[ki] * t_[pi]).sum(1))
+        yy = self.YA[ki] + (self.YB[ki] - self.YA[ki]) * tt
+        for p_, d_, h_, y_ in zip(pi, dist, hiza, yy):
+            if h_ > 0.7 and d_ < en[p_]:
+                en[p_] = d_
+                out[p_] = y_
+        return out
+
+
+def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0, eksen=None):
     """Bir hattın (g: hat408_guzergah.py çıktısı) şeritleri, ışıkları, durakları, sundurma ve lambaları, başlangıcı.
     on_ek: ikinci hattın şerit/ışık adlarına önek (Unity'de adlar tekil olmalı)."""
     A, S = geo["A"], geo["S"]
-    guz = LineString([kok.yerel(*p) for p in g["yol"]])
+    ham = np.array([kok.yerel(*p) for p in g["yol"]])
+    # köşeleri yuvarla (Chaikin, 3 geçiş; uçlar sabit): dönüşte iç kenara kayan şerit düğüm atmasın
+    for _ in range(3):
+        q = 0.75 * ham[:-1] + 0.25 * ham[1:]
+        r = 0.25 * ham[:-1] + 0.75 * ham[1:]
+        ham = np.vstack([ham[:1], np.stack([q, r], 1).reshape(-1, 2), ham[-1:]])
+    guz = LineString(ham)
     guz_id = set(g["osm_yollar"])
 
     # güzergâh yollarının şerit bilgisi (s'ye göre)
@@ -79,9 +125,22 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
     tek = np.zeros(len(ss), bool)
     nser = np.ones(len(ss), int)
     W = np.zeros(len(ss))
+    # her örneğin yolu: güzergâhın kendi düğüm sırasındaki parçası (en yakın güzergâh yolu alt geçitte üstteki yolu seçiyordu)
+    o_xy = o["xy"]
+    yol_dugum = {sr_id: set(o["ways"][sr_id]["n"]) for sr_id in guz_yol}
+    parca_g, parca_sr = [], []
+    for na, nb in zip(g["dugumler"], g["dugumler"][1:]):
+        if na not in o_xy or nb not in o_xy:
+            continue
+        for sr_id, ns in yol_dugum.items():
+            if na in ns and nb in ns:
+                parca_g.append(LineString([o_xy[na], o_xy[nb]]))
+                parca_sr.append(guz_yol[sr_id])
+                break
+    agac_parca = shapely.STRtree(parca_g)
     for i, p in enumerate(P):
-        sr = yol_geo[agac_y.nearest(Point(p))][1]
-        n, gen, kal, tk = serit_bilgisi({"lanes": str(sr["n"]), "oneway": "yes" if sr["tek"] else "no"}, sr["sinif"])
+        sr = parca_sr[agac_parca.nearest(Point(p))] if parca_g else yol_geo[agac_y.nearest(Point(p))][1]
+        n, gen, kal, tk = serit_bilgisi({"lanes": str(sr["n"]), "oneway": "yes" if sr["tek"] else "no"}, sr["sinif"], True)
         tek[i], nser[i], W[i] = sr["tek"], sr["n"], sr["genislik"]
         sag = isin(p, N[i])
         sag_kenar[i] = sag[0][1] if sag and sag[0][0] < 0.5 else W[i] / 2
@@ -93,8 +152,51 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                 refuj_orta[i] = -(sol[0][1] + sol[1][0]) / 2
         elif not sr["tek"]:
             karsi[i] = -max(1.7, min(sol_kenar[i] - 1.8, W[i] / 2 - 1.7))
-    # güzergâh şeridi: sağ kenardan 1,8 m içeride (otobüs sağ şeritte)
-    of1 = np.clip(sag_kenar - 1.8, 0.5, None)
+    # güzergâh şeridi: yolun kendi genişliğinden en sağ şeridin ortası (ışın kavşak dolgusuna çarpıp sıçrıyordu; şerit
+    # kaldırıma, binaya kayıyordu). Duraklar ve sundurmalar da bu kenara göre (yol kenarı = W/2).
+    serit_en = np.minimum(W / np.maximum(nser, 1), 3.6)
+    of1 = np.clip(W / 2 - serit_en / 2, 0.5, None)
+    sag_kenar = W / 2
+    # karşı yön: iki yönlü yolda aynası; ayrık yolda solda (≤ 35 m) ters yöne giden tek yönlü OSM yolunun en sağ şeridi
+    karsi = np.full(len(ss), np.nan)
+    refuj_orta = np.full(len(ss), np.nan)
+    tek_yollar = [(LineString(d["dugum_xz"][sr["d"]]), sr) for sr in geo["seritler"]
+                  if sr["tek"] and sr["sinif"] not in ("service",)]
+    agac_tek = shapely.STRtree([gg for gg, _ in tek_yollar])
+    for i, p in enumerate(P):
+        if not tek[i]:
+            karsi[i] = -of1[i]
+            continue
+        en = None
+        for j in agac_tek.query(Point(p).buffer(35.0)):
+            gg, sr = tek_yollar[j]
+            if sr["id"] in guz_id:
+                continue
+            t0 = gg.project(Point(p))
+            q = np.array(gg.interpolate(t0).coords[0])
+            dv = q - p
+            if np.linalg.norm(dv) > 35.0:
+                continue                    # izdüşüm uzak bir parçaya düştü
+            yan = float(np.dot(dv, N[i]))
+            if yan > -2.0:
+                continue                    # solda değil
+            a_, b_ = gg.interpolate(max(t0 - 3, 0)), gg.interpolate(min(t0 + 3, gg.length))
+            yv = np.array([b_.x - a_.x, b_.y - a_.y])
+            if sr["ters"]:
+                yv = -yv
+            if np.linalg.norm(yv) < 1e-6 or np.dot(yv / np.linalg.norm(yv), T[i]) > -0.7:
+                continue                    # ters yöne gitmiyor
+            if en is None or -yan < en[0]:
+                en = (-yan, sr)
+        if en is None:
+            continue
+        d0, sr2 = en
+        W2 = sr2["genislik"]
+        en2 = min(W2 / max(sr2["n"], 1), 3.6)
+        karsi[i] = -(d0 + W2 / 2 - en2 / 2)
+        bosluk = d0 - W[i] / 2 - W2 / 2
+        if bosluk > 1.0:
+            refuj_orta[i] = -(W[i] / 2 + bosluk / 2)
     # yumuşatma (kavşaklarda ışın sıçramaları)
     def yumusat(a, k=7):
         a = a.copy()
@@ -172,7 +274,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
         pts = np.array([nokta(i, ofset[i]) for i in idx])
         if ters:
             pts = pts[::-1]
-        ys = y_at(pts) + 0.02
+        ys = (eksen.y(pts, y_at(pts)) if eksen is not None else y_at(pts)) + 0.02
         return {"name": ad, "limitKmh": 50.0, "points": [round(float(v), 2) for xyz in zip(pts[:, 0], ys, pts[:, 1]) for v in xyz],
                 "exits": [], "stopLine": -1.0, "group": 0, "signal": ""}
 
@@ -259,7 +361,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                 nn = np.stack([tt[:, 1], -tt[:, 0]], 1)
                 of = (sr["genislik"] / 2 - 1.7) if sr["tek"] else sr["genislik"] / 4
                 pts = pts + nn * max(of, 0.0)
-                ys = y_at(pts) + 0.02
+                ys = eksen.y(pts, y_at(pts)) + 0.02 if eksen is not None else y_at(pts) + 0.02
                 uz = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(pts, axis=0), axis=1))])
                 # durma çizgisi: güzergâh yolunun kenarından 4 m önce
                 dmin = int(np.argmin(np.linalg.norm(pts - P[i], axis=1)))
@@ -300,7 +402,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                         q2 = hp[m2]
                         kontrol = p0 + t0v * np.linalg.norm(q2 - p0) * 0.5
                         bz = np.array([(1 - u) ** 2 * p0 + 2 * (1 - u) * u * kontrol + u ** 2 * q2 for u in np.linspace(0, 1, 9)])
-                        bys = y_at(bz) + 0.02
+                        bys = (eksen.y(bz, y_at(bz)) if eksen is not None else y_at(bz)) + 0.02
                         donus = {"name": ad + "_Don", "limitKmh": 25.0,
                                  "points": [round(float(v), 2) for xyz in zip(bz[:, 0], bys, bz[:, 1]) for v in xyz],
                                  "exits": [{"target": hl["name"], "at": round(float(np.sum(np.linalg.norm(np.diff(bz, axis=0), axis=1))) - 0.3, 1),
@@ -325,7 +427,8 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
         i = min(int(s / ADIM), len(P) - 1)
         p = nokta(i, sag_kenar[i] - 1.6)
         yaw = math.degrees(math.atan2(T[i][0], T[i][1]))
-        stops.append({"name": dz["ad"], "pos": [round(p[0], 2), round(float(y_at([p])[0]) + 0.05, 2), round(p[1], 2)],
+        py_ = float((eksen.y(np.array([p, p + T[i]]), y_at([p, p + T[i]])) if eksen is not None else y_at([p]))[0])
+        stops.append({"name": dz["ad"], "pos": [round(p[0], 2), round(py_ + 0.05, 2), round(p[1], 2)],
                       "rotY": round(yaw % 360, 1), "radius": 10.0})
         # sundurma: kaldırımda, kenardan 2,4 m içeride
         q = nokta(i, sag_kenar[i] + 2.4)
@@ -357,7 +460,8 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
     i0 = 2
     yaw0 = math.degrees(math.atan2(T[i0][0], T[i0][1]))
     sp = nokta(i0, of1[i0])
-    spawn = ([round(sp[0], 2), round(float(y_at([sp])[0]) + 0.3, 2), round(sp[1], 2)], round(yaw0 % 360, 1))
+    spy = float((eksen.y(np.array([sp, sp + T[i0]]), y_at([sp, sp + T[i0]])) if eksen is not None else y_at([sp]))[0])
+    spawn = ([round(sp[0], 2), round(spy + 0.3, 2), round(sp[1], 2)], round(yaw0 % 360, 1))
     return lanes, signals, stops, items, spawn
 
 
@@ -375,11 +479,12 @@ def main():
     shapely.prepare(S)
     # hat başına bileşenler; harita ortak: bütün hatların şeritleri, ışıkları, sundurma ve lambaları her sahnede
     hatlar = kok.hatlar()
+    eksen = YolEkseni(d)
     bilesen = {}
     for k, (ad, g) in enumerate(hatlar.items()):
         print(f"  hat {ad}")
         bilesen[ad] = hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="" if k == 0 else "A_",
-                                      nostaljik_s=2150.0 if ad == "408_gunesevler" else 2650.0)
+                                      nostaljik_s=2150.0 if ad == "408_gunesevler" else 2650.0, eksen=eksen)
     items = json.load(open(os.path.join(kok.ISLEM, "simge_items.json"), encoding="utf-8"))
     lanes, signals = [], []
     for ad, (ln, sg, st, it, sp) in bilesen.items():

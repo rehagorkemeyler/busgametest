@@ -121,6 +121,9 @@ class Yukseklik:
         return y
 
 
+KOPRU_KALDIRIM = 2.0
+
+
 def kesikli(xz, y, cizgi=3.0, bosluk=6.0):
     """Polilinyeyi kesikli parçalara böler: [(xz, y), ...]."""
     L = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(xz, axis=0), axis=1))])
@@ -303,7 +306,7 @@ def main():
     for kp in geo["katmanli"]:
         xz, y = yogunlastir(kp["xz"], kp["y"], 4.0)
         W = kp["genislik"]
-        kal = kp["kaldirim"]
+        kal = min(kp["kaldirim"], KOPRU_KALDIRIM)       # köprü/yarmada dar yürüme yolu (7 m'lik bulvar kaldırımı komşu şeritlere biniyordu)
         V, UV, Fc = serit(xz, y, W / 2, W / 2, y_ek=0.0, uv_v=0.125, uv_u=(0, W * 0.125))
         pc.ekle_dunya("H3_Asfalt", V, UV, Fc)
         zemin_y = ar.y(xz[:, 0], xz[:, 1])

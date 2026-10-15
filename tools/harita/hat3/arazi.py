@@ -160,6 +160,9 @@ def yol_agi(arazi):
     g = kok.guzergah()
     guz_id = set(g["osm_yollar"])
     secili = []
+    # güzergâh tünellerinin ikizleri (karşı yön): aynı adlı ve güzergâha 40 m'den yakın tüneller de çizilir
+    guz_ad = {o["ways"][w]["t"].get("name") for w in guz_id if w in o["ways"]} - {None}
+    guz_cizgi = kok.guzergah_cizgisi()
     for wid, w in o["ways"].items():
         t = w["t"]
         h = t.get("highway")
@@ -174,7 +177,8 @@ def yol_agi(arazi):
         if len(ns) < 2:
             continue
         if t.get("tunnel") in ("yes", "building_passage", "culvert") or t.get("location") == "underground":
-            if wid not in guz_id:
+            ikiz = t.get("name") in guz_ad and LineString([xy[n] for n in ns]).distance(guz_cizgi) < 40.0
+            if wid not in guz_id and not ikiz:
                 continue                        # güzergâh dışı tüneller yer altında: çizilmez (Akay gibi çok katlı yer altı
                                                 # kavşaklarının ağızları güzergâhı kesiyordu); güzergâhtaki alt geçitler çizilir
         secili.append((wid, sinif, t, ns))
@@ -233,7 +237,7 @@ def yol_agi(arazi):
         if sinif == "ray":
             gen, kal = 4.0, 0.0
         else:
-            _, gen, kal, _ = serit_bilgisi(t, sinif)
+            _, gen, kal, _ = serit_bilgisi(t, sinif, guz)
         yollar.append({"id": wid, "sinif": sinif, "t": t, "d": dlist, "guzergah": guz, "katman": kat(t),
                        "sira": katman(t) + (0.5 if kat(t) > 0 else -0.5 if kat(t) < 0 else 0.0), "yari": gen / 2 + kal})
 

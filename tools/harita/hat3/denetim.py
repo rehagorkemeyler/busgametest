@@ -348,6 +348,67 @@ def main():
                 K.ekle("nesne", it["pos"][0], it["pos"][2], abs(d), f"{it['model']} ({'havada' if d < 0 else 'gömülü'} {abs(d):.2f} m)", y=yv)
     print(f"  nesne {n_nesne} ({time.time() - t0:.0f} sn)")
 
+    # ---- güzergâh sürülebilirliği (otobüs şeridi, hat başına)
+    rota_satirlari = []
+    TO = np.concatenate([x for x in (TY, TD, TB, TS, TG) if len(x)])
+    trO = agac(TO)
+    for hat_ad, h in kok.HATLAR.items():
+        f = os.path.join(a.maps, h["klasor"], h["dosya"])
+        if not os.path.exists(f):
+            continue
+        yh_ = json.load(open(f, encoding="utf-8"))
+        on = "" if hat_ad == "408_gunesevler" else "A_"
+        ser = sorted([l for l in yh_["lanes"] if l["name"].startswith(on + "Gidis_1_")], key=lambda l: l["name"])
+        Q = np.concatenate([np.array(l["points"], float).reshape(-1, 3) for l in ser])
+        dd = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(Q[:, [0, 2]], axis=0), axis=1))])
+        ss = np.arange(0, dd[-1], 1.0)
+        X = np.interp(ss, dd, Q[:, 0]); Z = np.interp(ss, dd, Q[:, 2]); Yl = np.interp(ss, dd, Q[:, 1])
+        tx = np.gradient(X); tz = np.gradient(Z); nn_ = np.hypot(tx, tz) + 1e-9
+        nx, nz = tz / nn_, -tx / nn_
+        sorun = {}
+        # 1) yüzey: şerit yüksekliğinin ±0,6 m'sinde asfalt
+        pi, ti, yy = sorgu(agY, TY, np.stack([X, Z], 1))
+        yuz = np.full(len(ss), np.nan)
+        for k_, y_ in zip(pi, yy):
+            if abs(y_ - Yl[k_]) < 0.6 and (np.isnan(yuz[k_]) or abs(y_ - Yl[k_]) < abs(yuz[k_] - Yl[k_])):
+                yuz[k_] = y_
+        for k_ in np.nonzero(np.isnan(yuz))[0]:
+            sorun.setdefault("yüzey yok", []).append(ss[k_])
+        # 2) üst engel: otobüs genişliğinde (±1,6 m) yüzeyin 0,3–4,2 m üstü
+        for o_ in (-1.6, 0.0, 1.6):
+            Pq = np.stack([X + nx * o_, Z + nz * o_], 1)
+            pi, ti, yy = sorgu(trO, TO, Pq)
+            for k_, y_ in zip(pi, yy):
+                yv = yuz[k_] if not np.isnan(yuz[k_]) else Yl[k_]
+                if 0.3 < y_ - yv < 4.2:
+                    sorun.setdefault("üst engel", []).append(ss[k_])
+        # 3) eğim (10 m) ve basamak (1 m ikinci fark)
+        yv = np.where(np.isnan(yuz), Yl, yuz)
+        e10 = np.abs(yv[10:] - yv[:-10]) / 10.0
+        for k_ in np.nonzero(e10 > 0.10)[0]:
+            sorun.setdefault("eğim > %10", []).append(ss[k_])
+        kr = np.abs(yv[2:] - 2 * yv[1:-1] + yv[:-2])
+        for k_ in np.nonzero(kr > 0.08)[0]:
+            sorun.setdefault("basamak", []).append(ss[k_ + 1])
+        # 4) şerit asfaltta (±1,3 m)
+        for k_ in range(len(ss)):
+            if not all(shapely.contains_xy(Ab, X[k_] + nx[k_] * o_, Z[k_] + nz[k_] * o_) for o_ in (-1.3, 0.0, 1.3)):
+                sorun.setdefault("asfalt dışı", []).append(ss[k_])
+        rota_satirlari.append(f"{hat_ad} ({dd[-1]:.0f} m):")
+        if not sorun:
+            rota_satirlari.append("  sorun yok")
+        for tur, liste in sorun.items():
+            liste = sorted(set(round(v) for v in liste))
+            # ardışık aralıklar
+            ar_ = []
+            for v in liste:
+                if ar_ and v - ar_[-1][1] <= 3:
+                    ar_[-1][1] = v
+                else:
+                    ar_.append([v, v])
+            rota_satirlari.append(f"  {tur}: {len(liste)} m, {len(ar_)} yer: " + ", ".join(f"{a_}–{b_}" if b_ > a_ else f"{a_}" for a_, b_ in ar_[:40]))
+    print("güzergâh sürülebilirliği:\n" + "\n".join(rota_satirlari))
+
     # kümeler: en yakın sokak ve durak
     kumeler = K.kumeler()
     seritler = geo["seritler"]
@@ -386,7 +447,7 @@ def main():
             f"dal<{DAL} m {n_dal}, şerit asfalt dışı {n_serit_kotu}/{n_serit}, kesik yol ucu {n_kesik}, uç köşe {n_kose}, nesne {n_nesne}\n"
             f"kümeler: " + ", ".join(f"{t} {n}" for t, n in sorted(say.items(), key=lambda x: sira.get(x[0], 9))) + "\n")
     with open(a.cikti + ".txt", "w", encoding="utf-8") as fh:
-        fh.write(ozet + "\n")
+        fh.write(ozet + "\nGüzergâh sürülebilirliği (otobüs şeridi):\n" + "\n".join(rota_satirlari) + "\n\n")
         fh.write("tür | nokta | değer | konum (x, z) | güzergâha m | sokak | en yakın durak | ek\n")
         for k in kumeler:
             fh.write(f"{k['tur']} | {k['n']} | {k['deger']} | ({k['x']:.0f}, {k['z']:.0f}) | {k['guzergah']:.0f} | {k['sokak']} | "

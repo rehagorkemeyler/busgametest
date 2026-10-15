@@ -37,8 +37,10 @@ GENIS_KALDIRIM = {"Atatürk Bulvarı": 7.0, "Ulus Meydanı": 7.0, "Erbakan Meyda
                   "Talatpaşa Bulvarı": 4.5, "Celal Bayar Bulvarı": 4.5}
 
 
-def serit_bilgisi(t, sinif):
-    """(şerit sayısı, toplam asfalt genişliği, kaldırım genişliği, tek yön mü)"""
+def serit_bilgisi(t, sinif, guzergah=False):
+    """(şerit sayısı, toplam asfalt genişliği, kaldırım genişliği, tek yön mü).
+    guzergah: otobüs hattının geçtiği yol — tek yönlüde en az 2 şerit / 7 m (OSM'de şerit sayısı yazılmayan tek yönlü sokaklar
+    3,25 m çıkıyordu: 126. Sokak; otobüs şeridi asfalta sığmıyordu)."""
     varsay, sw, kal = kok.ARAC_YOLU[sinif]
     tek = t.get("oneway") in ("yes", "1", "-1", "true") or t.get("junction") == "roundabout" or sinif.endswith("_link")
     try:
@@ -51,6 +53,10 @@ def serit_bilgisi(t, sinif):
         gen = float(t["width"].replace("m", "").strip())
     except (KeyError, ValueError):
         gen = n * sw
+    if guzergah and sinif != "service":
+        if tek:
+            n = max(n, 2)
+        gen = max(gen, n * sw, 7.0 if tek else 6.5)
     ad = t.get("name", "")
     if kal > 0 and ad in GENIS_KALDIRIM:
         kal = GENIS_KALDIRIM[ad]
@@ -86,7 +92,7 @@ def main():
         geo = LineString(xz)
         if not geo.intersects(koridor):
             continue
-        n, gen, kal, tek = serit_bilgisi(t, w["sinif"])
+        n, gen, kal, tek = serit_bilgisi(t, w["sinif"], w["guzergah"])
         f = np.abs(F[w["d"]]) > 0.3
         seg_k = f[:-1] | f[1:]                  # parça katmanlı: uçlarından biri katmanlı
         bas = 0
@@ -133,7 +139,7 @@ def main():
     kav = ops.unary_union(kavsak)
     kapali = A.buffer(KOSE_R, join_style="round").buffer(-KOSE_R, join_style="round")
     # köşe dolgusu katmanlı yolların (köprü, alt geçit yarması) izine taşmasın: tünel ağzının üstüne "kapak" oluyordu
-    kat_iz = ops.unary_union([LineString(kp["xz"]).buffer(kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.5, cap_style="flat")
+    kat_iz = ops.unary_union([LineString(kp["xz"]).buffer(kp["genislik"] / 2 + max(min(kp["kaldirim"], 2.0), 0.6) + 0.5, cap_style="flat")
                               for kp in katmanli]) if katmanli else Polygon()
     A = ops.unary_union([A, kapali.intersection(kav).difference(kat_iz)]).buffer(0)
     print(f"  kavşak köşeleri ({time.time() - t0:.0f} sn)")
@@ -146,10 +152,10 @@ def main():
     for kp in katmanli:
         f = np.abs(np.asarray(kp["fark"], float))
         tunel = bool(etiket.get(kp["id"], {}).get("tunnel"))
-        r = kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.3
+        r = kp["genislik"] / 2 + max(min(kp["kaldirim"], 2.0), 0.6) + 0.3     # yuzeyler.KOPRU_KALDIRIM
         for i in range(len(kp["xz"]) - 1):
             fi = max(f[i], f[i + 1])
-            if not (0.3 < fi < 5.5):
+            if fi >= 5.5:
                 continue
             if tunel and min(kp["fark"][i], kp["fark"][i + 1]) < 0:
                 continue
