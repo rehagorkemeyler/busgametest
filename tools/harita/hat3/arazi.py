@@ -539,6 +539,8 @@ def yol_agi(arazi):
     # çiftlerde fark yarı yarıya düzeltilir, yinelemeli). Açıklık kısıtı kavşak düğümünü çiviliyor, güzergâh tünel ağzına 400 m
     # düz inip çıkışta %15 tırmanıyordu (Meclis alt geçidi). Sonuç güçlü hedef olur, komşu yollar yaylarla uyar.
     degisen = 0
+    hedef_kat = hedef.copy()        # eğim sınırının değiştirdiği düğümler katmanlı sayılmaz: arazi yola uydurulur (yükseltilmiş
+                                    # şerit + 1,5 m kenar düşüşü Cinnah'ta durağın yanında otobüsü devirdi)
     for ad, hg in kok.hatlar().items():
         cizgi = LineString([kok.yerel(*p_) for p_ in hg["yol"]])
         ids = set(hg["osm_yollar"])
@@ -590,7 +592,9 @@ def yol_agi(arazi):
 
     # katmanlı sayılan düğümler (yüzeyler: köprü/alt geçit şeridi): hedefi ya da sonucu zeminden > 0,5 m farklı
     # rampanın gevşetilmiş (köprü/tünel çevresindeki) kısmı da araziden sapıyorsa katmanlıdır: yarma (istinat duvarı) ya da dolgu
-    fark = np.where((np.abs(hedef) > 0.3) | ((W < 0.99) & (np.abs(y - zemin) > 1.5)), y - zemin, 0.0)
+    sinirli = np.abs(hedef - hedef_kat) > 1e-6
+    fark = np.where((np.abs(hedef_kat) > 0.3) | ((W < 0.99) & (np.abs(y - zemin) > 1.5)) | (sinirli & ((y - zemin > 2.5) | (y - zemin < -1.0))),
+                    y - zemin, 0.0)
     fark[np.abs(fark) < 0.5] = 0.0
     for w in yollar:
         dd = np.array(w["d"])

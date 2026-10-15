@@ -92,6 +92,7 @@ namespace AnkaraBus.Gameplay
         private int lastOnboard;
         private float startTime = -1f;
         private Ozet ozet = new Ozet();
+        private string puanKimligi = "";
         private bool finished;
         private OtobusOlcusu olcu = OtobusOlcusu.Varsayilan;
 
@@ -143,9 +144,9 @@ namespace AnkaraBus.Gameplay
             lastSide = new float[signalLanes.Length];
             for (int i = 0; i < signalLanes.Length; i++)
                 lastSide[i] = float.NaN;
+            ozet.hat = tracker != null && tracker.Route != null ? tracker.Route.LineNumber : "";
             // en iyi puan hat kimliğiyle (iki 408 hattı aynı numarayı taşır)
-            ozet.hat = OyunSecimi.SahneKimligi(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
-                       ?? (tracker != null && tracker.Route != null ? tracker.Route.LineNumber : "");
+            puanKimligi = OyunSecimi.SahneKimligi(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) ?? ozet.hat;
             ozet.hedefSure = TargetTime();
             ignoreAccelUntil = Time.time + 1.5f;
             lastVelocity = body.linearVelocity;
@@ -324,7 +325,7 @@ namespace AnkaraBus.Gameplay
             ozet.puan += Mathf.RoundToInt(ozet.konfor); // konfor puanı (en çok 100)
             ozet.yildiz = Stars();
 
-            string key = OyunSecimi.EnIyiPuanAnahtari(ozet.hat);
+            string key = OyunSecimi.EnIyiPuanAnahtari(puanKimligi);
             ozet.enIyiPuan = PlayerPrefs.GetInt(key, int.MinValue);
             ozet.rekor = ozet.puan > ozet.enIyiPuan;
             if (ozet.rekor)

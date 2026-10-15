@@ -236,7 +236,11 @@ namespace AnkaraBus.Diagnostics
 
         // ------------------------------------------------------------ duraklar
 
-        private static readonly string[] PerfDuraklari = { "Kızılay", "Ulus", "Dışkapı Hastanesi", "Altınpark", "Güneşevler" };
+        private static readonly string[] PerfDuraklari = { "Kızılay", "Ulus", "Dışkapı Hastanesi", "Altınpark", "Güneşevler",
+                                                           "Meclis", "Kuğulu Park", "Botanik Parkı", "Atakule" };
+
+        /// <summary>408 Kızılay → Atakule (Hat1 sahnesi) mı; ufuk/köprü/yokuş noktaları hatta göre.</summary>
+        private bool Atakule => tracker.Route != null && tracker.Route.LineName.Contains("Atakule");
 
         private IEnumerator Duraklar()
         {
@@ -345,8 +349,9 @@ namespace AnkaraBus.Diagnostics
         private IEnumerator Ufuk()
         {
             var route = tracker.Route;
-            foreach (int i in new[] { 0, 1, 3, 5, 9, 17 })
+            foreach (int i in Atakule ? new[] { 0, 2, 3, 6, 8 } : new[] { 0, 1, 3, 5, 9, 17 })
             {
+                if (i >= route.StopCount) continue;
                 var durak = DuragaKoy(i);
                 yield return Bekle(3f);
                 var p = bus.transform.position + Vector3.up * 2.6f;
@@ -427,9 +432,16 @@ namespace AnkaraBus.Diagnostics
             ("aydinlikevler_1", 4380f), ("aydinlikevler_2", 4405f), ("aihl_ustgecit", 5047f), ("altinpark", 5512f),
         };
 
+        /// <summary>Atakule hattı (H3Kurulum.AnalizBatch, H3_SAHNE=1): yaya üst geçitleri, Akay, Meclis alt geçidi ve tüneli.</summary>
+        private static readonly (string ad, float s)[] KopruNoktalariAtakule =
+        {
+            ("kizilay_ustgecit", 153f), ("guvenpark_ustgecit", 706f), ("akay", 965f), ("meclis_altgecit", 1620f),
+            ("meclis_tunel", 1790f), ("kugulu", 2420f),
+        };
+
         private IEnumerator Kopruler()
         {
-            foreach (var (ad, sk) in KopruNoktalari)
+            foreach (var (ad, sk) in Atakule ? KopruNoktalariAtakule : KopruNoktalari)
             {
                 Guzergah(sk - 60f, out var p, out var f);
                 yield return Isinla(p, f);
@@ -472,6 +484,11 @@ namespace AnkaraBus.Diagnostics
         {
             // Mehmet Akif Ersoy yokuşu: Güneşevler Spor Tesisleri'nden son durağa (en dik %9 s≈8977, editör analizi)
             float bas = 8700f, son = 9080f;
+            if (Atakule)
+            {
+                bas = 3250f;        // Cinnah Caddesi yokuşu (Farabi–Kırkpınar, yer yer %13–15)
+                son = 3700f;
+            }
             Guzergah(bas, out var p, out var f);
             yield return Isinla(p, f);
             var body = bus.GetComponent<Rigidbody>();

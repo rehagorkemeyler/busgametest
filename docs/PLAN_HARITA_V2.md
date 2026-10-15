@@ -259,3 +259,18 @@ nesne ya da düz kenar görünmüyor; DEM doldurma sonrası su yüzeyleri yerel 
 geçit ağzı 10 m), eğim > %13 47 m (Cinnah'ın gerçek yokuşu). Unity analizi: pembe malzeme 0, eksik anons 0, güzergâhta yolsuz nokta
 Hat 1'de 0, Hat 3'te 1.
 Oyun APK'sı derlendi: **230 MB** (önce 206 MB). **Kalan (M9, telefon)**: iki hattın sürüşü, FPS/bellek (A32 yalnız ölçüm).
+
+### M9 — ilk telefon testi (16 Ekim, S24 FE, Atakule hattı) ve düzeltmeler
+Test (`-e gorev h3 -e sahne Hat1_KizilayAtakule`): 9/9 durak sayıldı, 6/8 anons, trafik ışıklarında kırmızıda geçen 0, Cinnah
+yokuşu 90 yolcuyla çıkıldı (en düşük 22 km/s). Bulunan sorunlar ve düzeltmeler (telefonda henüz doğrulanmadı):
+- **Otobüs Farabi kalkışında devrildi**: eğim sınırı Cinnah'ı 1,2–1,6 m yükseltip katmanlı şerit (kenarında düşüş) yapıyordu →
+  eğim sınırının küçük değişiklikleri katmanlı sayılmaz (arazi yola uydurulur); yalnız > 2,5 m yükseltme ve > 1 m yarma katmanlı.
+- **"Yollar tümsekli, sallantılı"**: yüzey yüksekliği eksen karışımında komşu eksen 3 m penceresine sert eşikle giriyordu (5–13 cm
+  basamak) → ağırlık pencere sınırında sıfıra iner; servis yolları karışımda düşük ağırlık; asfalt/kaldırım yüksekliğine yol içinde
+  kenar koruyan Gauss süzgeci (σ 4,5 m, 1,5 m'den büyük kot farkı korunur). Bütün haritada basamak noktası 12 611 → 5 954; güzergâh
+  şeridinde 1 m'de yan eğim değişimi > %2: Atakule 147 → 37, Güneşevler 132 → 24.
+- **Atakule son durağı duvarın içinde**: katmanlı rampaya 25 m'den yakın durak 80 m'ye kadar geri alınır; durak yeri gerçek asfalt
+  kenarından ve otobüsün tamamı asfaltta kalacak şekilde.
+- Sefer özeti "HAT 408_atakule" yazıyordu → hat numarası gösterilir, en iyi puan kimlikle saklanır.
+- Akay, Meclis alt geçidi, Kuğulu köprü testlerinde otobüs 20 km/s'de takıldı (yol çıkıntıları); yukarıdaki düzeltmelerden sonra
+  telefonda yeniden denenecek.

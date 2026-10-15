@@ -490,17 +490,39 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0, eksen=No
 
     # --- duraklar
     stops = []
+    katman_yakin = shapely.union_all([LineString(kp["xz"]).buffer(kp["genislik"] / 2 + 2.0) for kp in geo["katmanli"]
+                                      if np.abs(np.asarray(kp["fark"])).max() > 1.0]) if geo["katmanli"] else Point(0, 0).buffer(0.0)
+    shapely.prepare(katman_yakin)
+    A_ic = A.buffer(-1.45)
+    shapely.prepare(A_ic)
     for dz in g["duraklar"]:
         x, z = kok.yerel(dz["lat"], dz["lon"])
         s = guz.project(Point(x, z))
+        # katmanlı (rampa/yarma; istinat duvarlı) yol parçasına 25 m'den yakın durak geri alınır (en çok 80 m): Atakule son durağı
+        # kavşak rampasının duvarına giriyordu
+        for geri in np.arange(0.0, 81.0, 5.0):
+            if not katman_yakin.intersects(Point(*guz.interpolate(max(s - geri, 0.0)).coords[0]).buffer(25.0)):
+                s = max(s - geri, 0.0)
+                break
         i = min(int(s / ADIM), len(P) - 1)
-        p = nokta(i, sag_kenar[i] - 1.6)
+        # yol kenarı: gerçek asfaltın sağ ucu (ışın; W/2'den ±2,5 m'den sapmıyorsa). Yumuşatılmış güzergâh çizgisi kıvrımlı yolda
+        # (Cinnah) OSM ekseninden 1–2 m kayıyor, W/2 − 1,6 durağı bordüre koyuyordu: otobüs sağ tekerleri kaldırımda devriliyordu.
+        isin_ = isin(P[i], N[i])
+        kenar_ = sag_kenar[i]
+        if isin_ and isin_[0][0] < 0.5 and abs(isin_[0][1] - sag_kenar[i]) < 2.5:
+            kenar_ = isin_[0][1]
+        of_ = kenar_ - 1.6
+        while of_ > -1.0 and not shapely.contains_xy(A_ic, *nokta(i, of_)):
+            of_ -= 0.2                  # otobüsün tamamı (±1,3 m) asfaltta kalana dek içeri
+        if of_ <= -1.0:
+            of_ = kenar_ - 1.6
+        p = nokta(i, of_)
         yaw = math.degrees(math.atan2(T[i][0], T[i][1]))
         py_ = float((eksen.y(np.array([p, p + T[i]]), y_at([p, p + T[i]])) if eksen is not None else y_at([p]))[0])
         stops.append({"name": dz["ad"], "pos": [round(p[0], 2), round(py_ + 0.05, 2), round(p[1], 2)],
                       "rotY": round(yaw % 360, 1), "radius": 10.0})
         # sundurma: kaldırımda, kenardan 2,4 m içeride
-        q = nokta(i, sag_kenar[i] + 2.4)
+        q = nokta(i, of_ + 1.6 + 2.4)
         items.append({"model": "Props/EGO_Durak", "pos": [round(q[0], 2), round(zemin_y(q), 2), round(q[1], 2)],
                       "rotY": round((yaw - 90) % 360, 1), "group": "Duraklar"})
     # --- lambalar: refüj varsa ortasında, yoksa sağ kaldırımda; Atatürk Bulvarı'nda nostaljik

@@ -80,14 +80,19 @@ class Yukseklik:
     def __init__(self, P, Y, F):
         m = np.abs(F) < 0.3
         yollar = json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))
-        a, b = [], []
+        a, b, ag = [], [], []
         for w in yollar:
             d_ = w["d"]
+            # servis yolları (otopark, site içi) ana yolun üstünden geçebiliyor: karışımda düşük ağırlık (Kuğulu'da güzergâh
+            # asfaltını 0,6 m yana yatırıyordu)
+            agr = 0.15 if w["sinif"] in ("service", "ray") else 1.0
             for i, j in zip(d_, d_[1:]):
                 if m[i] and m[j]:
                     a.append(i)
                     b.append(j)
+                    ag.append(agr)
         self.a, self.b = np.array(a), np.array(b)
+        self.ag = np.array(ag)
         self.A, self.B = P[self.a], P[self.b]
         self.YA, self.YB = Y[self.a], Y[self.b]
         self.agac = shapely.STRtree(shapely.linestrings(np.stack([self.A, self.B], axis=1)))
@@ -112,13 +117,52 @@ class Yukseklik:
         if len(pi):
             yy, dd = self._seg(ki, q[pi])
             ok = (ki != k1[pi]) & (dd < d1[pi] + 3.0)
-            pi, yy, dd = pi[ok], yy[ok], dd[ok]
+            pi, yy, dd, ki = pi[ok], yy[ok], dd[ok], ki[ok]
             if len(pi):
-                w = 1.0 / np.maximum(dd, 0.3) ** 2
-                ws = np.bincount(pi, weights=w, minlength=len(q)) + 1.0 / np.maximum(d1, 0.3) ** 2
-                ys = np.bincount(pi, weights=w * yy, minlength=len(q)) + y1 / np.maximum(d1, 0.3) ** 2
+                # ağırlık pencere sınırında (d1 + 3 m) sıfıra iner: sert eşikte komşu eksen pencereye girince yüzeyde 5–13 cm
+                # basamak oluyordu (telefonda "tümsekli, çıkıntılı yol", otobüs takılıyordu)
+                sinir = 1.0 / (np.maximum(d1, 0.3) + 3.0) ** 2
+                w = np.maximum(1.0 / np.maximum(dd, 0.3) ** 2 - sinir[pi], 0.0) * self.ag[ki]
+                w1 = (1.0 / np.maximum(d1, 0.3) ** 2 - sinir) * self.ag[k1]
+                ws = np.bincount(pi, weights=w, minlength=len(q)) + w1
+                ys = np.bincount(pi, weights=w * yy, minlength=len(q)) + y1 * w1
                 y = ys / ws
         return y
+
+
+class Puruzsuz:
+    """Yol yüzeyi yüksekliğinin yolun içinde Gauss ortalaması (σ 4,5 m, 7,5 m'ye kadar 31 örnek; yalnız asfalt/kaldırım içindeki
+    örnekler): eksen karışımı kavşaklarda ve yan yana yollarda %20–30 yan eğim, boyuna 5–13 cm kırık bırakıyordu; telefonda
+    otobüs "sallantılı, çıkıntılı" yolda yalpalıyordu."""
+
+    def __init__(self, yh, alan, sigma=4.5):
+        self.yh = yh
+        self.alan = alan
+        shapely.prepare(alan)
+        of = [(0.0, 0.0)]
+        for r, k in ((2.5, 6), (5.0, 10), (7.5, 14)):
+            for j in range(k):
+                a = 2 * math.pi * (j + 0.5 * (r == 5.0)) / k
+                of.append((r * math.cos(a), r * math.sin(a)))
+        self.of = np.array(of)
+        self.w = np.exp(-(self.of ** 2).sum(1) / (2 * sigma ** 2))
+
+    def __call__(self, x, z):
+        x = np.atleast_1d(np.asarray(x, float))
+        z = np.atleast_1d(np.asarray(z, float))
+        n, m = len(x), len(self.of)
+        qx = (x[:, None] + self.of[None, :, 0]).ravel()
+        qz = (z[:, None] + self.of[None, :, 1]).ravel()
+        ic = shapely.contains_xy(self.alan, qx, qz).reshape(n, m)
+        ic[:, 0] = True                               # merkez her zaman
+        yv = np.zeros(n * m)
+        ici = ic.ravel()
+        yv[ici] = self.yh(qx[ici], qz[ici])
+        yv = yv.reshape(n, m)
+        # kenar koruyan (ikili) süzgeç: merkezden çok farklı kottaki örnek (yarma/rampa yanındaki yol) ağırlık almaz;
+        # yoksa Kuğulu alt geçidinin yolu yandaki üst yollarla ortalanıp 0,65 m kalkıyordu
+        w = self.w[None, :] * ic * np.exp(-((yv - yv[:, :1]) / 1.5) ** 4)
+        return (w * yv).sum(1) / w.sum(1)
 
 
 KOPRU_KALDIRIM = 2.0
@@ -169,7 +213,9 @@ def main():
     yh = Yukseklik(P, Y, F)
     pc = Parcalar()
 
-    # --- zemin seviyesi yüzeyler
+    # --- zemin seviyesi yüzeyler (yükseklik yol içinde yumuşatılmış; kaldırım/bordür aynı yüzeyden)
+    yh_ham = yh
+    yh = Puruzsuz(yh_ham, shapely.union_all([A, S]).buffer(0.5))
     yuzey(pc, "H3_Asfalt", A, yh, uv_olcek=0.125)
     R = shapely.union_all(refuj) if refuj else None
     S_kal = S.difference(R) if R is not None else S
