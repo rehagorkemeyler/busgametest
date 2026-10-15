@@ -81,6 +81,7 @@ def main():
     koridor = guz.buffer(KORIDOR, quad_segs=16)
 
     asfalt, dis, katmanli, seritler = [], [], [], []
+    guz_asfalt = []          # zemindeki güzergâh asfaltı: katmanlı komşunun yarma kesimi bunu silmez (Akay)
     derece = {}
     for w in yollar:
         if w["sinif"] == "ray":
@@ -106,6 +107,8 @@ def main():
             else:
                 pg = LineString(P[idx])
                 asfalt.append(pg.buffer(gen / 2, cap_style="flat", join_style="round"))
+                if w["guzergah"]:
+                    guz_asfalt.append(asfalt[-1])
                 if kal > 0:
                     dis.append(pg.buffer(gen / 2 + kal, cap_style="flat", join_style="round"))
             bas = i
@@ -147,21 +150,49 @@ def main():
     print(f"  kaldırım ({time.time() - t0:.0f} sn)")
     # katmanlı yolların alçak kısmı (zeminden 0,3–5,5 m: rampa, dolgu, açık yarma) zemindeki asfalt ve kaldırımın üstüne/altına
     # taşmasın: izi zemin çokgenlerinden kesilir. Yüksek tabliyenin (> 5,5 m) altı ve kapalı tünelin (tunnel=yes) üstü kalır.
+    # Derin açık yarma (tünel etiketsiz, zeminden > 5,5 m aşağıda; ör. Meclis alt geçidine iniş) de kesilir: yandaki zemin yollarının
+    # asfalt/kaldırımı yarmanın üstünü tavan gibi örtüyordu. Yarmanın üstünden dik geçen yollar (köprü gibi) kesilmez.
     etiket = {w["id"]: w["t"] for w in yollar}
-    kes = []
+    kes, derin = [], []
     for kp in katmanli:
         f = np.abs(np.asarray(kp["fark"], float))
         tunel = bool(etiket.get(kp["id"], {}).get("tunnel"))
         r = kp["genislik"] / 2 + max(min(kp["kaldirim"], 2.0), 0.6) + 0.3     # yuzeyler.KOPRU_KALDIRIM
         for i in range(len(kp["xz"]) - 1):
             fi = max(f[i], f[i + 1])
-            if fi >= 5.5:
-                continue
             if tunel and min(kp["fark"][i], kp["fark"][i + 1]) < 0:
                 continue
+            if fi >= 5.5:
+                if max(kp["fark"][i], kp["fark"][i + 1]) < 0:
+                    derin.append(LineString(kp["xz"][i:i + 2]))
+                    kes.append(derin[-1].buffer(r, cap_style="flat"))
+                continue
             kes.append(LineString(kp["xz"][i:i + 2]).buffer(r, cap_style="flat"))
+    if derin:
+        dagac = shapely.STRtree(derin)
+        ustten = []
+        for w in yollar:
+            if w["sinif"] == "ray" or w["katman"] != 0:
+                continue
+            _, gen_w, kal_w, _ = serit_bilgisi(w["t"], w["sinif"], w["guzergah"])
+            xz = P[w["d"]]
+            for i in range(len(xz) - 1):
+                sg = LineString(xz[i:i + 2])
+                u = xz[i + 1] - xz[i]
+                for k in dagac.query(sg, predicate="intersects"):
+                    v = np.diff(np.asarray(derin[k].coords), axis=0)[0]
+                    c = abs(float(np.dot(u, v))) / (np.linalg.norm(u) * np.linalg.norm(v) + 1e-9)
+                    if c < 0.7 and min(abs(F[w["d"][i]]), abs(F[w["d"][i + 1]])) < 0.3:
+                        ustten.append(sg.buffer(gen_w / 2 + kal_w + 2.0, cap_style="flat"))
+                        break
+        print(f"  derin yarma {len(derin)} parça, üstünden geçen {len(ustten)} yol parçası korunur")
+        if ustten:
+            U_ = ops.unary_union(ustten)
+            kes = [k_.difference(U_) for k_ in kes]
     if kes:
         Y_ = ops.unary_union(kes)
+        if guz_asfalt:
+            Y_ = Y_.difference(ops.unary_union(guz_asfalt).buffer(-0.2))
         A = A.difference(Y_).buffer(0)
         S = S.difference(Y_).buffer(0)
     A = A.intersection(koridor)

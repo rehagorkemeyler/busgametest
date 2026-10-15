@@ -315,6 +315,9 @@ def main():
                 return True
         return False
 
+    tunel_id = {w["id"]: (w["t"].get("tunnel") not in (None, "no") or w["t"].get("location") == "underground")
+                for w in json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))}
+    tavan_say = [0]
     for k_kp, kp in enumerate(geo["katmanli"]):
         xz, y = yogunlastir(kp["xz"], kp["y"], 4.0)
         W = kp["genislik"]
@@ -364,6 +367,25 @@ def main():
                                             py - 1.2, ((ax + bx) / 2, (az + bz) / 2))
                     pc.ekle_dunya("H3_Bordur", V, UV, Fc)
         else:
+            # kapalı tünel (OSM tunnel=yes, zeminden > 4 m aşağıda): beton tavan döşemesi (yol + 5,9 m; alt ve üst yüz).
+            # Üstü açık kalınca tünel içinden gökyüzü ve üstteki yolların alt yüzü görünüyordu.
+            if tunel_id.get(kp["id"]):
+                dd_ = np.asarray(kp["fark"], float)
+                derin_ = np.interp(np.linspace(0, len(dd_) - 1, len(xz)), np.arange(len(dd_)), dd_) < -4.0
+                bas_ = None
+                for i in range(len(xz) + 1):
+                    ic = i < len(xz) and derin_[i]
+                    if ic and bas_ is None:
+                        bas_ = i
+                    elif not ic and bas_ is not None:
+                        if i - bas_ >= 2:
+                            q, qy = xz[bas_:i], y[bas_:i] + 5.9
+                            V, UV, Fc = serit(q, qy, kenar + 0.4, kenar + 0.4, uv_v=0.5)
+                            pc.ekle_dunya("H3_Bordur", V, UV, Fc[:, ::-1])
+                            V, UV, Fc = serit(q, qy + 0.4, kenar + 0.4, kenar + 0.4, uv_v=0.5)
+                            pc.ekle_dunya("H3_Bordur", V, UV, Fc)
+                            tavan_say[0] += 1
+                        bas_ = None
             # alt geçit: iki yanda istinat duvarı (yol kotundan doğal araziye)
             for yon in (-1, 1):
                 kx = xz + nrm * kenar * yon
@@ -377,7 +399,7 @@ def main():
                     V, UV, Fc = yonlu_duvar(kx[i], kx[i + 1], y[i] - 0.2, y[i + 1] - 0.2, max(dogal[i], y[i]) + 0.6,
                                             max(dogal[i + 1], y[i + 1]) + 0.6, -nrm[i] * yon)
                     pc.ekle_dunya("H3_Bordur", V, UV, Fc)
-    print(f"  köprü/alt geçit {len(geo['katmanli'])} ({time.time() - t0:.0f} sn)")
+    print(f"  köprü/alt geçit {len(geo['katmanli'])}, tünel tavanı {tavan_say[0]} ({time.time() - t0:.0f} sn)")
 
     # --- kesik yol uçları: koridor sınırında kesilen asfaltın ucuna beton bariyer (0,9 m; Yol grubunda, çarpışmalı)
     sinir = koridor.boundary
