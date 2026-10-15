@@ -324,7 +324,7 @@ def yol_agi(arazi):
     # yay matrisi
     rows, cols, vals = [], [], []
     for i, j, l, guz in kenarlar:
-        c = LAMBDA * (3.0 if guz else 1.0) / max(l, 0.5)     # güzergâh daha yumuşak (sürüş)
+        c = LAMBDA * (8.0 if guz else 1.0) / max(l, 0.5)     # güzergâh daha yumuşak (sürüş; kısa arazi dalgaları %13+ eğim yapıyordu)
         rows += [i, j, i, j]
         cols += [i, j, j, i]
         vals += [c, c, -c, -c]

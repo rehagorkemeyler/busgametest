@@ -303,7 +303,19 @@ def main():
     print(f"  {gecit} yaya geçidi ({time.time() - t0:.0f} sn)")
 
     # --- köprüler ve alt geçitler
-    for kp in geo["katmanli"]:
+    # duvar/korkuluk başka bir yolun asfaltına düşmesin (birleşen ya da yan yana giren şeritler): her şeridin asfalt izi
+    iz_listesi = [LineString(kp["xz"]).buffer(kp["genislik"] / 2 - 0.2, cap_style="flat") for kp in geo["katmanli"]]
+    iz_agac = shapely.STRtree(iz_listesi)
+
+    def baska_yolda(k_kendi, x, z):
+        if shapely.contains_xy(A, x, z):
+            return True
+        for j in iz_agac.query(Point(x, z)):
+            if j != k_kendi and iz_listesi[j].contains(Point(x, z)):
+                return True
+        return False
+
+    for k_kp, kp in enumerate(geo["katmanli"]):
         xz, y = yogunlastir(kp["xz"], kp["y"], 4.0)
         W = kp["genislik"]
         kal = min(kp["kaldirim"], KOPRU_KALDIRIM)       # köprü/yarmada dar yürüme yolu (7 m'lik bulvar kaldırımı komşu şeritlere biniyordu)
@@ -326,6 +338,9 @@ def main():
                 kx = xz + nrm * kenar * yon
                 for i in range(len(xz) - 1):
                     if max(y[i], y[i + 1]) - max(zemin_y[i], zemin_y[i + 1]) < 1.2:
+                        continue
+                    mx, mz = (kx[i] + kx[i + 1]) / 2
+                    if baska_yolda(k_kp, mx, mz):
                         continue
                     bak = nrm[i] * yon
                     V, UV, Fc = yonlu_duvar(kx[i], kx[i + 1], y[i] - 1.2, y[i + 1] - 1.2, y[i] + 1.1, y[i + 1] + 1.1, bak)
@@ -356,10 +371,43 @@ def main():
                 for i in range(len(xz) - 1):
                     if max(dogal[i] - y[i], dogal[i + 1] - y[i + 1]) < 0.6:
                         continue
+                    mx, mz = (kx[i] + kx[i + 1]) / 2
+                    if baska_yolda(k_kp, mx, mz):
+                        continue
                     V, UV, Fc = yonlu_duvar(kx[i], kx[i + 1], y[i] - 0.2, y[i + 1] - 0.2, max(dogal[i], y[i]) + 0.6,
                                             max(dogal[i + 1], y[i + 1]) + 0.6, -nrm[i] * yon)
                     pc.ekle_dunya("H3_Bordur", V, UV, Fc)
     print(f"  köprü/alt geçit {len(geo['katmanli'])} ({time.time() - t0:.0f} sn)")
+
+    # --- kesik yol uçları: koridor sınırında kesilen asfaltın ucuna beton bariyer (0,9 m; Yol grubunda, çarpışmalı)
+    sinir = koridor.boundary
+    bariyer = 0
+    for gg in cokgenler(A):
+        x_ = gg.boundary.intersection(sinir.buffer(0.3))
+        for ln in getattr(x_, "geoms", [x_]):
+            if ln.is_empty or ln.geom_type not in ("LineString", "MultiLineString") or ln.length < 2.0:
+                continue
+            c = np.asarray(ln.coords)
+            a_, b_ = c[0], c[-1]
+            u = b_ - a_
+            L_ = np.linalg.norm(u)
+            if L_ < 2.0:
+                continue
+            u /= L_
+            n_ = np.array([u[1], -u[0]])
+            # koridorun içine doğru 0,6 m çek (asfaltın üstünde dursun)
+            if not shapely.contains_xy(koridor, *((a_ + b_) / 2 + n_ * 1.0)):
+                n_ = -n_
+            a_, b_ = a_ + n_ * 0.6, b_ + n_ * 0.6
+            ya, yb = yh(np.array([a_[0], b_[0]]), np.array([a_[1], b_[1]]))
+            for kay, yon in ((0.25, 1), (-0.25, -1)):
+                pa, pb = a_ + n_ * kay, b_ + n_ * kay
+                V, UV, Fc = yonlu_duvar(pa, pb, ya - 0.1, yb - 0.1, ya + 0.9, yb + 0.9, n_ * yon)
+                pc.ekle_dunya("H3_Bordur", V, UV, Fc)
+            V, UV, Fc = serit(np.array([a_, b_]), np.array([ya + 0.9, yb + 0.9]), 0.25, 0.25)
+            pc.ekle_dunya("H3_Bordur", V, UV, Fc)
+            bariyer += 1
+    print(f"  kesik yol ucuna bariyer {bariyer} ({time.time() - t0:.0f} sn)")
 
     # --- arazi: raster (yol+kaldırım maskesi, mesafe dönüşümü, alt geçit çukurları, yeşil alanlar)
     x0, z0, x1, z1 = koridor.bounds
@@ -481,6 +529,10 @@ def main():
         m = ~np.isnan(en) & (np.abs(en - V[:, 1]) < 1.5)
         V[m, 1] = en[m] + 0.025
         oturan += int(m.sum())
+        # altında asfalt olmayan çizgi üçgenleri atılır (koridor sınırında kesilen yolun çizgisi toprağa uzanıyordu)
+        Vv, UVv, Fv = c["H3_Cizgi"]
+        tut = m[Fv].all(axis=1)
+        c["H3_Cizgi"] = (Vv, UVv, Fv[tut])
     print(f"  asfalta oturan çizgi köşesi {oturan}")
     for (i, j), cikti in ciktilar.items():
         pickle.dump(cikti, open(os.path.join(klasor, f"yol_{i}_{j}.pkl"), "wb"))

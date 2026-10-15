@@ -209,6 +209,30 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0, eksen=No
         out = np.where(w > 0, s_ / np.maximum(w, 1), np.nan)
         out[~m] = np.nan
         return out
+    # şeridi asfalta sığdır: nokta asfaltın (zemin + köprü/tünel şeritleri) 1,3 m içinde değilse ofset eksene doğru azalır
+    # (sağa dönüşte şerit kaldırım köşesinden kesiyordu)
+    A_tum = shapely.union_all([A] + [LineString(kp["xz"]).buffer(float(kp["genislik"]) / 2, cap_style="flat")
+                                     for kp in geo["katmanli"]]).buffer(-1.3)
+    shapely.prepare(A_tum)
+
+    def sigdir(of, isaret):
+        out = of.copy()
+        for i in range(len(P)):
+            if np.isnan(out[i]):
+                continue
+            o_ = out[i]
+            for _ in range(24):
+                q = P[i] + N[i] * o_
+                if shapely.contains_xy(A_tum, q[0], q[1]):
+                    out[i] = o_
+                    break
+                o_ -= isaret * 0.5
+                if isaret * o_ < -W[i] / 2:
+                    break
+        return out
+
+    of1 = sigdir(of1, 1.0)
+    karsi = sigdir(karsi, -1.0)
     of1 = yumusat(of1)
     karsi = yumusat(karsi)
 

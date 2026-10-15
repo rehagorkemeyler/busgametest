@@ -166,6 +166,10 @@ def main():
         S = S.difference(Y_).buffer(0)
     A = A.intersection(koridor)
     S = S.intersection(koridor)
+    # koridor sınırında kalan asfalt kırıntıları (sınıra değen < 150 m² parçalar) atılır
+    sinir_ = koridor.boundary.buffer(2.0)
+    A = shapely.union_all([pg for pg in (A.geoms if isinstance(A, MultiPolygon) else [A])
+                           if not (pg.area < 150.0 and pg.intersects(sinir_))])
     # refüj: kaldırımın iki asfalt arasında kalan dar parçaları
     A05 = A.buffer(0.5)
     shapely.prepare(A05)

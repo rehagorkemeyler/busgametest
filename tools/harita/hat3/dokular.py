@@ -87,19 +87,17 @@ def doku_duz(rng, renk, n=512, ince=6, kaba=10):
 
 
 def doku_zemin(rng, n=512):
-    """Kent içi boş zemin (10 m'lik kare): eski beton plaklar, arada toprak ve kuru ot lekeleri (Ankara bina araları)."""
-    a = doku_duz(rng, (150, 148, 142), n, 6, 8)
-    p = 64                                              # 1,25 m plak
-    for j in range(0, n, p):
-        for i in range(0, n, p):
-            a[j:j + p, i:i + p] += rng.integers(-10, 10)
-        a[j:j + 2, :] *= 0.75
-    a[:, ::p] *= 0.75
-    a[:, 1::p] *= 0.85
-    m = gurultu(n, 22, rng, 1) > 0.9
-    a[m] = a[m] * 0.35 + np.array([128, 112, 86]) * 0.65   # toprak
-    m2 = gurultu(n, 10, rng, 1) > 1.4
-    a[m2] = a[m2] * 0.4 + np.array([110, 118, 70]) * 0.6   # ot
+    """Kent içi boş zemin (10 m'lik kare): sıkışmış toprak, kuru ot öbekleri, yer yer çakıl (Ankara bina araları).
+    Eski sürüm gri beton plaklardı; kaldırım kilit taşından ayırt edilmiyordu (kullanıcı: harita "bozuk" görünüyordu)."""
+    a = doku_duz(rng, (124, 108, 84), n, 7, 12)                       # toprak
+    a += gurultu(n, 60, rng, 8)[..., None]
+    ot = gurultu(n, 14, rng, 1) + 0.5 * gurultu(n, 4, rng, 1)
+    m = ot > 0.35
+    a[m] = a[m] * 0.45 + (np.array([112, 112, 66]) + gurultu(n, 2, rng, 10)[m][:, None]) * 0.55   # kuru ot
+    m2 = ot > 1.3
+    a[m2] = a[m2] * 0.5 + np.array([86, 100, 52]) * 0.5               # yeşil ot
+    cakil = rng.random((n, n)) > 0.97
+    a[cakil] = a[cakil] * 0.5 + np.array([150, 144, 132]) * 0.5
     return a
 
 

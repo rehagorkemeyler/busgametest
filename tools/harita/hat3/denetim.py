@@ -350,7 +350,33 @@ def main():
 
     # ---- güzergâh sürülebilirliği (otobüs şeridi, hat başına)
     rota_satirlari = []
+    # dikey yüzler (duvar, korkuluk, bordür, bina, simge): 2B izi kısa kenar → nokta testinde görünmez, ayrıca kesişimle
+    def dikeyler(T):
+        if len(T) == 0:
+            return np.zeros((0, 2, 2)), np.zeros((0, 2))
+        a2 = T[:, :, [0, 2]]
+        alan = np.abs((a2[:, 1, 0] - a2[:, 0, 0]) * (a2[:, 2, 1] - a2[:, 0, 1]) - (a2[:, 2, 0] - a2[:, 0, 0]) * (a2[:, 1, 1] - a2[:, 0, 1]))
+        m = alan < 1e-3
+        Tv = T[m]
+        # 2B izdeki en uzun kenar
+        seg, yy = [], []
+        for t in Tv:
+            p_ = t[:, [0, 2]]
+            dmax, ab = -1, None
+            for i_, j_ in ((0, 1), (1, 2), (0, 2)):
+                dd_ = np.linalg.norm(p_[i_] - p_[j_])
+                if dd_ > dmax:
+                    dmax, ab = dd_, (p_[i_], p_[j_])
+            if dmax < 0.05:
+                continue
+            seg.append(ab)
+            yy.append((t[:, 1].min(), t[:, 1].max()))
+        return np.array(seg), np.array(yy)
+    DV, DY = dikeyler(np.concatenate([x for x in (TD, TB, TS) if len(x)]))
+    trD = shapely.STRtree(shapely.linestrings(DV)) if len(DV) else None
     TO = np.concatenate([x for x in (TY, TD, TB, TS, TG) if len(x)])
+    TO_ad = np.concatenate([np.array(a_, dtype=object) for a_, x in ((["asfalt"] * len(TY), TY), (list(AD), TD), (["bina"] * len(TB), TB),
+                                                                   (["simge"] * len(TS), TS), (["ağaç"] * len(TG), TG)) if len(x)])
     trO = agac(TO)
     for hat_ad, h in kok.HATLAR.items():
         f = os.path.join(a.maps, h["klasor"], h["dosya"])
@@ -366,6 +392,7 @@ def main():
         tx = np.gradient(X); tz = np.gradient(Z); nn_ = np.hypot(tx, tz) + 1e-9
         nx, nz = tz / nn_, -tx / nn_
         sorun = {}
+        engel_ne = {}
         # 1) yüzey: şerit yüksekliğinin ±0,6 m'sinde asfalt
         pi, ti, yy = sorgu(agY, TY, np.stack([X, Z], 1))
         yuz = np.full(len(ss), np.nan)
@@ -375,21 +402,33 @@ def main():
         for k_ in np.nonzero(np.isnan(yuz))[0]:
             sorun.setdefault("yüzey yok", []).append(ss[k_])
         # 2) üst engel: otobüs genişliğinde (±1,6 m) yüzeyin 0,3–4,2 m üstü
-        for o_ in (-1.6, 0.0, 1.6):
+        for o_ in (-1.3, 0.0, 1.3):        # otobüs 2,55 m (±1,28); bordür/kaldırım kenarı engel değil (0,5 m eşiği)
             Pq = np.stack([X + nx * o_, Z + nz * o_], 1)
             pi, ti, yy = sorgu(trO, TO, Pq)
-            for k_, y_ in zip(pi, yy):
+            for k_, t_, y_ in zip(pi, ti, yy):
                 yv = yuz[k_] if not np.isnan(yuz[k_]) else Yl[k_]
-                if 0.3 < y_ - yv < 4.2:
+                if 0.5 < y_ - yv < 4.2:
                     sorun.setdefault("üst engel", []).append(ss[k_])
+                    engel_ne.setdefault(int(round(ss[k_])), set()).add(str(TO_ad[t_]).replace("H3_", ""))
         # 3) eğim (10 m) ve basamak (1 m ikinci fark)
         yv = np.where(np.isnan(yuz), Yl, yuz)
         e10 = np.abs(yv[10:] - yv[:-10]) / 10.0
-        for k_ in np.nonzero(e10 > 0.10)[0]:
-            sorun.setdefault("eğim > %10", []).append(ss[k_])
+        for k_ in np.nonzero(e10 > 0.13)[0]:          # gerçek arazi: Cinnah Caddesi üstü %12,8 (50 m)
+            sorun.setdefault("eğim > %13", []).append(ss[k_])
         kr = np.abs(yv[2:] - 2 * yv[1:-1] + yv[:-2])
         for k_ in np.nonzero(kr > 0.08)[0]:
             sorun.setdefault("basamak", []).append(ss[k_ + 1])
+        # 3b) duvar: otobüsün iki kenarı (±1,25 m) boyunca 1 m'lik parçalar dikey yüzleri kesiyor mu (yükseklik aralığı içinde)
+        if trD is not None:
+            for o_ in (-1.25, 1.25):
+                X_ = X + nx * o_
+                Z_ = Z + nz * o_
+                parca = shapely.linestrings(np.stack([np.stack([X_[:-1], Z_[:-1]], 1), np.stack([X_[1:], Z_[1:]], 1)], 1))
+                pi_, di_ = trD.query(parca, predicate="intersects")
+                for k_, j_ in zip(pi_, di_):
+                    taban = yv[k_]
+                    if DY[j_][1] > taban + 0.35 and DY[j_][0] < taban + 3.5:
+                        sorun.setdefault("duvar", []).append(ss[k_])
         # 4) şerit asfaltta (±1,3 m)
         for k_ in range(len(ss)):
             if not all(shapely.contains_xy(Ab, X[k_] + nx[k_] * o_, Z[k_] + nz[k_] * o_) for o_ in (-1.3, 0.0, 1.3)):
@@ -406,7 +445,12 @@ def main():
                     ar_[-1][1] = v
                 else:
                     ar_.append([v, v])
-            rota_satirlari.append(f"  {tur}: {len(liste)} m, {len(ar_)} yer: " + ", ".join(f"{a_}–{b_}" if b_ > a_ else f"{a_}" for a_, b_ in ar_[:40]))
+            def ek_(a_, b_):
+                if tur != "üst engel":
+                    return ""
+                ne = set().union(*[engel_ne.get(v, set()) for v in range(a_, b_ + 1)])
+                return "(" + "/".join(sorted(ne)) + ")"
+            rota_satirlari.append(f"  {tur}: {len(liste)} m, {len(ar_)} yer: " + ", ".join((f"{a_}–{b_}" if b_ > a_ else f"{a_}") + ek_(a_, b_) for a_, b_ in ar_[:40]))
     print("güzergâh sürülebilirliği:\n" + "\n".join(rota_satirlari))
 
     # kümeler: en yakın sokak ve durak
