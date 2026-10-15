@@ -151,6 +151,7 @@ def katman(t):
 # Bağlı yollar (rampa ↔ ana yol) birbirinin izi içinde aynı yükseklikte: rampa ancak ana yoldan ayrılınca yükselir.
 RAMPA_EGIM = 0.06
 ACIKLIK_Y = 6.4
+GUZ_EGIM = 0.085      # güzergâh en çok eğimi (Cinnah gerçekte ~%12 yerel; ortalama altı)
 
 
 def yol_agi(arazi):
@@ -284,6 +285,10 @@ def yol_agi(arazi):
                 W[i] = 400.0 if oran[k] >= 0.999 else 50.0
 
     komsu = [[] for _ in range(n)]
+    guz_dugum = np.zeros(n, bool)
+    for i, j, l, guz in kenarlar:
+        if guz:
+            guz_dugum[i] = guz_dugum[j] = True
     for i, j, l, guz in kenarlar:
         komsu[i].append((j, l))
         komsu[j].append((i, l))
@@ -306,7 +311,9 @@ def yol_agi(arazi):
                     heapq.heappush(pq, (nd, v))
         for v in gor:
             if W[v] < 1.01:
-                W[v] = w_min
+                # güzergâh yayları 8 kat sert: aynı rampa uzunluğu için bağlılık da 8 kat (yoksa güzergâh 400 m'lik düz bir
+                # kalas gibi tünel ağzına iniyor, araziden 11 m aşağıda kalıp çıkışta %17 tırmanıyordu)
+                W[v] = w_min * (8.0 if guz_dugum[v] else 1.0)
 
     hata_p = os.environ.get("HARITA_HATA")
     hata_p = np.array([float(v) for v in hata_p.split(",")]) if hata_p else None
@@ -362,6 +369,66 @@ def yol_agi(arazi):
         c = np.array(x.representative_point().coords[0])
         capraz.append((int(ya), int(yb), c))
     print(f"  bağlantısız kesişme {len(capraz)}")
+    # paralel bağlama: aynı katmanda, aynı yönde uzanan ve izleri üst üste binen iki yolun düğümleri (ör. güzergâh ile
+    # yanındaki bağlantı yolu) yaylarla birbirine bağlanır; yoksa güzergâhın yumuşatması onu komşusundan 1–2 m ayırıyor,
+    # örtüşen asfalt kaldırım/basamak gibi üstte kalıyordu
+    sa, sb, sy = [], [], []
+    for yi, w in enumerate(yollar):
+        if w["sinif"] == "ray":
+            continue
+        for a_, b_ in zip(w["d"], w["d"][1:]):
+            sa.append(a_)
+            sb.append(b_)
+            sy.append(yi)
+    sa, sb, sy = np.array(sa), np.array(sb), np.array(sy)
+    su = P[sb] - P[sa]
+    su /= np.maximum(np.linalg.norm(su, axis=1, keepdims=True), 1e-9)
+    tr_p = STRtree(shapely.linestrings(np.stack([P[sa], P[sb]], axis=1)))
+    tan = np.zeros((n, 2))
+    for a_, b_, u_ in zip(sa, sb, su):
+        tan[a_] += u_
+        tan[b_] += u_
+    tan /= np.maximum(np.linalg.norm(tan, axis=1, keepdims=True), 1e-9)
+    dyol = np.full(n, -1)
+    for yi, w in enumerate(yollar):
+        if w["sinif"] != "ray":
+            dyol[w["d"]] = yi
+    yari = np.array([w["yari"] for w in yollar])
+    adaylar = np.nonzero(dyol >= 0)[0]
+    qi, qk = tr_p.query(shapely.points(P[adaylar]), predicate="dwithin", distance=float(2 * yari.max()))
+    qi = adaylar[qi]
+    ya_, yb_ = dyol[qi], sy[qk]
+    ab = P[sb[qk]] - P[sa[qk]]
+    tt = np.clip(((P[qi] - P[sa[qk]]) * ab).sum(1) / np.maximum((ab ** 2).sum(1), 1e-9), 0, 1)
+    dist = np.linalg.norm(P[qi] - (P[sa[qk]] + ab * tt[:, None]), axis=1)
+    kat_ = np.array([w["katman"] for w in yollar])
+    m_ = ((ya_ != yb_) & (kat_[ya_] == kat_[yb_]) & (dist < yari[ya_] + yari[yb_] - 1.0)
+          & (np.abs((tan[qi] * su[qk]).sum(1)) > 0.8))
+    guz_yol = np.array([w["guzergah"] for w in yollar])
+    m_ &= guz_yol[ya_] | guz_yol[yb_]
+    # köprü/tünel rampalarında (gevşetilmiş, W < 1) bağlama yok: alt geçit çıkışı komşu zemin yoluna çekilip %15 oluyordu
+    m_ &= (W[qi] >= 0.99) & (W[sa[qk]] >= 0.99) & (W[sb[qk]] >= 0.99)
+    if capraz:
+        ic = np.nonzero(m_)[0]
+        uzak = shapely.STRtree(shapely.points(np.array([c for _, _, c in capraz]))).query(
+            shapely.points(P[qi[ic]]), predicate="dwithin", distance=100.0)[0]
+        m_[ic[np.unique(uzak)]] = False
+    bag = 0
+    cb = LAMBDA * 8.0 / SIKLIK
+    rows, cols, vals = [], [], []
+    for i, k, t_ in zip(qi[m_], qk[m_], tt[m_]):
+        for j, wj in ((sa[k], 1 - t_), (sb[k], t_)):
+            if j == i or wj < 0.05:
+                continue
+            c = cb * wj
+            rows += [i, j, i, j]
+            cols += [i, j, j, i]
+            vals += [c, c, -c, -c]
+            bag += 1
+    print(f"  paralel bağlama yayı {bag}")
+    if bag:
+        K = K + sparse.coo_matrix((vals, (rows, cols)), shape=(n, n)).tocsr()
+        y = coz(zemin + hedef, W)
     yol_cizgi = [LineString(P[w["d"]]) for w in yollar]
 
     def kesit_y(yi, p):
@@ -467,6 +534,59 @@ def yol_agi(arazi):
         hedef = hedef_y - zemin
         y = coz(hedef_y, W)
     iz("bağlı iz")
+
+    # 5) güzergâh eğim sınırı (GUZ_EGIM): hat boyunca sıralı güzergâh düğümlerinde |dy/ds| ≤ sınır, en az değişiklikle (ardışık
+    # çiftlerde fark yarı yarıya düzeltilir, yinelemeli). Açıklık kısıtı kavşak düğümünü çiviliyor, güzergâh tünel ağzına 400 m
+    # düz inip çıkışta %15 tırmanıyordu (Meclis alt geçidi). Sonuç güçlü hedef olur, komşu yollar yaylarla uyar.
+    degisen = 0
+    for ad, hg in kok.hatlar().items():
+        cizgi = LineString([kok.yerel(*p_) for p_ in hg["yol"]])
+        ids = set(hg["osm_yollar"])
+        dd = sorted({i for w in yollar if w["id"] in ids for i in w["d"]})
+        dd = np.array([i for i in dd if cizgi.distance(Point(P[i])) < 12.0])
+        if len(dd) < 3:
+            continue
+        sv = np.array([cizgi.project(Point(P[i])) for i in dd])
+        o_ = np.argsort(sv)
+        dd, sv = dd[o_], sv[o_]
+        yy = y[dd].copy()
+        ds = np.maximum(np.diff(sv), 0.5)
+        # arazinin kendisi dikse (Cinnah ~%12) o eğime izin: sınır = max(GUZ_EGIM, arazi eğimi (50 m ortalama) + %1,5)
+        zs = np.interp(np.arange(sv[0], sv[-1] + 1, 1.0), sv, zemin[dd])
+        k_ = 25
+        zp = np.pad(zs, k_, mode="edge")
+        zort = np.convolve(zp, np.ones(2 * k_ + 1) / (2 * k_ + 1), mode="valid")
+        ze = np.abs(np.gradient(zort))
+        sinir = np.maximum(GUZ_EGIM, np.interp((sv[:-1] + sv[1:]) / 2, np.arange(sv[0], sv[-1] + 1, 1.0), ze) + 0.015)
+        for _ in range(4000):
+            fark_ = np.diff(yy)
+            asim = np.abs(fark_) - sinir * ds
+            m = asim > 1e-3
+            if not m.any():
+                break
+            duz = np.where(m, np.sign(fark_) * asim / 2, 0.0)
+            yy[:-1] += duz
+            yy[1:] -= duz
+        ch = np.abs(yy - y[dd]) > 0.05
+        if ch.any():
+            hy = zemin + hedef
+            hy[dd[ch]] = yy[ch]
+            hedef[dd[ch]] = yy[ch] - zemin[dd[ch]]
+            W[dd[ch]] = 5000.0
+            degisen += int(ch.sum())
+            print(f"  {ad}: eğim sınırı {int(ch.sum())} düğüm, en çok {np.abs(yy - y[dd]).max():.1f} m")
+    if degisen:
+        y = coz(zemin + hedef, W)
+
+    hata_yol = os.environ.get("HARITA_YOL")
+    if hata_yol:
+        for w in yollar:
+            if str(w["id"]) in hata_yol.split(","):
+                dd = w["d"]
+                Ls = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(P[dd], axis=0), axis=1))])
+                for k, i in enumerate(dd):
+                    print(f"   YOL {w['id']} kat {w['katman']} s {Ls[k]:6.1f} {P[i].round(0)} y {y[i]:7.2f} zemin {zemin[i]:7.2f} "
+                          f"hedef {hedef[i]:6.2f} W {W[i]:7.1f} yollar {len(dugum_yol[i])}")
 
     # katmanlı sayılan düğümler (yüzeyler: köprü/alt geçit şeridi): hedefi ya da sonucu zeminden > 0,5 m farklı
     # rampanın gevşetilmiş (köprü/tünel çevresindeki) kısmı da araziden sapıyorsa katmanlıdır: yarma (istinat duvarı) ya da dolgu

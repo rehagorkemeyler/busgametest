@@ -10,15 +10,15 @@ using UnityEngine;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// tools/blender/harita_hat1.py'nin ürettiği yerleşim dosyasından Hat 1 haritasını sahneye kurar.
-    /// Menü: Ankara Bus > Hat 1 Haritasını Kur
+    /// tools/harita/hat3/yerlesim.py'nin ürettiği yerleşim dosyalarından hat haritasını sahneye kurar (Hat 1: 408 Atakule,
+    /// Hat 3: 408 Güneşevler; ikisi aynı parçaları paylaşır).
+    /// Menü: Ankara Bus > Hat 1 / Hat 3 Haritasını Kur
     /// </summary>
     public static class HaritaKurucu
     {
         private const string MapsRoot = "Assets/_Project/Maps/";
         private const string SkpPrefix = "SKP/"; // tools/blender/skp_donustur.py çıktıları
         private const string Hat1Path = MapsRoot + "Hat1/Hat1_Yerlesim.json";
-        private const string Hat2Path = MapsRoot + "Hat2/Hat2_Yerlesim.json";
         private const string Hat3Path = MapsRoot + "Hat3/Hat3_Yerlesim.json";
         private static string label = "Hat 1";
         private const string PalettePath = "Assets/_Project/Materials/T_AnkaraPalet.png";
@@ -124,15 +124,11 @@ namespace AnkaraBus.EditorTools
             public HaritaDokusuBilgi haritaDokusu;
         }
 
+        /// <summary>Hat 1 (EGO 408 Kızılay → Atakule): Hat 3'ün parçalı haritası, kendi rotası ve durakları. Işık bake'i yok.</summary>
         [MenuItem("Ankara Bus/Hat 1 Haritasını Kur")]
-        public static void Build() => BuildFrom(Hat1Path, "Hat1_KizilayAtakule", "Hat 1");
-
-        /// <summary>Hat 2 (Kızılay → Ulus): Hat 3'ün gerçek coğrafyalı haritasında ilk dört durak (tools/harita/hat3/yerlesim.py).
-        /// Eski stilize Hat 2 (harita_hat2.py) harita kenarları görünüyordu. Işık bake'i yok.</summary>
-        [MenuItem("Ankara Bus/Hat 2 Haritasını Kur")]
-        public static void BuildHat2()
+        public static void Build()
         {
-            BuildFrom(Hat2Path, "Hat2_KizilayUlus", "Hat 2");
+            BuildFrom(Hat1Path, "Hat1_KizilayAtakule", "Hat 1");
             GunesGercekZamanli();
         }
 

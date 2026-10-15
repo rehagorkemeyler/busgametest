@@ -6,11 +6,12 @@ using UnityEngine;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// Hat sahnelerinin (Hat 1, Hat 2) ışığını ve occlusion culling'ini bake eder.
+    /// Stilize hat sahnelerinin ışığını ve occlusion culling'ini bake eder.
     /// Işık: Mixed güneş, Subtractive mod. Bina ve yol gölgeleri lightmap'e işlenir; gerçek zamanlı gölgeyi
     /// yalnızca hareketli objeler (otobüs, trafik) verir. Mobilde gölge maliyetini otobüse indirir.
-    /// Menü: Ankara Bus > Hat 1 / Hat 2 Işık ve Occlusion Bake
-    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.HatIsikBake.BakeHat1Batch (veya BakeHat2Batch)
+    /// Gerçek coğrafyalı parçalı haritalar (Hat 1, Hat 3) bake edilmez (güneş gerçek zamanlı).
+    /// Menü: Ankara Bus > Hat 1 Işık ve Occlusion Bake
+    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.HatIsikBake.BakeHat1Batch
     /// </summary>
     public static class HatIsikBake
     {
@@ -21,12 +22,7 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Hat 1 Işık ve Occlusion Bake")]
         public static void BakeHat1Menu() => BakeMenu(Hat1SahneKurucu.ScenePath);
 
-        [MenuItem("Ankara Bus/Hat 2 Işık ve Occlusion Bake")]
-        public static void BakeHat2Menu() => BakeMenu(Hat2SahneKurucu.ScenePath);
-
         public static void BakeHat1Batch() => EditorApplication.Exit(Bake(Hat1SahneKurucu.ScenePath) ? 0 : 1);
-
-        public static void BakeHat2Batch() => EditorApplication.Exit(Bake(Hat2SahneKurucu.ScenePath) ? 0 : 1);
 
         private static void BakeMenu(string scenePath)
         {
@@ -42,7 +38,7 @@ namespace AnkaraBus.EditorTools
             var scene = EditorSceneManager.OpenScene(scenePath);
             if (Object.FindAnyObjectByType<AnkaraBus.Harita.ParcaAkisi>() != null)
             {
-                // gerçek coğrafyalı parçalı harita (Hat 2, Hat 3; 9 km): bake edilmez, güneş gerçek zamanlı
+                // gerçek coğrafyalı parçalı harita (Hat 1, Hat 3): bake edilmez, güneş gerçek zamanlı
                 Debug.LogWarning($"[HatBake] {scene.name}: parçalı harita, ışık bake'i yapılmaz (güneş gerçek zamanlı).");
                 return true;
             }

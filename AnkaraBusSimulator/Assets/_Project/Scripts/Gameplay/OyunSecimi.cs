@@ -11,6 +11,8 @@ namespace AnkaraBus.Gameplay
     {
         public class Hat
         {
+            /// <summary>Kart adı ("Hat_" + kimlik) ve en iyi puan anahtarı; iki 408 hattı aynı numarayı taşır.</summary>
+            public string kimlik;
             public string numara;
             public string ad;
             public string duraklar;
@@ -21,9 +23,8 @@ namespace AnkaraBus.Gameplay
 
         public static readonly Hat[] Hatlar =
         {
-            new Hat { numara = "1", ad = "Kızılay AVM – Atakule", duraklar = "Kızılay · Meclis · Kuğulu Park · Cinnah · Atakule", sahne = "Hat1_KizilayAtakule" },
-            new Hat { numara = "2", ad = "Kızılay – Ulus", duraklar = "Kızılay · Sıhhiye · Opera · Ulus", sahne = "Hat2_KizilayUlus" },
-            new Hat { numara = "408", ad = "Kızılay – Güneşevler", duraklar = "Kızılay · Ulus · Dışkapı · Altınpark · Hasköy · Güneşevler (18 durak, 8,9 km)", sahne = "Hat3_KizilayGunesevler" },
+            new Hat { kimlik = "408_atakule", numara = "408", ad = "Kızılay – Atakule", duraklar = "Kızılay · Meclis · Kuğulu Park · Cinnah · Botanik Parkı · Atakule (9 durak, 4,5 km)", sahne = "Hat1_KizilayAtakule" },
+            new Hat { kimlik = "408", numara = "408", ad = "Kızılay – Güneşevler", duraklar = "Kızılay · Ulus · Dışkapı · Altınpark · Hasköy · Güneşevler (18 durak, 8,9 km)", sahne = "Hat3_KizilayGunesevler" },
         };
 
         private const string HatKey = "SeciliHat";
@@ -81,6 +82,15 @@ namespace AnkaraBus.Gameplay
         }
 
         public static bool Kar => SeciliHava == Hava.Kar;
+
+        /// <summary>Sahnenin hat kimliği (Hatlar'da yoksa null).</summary>
+        public static string SahneKimligi(string sahne)
+        {
+            foreach (var h in Hatlar)
+                if (h.sahne == sahne)
+                    return h.kimlik;
+            return null;
+        }
 
         public static string EnIyiPuanAnahtari(string hatNumarasi) =>
             "EnIyiPuan_" + (string.IsNullOrEmpty(hatNumarasi) ? "Hat" : hatNumarasi);

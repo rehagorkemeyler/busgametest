@@ -24,7 +24,7 @@ namespace AnkaraBus.EditorTools
         {
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
-            foreach (var yol in new[] { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath })
+            foreach (var yol in new[] { Hat1SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath })
             {
                 var sahne = EditorSceneManager.OpenScene(yol);
                 int adet = 0;
@@ -52,7 +52,7 @@ namespace AnkaraBus.EditorTools
         {
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
-            foreach (var yol in new[] { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath })
+            foreach (var yol in new[] { Hat1SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath })
             {
                 var sahne = EditorSceneManager.OpenScene(yol);
                 int adet = 0;

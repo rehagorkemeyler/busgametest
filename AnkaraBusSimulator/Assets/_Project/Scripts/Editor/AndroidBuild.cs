@@ -12,7 +12,7 @@ namespace AnkaraBus.EditorTools
     /// <summary>
     /// Android APK build'leri. Performans build'i Development modunda alınır ve her sahneye
     /// build sırasında PerfBenchmark eklenir (sahne dosyaları değişmez): TestTrack bitince Hat 1 yüklenir.
-    /// Sürüş testi build'i Hat 1 ve Hat 2'yi içerir; OtomatikPilot eklenir, Hat 1 bitince Hat 2'ye geçer.
+    /// Sürüş testi build'i Hat 1 ve Hat 3'ü içerir; OtomatikPilot eklenir, Hat 1 bitince Hat 3'e geçer.
     /// Menü: Ankara Bus > Android > Performans APK'sı / Sürüş Testi APK'sı
     /// Komut satırı: -executeMethod AnkaraBus.EditorTools.AndroidBuild.PerfBuild (veya DriveTestBuild)
     /// </summary>
@@ -23,7 +23,7 @@ namespace AnkaraBus.EditorTools
 
         private enum Mode { None, Perf, DriveTest, SesPuan, MenuKamera, Y10 }
 
-        // Y10: menü başlatıcı olur (zaman/hava/kalite ayarlanır), Hat 1 → Hat 2 otomatik pilot + Y10Gozlemci
+        // Y10: menü başlatıcı olur (zaman/hava/kalite ayarlanır), Hat 1 → Hat 3 otomatik pilot + Y10Gozlemci
         private static OyunSecimi.Zaman y10Zaman;
         private static bool y10Yagmur;
         private static int y10Kalite = -1;
@@ -48,10 +48,9 @@ namespace AnkaraBus.EditorTools
         public static void MenuKameraBuild() => Build(Mode.MenuKamera, OyunSahneleri, MenuKameraApkPath);
 
         public const string OyunApkPath = "Builds/AnkaraBus.apk";
-        private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath,
-                                                            Hat3SahneKurucu.ScenePath };
+        private static readonly string[] OyunSahneleri = { AnaMenuKurucu.ScenePath, Hat1SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath };
 
-        /// <summary>Oynanabilir build: ana menü + Hat 1 + Hat 2, ölçüm ya da otomatik pilot eklenmez.</summary>
+        /// <summary>Oynanabilir build: ana menü + Hat 1 (408 Atakule) + Hat 3 (408 Güneşevler), ölçüm ya da otomatik pilot eklenmez.</summary>
         [MenuItem("Ankara Bus/Android/Oyun APK'sı")]
         public static void OyunBuild() => Build(Mode.None, OyunSahneleri, OyunApkPath);
 
@@ -96,7 +95,7 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Android/Sürüş Testi APK'sı")]
         public static void DriveTestBuildMenu() => DriveTestBuild();
 
-        private static readonly string[] DriveTestScenes = { Hat1SahneKurucu.ScenePath, Hat2SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath };
+        private static readonly string[] DriveTestScenes = { Hat1SahneKurucu.ScenePath, Hat3SahneKurucu.ScenePath };
 
         public static void DriveTestBuild() => Build(Mode.DriveTest, DriveTestScenes, DriveTestApkPath);
 
@@ -156,7 +155,7 @@ namespace AnkaraBus.EditorTools
                     }
                     var test = new GameObject("Y10Test");
                     SceneManager.MoveGameObjectToScene(test, scene);
-                    string sonraki = scene.path == Hat1SahneKurucu.ScenePath ? Path.GetFileNameWithoutExtension(Hat2SahneKurucu.ScenePath) : null;
+                    string sonraki = scene.path == Hat1SahneKurucu.ScenePath ? Path.GetFileNameWithoutExtension(Hat3SahneKurucu.ScenePath) : null;
                     test.AddComponent<Y11Hat>().Ayarla(sonraki);
                     return;
                 }

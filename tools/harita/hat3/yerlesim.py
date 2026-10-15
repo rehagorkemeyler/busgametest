@@ -44,18 +44,28 @@ class YolEkseni:
     def __init__(self, d):
         yollar = json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))
         P, Y = d["dugum_xz"], d["dugum_y"]
-        a, b = [], []
+        a, b, wid = [], [], []
         for w in yollar:
             if w["sinif"] == "ray":
                 continue
             for i, j in zip(w["d"], w["d"][1:]):
                 a.append(i)
                 b.append(j)
+                wid.append(w["id"])
         a, b = np.array(a), np.array(b)
+        self.W = np.array(wid)
+        self.tercih = None
         self.A, self.B, self.YA, self.YB = P[a], P[b], Y[a], Y[b]
         u = self.B - self.A
         self.u = u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-9)
         self.agac = shapely.STRtree(shapely.linestrings(np.stack([self.A, self.B], axis=1)))
+
+    def tercihli(self, idler):
+        """Hattın kendi OSM yollarını öne alan kopya: alt geçitte paralel üst geçidin ekseni şeridi 7 m yukarı taşımasın."""
+        e = object.__new__(YolEkseni)
+        e.__dict__.update(self.__dict__)
+        e.tercih = np.isin(self.W, list(idler))
+        return e
 
     def y(self, pts, yedek):
         pts = np.asarray(pts, float)
@@ -70,6 +80,8 @@ class YolEkseni:
         dist = np.linalg.norm(pts[pi] - (self.A[ki] + ab * tt[:, None]), axis=1)
         hiza = np.abs((self.u[ki] * t_[pi]).sum(1))
         yy = self.YA[ki] + (self.YB[ki] - self.YA[ki]) * tt
+        if self.tercih is not None:
+            dist = dist - 6.0 * self.tercih[ki]
         for p_, d_, h_, y_ in zip(pi, dist, hiza, yy):
             if h_ > 0.7 and d_ < en[p_]:
                 en[p_] = d_
@@ -89,6 +101,8 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0, eksen=No
         ham = np.vstack([ham[:1], np.stack([q, r], 1).reshape(-1, 2), ham[-1:]])
     guz = LineString(ham)
     guz_id = set(g["osm_yollar"])
+    if eksen is not None:
+        eksen = eksen.tercihli(guz_id)
 
     # güzergâh yollarının şerit bilgisi (s'ye göre)
     guz_yol = {}

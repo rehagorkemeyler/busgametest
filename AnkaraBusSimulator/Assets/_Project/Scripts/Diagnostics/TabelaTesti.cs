@@ -52,7 +52,7 @@ namespace AnkaraBus.Diagnostics
             tracker = bus.GetComponent<RouteTracker>();
             olcu = OtobusOlcusu.Olc(bus);
             otobus = KapiTesti.KisaAd(bus.name);
-            hat = SceneManager.GetActiveScene().name.StartsWith("Hat1") ? "hat1" : "hat2";
+            hat = SceneManager.GetActiveScene().name.StartsWith("Hat1") ? "hat1" : "hat3";
             var livery = bus.GetComponent<BusLivery>();
             var kor = bus.GetComponent<KorukluOtobus>();
             bus.Handbrake = true;

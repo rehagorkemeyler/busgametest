@@ -64,7 +64,7 @@ namespace AnkaraBus.Diagnostics
             yield return new WaitForSeconds(2f);
             yield return Kamera();
             yield return HattanMenuye();
-            yield return Hat2VeHatSonu();
+            yield return Hat3VeHatSonu();
 
             Log($"SONUC hata={hata}");
             Log("BITTI");
@@ -156,7 +156,7 @@ namespace AnkaraBus.Diagnostics
             Check(toplam > 0 && dogru == toplam, $"bina ön cepheleri merkeze bakıyor ({dogru}/{toplam})");
 
             // Kartlarda en iyi puan
-            foreach (var kart in new[] { "Hat_1", "Hat_2" })
+            foreach (var kart in new[] { "Hat_408_atakule", "Hat_408" })
             {
                 var go = GameObject.Find(kart);
                 var eniyi = go != null ? go.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnIyi") : null;
@@ -165,7 +165,7 @@ namespace AnkaraBus.Diagnostics
             }
 
             // Hat 1, Özel Halk ile başla
-            Bas("Hat_1");
+            Bas("Hat_408_atakule");
             Bas("Özel Halk");
             yield return null;
             Bas("SEFERE BAŞLA");
@@ -332,13 +332,13 @@ namespace AnkaraBus.Diagnostics
             yield return new WaitForSeconds(1f);
         }
 
-        private IEnumerator Hat2VeHatSonu()
+        private IEnumerator Hat3VeHatSonu()
         {
-            Bas("Hat_2");
+            Bas("Hat_408");
             yield return null;
             Bas("SEFERE BAŞLA");
-            yield return SahneyiBekle("Hat2_KizilayUlus");
-            Check(SceneManager.GetActiveScene().name == "Hat2_KizilayUlus", "menüden Hat 2 açıldı");
+            yield return SahneyiBekle("Hat3_KizilayGunesevler");
+            Check(SceneManager.GetActiveScene().name == "Hat3_KizilayGunesevler", "menüden 408 Güneşevler açıldı");
             yield return new WaitForSeconds(2f);
 
             // Hat sonunu tetikle (özet paneli için hattın bitmiş olması yeterli)
@@ -347,14 +347,14 @@ namespace AnkaraBus.Diagnostics
             m?.Invoke(puanlama, null);
             yield return new WaitForSeconds(1f);
             var panel = GameObject.Find("SeferOzeti");
-            Check(panel != null, "Hat 2: hat sonu özeti açıldı");
+            Check(panel != null, "408 Güneşevler: hat sonu özeti açıldı");
             Check(Bas("MENÜ"), "hat sonu MENÜ düğmesi var");
             yield return SahneyiBekle("AnaMenu");
             Check(SceneManager.GetActiveScene().name == "AnaMenu", "hat sonu MENÜ menüye döndü");
             yield return new WaitForSeconds(1f);
-            var eniyi2 = GameObject.Find("Hat_2")?.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnIyi");
+            var eniyi2 = GameObject.Find("Hat_408")?.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnIyi");
             var yazi = eniyi2 != null ? eniyi2.GetComponentInChildren<Text>(true) : null;
-            Log($"Hat 2 kartı dönüşte: '{yazi?.text}'");
+            Log($"408 Güneşevler kartı dönüşte: '{yazi?.text}'");
         }
 
         // ---------------- Yardımcılar ----------------

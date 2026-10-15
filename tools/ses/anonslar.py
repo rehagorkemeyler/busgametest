@@ -20,15 +20,15 @@ import wave
 
 import numpy as np
 
-DURAKLAR = ["Kızılay AVM", "Meclis", "Kuğulu Park", "Cinnah", "Atakule",   # Hat 1
-            "Kızılay", "Sıhhiye", "Opera", "Ulus",                         # Hat 2
-            # Hat 3 (EGO 408 Kızılay → Güneşevler; Kızılay, Sıhhiye, Opera, Ulus yukarıda)
-            "Yıba Çarşısı", "Dışkapı Hastanesi", "Veteriner Fakültesi", "Çağdaş Sokak",
+DURAKLAR = [# Hat 1 (EGO 408 Kızılay → Atakule; Kızılay aşağıda)
+            "Güvenpark", "Meclis", "Kuğulu Park", "Farabi", "Kırkpınar Sokağı", "Pilot Sokağı", "Botanik Parkı", "Atakule",
+            # Hat 3 (EGO 408 Kızılay → Güneşevler)
+            "Kızılay", "Sıhhiye", "Opera", "Ulus", "Yıba Çarşısı", "Dışkapı Hastanesi", "Veteriner Fakültesi", "Çağdaş Sokak",
             "Atatürk Anadolu İmam Hatip Lisesi", "Altınpark", "Subayevleri", "Hasköy Akşemsettin Camii", "Pazar Yeri",
             "Esenevler Anadolu Lisesi", "Çeyizciler", "Çiçek Taksi", "Güneşevler Spor Tesisleri", "Güneşevler"]
 # TTS'in doğru okuması için yazılış (ekranda/dosya adında asıl ad kullanılır)
 # (Whisper ile denendi: "Sıradaki durak: Ulus" → "buluz", virgülle doğru; AVM, Atakule, Cinnah, Sıhhiye ayrı yazılınca doğru)
-OKUNUS = {"Kızılay AVM": "Kızılay Ave Me", "Atakule": "Ata kule", "Cinnah": "Cinnâh", "Sıhhiye": "Sıhiye"}
+OKUNUS = {"Atakule": "Ata kule", "Sıhhiye": "Sıhiye"}
 HAT_SONU = "Son durağa geldik. İnerken eşyalarınızı unutmayınız. İyi günler dileriz."
 SR = 48000
 HEDEF_RMS = 0.12

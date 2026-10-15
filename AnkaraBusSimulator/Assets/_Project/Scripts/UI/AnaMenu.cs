@@ -53,7 +53,7 @@ namespace AnkaraBus.UI
             "BMC Procity 12LF: Proton Bus Simulator modu (izinle)\n" +
             "Körüklü versiyon (BMC Procity 18) bu modelden türetildi\n\n" +
             "Yolcular: Quaternius · Ultimate Modular Men / Women (CC0) · quaternius.com\n\n" +
-            "Hat 2–408 haritası: © OpenStreetMap katkıcıları (ODbL) · openstreetmap.org/copyright\n" +
+            "408 haritaları: © OpenStreetMap katkıcıları (ODbL) · openstreetmap.org/copyright\n" +
             "Arazi: AWS Terrain Tiles (SRTM/NASA, Copernicus) · durak listesi: EGO Genel Müdürlüğü\n\n" +
             "Kapatmak için dokun";
         private bool basladi;
@@ -118,7 +118,7 @@ namespace AnkaraBus.UI
                 int index = i;
                 var hat = OyunSecimi.Hatlar[i];
                 bool mevcut = Application.CanStreamedLevelBeLoaded(hat.sahne);
-                var kart = Box(root, "Hat_" + hat.numara, new Vector2(0f, 1f), new Vector2(470f, -290f - i * aralik + (aralik - 140f) * 0.5f),
+                var kart = Box(root, "Hat_" + hat.kimlik, new Vector2(0f, 1f), new Vector2(470f, -290f - i * aralik + (aralik - 140f) * 0.5f),
                     new Vector2(860f, kartBoy), Card);
                 var image = kart.GetComponent<Image>();
                 hatKartlari.Add(image);
@@ -135,7 +135,7 @@ namespace AnkaraBus.UI
                 var duraklar = Label(Element(kart, "Duraklar", new Vector2(0f, 1f), new Vector2(480f, -72f * k), new Vector2(680f, 32f * k)),
                     hat.duraklar, Mathf.RoundToInt(24 * k), TextAnchor.MiddleLeft, Dim);
                 duraklar.fontStyle = FontStyle.Normal;
-                int? enIyi = OyunSecimi.EnIyiPuan(hat.numara);
+                int? enIyi = OyunSecimi.EnIyiPuan(hat.kimlik);
                 var puan = Label(Element(kart, "EnIyi", new Vector2(0f, 1f), new Vector2(480f, -104f * k), new Vector2(680f, 30f * k)),
                     !mevcut ? "Sahne build'de yok" : enIyi.HasValue ? $"En iyi puan: {enIyi.Value}" : "Henüz oynanmadı",
                     Mathf.RoundToInt(24 * k), TextAnchor.MiddleLeft, enIyi.HasValue ? Active : Dim);

@@ -1,44 +1,43 @@
-Harita denetimi (2026-10-15 23:23): örnek 335122 nokta (2 m), şerit örneği 43106
-nokta sayıları: delik 0, basamak 14327, eğim>%12 10475, açıklık 1–5.0 m 627, çakışma 0,3–1 m 976, dal<4.2 m 310, şerit asfalt dışı 760/43106, kesik yol ucu 243, uç köşe 0, nesne 1
-kümeler: aciklik 32, basamak 703, kesik 211, serit 40, egim 392, nesne 1, dal 14, cakisma 187
+Harita denetimi (2026-10-15 23:49): örnek 334255 nokta (2 m), şerit örneği 43123
+nokta sayıları: delik 1, basamak 11752, eğim>%12 8775, açıklık 1–5.0 m 764, çakışma 0,3–1 m 1018, dal<4.2 m 372, şerit asfalt dışı 855/43123, kesik yol ucu 243, uç köşe 0, nesne 1
+kümeler: aciklik 32, delik 1, basamak 701, kesik 211, serit 42, egim 388, nesne 1, dal 15, cakisma 190
 
 Güzergâh sürülebilirliği (otobüs şeridi):
 408_gunesevler (8889 m):
-  yüzey yok: 32 m, 8 yer: 435–442, 462, 608–616, 3438–3442, 4403–4404, 4423–4424, 6462–6466, 7161
-  üst engel: 56 m, 7 yer: 609–616(Bordur/Kaldirim/asfalt), 4099–4106(Kaldirim/asfalt), 4372–4378(Kaldirim/asfalt), 4383(asfalt), 4396–4424(Kaldirim/asfalt), 4577–4578(Kaldirim), 4582–4583(Kaldirim)
-  eğim > %13: 30 m, 5 yer: 599–616, 3189–3190, 4383, 4402, 4414–4422
-  basamak: 113 m, 62 yer: 434–437, 442–445, 607–617, 1068, 1402–1403, 1974–1977, 2197, 2439, 2809–2811, 2832, 2842–2846, 2851, 2870, 2902–2903, 2942, 2994–2996, 3200, 4098–4099, 4383–4384, 4389–4390, 4402–4405, 4422–4425, 4979, 5091, 5101–5102, 5246, 5254, 5325, 5331–5332, 5410, 5517–5519, 5773–5776, 6013, 6174, 6322–6323, 6349–6351, 6461–6462, 6848–6849, 6973, 7058
-  duvar: 13 m, 10 yer: 1313, 3157, 4119, 4371–4373, 4576, 4583, 4655, 6281–6284, 6462–6463, 7541
-  asfalt dışı: 121 m, 17 yer: 441–442, 453–471, 1246, 1288–1290, 1309–1312, 1619–1622, 3343–3349, 3435–3442, 4315–4321, 4648–4655, 5980–5985, 6215–6216, 6461–6471, 7037–7039, 7281–7288, 7423–7444, 7536–7541
+  yüzey yok: 19 m, 4 yer: 485–491, 1246–1247, 3438–3442, 6462–6466
+  üst engel: 47 m, 6 yer: 1408–1409(Kaldirim), 4258–4265(Kaldirim), 4372–4385(Kaldirim/asfalt), 4389–4408(asfalt), 4577–4578(Kaldirim), 4582–4583(Kaldirim)
+  basamak: 41 m, 20 yer: 1414–1416, 1974–1978, 2136–2139, 2194–2205, 2375, 2437–2439, 2995–2996, 4431–4433, 4734, 5101, 5246, 5254–5255, 5328–5329, 6173–6174, 6322–6323, 6461–6462, 6982, 7072–7074, 7483–7484, 7731
+  duvar: 15 m, 12 yer: 454, 476, 490, 1407, 1417, 3157, 4257, 4372–4373, 4576, 4583, 6281–6284, 6462–6463
+  asfalt dışı: 118 m, 15 yer: 453–456, 475–494, 1246–1248, 1619–1622, 3343–3349, 3435–3442, 4315–4321, 4648–4655, 5980–5985, 6215–6216, 6461–6471, 7038–7039, 7281–7288, 7423–7444, 7536–7541
 408_atakule (4503 m):
-  yüzey yok: 8 m, 3 yer: 1285–1288, 3422–3423, 4494–4495
-  üst engel: 5 m, 1 yer: 2034–2038(Kaldirim)
-  eğim > %13: 28 m, 6 yer: 3255, 3335–3341, 3419–3428, 3483–3487, 3504–3508, 3632–3634
-  basamak: 39 m, 27 yer: 1374, 1416, 1814, 2251, 2272, 2714, 2901–2902, 2907–2913, 2922, 3180–3181, 3258, 3307, 3329, 3340, 3345, 3410–3413, 3421–3424, 3444, 3505–3506, 3626, 3632–3633, 3653, 3878, 4039, 4084, 4365, 4371
-  duvar: 3 m, 3 yer: 1283, 1557, 4492
-  asfalt dışı: 34 m, 6 yer: 969–978, 1283–1288, 1547–1549, 2323–2326, 2894–2900, 4492–4495
+  yüzey yok: 14 m, 4 yer: 971–977, 1286–1289, 1349, 4495–4496
+  üst engel: 33 m, 3 yer: 962–963(Kaldirim), 1697–1718(Kaldirim), 1812–1821(Kaldirim/asfalt)
+  eğim > %13: 47 m, 7 yer: 3336–3343, 3419–3429, 3440–3445, 3482–3485, 3517, 3530–3540, 3562–3567
+  basamak: 41 m, 25 yer: 959–960, 1125, 1910, 2162–2166, 2270–2275, 2714, 2789, 2953, 3179–3184, 3226, 3286, 3306–3307, 3314, 3340, 3397, 3413–3414, 3423, 3444, 3567–3569, 3653, 3878, 4084, 4138, 4365–4366, 4371
+  duvar: 10 m, 9 yer: 969–971, 981, 1283, 1558, 1696, 1821, 2327, 3567, 4492
+  asfalt dışı: 47 m, 8 yer: 968–983, 1283–1289, 1348–1349, 1547–1549, 2070–2073, 2322–2326, 2894–2900, 4492–4495
 
 tür | nokta | değer | konum (x, z) | güzergâha m | sokak | en yakın durak | ek
-aciklik | 37 | 1.95 | (126, -1556) | 1 | Atatürk Bulvarı | Meclis+444m | yol
-aciklik | 4 | 4.89 | (832, 3829) | 1 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+118m | yol
-aciklik | 9 | 1.08 | (800, 3782) | 1 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+61m | yol
-aciklik | 6 | 1.61 | (87, -1450) | 4 | Atatürk Bulvarı | Meclis+330m | yol
-aciklik | 237 | 1.0 | (970, 4038) | 4 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+337m | yol
-aciklik | 10 | 1.36 | (183, -1698) | 4 | Atatürk Bulvarı | Meclis+597m | yol
-aciklik | 4 | 4.34 | (405, -2523) | 6 | Cinnah Caddesi | Kuğulu Park+71m | yol
-aciklik | 8 | 1.04 | (315, 3045) | 6 | Çankırı Caddesi | Yıba Çarşısı+269m | yol
-aciklik | 1 | 1.01 | (362, -2200) | 13 | Atatürk Bulvarı | Kuğulu Park+255m | yol
-aciklik | 6 | 1.84 | (401, -2355) | 14 | Atatürk Bulvarı | Kuğulu Park+98m | yol
-aciklik | 13 | 4.28 | (860, 3898) | 16 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+190m | yol
-aciklik | 54 | 1.11 | (1041, 4156) | 16 | trunk | Çağdaş Sokak+202m | yol
-aciklik | 16 | 4.56 | (7, 616) | 22 | Celal Bayar Bulvarı | Sıhhiye+151m | simge
-aciklik | 1 | 2.83 | (906, 3996) | 32 | trunk | Veteriner Fakültesi+299m | yol
-aciklik | 26 | 3.34 | (-130, 1270) | 71 | primary_link | Opera+216m | yol
-aciklik | 6 | 4.84 | (-44, 597) | 75 | Strazburg Caddesi | Sıhhiye+177m | simge
+aciklik | 70 | 3.9 | (162, -1656) | 0 | Atatürk Bulvarı | Meclis+549m | yol
+aciklik | 26 | 3.54 | (894, 3916) | 2 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+224m | yol
+aciklik | 169 | 2.51 | (136, -1571) | 5 | Atatürk Bulvarı | Meclis+461m | yol
+aciklik | 6 | 4.25 | (405, -2522) | 6 | Cinnah Caddesi | Kuğulu Park+70m | yol
+aciklik | 3 | 1.04 | (313, 3042) | 6 | Çankırı Caddesi | Yıba Çarşısı+266m | yol
+aciklik | 61 | 1.12 | (370, -2249) | 8 | primary | Kuğulu Park+206m | yol
+aciklik | 135 | 1.01 | (959, 4034) | 11 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+347m | yol
+aciklik | 1 | 0.29 | (8, 148) | 12 | Atatürk Bulvarı | Kızılay+49m | simge
+aciklik | 10 | 1.69 | (398, -2356) | 12 | Cinnah Caddesi | Kuğulu Park+97m | yol
+aciklik | 47 | 1.01 | (362, -2190) | 16 | Atatürk Bulvarı | Kuğulu Park+265m | yol
+aciklik | 1 | 2.21 | (166, -1726) | 21 | service | Meclis+617m | simge
+aciklik | 3 | 1.13 | (54, 604) | 22 | Celal Bayar Bulvarı | Sıhhiye+170m | yol
+aciklik | 1 | 2.56 | (906, 3996) | 32 | trunk | Veteriner Fakültesi+299m | yol
+aciklik | 35 | 2.75 | (-131, 1270) | 73 | primary_link | Opera+216m | yol
+aciklik | 7 | 1.64 | (24, 1228) | 87 | residential | Opera+231m | yol
 aciklik | 4 | 1.2 | (-70, 622) | 96 | primary_link | Sıhhiye+164m | yol
-aciklik | 31 | 1.03 | (-99, 547) | 139 | service | Sıhhiye+243m | yol
+aciklik | 30 | 1.04 | (-99, 548) | 138 | service | Sıhhiye+243m | yol
 aciklik | 1 | 1.01 | (506, -2672) | 142 | Atatürk Bulvarı | Kuğulu Park+244m | yol
-aciklik | 2 | 1.1 | (-307, 1264) | 235 | Talatpaşa Bulvarı | Opera+347m | yol
+aciklik | 1 | 2.23 | (28, -1784) | 171 | service | Meclis+645m | simge
+aciklik | 2 | 1.09 | (-307, 1264) | 235 | Talatpaşa Bulvarı | Opera+347m | yol
 aciklik | 12 | 1.1 | (105, 3279) | 267 | primary_link | Dışkapı Hastanesi+451m | yol
 aciklik | 25 | 1.07 | (298, -175) | 348 | secondary_link | Kızılay+349m | yol
 aciklik | 2 | 2.24 | (329, -247) | 389 | secondary_link | Kızılay+414m | yol
@@ -51,255 +50,256 @@ aciklik | 1 | 1.02 | (-232, -3112) | 449 | Güvenlik Caddesi | Farabi+518m | yol
 aciklik | 1 | 1.04 | (2022, 5870) | 449 | residential | Hasköy Akşemsettin Camii+453m | yol
 aciklik | 95 | 1.07 | (462, 752) | 451 | A.Adnan Saygun Caddesi | Sıhhiye+458m | yol
 aciklik | 3 | 1.01 | (719, 4617) | 555 | Fatih Caddesi | Çağdaş Sokak+565m | yol
+delik | 1 | None | (114, -1466) | 22 | service | Meclis+355m | 
+basamak | 20 | 0.14 | (185, -3286) | 0 | Cinnah Caddesi | Farabi+319m | 
 basamak | 1 | 0.1 | (454, 3378) | 0 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+101m | 
-basamak | 9 | 0.2 | (-22, 1839) | 0 | Atatürk Bulvarı | Ulus+106m | 
-basamak | 3 | 0.11 | (3743, 5167) | 0 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+22m | 
-basamak | 23 | 0.23 | (302, -2885) | 1 | Cinnah Caddesi | Farabi+99m | 
-basamak | 38 | 0.26 | (207, -3209) | 1 | Cinnah Caddesi | Farabi+239m | 
-basamak | 46 | 0.51 | (346, -2732) | 1 | Cinnah Caddesi | Farabi+259m | 
-basamak | 9 | 0.24 | (2338, 5523) | 1 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+117m | 
-basamak | 43 | 0.24 | (40, -3829) | 1 | Cinnah Caddesi | Pilot Sokağı+6m | 
-basamak | 293 | 0.46 | (-108, 1014) | 1 | Atatürk Bulvarı | Sıhhiye+271m | 
-basamak | 26 | 0.29 | (183, -3289) | 1 | Cinnah Caddesi | Farabi+322m | 
-basamak | 21 | 0.21 | (324, -2810) | 1 | Cinnah Caddesi | Farabi+177m | 
-basamak | 3 | 0.16 | (71, -1425) | 1 | Atatürk Bulvarı | Meclis+301m | 
-basamak | 237 | 0.56 | (114, 2729) | 1 | Çankırı Caddesi | Yıba Çarşısı+105m | 
-basamak | 46 | 0.22 | (-8, 2108) | 2 | Çankırı Caddesi | Ulus+164m | 
-basamak | 3 | 0.13 | (68, -3709) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+78m | 
-basamak | 18 | 0.2 | (80, -3646) | 2 | Willy Brandt Sokak | Kırkpınar Sokağı+14m | 
-basamak | 7 | 0.14 | (31, -3903) | 2 | Cinnah Caddesi | Pilot Sokağı+76m | 
-basamak | 7 | 0.11 | (-20, 1638) | 2 | Atatürk Bulvarı | Opera+183m | 
-basamak | 8 | 0.26 | (-18, 1897) | 3 | Kızılbey Caddesi | Ulus+48m | 
-basamak | 13 | 0.23 | (1175, 4286) | 3 | Çağdaş Sokak | Çağdaş Sokak+15m | 
-basamak | 72 | 0.49 | (4206, 5020) | 3 | Mehmet Akif Ersoy Caddesi | Güneşevler+26m | 
-basamak | 21 | 0.26 | (145, -3411) | 3 | Kuşkondu Sokak | Kırkpınar Sokağı+230m | 
-basamak | 73 | 0.29 | (16, 2483) | 3 | Çankırı Caddesi | Yıba Çarşısı+369m | 
-basamak | 13 | 0.23 | (111, -3527) | 3 | Kırkpınar Sokak | Kırkpınar Sokağı+109m | 
-basamak | 5 | 0.14 | (2431, 5350) | 3 | Malazgirt Caddesi | Pazar Yeri+215m | 
-basamak | 2 | 0.17 | (3686, 5181) | 3 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+81m | 
-basamak | 30 | 0.35 | (228, -3130) | 4 | Cinnah Caddesi | Farabi+157m | 
-basamak | 7 | 0.17 | (3123, 5379) | 4 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+233m | 
-basamak | 444 | 0.63 | (2720, 5316) | 4 | 126. Sokak | Çeyizciler+75m | 
-basamak | 24 | 0.49 | (-39, -937) | 4 | Akay Kavşağı | Meclis+204m | 
-basamak | 5 | 0.18 | (4086, 5050) | 4 | Mehmet Akif Ersoy Caddesi | Güneşevler+150m | 
-basamak | 14 | 0.5 | (1817, 5086) | 4 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+272m | 
-basamak | 12 | 0.36 | (372, 3264) | 4 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+241m | 
-basamak | 24 | 0.27 | (396, -2513) | 4 | Cinnah Caddesi | Kuğulu Park+61m | 
-basamak | 1 | 0.12 | (370, -2294) | 5 | service | Kuğulu Park+161m | 
-basamak | 88 | 0.84 | (379, -2616) | 5 | Cinnah Caddesi | Kuğulu Park+164m | 
-basamak | 68 | 0.29 | (-27, 1730) | 5 | Atatürk Bulvarı | Ulus+216m | 
-basamak | 245 | 0.58 | (317, -2067) | 5 | Atatürk Bulvarı | Kuğulu Park+394m | 
-basamak | 1 | 0.12 | (234, -3100) | 6 | Cinnah Caddesi | Farabi+127m | 
-basamak | 1 | 0.1 | (-28, 1518) | 6 | Atatürk Bulvarı | Opera+64m | 
-basamak | 20 | 0.25 | (3581, 5224) | 6 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+194m | 
-basamak | 27 | 0.33 | (3420, 5280) | 6 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+365m | 
-basamak | 25 | 0.22 | (2463, 5290) | 6 | residential | Pazar Yeri+148m | 
-basamak | 30 | 0.34 | (-5, 2357) | 6 | Çankırı Caddesi | Ulus+412m | 
-basamak | 6 | 0.26 | (-5, 2269) | 6 | Çankırı Caddesi | Ulus+324m | 
-basamak | 22 | 0.13 | (-30, 846) | 6 | Atatürk Bulvarı | Sıhhiye+87m | 
-basamak | 177 | 0.63 | (969, 4019) | 6 | trunk | Çağdaş Sokak+352m | 
-basamak | 10 | 0.36 | (-5, 2312) | 6 | Çankırı Caddesi | Ulus+367m | 
-basamak | 74 | 0.79 | (1685, 4869) | 7 | Şehit Ömer Halisdemir Bulvarı | Altınpark+54m | 
-basamak | 252 | 0.5 | (1379, 4509) | 7 | Şehit Ömer Halisdemir Bulvarı | Atatürk Anadolu İmam Hatip Lisesi+87m | 
-basamak | 14 | 0.19 | (9, 686) | 7 | Atatürk Bulvarı | Sıhhiye+81m | 
-basamak | 35 | 0.42 | (161, -1633) | 7 | Atatürk Bulvarı | Meclis+528m | 
-basamak | 66 | 0.65 | (327, 3071) | 7 | Çankırı Caddesi | Yıba Çarşısı+297m | 
-basamak | 92 | 0.73 | (1947, 5292) | 7 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+32m | 
-basamak | 70 | 0.44 | (277, -2996) | 7 | Cinnah Caddesi | Farabi+19m | 
-basamak | 85 | 0.27 | (-39, 1356) | 7 | Atatürk Bulvarı | Opera+101m | 
-basamak | 19 | 0.14 | (3970, 5095) | 7 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+216m | 
-basamak | 62 | 0.62 | (3, 104) | 7 | Atatürk Bulvarı | Kızılay+16m | 
-basamak | 90 | 0.52 | (1099, 4219) | 7 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+116m | 
-basamak | 49 | 0.37 | (686, 3668) | 8 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+101m | 
-basamak | 141 | 0.33 | (1564, 4703) | 8 | Şehit Ömer Halisdemir Bulvarı | Altınpark+154m | 
-basamak | 56 | 0.4 | (3321, 5317) | 8 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+438m | 
-basamak | 62 | 0.61 | (56, 390) | 8 | Atatürk Bulvarı | Kızılay+294m | 
-basamak | 7 | 0.17 | (45, 306) | 8 | Atatürk Bulvarı | Kızılay+210m | 
-basamak | 3 | 0.17 | (235, -1874) | 8 | Atatürk Bulvarı | Kuğulu Park+602m | 
-basamak | 2 | 0.11 | (175, -1716) | 10 | Atatürk Bulvarı | Meclis+610m | 
-basamak | 160 | 0.64 | (2221, 5478) | 10 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+16m | 
-basamak | 140 | 0.44 | (-35, -707) | 10 | Atatürk Bulvarı | Güvenpark+286m | 
-basamak | 28 | 0.49 | (404, -2387) | 10 | Cinnah Caddesi | Kuğulu Park+65m | 
-basamak | 35 | 0.26 | (-32, 1561) | 11 | Erbakan Meydanı | Opera+107m | 
-basamak | 97 | 0.64 | (1627, 4792) | 11 | Şehit Ömer Halisdemir Bulvarı | Altınpark+46m | 
-basamak | 21 | 0.67 | (-78, 1240) | 12 | Atatürk Bulvarı | Opera+223m | 
-basamak | 31 | 0.74 | (201, 2886) | 13 | Çankırı Caddesi | Yıba Çarşısı+75m | 
-basamak | 1 | 0.11 | (4046, 5074) | 13 | Mehmet Akif Ersoy Caddesi | Güneşevler+195m | 
-basamak | 2 | 0.27 | (62, 509) | 13 | Atatürk Bulvarı | Sıhhiye+264m | 
-basamak | 84 | 0.33 | (2074, 5415) | 17 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+146m | 
-basamak | 26 | 0.73 | (787, 3798) | 18 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+69m | 
-basamak | 397 | 0.82 | (12, -1231) | 19 | Atatürk Bulvarı | Meclis+100m | 
-basamak | 1 | 0.1 | (6, 182) | 21 | Atatürk Bulvarı | Kızılay+80m | 
-basamak | 49 | 0.64 | (54, 604) | 22 | Celal Bayar Bulvarı | Sıhhiye+170m | 
-basamak | 30 | 0.61 | (1046, 4172) | 22 | trunk | Çağdaş Sokak+187m | 
-basamak | 2 | 0.12 | (262, 2989) | 23 | primary_link | Yıba Çarşısı+194m | 
-basamak | 281 | 0.97 | (88, -4214) | 27 | Cinnah Caddesi | Atakule+51m | 
-basamak | 1 | 0.11 | (2324, 5560) | 38 | 48. Sokak | Hasköy Akşemsettin Camii+128m | 
-basamak | 8 | 0.2 | (2296, 5547) | 40 | 48. Sokak | Hasköy Akşemsettin Camii+99m | 
+basamak | 28 | 0.22 | (301, -2885) | 0 | Cinnah Caddesi | Farabi+99m | 
+basamak | 21 | 0.43 | (-6, 2122) | 0 | Çankırı Caddesi | Ulus+177m | 
+basamak | 30 | 0.21 | (80, -3654) | 0 | Cinnah Caddesi | Kırkpınar Sokağı+22m | 
+basamak | 13 | 0.22 | (4079, 5048) | 1 | Mehmet Akif Ersoy Caddesi | Güneşevler+156m | 
+basamak | 4 | 0.2 | (3754, 5164) | 1 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+11m | 
+basamak | 6 | 0.12 | (486, 3417) | 1 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+51m | 
+basamak | 33 | 0.24 | (39, -3838) | 1 | Cinnah Caddesi | Pilot Sokağı+13m | 
+basamak | 13 | 0.24 | (-0, 2361) | 1 | Çankırı Caddesi | Ulus+416m | 
+basamak | 2 | 0.14 | (285, -1995) | 1 | Atatürk Bulvarı | Kuğulu Park+472m | 
+basamak | 66 | 0.25 | (219, -3165) | 2 | Cinnah Caddesi | Farabi+193m | 
+basamak | 11 | 0.15 | (143, -3422) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+219m | 
+basamak | 2 | 0.13 | (-20, 1841) | 2 | Atatürk Bulvarı | Ulus+104m | 
+basamak | 8 | 0.26 | (164, -3351) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+293m | 
+basamak | 8 | 0.55 | (-43, -850) | 2 | Atatürk Bulvarı | Meclis+291m | 
+basamak | 2 | 0.15 | (1587, 4717) | 2 | Şehit Ömer Halisdemir Bulvarı | Altınpark+128m | 
+basamak | 2 | 0.11 | (3246, 5337) | 2 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+361m | 
+basamak | 10 | 0.33 | (-19, 1898) | 2 | Kızılbey Caddesi | Ulus+47m | 
+basamak | 8 | 0.18 | (1539, 4665) | 2 | Şehit Ömer Halisdemir Bulvarı | Altınpark+199m | 
+basamak | 5 | 0.25 | (372, -2296) | 3 | Atatürk Bulvarı | Kuğulu Park+159m | 
+basamak | 10 | 0.24 | (-20, 1716) | 3 | Atatürk Bulvarı | Ulus+229m | 
+basamak | 7 | 0.16 | (4, 2299) | 3 | Armutlu Sokak | Ulus+354m | 
+basamak | 9 | 0.25 | (2895, 5411) | 3 | residential | Çiçek Taksi+5m | 
+basamak | 12 | 0.17 | (30, -3906) | 3 | Hava Sokağı | Pilot Sokağı+79m | 
+basamak | 13 | 0.27 | (1175, 4286) | 3 | Çağdaş Sokak | Çağdaş Sokak+15m | 
+basamak | 66 | 0.29 | (2632, 5264) | 3 | 128. Sokak | Esenevler Anadolu Lisesi+14m | 
+basamak | 40 | 0.26 | (356, -2687) | 3 | Cinnah Caddesi | Kuğulu Park+238m | 
+basamak | 5 | 0.15 | (2431, 5350) | 3 | Malazgirt Caddesi | Pazar Yeri+215m | 
+basamak | 12 | 0.2 | (46, -4128) | 3 | Cinnah Caddesi | Botanik Parkı+71m | 
+basamak | 22 | 0.2 | (4236, 5015) | 4 | Taşdelen Caddesi | Güneşevler+8m | 
+basamak | 3 | 0.13 | (2945, 5437) | 4 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+62m | 
+basamak | 5 | 0.13 | (-66, -286) | 4 | 15 Temmuz Milli İrade Meydanı | Güvenpark+137m | 
+basamak | 2 | 0.13 | (2517, 5165) | 4 | Kaman Sokak | Pazar Yeri+44m | 
+basamak | 2 | 0.11 | (114, -3544) | 4 | Cinnah Caddesi | Kırkpınar Sokağı+94m | 
+basamak | 27 | 0.28 | (396, -2514) | 4 | Cinnah Caddesi | Kuğulu Park+62m | 
+basamak | 5 | 0.15 | (1433, 4546) | 4 | Çevreli Caddesi | Atatürk Anadolu İmam Hatip Lisesi+151m | 
+basamak | 3 | 0.16 | (407, -2451) | 5 | Cinnah Caddesi | Kuğulu Park+7m | 
+basamak | 4 | 0.18 | (331, -2764) | 5 | Cinnah Caddesi | Farabi+223m | 
+basamak | 80 | 0.9 | (381, -2609) | 5 | Cinnah Caddesi | Kuğulu Park+158m | 
+basamak | 28 | 0.35 | (379, 3281) | 5 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+224m | 
+basamak | 27 | 0.18 | (2834, 5380) | 5 | 126. Sokak | Çeyizciler+56m | 
+basamak | 1 | 0.11 | (256, -3022) | 6 | Cinnah Caddesi | Farabi+46m | 
+basamak | 27 | 0.22 | (2463, 5290) | 6 | residential | Pazar Yeri+147m | 
+basamak | 3 | 0.14 | (-51, -705) | 6 | service | Güvenpark+283m | 
+basamak | 3 | 0.11 | (2025, 5354) | 6 | Altınpark Caddesi | Subayevleri+69m | 
+basamak | 46 | 0.46 | (-52, 1297) | 6 | Atatürk Bulvarı | Opera+162m | 
+basamak | 21 | 0.24 | (3120, 5383) | 7 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+230m | 
+basamak | 21 | 0.33 | (3579, 5226) | 7 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+196m | 
+basamak | 6 | 0.2 | (4174, 5032) | 7 | Mehmet Akif Ersoy Caddesi | Güneşevler+60m | 
+basamak | 54 | 0.3 | (3965, 5097) | 7 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+211m | 
+basamak | 13 | 0.33 | (196, -1723) | 8 | Atatürk Bulvarı | Meclis+624m | 
+basamak | 43 | 0.44 | (152, -1609) | 8 | Atatürk Bulvarı | Meclis+502m | 
+basamak | 19 | 0.36 | (3415, 5284) | 8 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+370m | 
+basamak | 2 | 0.11 | (-32, -1019) | 8 | Atatürk Bulvarı | Meclis+122m | 
+basamak | 54 | 0.53 | (327, 3076) | 8 | Samsun- Ankara Yolu | Yıba Çarşısı+302m | 
+basamak | 33 | 0.61 | (402, -2384) | 8 | Cinnah Caddesi | Kuğulu Park+69m | 
+basamak | 9 | 0.4 | (76, -1414) | 8 | Atatürk Bulvarı | Meclis+293m | 
+basamak | 8 | 0.2 | (2784, 5362) | 9 | 126. Sokak | Çeyizciler+11m | 
+basamak | 188 | 0.47 | (994, 4079) | 9 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+290m | 
+basamak | 43 | 0.34 | (3319, 5318) | 9 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+436m | 
+basamak | 6 | 0.19 | (65, 2654) | 10 | Çankırı Caddesi | Yıba Çarşısı+195m | 
+basamak | 50 | 0.61 | (285, -2979) | 11 | Farabi Sokağı | Farabi+17m | 
+basamak | 73 | 0.56 | (354, -2179) | 11 | primary | Kuğulu Park+277m | 
+basamak | 68 | 0.62 | (-34, 1550) | 13 | Erbakan Meydanı | Opera+97m | 
+basamak | 211 | 0.67 | (20, 593) | 13 | Atatürk Bulvarı | Sıhhiye+175m | 
+basamak | 8 | 0.3 | (914, 3925) | 13 | Kenar Sokak | Veteriner Fakültesi+244m | 
+basamak | 21 | 0.24 | (2114, 5434) | 14 | residential | Hasköy Akşemsettin Camii+125m | 
+basamak | 4 | 0.12 | (1946, 5304) | 15 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+29m | 
+basamak | 47 | 0.36 | (195, 2881) | 16 | Çankırı Caddesi | Yıba Çarşısı+68m | 
+basamak | 5 | 0.12 | (-10, -1156) | 16 | Atatürk Bulvarı | Meclis+25m | 
+basamak | 28 | 0.46 | (2230, 5491) | 17 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+22m | 
+basamak | 4 | 0.23 | (114, -1474) | 18 | service | Meclis+363m | 
+basamak | 15 | 0.32 | (-27, -648) | 19 | Meşrutiyet Caddesi | Güvenpark+227m | 
+basamak | 28 | 0.69 | (7, 178) | 20 | Atatürk Bulvarı | Kızılay+77m | 
+basamak | 23 | 0.46 | (794, 3810) | 20 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+83m | 
+basamak | 98 | 0.46 | (9, 2058) | 20 | Anafartalar Caddesi | Ulus+116m | 
+basamak | 4 | 0.1 | (-20, -993) | 21 | Atatürk Bulvarı | Meclis+148m | 
+basamak | 6 | 0.18 | (-56, 1201) | 21 | Talatpaşa Bulvarı | Opera+257m | 
+basamak | 25 | 0.45 | (299, -2105) | 23 | service | Kuğulu Park+362m | 
+basamak | 6 | 0.13 | (50, -1312) | 26 | service | Meclis+189m | 
+basamak | 7 | 0.23 | (2937, 5467) | 26 | residential | Çiçek Taksi+76m | 
+basamak | 50 | 0.29 | (34, 353) | 28 | Atatürk Bulvarı | Kızılay+254m | 
+basamak | 262 | 0.73 | (91, -4220) | 29 | Çankaya Caddesi | Atakule+47m | 
+basamak | 3 | 0.18 | (1387, 4549) | 30 | secondary | Atatürk Anadolu İmam Hatip Lisesi+126m | 
+basamak | 1 | 0.12 | (2324, 5560) | 38 | 48. Sokak | Hasköy Akşemsettin Camii+128m | 
+basamak | 8 | 0.22 | (2296, 5547) | 40 | 48. Sokak | Hasköy Akşemsettin Camii+99m | 
 basamak | 13 | 0.24 | (263, 2870) | 46 | Akşehir Sokak | Yıba Çarşısı+106m | 
-basamak | 1 | 0.11 | (2424, 5462) | 47 | 130. Sokak | Hasköy Akşemsettin Camii+190m | 
 basamak | 7 | 0.22 | (264, -2077) | 48 | service | Kuğulu Park+399m | 
-basamak | 3 | 0.15 | (80, 2516) | 52 | Çankırı Kapı Sokak | Yıba Çarşısı+314m | 
-basamak | 3 | 0.13 | (24, -1447) | 53 | Ballı Sokak | Meclis+311m | 
-basamak | 31 | 0.4 | (-24, 609) | 53 | Celal Bayar Bulvarı | Sıhhiye+161m | 
-basamak | 1 | 0.13 | (1964, 5380) | 55 | Hendek Sokak | Subayevleri+73m | 
+basamak | 3 | 0.18 | (80, 2516) | 52 | Çankırı Kapı Sokak | Yıba Çarşısı+314m | 
+basamak | 2 | 0.16 | (54, 2367) | 52 | Kureyş Mescidi Sokak | Ulus+428m | 
+basamak | 5 | 0.18 | (32, 1570) | 54 | Çavuş Sokak | Opera+125m | 
+basamak | 6 | 0.33 | (23, -1448) | 54 | Ballı Sokak | Meclis+311m | 
+basamak | 1 | 0.11 | (1964, 5380) | 55 | Hendek Sokak | Subayevleri+73m | 
+basamak | 26 | 0.36 | (2384, 5560) | 55 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+175m | 
+basamak | 49 | 0.51 | (104, -4311) | 56 | Simon Bolivar Caddesi | Atakule+57m | 
 basamak | 10 | 0.23 | (3845, 5074) | 56 | service | Güneşevler Spor Tesisleri+117m | 
-basamak | 1 | 0.11 | (318, 2928) | 58 | Uzunyol Caddesi | Yıba Çarşısı+184m | 
-basamak | 1 | 0.13 | (-16, 1198) | 60 | residential | Opera+257m | 
-basamak | 12 | 0.18 | (40, 1566) | 61 | service | Opera+126m | 
-basamak | 11 | 0.28 | (3934, 5032) | 64 | service | Güneşevler Spor Tesisleri+212m | 
-basamak | 59 | 0.37 | (107, -4320) | 65 | Simon Bolivar Caddesi | Atakule+66m | 
+basamak | 1 | 0.12 | (318, 2928) | 58 | Uzunyol Caddesi | Yıba Çarşısı+184m | 
+basamak | 1 | 0.11 | (4048, 4996) | 60 | service | Güneşevler+183m | 
+basamak | 11 | 0.29 | (3934, 5032) | 64 | service | Güneşevler Spor Tesisleri+212m | 
+basamak | 43 | 0.41 | (1592, 4835) | 65 | Cihangir Caddesi | Altınpark+74m | 
 basamak | 1 | 0.14 | (-64, 2288) | 66 | Açık Sokak | Ulus+346m | 
-basamak | 1 | 0.1 | (56, 2060) | 67 | Anafartalar Caddesi | Ulus+136m | 
-basamak | 56 | 0.6 | (858, 3986) | 67 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+269m | 
-basamak | 25 | 0.21 | (453, 3264) | 67 | Atmaca Caddesi | Dışkapı Hastanesi+202m | 
+basamak | 55 | 0.47 | (858, 3985) | 66 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+269m | 
 basamak | 1 | 0.13 | (320, -2378) | 69 | Yazanlar Sokağı | Kuğulu Park+109m | 
+basamak | 13 | 0.26 | (2077, 5477) | 70 | residential | Hasköy Akşemsettin Camii+158m | 
+basamak | 8 | 0.21 | (66, 2149) | 71 | Çam Sokak | Ulus+220m | 
 basamak | 12 | 0.2 | (1741, 5089) | 71 | Sandalcı Caddesi | Altınpark+280m | 
 basamak | 21 | 0.35 | (410, 3068) | 72 | Altındağ Caddesi | Yıba Çarşısı+346m | 
-basamak | 7 | 0.21 | (67, 2149) | 72 | Çam Sokak | Ulus+221m | 
 basamak | 11 | 0.21 | (2460, 5126) | 72 | Tuğrulbey Sokak | Pazar Yeri+112m | 
-basamak | 5 | 0.24 | (262, -2150) | 73 | service | Kuğulu Park+332m | 
+basamak | 5 | 0.27 | (262, -2150) | 73 | service | Kuğulu Park+332m | 
 basamak | 1 | 0.11 | (4214, 5090) | 73 | residential | Güneşevler+81m | 
 basamak | 3 | 0.11 | (1821, 5225) | 73 | Centilmen Caddesi | Subayevleri+175m | 
 basamak | 2 | 0.16 | (2950, 5515) | 73 | 135. Sokak | Çiçek Taksi+123m | 
 basamak | 4 | 0.18 | (1767, 5136) | 73 | Sandalcı Caddesi | Subayevleri+269m | 
-basamak | 25 | 0.47 | (48, -1145) | 75 | Tunus Caddesi | Meclis+78m | 
+basamak | 24 | 0.43 | (48, -1145) | 75 | Tunus Caddesi | Meclis+78m | 
 basamak | 2 | 0.11 | (207, 2734) | 75 | Karayel Sokak | Yıba Çarşısı+90m | 
-basamak | 7 | 0.15 | (2250, 5397) | 76 | Tütüncü Sokak | Hasköy Akşemsettin Camii+75m | 
+basamak | 7 | 0.16 | (2250, 5397) | 76 | Tütüncü Sokak | Hasköy Akşemsettin Camii+75m | 
 basamak | 5 | 0.24 | (1697, 5026) | 77 | Şabanözü Sokak | Altınpark+210m | 
 basamak | 6 | 0.13 | (245, 2789) | 79 | Sümbül Sokak | Yıba Çarşısı+79m | 
 basamak | 3 | 0.15 | (323, -3099) | 80 | Nergiz Sokak | Farabi+132m | 
-basamak | 5 | 0.14 | (169, -1899) | 80 | service | Kuğulu Park+600m | 
 basamak | 1 | 0.11 | (-36, -3796) | 80 | Andrey Karlov Sokağı | Pilot Sokağı+77m | 
 basamak | 3 | 0.11 | (1626, 4916) | 81 | Aşiyan Sokak | Altınpark+104m | 
-basamak | 7 | 0.28 | (2413, 5563) | 82 | primary_link | Hasköy Akşemsettin Camii+202m | 
 basamak | 2 | 0.15 | (347, 2926) | 83 | Çankırı Caddesi | Yıba Çarşısı+206m | 
+basamak | 3 | 0.14 | (167, -1904) | 83 | service | Kuğulu Park+596m | 
 basamak | 2 | 0.24 | (1660, 4977) | 83 | Şair Mehmet Emin Caddesi | Altınpark+158m | 
 basamak | 6 | 0.18 | (265, 3128) | 84 | Etlik Caddesi | Yıba Çarşısı+325m | 
+basamak | 1 | 0.1 | (86, 2360) | 85 | Telgraf Sokak | Ulus+428m | 
 basamak | 9 | 0.2 | (1494, 4741) | 85 | Mehmetçik Sokak | Altınpark+187m | 
 basamak | 2 | 0.15 | (66, -1643) | 86 | service | Meclis+511m | 
-basamak | 28 | 0.4 | (1577, 4852) | 87 | Cihangir Caddesi | Altınpark+93m | 
-basamak | 6 | 0.16 | (1536, 4795) | 87 | Dinç Sokak | Altınpark+131m | 
-basamak | 1 | 0.11 | (86, 2192) | 88 | Telgraf Sokak | Ulus+268m | 
+basamak | 6 | 0.13 | (472, 3258) | 87 | Açıkel Sokak | Dışkapı Hastanesi+202m | 
+basamak | 1 | 0.12 | (86, 2192) | 88 | Telgraf Sokak | Ulus+268m | 
+basamak | 6 | 0.16 | (1536, 4796) | 88 | Dinç Sokak | Altınpark+131m | 
 basamak | 6 | 0.17 | (319, -3145) | 88 | Nilgün Sokak | Farabi+174m | 
+basamak | 2 | 0.11 | (90, 2291) | 88 | Armutlu Sokak | Ulus+362m | 
 basamak | 6 | 0.35 | (69, 1979) | 90 | Alsancak Sokak | Ulus+93m | 
-basamak | 91 | 0.6 | (-113, 1618) | 91 | İstiklal Caddesi | Opera+189m | 
-basamak | 17 | 0.46 | (71, 1897) | 92 | Sanayi Caddesi | Ulus+100m | 
-basamak | 3 | 0.16 | (309, -2506) | 92 | Kuveyt Caddesi | Kuğulu Park+106m | 
-basamak | 2 | 0.13 | (-87, 2407) | 92 | Erguvan Sokak | Ulus+467m | 
+basamak | 1 | 0.1 | (90, 2230) | 90 | residential | Ulus+304m | 
+basamak | 1 | 0.13 | (-86, 2408) | 91 | Erciş Sokak | Ulus+468m | 
+basamak | 90 | 0.61 | (-113, 1618) | 92 | İstiklal Caddesi | Opera+189m | 
+basamak | 18 | 0.46 | (71, 1897) | 92 | Kızılbey Caddesi | Ulus+100m | 
+basamak | 3 | 0.17 | (309, -2506) | 92 | Kuveyt Caddesi | Kuğulu Park+106m | 
 basamak | 4 | 0.15 | (312, 2859) | 92 | Akşehir Sokak | Yıba Çarşısı+146m | 
-basamak | 10 | 0.16 | (110, -1278) | 94 | Tunus Caddesi | Meclis+196m | 
-basamak | 3 | 0.13 | (3107, 5480) | 94 | Şeref Taşlıova Caddesi | Çiçek Taksi+228m | 
+basamak | 1 | 0.11 | (3104, 5480) | 93 | Şeref Taşlıova Caddesi | Çiçek Taksi+225m | 
 basamak | 2 | 0.1 | (933, 4142) | 95 | residential | Çağdaş Sokak+296m | 
 basamak | 21 | 0.45 | (2382, 5226) | 95 | Tuğrulbey Sokak | Pazar Yeri+183m | 
-basamak | 5 | 0.17 | (-7, -4312) | 95 | Yunus Nadi Sokağı | Atakule+94m | 
+basamak | 5 | 0.18 | (-7, -4312) | 95 | Yunus Nadi Sokağı | Atakule+94m | 
 basamak | 8 | 0.21 | (19, -3515) | 95 | residential | Kırkpınar Sokağı+132m | 
-basamak | 119 | 0.63 | (-172, 1226) | 96 | Talatpaşa Bulvarı | Opera+277m | 
-basamak | 32 | 0.24 | (2214, 5570) | 96 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+102m | 
 basamak | 3 | 0.14 | (3254, 5230) | 96 | 71. Sokak | Çiçek Taksi+403m | 
-basamak | 7 | 0.16 | (445, -2739) | 98 | Katip Çelebi Sokağı | Kuğulu Park+290m | 
-basamak | 1 | 0.1 | (1070, 4002) | 98 | Şehit Cemalettin Caddesi | Çağdaş Sokak+316m | 
-basamak | 16 | 0.3 | (77, 1844) | 99 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+138m | 
-basamak | 4 | 0.16 | (76, 1713) | 99 | Kediseven Caddesi | Ulus+250m | 
-basamak | 7 | 0.17 | (3010, 5256) | 99 | residential | Çiçek Taksi+192m | 
-basamak | 17 | 0.24 | (-7, 2712) | 100 | Giriş Caddesi | Yıba Çarşısı+207m | 
+basamak | 10 | 0.19 | (113, -1280) | 96 | service | Meclis+199m | 
+basamak | 33 | 0.27 | (2214, 5571) | 97 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+103m | 
+basamak | 10 | 0.17 | (3007, 5255) | 97 | residential | Çiçek Taksi+190m | 
+basamak | 16 | 0.31 | (77, 1844) | 99 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+138m | 
+basamak | 4 | 0.13 | (76, 1713) | 99 | Kediseven Caddesi | Ulus+250m | 
+basamak | 114 | 0.63 | (-176, 1227) | 99 | Talatpaşa Bulvarı | Opera+278m | 
+basamak | 18 | 0.2 | (396, 2971) | 100 | Hacı Bayram Bulvarı | Yıba Çarşısı+272m | 
+basamak | 6 | 0.17 | (447, -2738) | 100 | Katip Çelebi Sokağı | Kuğulu Park+290m | 
+basamak | 17 | 0.25 | (-7, 2712) | 100 | Giriş Caddesi | Yıba Çarşısı+207m | 
 basamak | 4 | 0.15 | (966, 4197) | 100 | residential | Çağdaş Sokak+240m | 
 basamak | 1 | 0.11 | (1154, 4112) | 101 | Arama Sokak | Çağdaş Sokak+187m | 
-basamak | 17 | 0.21 | (397, 2970) | 102 | Hacı Bayram Bulvarı | Yıba Çarşısı+272m | 
 basamak | 1 | 0.11 | (1254, 4224) | 103 | Çağdaş Sokak | Çağdaş Sokak+100m | 
 basamak | 10 | 0.15 | (82, 1798) | 104 | Pul Sokak | Ulus+177m | 
 basamak | 1 | 0.11 | (412, -2040) | 104 | Çığır Sokak | Kuğulu Park+413m | 
 basamak | 5 | 0.18 | (-104, 2361) | 105 | Çukurkavaklı Caddesi | Ulus+425m | 
 basamak | 11 | 0.25 | (77, -3272) | 108 | Kıbrıs Sokağı | Farabi+351m | 
-basamak | 10 | 0.31 | (56, 1260) | 108 | residential | Opera+209m | 
 basamak | 1 | 0.11 | (3312, 5196) | 109 | 71. Sokak | Güneşevler Spor Tesisleri+453m | 
-basamak | 3 | 0.11 | (64, -645) | 110 | Karanfil Sokağı | Güvenpark+254m | 
+basamak | 3 | 0.13 | (64, -645) | 110 | Karanfil Sokağı | Güvenpark+254m | 
 basamak | 7 | 0.17 | (1134, 4409) | 110 | residential | Çağdaş Sokak+123m | 
 basamak | 21 | 0.24 | (2335, 5286) | 111 | Tuğrulbey Sokak | Hasköy Akşemsettin Camii+209m | 
 basamak | 10 | 0.26 | (291, -3321) | 111 | Üsküp Caddesi | Farabi+343m | 
 basamak | 1 | 0.1 | (-110, 2288) | 112 | Plevne Caddesi | Ulus+355m | 
-basamak | 2 | 0.13 | (2585, 5053) | 112 | Malazgirt Caddesi | Pazar Yeri+128m | 
-basamak | 1 | 0.12 | (2816, 5244) | 113 | residential | Çeyizciler+112m | 
+basamak | 13 | 0.27 | (61, 1262) | 112 | residential | Opera+208m | 
+basamak | 1 | 0.13 | (2816, 5244) | 113 | residential | Çeyizciler+112m | 
+basamak | 2 | 0.11 | (2585, 5052) | 113 | Malazgirt Caddesi | Pazar Yeri+129m | 
 basamak | 1 | 0.11 | (1070, 4346) | 115 | service | Çağdaş Sokak+125m | 
-basamak | 6 | 0.26 | (155, -1971) | 116 | service | Kuğulu Park+540m | 
-basamak | 4 | 0.22 | (3255, 5454) | 116 | Türkmen Caddesi | Çiçek Taksi+367m | 
-basamak | 3 | 0.18 | (3206, 5470) | 116 | 183. Sokak | Çiçek Taksi+321m | 
 basamak | 15 | 0.47 | (1947, 5449) | 117 | Palandöken Sokak | Subayevleri+144m | 
+basamak | 3 | 0.18 | (3255, 5455) | 117 | Türkmen Caddesi | Çiçek Taksi+367m | 
 basamak | 10 | 0.21 | (0, -4354) | 118 | Ahmet Mithat Efendi Sokağı | Atakule+116m | 
 basamak | 6 | 0.32 | (3790, 5275) | 118 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+120m | 
+basamak | 2 | 0.17 | (3211, 5470) | 118 | 183. Sokak | Çiçek Taksi+326m | 
 basamak | 4 | 0.18 | (1796, 5273) | 118 | Centilmen Caddesi | Subayevleri+182m | 
+basamak | 5 | 0.26 | (152, -1974) | 120 | service | Kuğulu Park+539m | 
 basamak | 53 | 0.42 | (471, 3113) | 120 | residential | Dışkapı Hastanesi+344m | 
 basamak | 7 | 0.17 | (207, -3651) | 122 | Üsküp Caddesi | Kırkpınar Sokağı+128m | 
 basamak | 4 | 0.2 | (220, 2664) | 123 | Aralık Sokak | Yıba Çarşısı+160m | 
 basamak | 4 | 0.1 | (507, -2320) | 125 | Buğday Sokağı | Kuğulu Park+170m | 
-basamak | 5 | 0.34 | (429, -2902) | 127 | Kilis Sokak | Farabi+177m | 
+basamak | 5 | 0.33 | (429, -2902) | 127 | Kilis Sokak | Farabi+177m | 
 basamak | 7 | 0.24 | (3905, 4975) | 127 | 47. Cadde | Güneşevler Spor Tesisleri+232m | 
 basamak | 14 | 0.26 | (2287, 5345) | 128 | Doruk Sokak | Hasköy Akşemsettin Camii+135m | 
 basamak | 6 | 0.23 | (3582, 5083) | 129 | residential | Güneşevler Spor Tesisleri+197m | 
 basamak | 3 | 0.16 | (3540, 5096) | 129 | 71. Sokak | Güneşevler Spor Tesisleri+232m | 
-basamak | 140 | 0.77 | (499, -2650) | 129 | Atatürk Bulvarı | Kuğulu Park+221m | 
-basamak | 2 | 0.13 | (2542, 5022) | 130 | Tuğrulbey Sokak | Pazar Yeri+157m | 
+basamak | 140 | 0.78 | (499, -2650) | 129 | Atatürk Bulvarı | Kuğulu Park+221m | 
+basamak | 2 | 0.14 | (2542, 5022) | 130 | Tuğrulbey Sokak | Pazar Yeri+157m | 
 basamak | 4 | 0.12 | (4305, 4902) | 130 | residential | Güneşevler+132m | 
-basamak | 5 | 0.12 | (-176, -677) | 130 | service | Güvenpark+281m | 
-basamak | 2 | 0.12 | (35, 1134) | 130 | primary_link | Opera+325m | 
-basamak | 80 | 0.54 | (136, -4378) | 131 | Simon Bolivar Caddesi | Atakule+131m | 
+basamak | 80 | 0.46 | (136, -4378) | 131 | Simon Bolivar Caddesi | Atakule+131m | 
+basamak | 5 | 0.13 | (-176, -678) | 131 | service | Güvenpark+282m | 
 basamak | 5 | 0.19 | (2676, 5114) | 131 | 125. Sokak | Pazar Yeri+133m | 
 basamak | 3 | 0.11 | (2415, 5085) | 133 | Kaman Sokak | Pazar Yeri+171m | 
 basamak | 37 | 0.53 | (103, -1116) | 133 | Esat Caddesi | Meclis+135m | 
 basamak | 4 | 0.16 | (4173, 4888) | 133 | Taşdelen Caddesi | Güneşevler+135m | 
-basamak | 19 | 0.18 | (4306, 5123) | 133 | Taşdelen Caddesi | Güneşevler+136m | 
-basamak | 15 | 0.18 | (3796, 5010) | 133 | 44. Sokak | Güneşevler Spor Tesisleri+152m | 
+basamak | 14 | 0.18 | (3796, 5010) | 133 | 44. Sokak | Güneşevler Spor Tesisleri+152m | 
+basamak | 18 | 0.18 | (4307, 5123) | 133 | Taşdelen Caddesi | Güneşevler+137m | 
 basamak | 1 | 0.12 | (-194, -242) | 133 | Gazi Mustafa Kemal Bulvarı | Güvenpark+226m | 
 basamak | 20 | 0.27 | (211, 2624) | 134 | Beştepeler Sokak | Yıba Çarşısı+196m | 
-basamak | 1 | 0.1 | (992, 4288) | 135 | residential | Çağdaş Sokak+193m | 
-basamak | 2 | 0.14 | (-177, -830) | 135 | service | Meclis+344m | 
+basamak | 1 | 0.11 | (992, 4288) | 135 | residential | Çağdaş Sokak+193m | 
+basamak | 2 | 0.15 | (-177, -830) | 135 | service | Meclis+344m | 
 basamak | 1 | 0.11 | (3496, 5104) | 136 | 71. Sokak | Güneşevler Spor Tesisleri+273m | 
 basamak | 10 | 0.33 | (64, -3217) | 136 | Kıbrıs Sokağı | Farabi+315m | 
 basamak | 1 | 0.1 | (1620, 5014) | 137 | Şair Mehmet Emin Caddesi | Altınpark+200m | 
 basamak | 11 | 0.19 | (262, 2707) | 137 | Uzunyol Caddesi | Yıba Çarşısı+143m | 
 basamak | 4 | 0.12 | (908, 3700) | 137 | Şehit Haluk Çağlar Sokak | Veteriner Fakültesi+148m | 
 basamak | 9 | 0.24 | (4372, 5004) | 137 | residential | Güneşevler+142m | 
-basamak | 13 | 0.28 | (116, 1608) | 137 | Sanayi Caddesi | Opera+203m | 
-basamak | 1 | 0.13 | (290, -1604) | 138 | John F. Kennedy Caddesi | Meclis+563m | 
-basamak | 2 | 0.15 | (87, 1260) | 138 | Derman Sokak | Opera+221m | 
-basamak | 1 | 0.1 | (1346, 4660) | 138 | Kış Sokak | Atatürk Anadolu İmam Hatip Lisesi+221m | 
+basamak | 1 | 0.12 | (290, -1604) | 138 | John F. Kennedy Caddesi | Meclis+563m | 
+basamak | 12 | 0.27 | (116, 1607) | 138 | Doğan Sokak | Opera+203m | 
 basamak | 10 | 0.3 | (3964, 5237) | 139 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+215m | 
 basamak | 12 | 0.2 | (490, -2189) | 139 | Tunalı Hilmi Caddesi | Kuğulu Park+278m | 
-basamak | 31 | 0.25 | (1094, 3965) | 140 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+344m | 
 basamak | 2 | 0.12 | (2823, 5218) | 140 | residential | Çeyizciler+139m | 
+basamak | 44 | 0.28 | (1094, 3964) | 140 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+345m | 
 basamak | 4 | 0.18 | (4247, 5152) | 140 | Zemheri Sokak | Güneşevler+143m | 
 basamak | 8 | 0.27 | (2755, 5493) | 140 | 137/1. Sokak | Çeyizciler+145m | 
 basamak | 1 | 0.11 | (-166, -1176) | 141 | service | Meclis+140m | 
-basamak | 1 | 0.13 | (4226, 4870) | 142 | residential | Güneşevler+140m | 
+basamak | 1 | 0.14 | (4226, 4870) | 142 | residential | Güneşevler+140m | 
 basamak | 3 | 0.13 | (-21, 2775) | 142 | Demir Caddesi | Yıba Çarşısı+197m | 
-basamak | 7 | 0.11 | (3027, 5210) | 142 | residential | Çiçek Taksi+239m | 
 basamak | 17 | 0.41 | (-4, -3424) | 142 | Kuşkondu Sokak | Kırkpınar Sokağı+224m | 
 basamak | 4 | 0.15 | (13, -1664) | 142 | Paris Caddesi | Meclis+524m | 
-basamak | 7 | 0.29 | (122, 1903) | 143 | Zafer Sokak | Ulus+145m | 
+basamak | 7 | 0.3 | (122, 1903) | 143 | Zafer Sokak | Ulus+145m | 
 basamak | 1 | 0.13 | (100, -932) | 143 | Karanfil Sokağı | Meclis+246m | 
 basamak | 2 | 0.11 | (-128, 666) | 145 | primary_link | Sıhhiye+167m | 
 basamak | 19 | 0.3 | (368, 2846) | 146 | Deliler Tepesi Sokak | Yıba Çarşısı+198m | 
-basamak | 1 | 0.13 | (1404, 4726) | 146 | Güzin Sokak | Altınpark+277m | 
+basamak | 1 | 0.12 | (1404, 4726) | 146 | Güzin Sokak | Altınpark+277m | 
+basamak | 5 | 0.13 | (3303, 5470) | 146 | 184. Sokak | Çiçek Taksi+416m | 
 basamak | 4 | 0.17 | (126, 1974) | 146 | Zafer Sokak | Ulus+146m | 
-basamak | 5 | 0.17 | (3304, 5471) | 148 | 184. Sokak | Çiçek Taksi+417m | 
 basamak | 14 | 0.32 | (140, 821) | 148 | Kızılay Caddesi | Sıhhiye+145m | 
+basamak | 1 | 0.11 | (3036, 5210) | 148 | Celal Esat Arseven Caddesi | Çiçek Taksi+244m | 
 basamak | 1 | 0.13 | (148, 2206) | 149 | residential | Ulus+309m | 
 basamak | 3 | 0.15 | (211, 3199) | 150 | primary_link | Yıba Çarşısı+385m | 
 basamak | 2 | 0.13 | (4295, 4874) | 150 | residential | Güneşevler+151m | 
-basamak | 3 | 0.27 | (2963, 5167) | 150 | residential | Çiçek Taksi+250m | 
+basamak | 3 | 0.26 | (2963, 5167) | 150 | residential | Çiçek Taksi+250m | 
 basamak | 2 | 0.14 | (4039, 5222) | 150 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+283m | 
 basamak | 18 | 0.39 | (2170, 5610) | 151 | 47. Sokak | Hasköy Akşemsettin Camii+155m | 
 basamak | 6 | 0.24 | (-87, -3694) | 153 | Andrey Karlov Sokağı | Kırkpınar Sokağı+179m | 
 basamak | 2 | 0.11 | (4355, 5107) | 153 | residential | Güneşevler+158m | 
 basamak | 7 | 0.28 | (-125, -3975) | 154 | Hava Sokağı | Botanik Parkı+176m | 
 basamak | 1 | 0.12 | (3240, 5172) | 156 | residential | Çiçek Taksi+420m | 
-basamak | 4 | 0.14 | (2776, 5525) | 156 | 137/1. Sokak | Çiçek Taksi+166m | 
-basamak | 48 | 0.35 | (220, -2323) | 157 | service | Kuğulu Park+221m | 
+basamak | 3 | 0.14 | (2777, 5525) | 156 | 137/1. Sokak | Çiçek Taksi+165m | 
 basamak | 1 | 0.1 | (266, -3570) | 158 | And Sokağı | Kırkpınar Sokağı+195m | 
+basamak | 46 | 0.35 | (220, -2324) | 158 | service | Kuğulu Park+222m | 
 basamak | 2 | 0.14 | (2246, 5655) | 159 | Ak Sokak | Hasköy Akşemsettin Camii+186m | 
 basamak | 1 | 0.11 | (1448, 4344) | 159 | Şehit Mustafa Baş Sokak | Atatürk Anadolu İmam Hatip Lisesi+157m | 
 basamak | 2 | 0.11 | (2513, 4993) | 159 | Tabya Sokak | Pazar Yeri+191m | 
-basamak | 107 | 0.7 | (-184, 1678) | 162 | İstiklal Caddesi | Opera+278m | 
+basamak | 107 | 0.71 | (-184, 1678) | 162 | İstiklal Caddesi | Opera+278m | 
 basamak | 5 | 0.21 | (19, -4415) | 162 | Yunus Nadi Sokağı | Atakule+161m | 
 basamak | 10 | 0.3 | (198, 599) | 163 | Celal Bayar Bulvarı | Sıhhiye+256m | 
 basamak | 12 | 0.2 | (139, 1420) | 163 | Tavus Sokak | Opera+161m | 
@@ -311,16 +311,16 @@ basamak | 8 | 0.2 | (-167, -1281) | 167 | service | Meclis+196m |
 basamak | 1 | 0.15 | (2330, 5172) | 167 | Mahmut Şevket Paşa Caddesi | Pazar Yeri+229m | 
 basamak | 11 | 0.23 | (1775, 5330) | 167 | Centilmen Caddesi | Subayevleri+201m | 
 basamak | 4 | 0.2 | (234, -2467) | 168 | Paris Caddesi | Kuğulu Park+166m | 
-basamak | 9 | 0.24 | (3353, 5475) | 168 | 165. Sokak | Çiçek Taksi+467m | 
 basamak | 3 | 0.16 | (122, -2034) | 168 | service | Kuğulu Park+503m | 
+basamak | 7 | 0.14 | (3356, 5474) | 168 | Celal Esat Arseven Caddesi | Çiçek Taksi+469m | 
 basamak | 3 | 0.15 | (223, -2400) | 168 | Paris Caddesi | Kuğulu Park+184m | 
 basamak | 2 | 0.14 | (2213, 5650) | 168 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+182m | 
 basamak | 2 | 0.15 | (-167, 2293) | 169 | residential | Ulus+379m | 
-basamak | 2 | 0.24 | (-129, 542) | 169 | Strazburg Caddesi | Sıhhiye+262m | 
+basamak | 2 | 0.23 | (-129, 542) | 169 | Strazburg Caddesi | Sıhhiye+262m | 
 basamak | 4 | 0.21 | (568, -2397) | 169 | Binnaz Sokak | Kuğulu Park+176m | 
 basamak | 10 | 0.34 | (143, 887) | 170 | service | Sıhhiye+183m | 
 basamak | 2 | 0.21 | (-170, 2367) | 171 | residential | Ulus+449m | 
-basamak | 12 | 0.35 | (536, 3197) | 171 | Atmaca Caddesi | Dışkapı Hastanesi+258m | 
+basamak | 12 | 0.36 | (536, 3197) | 171 | Atmaca Caddesi | Dışkapı Hastanesi+258m | 
 basamak | 2 | 0.16 | (4152, 4853) | 172 | Taşdelen Caddesi | Güneşevler+176m | 
 basamak | 4 | 0.27 | (508, 3044) | 172 | residential | Yıba Çarşısı+405m | 
 basamak | 18 | 0.23 | (151, 1755) | 173 | Konuklar Sokak | Ulus+253m | 
@@ -328,14 +328,14 @@ basamak | 3 | 0.14 | (1365, 4239) | 173 | Çağrı Sokak | Çağdaş Sokak+188m 
 basamak | 3 | 0.13 | (-175, 2209) | 173 | Yaşar Doğu Caddesi | Ulus+308m | 
 basamak | 1 | 0.11 | (24, -1780) | 173 | Paris Caddesi | Meclis+641m | 
 basamak | 11 | 0.19 | (3552, 5411) | 173 | Asalet Sokak | Güneşevler Spor Tesisleri+330m | 
-basamak | 13 | 0.27 | (153, 1555) | 174 | Sanayi Caddesi | Opera+198m | 
+basamak | 13 | 0.25 | (153, 1555) | 174 | Sanayi Caddesi | Opera+198m | 
 basamak | 1 | 0.14 | (-152, 632) | 175 | primary_link | Sıhhiye+207m | 
 basamak | 16 | 0.4 | (48, -3130) | 176 | Dede Korkut Caddesi | Farabi+268m | 
 basamak | 3 | 0.14 | (3489, 5062) | 178 | residential | Güneşevler Spor Tesisleri+291m | 
 basamak | 16 | 0.21 | (3567, 5035) | 178 | 46. Sokak | Güneşevler Spor Tesisleri+231m | 
 basamak | 1 | 0.1 | (4334, 4862) | 179 | residential | Güneşevler+181m | 
 basamak | 2 | 0.17 | (-201, 1826) | 179 | İnebolu Sokak | Ulus+219m | 
-basamak | 130 | 0.57 | (1846, 5440) | 181 | Paşabahçe Sokak | Subayevleri+185m | 
+basamak | 130 | 0.57 | (1845, 5440) | 181 | Paşabahçe Sokak | Subayevleri+185m | 
 basamak | 12 | 0.18 | (1621, 5103) | 182 | Şabanözü Sokak | Altınpark+287m | 
 basamak | 3 | 0.14 | (-125, -1433) | 182 | service | Meclis+307m | 
 basamak | 1 | 0.12 | (186, 2280) | 185 | Hilal Caddesi | Ulus+392m | 
@@ -344,43 +344,43 @@ basamak | 5 | 0.28 | (-155, -3927) | 186 | Vali Dr. Reşit Sokak | Pilot Sokağ�
 basamak | 1 | 0.1 | (682, 3356) | 189 | Ateşböceği Sokak | Dışkapı Hastanesi+189m | 
 basamak | 10 | 0.29 | (2792, 5573) | 189 | 135. Sokak | Çiçek Taksi+194m | 
 basamak | 4 | 0.16 | (-120, -4278) | 190 | Süleyman Nazif Sokağı | Atakule+194m | 
+basamak | 86 | 0.64 | (2493, 5640) | 191 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+311m | 
 basamak | 1 | 0.1 | (2472, 4968) | 192 | Altınpark Caddesi | Pazar Yeri+227m | 
 basamak | 7 | 0.13 | (2932, 5121) | 192 | residential | Çeyizciler+273m | 
 basamak | 48 | 0.39 | (-252, -204) | 192 | Gazi Mustafa Kemal Bulvarı | Güvenpark+292m | 
 basamak | 16 | 0.4 | (1582, 5060) | 193 | Şair Mehmet Emin Caddesi | Altınpark+255m | 
 basamak | 15 | 0.26 | (-30, -3334) | 193 | Kuloğlu Sokağı | Kırkpınar Sokağı+318m | 
 basamak | 7 | 0.15 | (-17, -1737) | 196 | Işıkyolu Sokak | Meclis+596m | 
-basamak | 63 | 0.44 | (2498, 5642) | 196 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+315m | 
-basamak | 1 | 0.11 | (2578, 5490) | 197 | 130. Sokak | Esenevler Anadolu Lisesi+244m | 
 basamak | 2 | 0.2 | (202, 46) | 199 | Tuna Caddesi | Kızılay+212m | 
+basamak | 14 | 0.18 | (3436, 5479) | 199 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+458m | 
 basamak | 18 | 0.36 | (545, -2758) | 199 | service | Kuğulu Park+338m | 
 basamak | 3 | 0.12 | (153, -625) | 199 | Konur Sokağı | Güvenpark+292m | 
 basamak | 8 | 0.22 | (184, -1176) | 199 | Güfte Caddesi | Meclis+217m | 
+basamak | 2 | 0.11 | (1160, 3953) | 200 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+345m | 
 basamak | 8 | 0.15 | (1420, 4832) | 200 | Doru Sokak | Altınpark+245m | 
 basamak | 1 | 0.13 | (262, -4192) | 200 | Prof. Dr. Aziz Sancar Caddesi | Atakule+202m | 
 basamak | 9 | 0.34 | (45, -3050) | 201 | Kıbrıs Sokak | Farabi+235m | 
 basamak | 9 | 0.15 | (-185, 196) | 201 | Sezenler Caddesi | Kızılay+196m | 
 basamak | 4 | 0.16 | (2297, 5722) | 201 | 48. Sokak | Hasköy Akşemsettin Camii+260m | 
-basamak | 22 | 0.19 | (3442, 5480) | 202 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+454m | 
 basamak | 25 | 0.25 | (605, -2470) | 202 | İran Caddesi | Kuğulu Park+205m | 
 basamak | 23 | 0.3 | (180, 1654) | 202 | Doğan Sokak | Opera+281m | 
 basamak | 17 | 0.17 | (253, -4121) | 204 | 27 Aralık Sokak | Atakule+229m | 
 basamak | 4 | 0.14 | (2245, 5706) | 204 | Tatlısu Sokak | Hasköy Akşemsettin Camii+236m | 
-basamak | 3 | 0.19 | (3084, 5173) | 204 | Celal Esat Arseven Caddesi | Çiçek Taksi+303m | 
+basamak | 1 | 0.17 | (3078, 5172) | 205 | Celal Esat Arseven Caddesi | Çiçek Taksi+300m | 
 basamak | 6 | 0.39 | (474, 2892) | 206 | Çankırı Caddesi | Yıba Çarşısı+311m | 
 basamak | 1 | 0.12 | (4066, 5272) | 206 | Safahat Caddesi | Güneşevler+309m | 
 basamak | 6 | 0.19 | (-136, 2682) | 207 | İşeri Caddesi | Yıba Çarşısı+336m | 
 basamak | 18 | 0.45 | (3984, 4861) | 209 | residential | Güneşevler+288m | 
 basamak | 4 | 0.17 | (1458, 4896) | 210 | residential | Altınpark+220m | 
 basamak | 7 | 0.16 | (4444, 4989) | 210 | Mehmet Akif Ersoy Caddesi | Güneşevler+215m | 
-basamak | 17 | 0.16 | (3320, 5086) | 211 | residential | Güneşevler Spor Tesisleri+450m | 
+basamak | 18 | 0.16 | (3319, 5085) | 211 | residential | Güneşevler Spor Tesisleri+450m | 
 basamak | 11 | 0.17 | (1643, 5198) | 212 | Filyos Caddesi | Subayevleri+350m | 
 basamak | 20 | 0.32 | (1534, 5017) | 212 | Aşiyan Sokak | Altınpark+237m | 
 basamak | 19 | 0.28 | (1280, 4700) | 212 | Doru Sokak | Atatürk Anadolu İmam Hatip Lisesi+264m | 
 basamak | 10 | 0.57 | (186, 896) | 213 | service | Sıhhiye+223m | 
-basamak | 124 | 0.64 | (209, 2135) | 214 | living_street | Ulus+295m | 
+basamak | 11 | 0.18 | (2129, 5660) | 214 | residential | Hasköy Akşemsettin Camii+218m | 
+basamak | 125 | 0.64 | (209, 2135) | 214 | living_street | Ulus+295m | 
 basamak | 4 | 0.12 | (4375, 4849) | 214 | residential | Güneşevler+217m | 
-basamak | 10 | 0.18 | (2130, 5661) | 214 | residential | Hasköy Akşemsettin Camii+218m | 
 basamak | 17 | 0.25 | (1771, 5408) | 215 | Centilmen Caddesi | Subayevleri+227m | 
 basamak | 7 | 0.24 | (-183, -3883) | 216 | Piyade Sokağı | Pilot Sokağı+224m | 
 basamak | 1 | 0.11 | (3708, 4950) | 217 | residential | Güneşevler Spor Tesisleri+216m | 
@@ -388,7 +388,7 @@ basamak | 36 | 0.42 | (318, 2643) | 218 | Beştepeler Sokak | Yıba Çarşısı+
 basamak | 16 | 0.23 | (-116, -4369) | 218 | Ahmet Mithat Efendi Sokağı | Atakule+216m | 
 basamak | 3 | 0.13 | (510, -1974) | 218 | Bestekar Caddesi | Kuğulu Park+491m | 
 basamak | 5 | 0.18 | (1361, 4788) | 218 | Güzin Sokak | Altınpark+305m | 
-basamak | 338 | 0.71 | (1215, 4645) | 218 | secondary | Atatürk Anadolu İmam Hatip Lisesi+232m | 
+basamak | 337 | 0.71 | (1215, 4645) | 219 | secondary | Atatürk Anadolu İmam Hatip Lisesi+232m | 
 basamak | 7 | 0.14 | (3197, 5581) | 219 | 182. Sokak | Çiçek Taksi+352m | 
 basamak | 10 | 0.45 | (197, 1841) | 219 | Susam Caddesi | Ulus+239m | 
 basamak | 4 | 0.17 | (318, -1446) | 219 | Beykoz Sokak | Meclis+463m | 
@@ -402,13 +402,12 @@ basamak | 7 | 0.13 | (376, -1591) | 223 | Bestekar Caddesi | Meclis+606m |
 basamak | 3 | 0.14 | (3667, 5425) | 223 | Esinti Sokak | Güneşevler Spor Tesisleri+283m | 
 basamak | 1 | 0.1 | (202, 1896) | 223 | Susam Caddesi | Ulus+225m | 
 basamak | 1 | 0.1 | (1310, 4742) | 223 | Doru Sokak | Atatürk Anadolu İmam Hatip Lisesi+302m | 
-basamak | 3 | 0.14 | (3184, 5120) | 223 | 117. Sokak | Çiçek Taksi+409m | 
 basamak | 7 | 0.21 | (269, -1317) | 224 | Bilezik Sokağı | Meclis+346m | 
 basamak | 3 | 0.21 | (2211, 5711) | 224 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+242m | 
-basamak | 1 | 0.11 | (3268, 5088) | 225 | Celal Esat Arseven Caddesi | Çiçek Taksi+493m | 
 basamak | 4 | 0.16 | (-226, 162) | 226 | İzmir 1 Caddesi | Kızılay+221m | 
+basamak | 4 | 0.13 | (3524, 5480) | 229 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+400m | 
 basamak | 29 | 0.52 | (141, 1034) | 229 | service | Sıhhiye+300m | 
-basamak | 29 | 0.24 | (-251, 1908) | 230 | Cumhuriyet Caddesi | Ulus+236m | 
+basamak | 28 | 0.24 | (-252, 1907) | 231 | Cumhuriyet Caddesi | Ulus+238m | 
 basamak | 49 | 0.49 | (202, -1115) | 232 | Esat Caddesi | Meclis+234m | 
 basamak | 1 | 0.12 | (210, 1432) | 233 | residential | Opera+229m | 
 basamak | 7 | 0.19 | (696, 3303) | 233 | Ateşböceği Sokak | Dışkapı Hastanesi+232m | 
@@ -417,7 +416,7 @@ basamak | 3 | 0.18 | (-235, 2365) | 236 | Çukurkavaklı Caddesi | Ulus+473m |
 basamak | 1 | 0.14 | (4166, 4784) | 237 | residential | Güneşevler+235m | 
 basamak | 1 | 0.14 | (520, -2986) | 238 | Fatma Aliye Sokağı | Farabi+251m | 
 basamak | 3 | 0.23 | (-240, 2214) | 239 | Rüzgarlı Caddesi | Ulus+349m | 
-basamak | 41 | 0.43 | (-196, 522) | 239 | Strazburg Caddesi | Sıhhiye+317m | 
+basamak | 41 | 0.44 | (-196, 522) | 239 | Strazburg Caddesi | Sıhhiye+317m | 
 basamak | 13 | 0.28 | (3009, 5672) | 239 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+291m | 
 basamak | 12 | 0.26 | (3066, 5648) | 239 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+298m | 
 basamak | 3 | 0.18 | (143, 3319) | 240 | Fatih Caddesi | Dışkapı Hastanesi+402m | 
@@ -428,10 +427,10 @@ basamak | 20 | 0.4 | (202, -930) | 245 | Konur Sokağı | Meclis+314m |
 basamak | 3 | 0.15 | (319, -4243) | 246 | Mahmut Yegari | Atakule+247m | 
 basamak | 2 | 0.14 | (1473, 4244) | 247 | Çember Sokak | Atatürk Anadolu İmam Hatip Lisesi+246m | 
 basamak | 16 | 0.26 | (294, 2536) | 247 | residential | Yıba Çarşısı+306m | 
-basamak | 16 | 0.25 | (3553, 5490) | 248 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+393m | 
 basamak | 2 | 0.16 | (135, -2548) | 249 | Kuveyt Caddesi | Kuğulu Park+282m | 
 basamak | 16 | 0.2 | (2824, 5661) | 249 | 137/1. Sokak | Çiçek Taksi+263m | 
 basamak | 3 | 0.25 | (600, -2171) | 250 | Güniz Sokağı | Kuğulu Park+345m | 
+basamak | 3 | 0.13 | (3574, 5485) | 251 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+378m | 
 basamak | 3 | 0.17 | (629, -2284) | 252 | Buğday Sokağı | Kuğulu Park+284m | 
 basamak | 68 | 0.46 | (598, 3074) | 252 | residential | Dışkapı Hastanesi+388m | 
 basamak | 55 | 0.82 | (516, 2871) | 253 | Etlik Caddesi | Yıba Çarşısı+348m | 
@@ -440,28 +439,28 @@ basamak | 9 | 0.18 | (44, -2860) | 254 | Kıbrıs Sokak | Farabi+254m |
 basamak | 8 | 0.21 | (-113, -4436) | 255 | Süleyman Nazif Sokağı | Atakule+253m | 
 basamak | 8 | 0.24 | (-189, -4272) | 255 | Portakal Çiçeği Caddesi | Atakule+262m | 
 basamak | 4 | 0.15 | (4111, 4776) | 256 | Taşdelen Caddesi | Güneşevler+263m | 
-basamak | 105 | 0.36 | (2604, 5574) | 258 | Şht. Pilot Fatih Korçam Sokak | Çeyizciler+287m | 
+basamak | 129 | 0.47 | (2602, 5575) | 256 | Şht. Pilot Fatih Korçam Sokak | Çeyizciler+289m | 
 basamak | 1 | 0.11 | (4184, 5288) | 259 | Ferah Caddesi | Güneşevler+281m | 
 basamak | 17 | 0.17 | (82, -2201) | 259 | residential | Kuğulu Park+406m | 
 basamak | 4 | 0.51 | (114, 3284) | 260 | primary_link | Dışkapı Hastanesi+441m | 
+basamak | 2 | 0.11 | (3433, 4994) | 260 | residential | Güneşevler Spor Tesisleri+369m | 
 basamak | 2 | 0.11 | (1575, 5180) | 260 | Şabanözü Sokak | Altınpark+372m | 
 basamak | 1 | 0.11 | (2286, 5780) | 260 | 48. Sokak | Hasköy Akşemsettin Camii+315m | 
 basamak | 5 | 0.14 | (3789, 5426) | 261 | Asalet Sokak | Güneşevler Spor Tesisleri+269m | 
 basamak | 2 | 0.12 | (3260, 5053) | 261 | residential | Çiçek Taksi+511m | 
-basamak | 223 | 0.79 | (608, 3965) | 261 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+279m | 
-basamak | 1 | 0.1 | (3434, 4992) | 261 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+369m | 
+basamak | 222 | 0.79 | (607, 3965) | 261 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+279m | 
 basamak | 8 | 0.23 | (1636, 5286) | 262 | residential | Subayevleri+339m | 
 basamak | 1 | 0.11 | (-224, 264) | 263 | Hanımeli Sokağı | Kızılay+266m | 
-basamak | 15 | 0.17 | (195, 1186) | 263 | Derman Sokak | Opera+343m | 
+basamak | 14 | 0.17 | (195, 1185) | 263 | Derman Sokak | Opera+343m | 
 basamak | 1 | 0.12 | (214, -514) | 264 | Hatay Sokak | Güvenpark+287m | 
+basamak | 268 | 0.51 | (179, 1139) | 264 | Talatpaşa Bulvarı | Opera+372m | 
 basamak | 1 | 0.12 | (3346, 5020) | 264 | residential | Güneşevler Spor Tesisleri+440m | 
-basamak | 268 | 0.52 | (180, 1139) | 265 | Talatpaşa Bulvarı | Opera+373m | 
 basamak | 54 | 0.61 | (-163, -3537) | 265 | Andrey Karlov Sokağı | Kırkpınar Sokağı+261m | 
 basamak | 2 | 0.12 | (2957, 5707) | 265 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+308m | 
 basamak | 1 | 0.17 | (4322, 5262) | 265 | Güneş Sokak | Güneşevler+268m | 
 basamak | 4 | 0.19 | (4460, 5154) | 266 | 877.Sokak | Güneşevler+271m | 
 basamak | 67 | 0.31 | (683, 3233) | 268 | Altındağ Caddesi | Dışkapı Hastanesi+274m | 
-basamak | 1 | 0.14 | (3532, 4952) | 268 | 44. Sokak | Güneşevler Spor Tesisleri+310m | 
+basamak | 1 | 0.15 | (3532, 4952) | 268 | 44. Sokak | Güneşevler Spor Tesisleri+310m | 
 basamak | 23 | 0.16 | (4381, 5237) | 268 | Taşdelen Caddesi | Güneşevler+272m | 
 basamak | 2 | 0.17 | (453, -3329) | 269 | Nilgün Sokak | Farabi+396m | 
 basamak | 39 | 0.64 | (587, 2978) | 269 | residential | Yıba Çarşısı+445m | 
@@ -497,18 +496,18 @@ basamak | 9 | 0.23 | (445, -1584) | 289 | John F. Kennedy Caddesi | Meclis+649m 
 basamak | 2 | 0.11 | (2576, 4865) | 290 | Altınpark Caddesi | Pazar Yeri+314m | 
 basamak | 5 | 0.17 | (281, -1177) | 290 | Güfte Caddesi | Meclis+313m | 
 basamak | 3 | 0.17 | (55, -4554) | 292 | Yunus Nadi Sokağı | Atakule+291m | 
-basamak | 5 | 0.17 | (3677, 5494) | 292 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+347m | 
+basamak | 5 | 0.2 | (3677, 5494) | 292 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+347m | 
 basamak | 6 | 0.27 | (341, -1309) | 293 | Büklüm Caddesi | Meclis+408m | 
 basamak | 18 | 0.22 | (3210, 5655) | 293 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+404m | 
 basamak | 2 | 0.11 | (1687, 4387) | 293 | Dik Sokak | Atatürk Anadolu İmam Hatip Lisesi+366m | 
 basamak | 5 | 0.12 | (4457, 5204) | 294 | residential | Güneşevler+298m | 
 basamak | 13 | 0.32 | (650, 3135) | 294 | residential | Dışkapı Hastanesi+344m | 
+basamak | 19 | 0.15 | (3473, 4943) | 296 | tertiary | Güneşevler Spor Tesisleri+362m | 
 basamak | 9 | 0.18 | (2826, 5031) | 296 | 120. Sokak | Esenevler Anadolu Lisesi+296m | 
 basamak | 2 | 0.18 | (63, -2624) | 296 | Esenlik Sokak | Kuğulu Park+378m | 
 basamak | 10 | 0.21 | (3776, 4842) | 297 | residential | Güneşevler Spor Tesisleri+316m | 
 basamak | 2 | 0.14 | (2651, 5620) | 298 | residential | Çeyizciler+300m | 
 basamak | 1 | 0.11 | (-320, 1812) | 298 | İstiklal Caddesi | Ulus+331m | 
-basamak | 11 | 0.14 | (3476, 4938) | 300 | tertiary | Güneşevler Spor Tesisleri+362m | 
 basamak | 14 | 0.31 | (368, -3737) | 300 | service | Kırkpınar Sokağı+306m | 
 basamak | 1 | 0.23 | (46, -2684) | 301 | Kıbrıs Sokak | Farabi+369m | 
 basamak | 2 | 0.1 | (-255, 2630) | 302 | Tunç Caddesi | Yıba Çarşısı+466m | 
@@ -530,14 +529,14 @@ basamak | 15 | 0.25 | (560, -1830) | 313 | Bülten Caddesi | Kuğulu Park+643m |
 basamak | 7 | 0.16 | (3077, 5037) | 313 | 117. Sokak | Çiçek Taksi+413m | 
 basamak | 49 | 0.35 | (293, 1583) | 314 | residential | Opera+336m | 
 basamak | 22 | 0.27 | (3905, 4776) | 315 | residential | Güneşevler+401m | 
+basamak | 3 | 0.14 | (3724, 5503) | 315 | 168. Sokak | Güneşevler Spor Tesisleri+347m | 
 basamak | 2 | 0.16 | (310, -13) | 316 | service | Kızılay+315m | 
 basamak | 4 | 0.23 | (70, 3344) | 317 | primary_link | Dışkapı Hastanesi+465m | 
 basamak | 22 | 0.35 | (3360, 5630) | 317 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+520m | 
-basamak | 6 | 0.21 | (3724, 5505) | 317 | 168. Sokak | Güneşevler Spor Tesisleri+349m | 
 basamak | 1 | 0.12 | (824, 3326) | 318 | Ahter Sokak | Dışkapı Hastanesi+329m | 
 basamak | 122 | 0.27 | (240, -4536) | 319 | Simon Bolivar Caddesi | Atakule+320m | 
-basamak | 4 | 0.16 | (314, 2125) | 319 | Güvercin Sokak | Ulus+376m | 
 basamak | 12 | 0.17 | (2734, 5690) | 319 | 136. Sokak | Çiçek Taksi+324m | 
+basamak | 3 | 0.16 | (315, 2129) | 320 | Güvercin Sokak | Ulus+380m | 
 basamak | 3 | 0.16 | (517, -3294) | 321 | Nergiz Sokak | Farabi+402m | 
 basamak | 2 | 0.15 | (-45, -2023) | 322 | residential | Kuğulu Park+619m | 
 basamak | 42 | 0.36 | (277, 1255) | 323 | Yenice Sokak | Opera+357m | 
@@ -564,9 +563,9 @@ basamak | 6 | 0.34 | (-279, -3695) | 339 | Platin Sokak | Pilot Sokağı+340m |
 basamak | 4 | 0.34 | (1455, 5132) | 339 | Aşiyan Sokak | Altınpark+376m | 
 basamak | 11 | 0.28 | (1332, 4944) | 339 | Üçyıldız Caddesi | Altınpark+355m | 
 basamak | 1 | 0.11 | (408, -4330) | 340 | Mahmut Yegari | Atakule+342m | 
-basamak | 6 | 0.23 | (3807, 5503) | 340 | 162. Cadde | Güneşevler Spor Tesisleri+347m | 
+basamak | 6 | 0.24 | (3807, 5503) | 340 | 162. Cadde | Güneşevler Spor Tesisleri+347m | 
+basamak | 10 | 0.2 | (4357, 5329) | 340 | 812. Sokak | Güneşevler+343m | 
 basamak | 5 | 0.21 | (570, 2794) | 340 | Etlik Caddesi | Yıba Çarşısı+398m | 
-basamak | 9 | 0.2 | (4357, 5329) | 340 | 812. Sokak | Güneşevler+343m | 
 basamak | 3 | 0.3 | (577, -3161) | 341 | Şehit Ersan Caddesi | Farabi+358m | 
 basamak | 5 | 0.24 | (712, -2675) | 341 | tertiary_link | Kuğulu Park+383m | 
 basamak | 2 | 0.14 | (3156, 5005) | 341 | residential | Çiçek Taksi+481m | 
@@ -593,7 +592,6 @@ basamak | 11 | 0.14 | (-303, 477) | 352 | Strazburg Caddesi | Sıhhiye+423m |
 basamak | 15 | 0.25 | (547, -3307) | 353 | Şehit Ersan Caddesi | Farabi+431m | 
 basamak | 7 | 0.24 | (3087, 5765) | 353 | 17. Sokak | Çiçek Taksi+409m | 
 basamak | 1 | 0.1 | (390, -4024) | 354 | service | Botanik Parkı+362m | 
-basamak | 4 | 0.13 | (3516, 4866) | 355 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+383m | 
 basamak | 2 | 0.13 | (-86, -2940) | 357 | Güvenlik Caddesi | Farabi+357m | 
 basamak | 19 | 0.5 | (2107, 5809) | 357 | residential | Hasköy Akşemsettin Camii+362m | 
 basamak | 4 | 0.29 | (2639, 5723) | 358 | 136. Sokak | Çeyizciler+399m | 
@@ -607,9 +605,8 @@ basamak | 11 | 0.26 | (25, -2410) | 365 | Gerede Sokak | Kuğulu Park+377m |
 basamak | 30 | 0.29 | (3947, 4708) | 365 | residential | Güneşevler+414m | 
 basamak | 7 | 0.22 | (3415, 4889) | 365 | tertiary | Güneşevler Spor Tesisleri+440m | 
 basamak | 459 | 0.77 | (1365, 3953) | 366 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+388m | 
-basamak | 2 | 0.12 | (3907, 5498) | 366 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+369m | 
 basamak | 15 | 0.57 | (3141, 5756) | 366 | 179. Sokak | Çiçek Taksi+430m | 
-basamak | 10 | 0.23 | (4089, 5436) | 369 | Asalet Sokak | Güneşevler Spor Tesisleri+428m | 
+basamak | 9 | 0.21 | (4089, 5436) | 369 | Asalet Sokak | Güneşevler Spor Tesisleri+428m | 
 basamak | 4 | 0.2 | (-244, -1628) | 371 | service | Meclis+532m | 
 basamak | 25 | 0.32 | (4271, 5384) | 372 | Ferah Caddesi | Güneşevler+376m | 
 basamak | 3 | 0.11 | (-379, 2130) | 373 | Rüzgarlı Caddesi | Ulus+407m | 
@@ -632,13 +629,13 @@ basamak | 13 | 0.36 | (2877, 5816) | 380 | Şehit Hasan Cevher Caddesi | Çiçek
 basamak | 2 | 0.12 | (1698, 4279) | 380 | Kara Ahmet Sokak | Atatürk Anadolu İmam Hatip Lisesi+407m | 
 basamak | 11 | 0.22 | (3221, 5744) | 381 | residential | Çiçek Taksi+472m | 
 basamak | 9 | 0.16 | (-413, -1131) | 381 | service | Meclis+383m | 
+basamak | 2 | 0.39 | (2611, 5796) | 383 | 134. Sokak | Çeyizciler+477m | 
 basamak | 9 | 0.2 | (631, -3123) | 383 | Atatürk Bulvarı | Farabi+390m | 
 basamak | 16 | 0.15 | (-90, -2856) | 384 | Yeşilyurt Sokağı | Farabi+379m | 
-basamak | 5 | 0.4 | (2612, 5797) | 384 | 134. Sokak | Çeyizciler+478m | 
 basamak | 34 | 0.36 | (1531, 5351) | 386 | residential | Subayevleri+446m | 
 basamak | 2 | 0.14 | (-26, -4637) | 387 | service | Atakule+387m | 
 basamak | 7 | 0.53 | (547, -1577) | 388 | Yalım Sokağı | Meclis+723m | 
-basamak | 1 | 0.11 | (-430, -958) | 388 | Millî Müdafaa Caddesi | Meclis+440m | 
+basamak | 1 | 0.1 | (-430, -958) | 388 | Millî Müdafaa Caddesi | Meclis+440m | 
 basamak | 4 | 0.16 | (492, -1429) | 388 | Yalım Sokağı | Meclis+596m | 
 basamak | 23 | 0.51 | (-23, -2320) | 390 | Ali Dede Caddesi | Kuğulu Park+443m | 
 basamak | 131 | 0.46 | (429, 601) | 390 | A.Adnan Saygun Caddesi | Sıhhiye+456m | 
@@ -658,14 +655,16 @@ basamak | 9 | 0.2 | (2806, 4862) | 399 | 119. Sokak | Pazar Yeri+401m |
 basamak | 20 | 0.34 | (2894, 4916) | 400 | 116. Sokak | Pazar Yeri+425m | 
 basamak | 2 | 0.18 | (-446, -663) | 400 | Yahya Galip Caddesi | Güvenpark+457m | 
 basamak | 3 | 0.17 | (1164, 4849) | 400 | Üçpınar Sokak | Atatürk Anadolu İmam Hatip Lisesi+439m | 
-basamak | 13 | 0.21 | (2655, 5774) | 400 | 134. Sokak | Çiçek Taksi+437m | 
+basamak | 14 | 0.22 | (2655, 5774) | 401 | 134. Sokak | Çiçek Taksi+437m | 
 basamak | 5 | 0.2 | (4564, 4778) | 403 | Kibar Ulu Caddesi | Güneşevler+407m | 
 basamak | 21 | 0.21 | (3856, 4698) | 405 | residential | Güneşevler Spor Tesisleri+469m | 
 basamak | 1 | 0.1 | (4526, 4730) | 405 | residential | Güneşevler+408m | 
 basamak | 1 | 0.12 | (634, -3194) | 405 | Atatürk Bulvarı | Farabi+424m | 
+basamak | 1 | 0.12 | (4396, 5384) | 406 | Zemheri Sokak | Güneşevler+409m | 
 basamak | 85 | 0.41 | (-185, -3103) | 406 | Güvenlik Caddesi | Farabi+470m | 
 basamak | 2 | 0.11 | (450, -4056) | 407 | service | Botanik Parkı+420m | 
 basamak | 18 | 0.3 | (-263, -3367) | 407 | Andrey Karlov Sokağı | Kırkpınar Sokağı+434m | 
+basamak | 3 | 0.18 | (4437, 5365) | 407 | secondary | Güneşevler+411m | 
 basamak | 50 | 0.32 | (-376, -3909) | 408 | service | Pilot Sokağı+419m | 
 basamak | 26 | 0.41 | (386, 1629) | 408 | Denizciler Caddesi | Opera+440m | 
 basamak | 2 | 0.11 | (295, 3825) | 408 | 658 Caddesi | Dışkapı Hastanesi+434m | 
@@ -676,19 +675,18 @@ basamak | 1 | 0.11 | (778, -2692) | 409 | Arjantin Caddesi | Kuğulu Park+447m |
 basamak | 3 | 0.14 | (3059, 4925) | 409 | residential | Çeyizciler+506m | 
 basamak | 1 | 0.11 | (-252, -4510) | 410 | Abidin Daver Sokak | Atakule+408m | 
 basamak | 7 | 0.28 | (-327, -3591) | 410 | service | Kırkpınar Sokağı+410m | 
-basamak | 20 | 0.2 | (4453, 5359) | 410 | Hacı Bayram Veli Caddesi | Güneşevler+414m | 
-basamak | 2 | 0.13 | (4044, 5498) | 411 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+441m | 
 basamak | 2 | 0.13 | (393, -1130) | 411 | Esat Caddesi | Meclis+423m | 
 basamak | 86 | 0.61 | (325, 1108) | 411 | Talatpaşa Bulvarı | Sıhhiye+468m | 
 basamak | 29 | 0.23 | (4546, 5281) | 411 | residential | Güneşevler+416m | 
 basamak | 8 | 0.19 | (-433, 1928) | 412 | İstanbul Caddesi | Ulus+416m | 
 basamak | 28 | 0.34 | (744, -2838) | 412 | İran Caddesi | Farabi+495m | 
 basamak | 3 | 0.13 | (3204, 4912) | 413 | residential | Çiçek Taksi+585m | 
-basamak | 25 | 0.25 | (3717, 5609) | 414 | 168. Sokak | Güneşevler Spor Tesisleri+453m | 
+basamak | 26 | 0.25 | (3717, 5609) | 414 | residential | Güneşevler Spor Tesisleri+453m | 
+basamak | 4 | 0.13 | (4046, 5500) | 414 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+444m | 
 basamak | 22 | 0.15 | (-483, 1306) | 415 | Talatpaşa Bulvarı | Opera+488m | 
 basamak | 9 | 0.19 | (3996, 4641) | 415 | Taşdelen Caddesi | Güneşevler+437m | 
 basamak | 16 | 0.37 | (420, 2375) | 415 | Hacı Bayram Veli Caddesi | Yıba Çarşısı+507m | 
-basamak | 3 | 0.12 | (3545, 4793) | 416 | residential | Güneşevler Spor Tesisleri+425m | 
+basamak | 10 | 0.19 | (4475, 5350) | 415 | secondary | Güneşevler+419m | 
 basamak | 59 | 0.57 | (3336, 5743) | 416 | residential | Çiçek Taksi+558m | 
 basamak | 3 | 0.21 | (-340, -4334) | 417 | Ahmet Mithat Efendi Sokağı | Atakule+419m | 
 basamak | 2 | 0.15 | (1460, 5293) | 417 | Fethibey Sokak | Subayevleri+515m | 
@@ -705,11 +703,11 @@ basamak | 1 | 0.12 | (4656, 5050) | 423 | tertiary | Güneşevler+428m |
 basamak | 8 | 0.24 | (-463, -1034) | 424 | primary | Meclis+446m | 
 basamak | 5 | 0.12 | (4610, 4814) | 424 | Kibar Ulu Caddesi | Güneşevler+428m | 
 basamak | 3 | 0.16 | (-196, -4592) | 426 | service | Atakule+425m | 
+basamak | 14 | 0.25 | (4095, 5495) | 426 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+473m | 
 basamak | 5 | 0.14 | (489, 316) | 427 | Aksu Caddesi | Kızılay+544m | 
-basamak | 14 | 0.2 | (4094, 5496) | 427 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+473m | 
 basamak | 3 | 0.12 | (-154, -2030) | 427 | Güvenlik Caddesi | Kuğulu Park+697m | 
-basamak | 5 | 0.12 | (4220, 5454) | 428 | 805. Sokak | Güneşevler+443m | 
 basamak | 129 | 0.58 | (2036, 5854) | 428 | secondary | Hasköy Akşemsettin Camii+432m | 
+basamak | 6 | 0.12 | (4220, 5455) | 429 | 805. Sokak | Güneşevler+444m | 
 basamak | 2 | 0.12 | (613, -3352) | 429 | service | Farabi+508m | 
 basamak | 7 | 0.18 | (386, -921) | 429 | Bankacı Sokağı | Meclis+471m | 
 basamak | 5 | 0.17 | (374, -362) | 429 | Mithatpaşa Caddesi | Güvenpark+436m | 
@@ -720,7 +718,7 @@ basamak | 27 | 0.37 | (4663, 4970) | 430 | tertiary | Güneşevler+435m |
 basamak | 5 | 0.17 | (4124, 4595) | 430 | residential | Güneşevler+429m | 
 basamak | 7 | 0.23 | (1833, 5754) | 431 | 56. Sokak | Subayevleri+468m | 
 basamak | 4 | 0.29 | (765, -2084) | 432 | Abay Kunanbay Caddesi | Kuğulu Park+518m | 
-basamak | 1 | 0.14 | (3640, 4746) | 432 | 35. Cadde | Güneşevler Spor Tesisleri+430m | 
+basamak | 1 | 0.15 | (3640, 4746) | 432 | 35. Cadde | Güneşevler Spor Tesisleri+430m | 
 basamak | 1 | 0.13 | (800, -2700) | 433 | Şehit Ömer Haluk Sipahioğlu Sokak | Kuğulu Park+470m | 
 basamak | 20 | 0.35 | (-465, 25) | 433 | Gazi Mustafa Kemal Bulvarı | Kızılay+459m | 
 basamak | 23 | 0.43 | (1532, 5444) | 434 | residential | Subayevleri+464m | 
@@ -965,271 +963,269 @@ kesik | 1 | None | (558, 2589) | 450 | Etlik Caddesi | Yıba Çarşısı+448m |
 kesik | 1 | None | (-96, -2637) | 450 | Güvenlik Caddesi | Farabi+499m | 
 kesik | 3 | None | (499, -4111) | 450 | service | Atakule+453m | 
 kesik | 4 | None | (1461, 3937) | 451 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+453m | 
-serit | 6 | None | (-25, -1175) | 1 | Atatürk Bulvarı | Meclis+35m | A_Gidis_1_01
+serit | 72 | None | (377, -2297) | 1 | Atatürk Bulvarı | Kuğulu Park+157m | A_Gidis_2_00
 serit | 68 | None | (393, -2556) | 1 | Cinnah Caddesi | Kuğulu Park+104m | A_Gidis_2_00
 serit | 35 | None | (379, 3272) | 2 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+231m | Gidis_1_08
-serit | 20 | None | (-65, 1235) | 2 | Atatürk Bulvarı | Opera+225m | Gidis_1_02
 serit | 5 | None | (70, -4254) | 2 | Simon Bolivar Caddesi | Atakule+10m | A_Gidis_1_02
 serit | 39 | None | (365, -2652) | 2 | Cinnah Caddesi | Kuğulu Park+203m | A_Gidis_2_00
-serit | 6 | None | (58, 315) | 2 | Atatürk Bulvarı | Kızılay+222m | Gidis_2_00
 serit | 1 | None | (302, 3002) | 2 | Hacı Bayram Bulvarı | Yıba Çarşısı+226m | Gidis_1_08
 serit | 34 | None | (2340, 5523) | 2 | Malazgirt Caddesi | Hasköy Akşemsettin Camii+118m | Gidis_1_10
-serit | 7 | None | (2951, 5435) | 2 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+66m | Gidis_1_10
-serit | 188 | None | (367, -2258) | 2 | Atatürk Bulvarı | Kuğulu Park+198m | A_Gidis_1_01
 serit | 74 | None | (2867, 5376) | 2 | secondary | Çiçek Taksi+39m | Gidis_1_10
 serit | 2 | None | (2522, 5168) | 2 | Malazgirt Caddesi | Pazar Yeri+38m | Donus_1_00
-serit | 44 | None | (62, 426) | 2 | Atatürk Bulvarı | Kızılay+331m | Gidis_1_02
 serit | 3 | None | (67, -1420) | 2 | Atatürk Bulvarı | Meclis+295m | A_Gidis_1_01
 serit | 3 | None | (2644, 5268) | 2 | 126. Sokak | Esenevler Anadolu Lisesi+24m | Gidis_1_10
-serit | 4 | None | (334, -2149) | 2 | Atatürk Bulvarı | Kuğulu Park+310m | A_Gidis_1_01
 serit | 8 | None | (347, -2706) | 2 | Cinnah Caddesi | Kuğulu Park+259m | A_Gidis_1_02
 serit | 6 | None | (-19, 1544) | 2 | Erbakan Meydanı | Opera+89m | Gidis_1_03
+serit | 6 | None | (334, -2148) | 2 | Atatürk Bulvarı | Kuğulu Park+311m | A_Gidis_1_01
 serit | 1 | None | (334, 3061) | 3 | Çankırı Caddesi | Yıba Çarşısı+293m | Gidis_1_08
 serit | 5 | None | (-3, 2129) | 3 | Çankırı Caddesi | Ulus+184m | Capraz_07_289495207_0_Don
-serit | 11 | None | (-45, -864) | 3 | Atatürk Bulvarı | Meclis+277m | A_Gidis_1_01
+serit | 83 | None | (56, 436) | 3 | Atatürk Bulvarı | Sıhhiye+335m | Gidis_1_02
+serit | 8 | None | (2948, 5436) | 3 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+63m | Gidis_1_10
 serit | 1 | None | (2117, 5416) | 4 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+129m | Gidis_1_10
+serit | 56 | None | (-40, -877) | 4 | Akay Kavşağı | Meclis+264m | A_Gidis_1_01
 serit | 8 | None | (1121, 4228) | 4 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+94m | Gidis_1_09
 serit | 6 | None | (1940, 5268) | 4 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+53m | Gidis_1_10
+serit | 1 | None | (69, 360) | 5 | Atatürk Bulvarı | Kızılay+268m | Gidis_1_02
+serit | 2 | None | (-82, 1180) | 5 | primary_link | Opera+282m | Gidis_1_02
 serit | 7 | None | (2574, 5207) | 7 | 126. Sokak | Pazar Yeri+33m | Donus_1_00
 serit | 19 | None | (352, 3183) | 7 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+319m | Gidis_1_08
 serit | 19 | None | (912, 3960) | 8 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+271m | Gidis_1_09
-serit | 10 | None | (4, -1237) | 8 | primary_link | Meclis+102m | A_Donus_1_00
-serit | 8 | None | (240, 2934) | 9 | Çankırı Caddesi | Yıba Çarşısı+136m | Donus_1_00
-serit | 5 | None | (109, -1482) | 10 | Atatürk Bulvarı | Meclis+368m | A_Donus_1_00
-serit | 13 | None | (263, -1896) | 11 | Atatürk Bulvarı | Kuğulu Park+574m | A_Donus_1_00
+serit | 24 | None | (261, -1896) | 9 | Atatürk Bulvarı | Kuğulu Park+574m | A_Gidis_1_01
+serit | 52 | None | (-26, -1068) | 10 | Atatürk Bulvarı | Meclis+74m | A_Donus_1_00
+serit | 1 | None | (57, -1368) | 11 | Akay Kavşağı | Meclis+243m | A_Donus_1_00
+serit | 68 | None | (-3, -1210) | 12 | Atatürk Bulvarı | Meclis+74m | A_Gidis_1_01
+serit | 8 | None | (978, 4064) | 13 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+311m | Donus_1_00
 serit | 1 | None | (2819, 5382) | 13 | 126. Sokak | Çeyizciler+45m | Donus_1_00
-serit | 15 | None | (-121, 1139) | 16 | Talatpaşa Bulvarı | Opera+332m | Donus_1_00
+serit | 36 | None | (41, 320) | 15 | Atatürk Bulvarı | Kızılay+223m | Gidis_2_00
+serit | 1 | None | (-126, 1125) | 17 | Talatpaşa Bulvarı | Opera+347m | Donus_1_00
 serit | 11 | None | (479, 3432) | 17 | 659/1 Caddesi | Dışkapı Hastanesi+48m | Capraz_09_35209389_0_Don
-serit | 6 | None | (-14, -1103) | 18 | Atatürk Bulvarı | Meclis+41m | A_Donus_1_00
 serit | 1 | None | (-52, 1341) | 18 | Atatürk Bulvarı | Opera+119m | Donus_1_00
-serit | 51 | None | (421, -2501) | 20 | primary_link | Kuğulu Park+53m | A_Gidis_2_00
+serit | 12 | None | (370, -2205) | 19 | Atatürk Bulvarı | Kuğulu Park+249m | A_Donus_1_00
+serit | 7 | None | (-75, 1271) | 20 | primary_link | Opera+192m | Donus_1_00
+serit | 50 | None | (422, -2502) | 20 | primary_link | Kuğulu Park+54m | A_Donus_1_00
 serit | 3 | None | (1532, 4687) | 22 | Üçyıldız Caddesi | Altınpark+187m | Capraz_10_226577214_0_Don
-serit | 6 | None | (33, 377) | 31 | Atatürk Bulvarı | Kızılay+277m | Donus_1_00
-egim | 5 | 25.92 | (4206, 5017) | 0 | Mehmet Akif Ersoy Caddesi | Güneşevler+25m | 
-egim | 3 | 19.43 | (2942, 5441) | 0 | Celal Esat Arseven Caddesi | Çiçek Taksi+61m | 
-egim | 123 | 24.42 | (196, -3247) | 0 | Cinnah Caddesi | Farabi+278m | 
-egim | 521 | 29.82 | (2698, 5306) | 0 | 126. Sokak | Esenevler Anadolu Lisesi+90m | 
-egim | 14 | 21.04 | (274, -2981) | 1 | Cinnah Caddesi | Farabi+6m | 
-egim | 12 | 17.89 | (40, -3832) | 1 | Cinnah Caddesi | Pilot Sokağı+8m | 
-egim | 40 | 29.85 | (345, -2737) | 1 | Cinnah Caddesi | Farabi+253m | 
-egim | 22 | 17.76 | (150, -3401) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+241m | 
-egim | 3 | 14.77 | (324, -2814) | 2 | Cinnah Caddesi | Farabi+173m | 
-egim | 8 | 16.06 | (113, -3524) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+113m | 
-egim | 1 | 14.44 | (792, 3770) | 2 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+47m | 
-egim | 103 | 29.47 | (378, -2611) | 2 | Cinnah Caddesi | Kuğulu Park+160m | 
-egim | 422 | 18.07 | (-110, 1012) | 2 | Atatürk Bulvarı | Sıhhiye+271m | 
-egim | 171 | 29.96 | (116, 2734) | 3 | Çankırı Caddesi | Yıba Çarşısı+100m | 
-egim | 12 | 28.65 | (-40, -937) | 3 | Atatürk Bulvarı | Meclis+204m | 
-egim | 2 | 14.2 | (-18, 1895) | 3 | Atatürk Bulvarı | Ulus+50m | 
-egim | 6 | 22.07 | (245, -3071) | 3 | Cinnah Caddesi | Farabi+96m | 
-egim | 2 | 19.81 | (2540, 5165) | 3 | 126. Sokak | Pazar Yeri+23m | 
-egim | 1 | 12.84 | (2338, 5520) | 3 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+116m | 
-egim | 1 | 12.63 | (82, -3630) | 4 | Cinnah Caddesi | Kırkpınar Sokağı+2m | 
-egim | 5 | 15.48 | (-7, 2064) | 4 | Ulus Meydanı | Ulus+119m | 
-egim | 3 | 23.21 | (4156, 5033) | 4 | Mehmet Akif Ersoy Caddesi | Güneşevler+77m | 
-egim | 2 | 13.33 | (2905, 5415) | 4 | Celal Esat Arseven Caddesi | Çiçek Taksi+16m | 
-egim | 1 | 15.06 | (44, -4134) | 4 | Cinnah Caddesi | Botanik Parkı+77m | 
-egim | 1 | 13.02 | (306, -2888) | 5 | Bükreş Caddesi | Farabi+98m | 
-egim | 1 | 12.71 | (2, 2416) | 5 | Çankırı Caddesi | Yıba Çarşısı+435m | 
-egim | 2 | 13.03 | (19, 2506) | 5 | Çankırı Caddesi | Yıba Çarşısı+346m | 
-egim | 3 | 13.49 | (1175, 4283) | 5 | Çağdaş Sokak | Çağdaş Sokak+17m | 
-egim | 7 | 17.61 | (9, 2462) | 5 | Çankırı Caddesi | Yıba Çarşısı+390m | 
-egim | 1 | 17.05 | (1436, 4562) | 5 | Şehit Ömer Halisdemir Bulvarı | Atatürk Anadolu İmam Hatip Lisesi+165m | 
-egim | 11 | 25.17 | (1336, 4465) | 6 | Şehit Ömer Halisdemir Bulvarı | Atatürk Anadolu İmam Hatip Lisesi+28m | 
-egim | 32 | 29.53 | (964, 4032) | 6 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+345m | 
-egim | 10 | 28.1 | (405, -2519) | 6 | Cinnah Caddesi | Kuğulu Park+67m | 
-egim | 2 | 14.99 | (-30, 1333) | 6 | Derman Sokak | Opera+123m | 
-egim | 80 | 27.24 | (-34, -1024) | 6 | Atatürk Bulvarı | Meclis+118m | 
-egim | 8 | 21.91 | (-40, -679) | 6 | Atatürk Bulvarı | Güvenpark+257m | 
-egim | 6 | 18.03 | (3320, 5315) | 6 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+438m | 
-egim | 9 | 28.69 | (1056, 4160) | 6 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+188m | 
-egim | 12 | 26.4 | (201, 2874) | 6 | Çankırı Caddesi | Yıba Çarşısı+64m | 
-egim | 72 | 26.5 | (306, -2034) | 6 | Atatürk Bulvarı | Kuğulu Park+429m | 
-egim | 1 | 13.29 | (26, -3904) | 6 | Hava Sokağı | Pilot Sokağı+78m | 
-egim | 2 | 16.47 | (-40, -637) | 6 | Atatürk Bulvarı | Güvenpark+216m | 
-egim | 55 | 27.38 | (319, 3053) | 6 | Etlik Caddesi | Yıba Çarşısı+278m | 
-egim | 12 | 29.18 | (1815, 5086) | 6 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+273m | 
-egim | 19 | 19.06 | (688, 3668) | 6 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+100m | 
-egim | 8 | 12.78 | (3412, 5284) | 6 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+373m | 
-egim | 2 | 14.94 | (-28, 1557) | 7 | Erbakan Meydanı | Opera+102m | 
-egim | 39 | 17.58 | (2824, 5377) | 7 | 126. Sokak | Çeyizciler+46m | 
-egim | 61 | 23.71 | (-7, 2357) | 8 | Çankırı Caddesi | Ulus+412m | 
-egim | 48 | 17.64 | (1574, 4717) | 8 | Şehit Ömer Halisdemir Bulvarı | Altınpark+136m | 
-egim | 9 | 17.8 | (-22, -1124) | 8 | Atatürk Bulvarı | Meclis+18m | 
-egim | 10 | 28.66 | (176, -1668) | 8 | Atatürk Bulvarı | Meclis+566m | 
-egim | 2 | 13.17 | (-30, 1733) | 8 | Atatürk Bulvarı | Ulus+212m | 
-egim | 49 | 29.35 | (4, 110) | 8 | Atatürk Bulvarı | Kızılay+18m | 
-egim | 79 | 29.36 | (-6, 2291) | 8 | Çankırı Caddesi | Ulus+346m | 
-egim | 43 | 20.95 | (1942, 5289) | 8 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+37m | 
-egim | 147 | 29.78 | (2223, 5478) | 8 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+14m | 
-egim | 93 | 29.07 | (1683, 4870) | 8 | Şehit Ömer Halisdemir Bulvarı | Altınpark+54m | 
-egim | 8 | 21.4 | (1384, 4517) | 9 | Şehit Ömer Halisdemir Bulvarı | Atatürk Anadolu İmam Hatip Lisesi+98m | 
-egim | 15 | 24.2 | (402, -2386) | 9 | Cinnah Caddesi | Kuğulu Park+66m | 
-egim | 1 | 14.82 | (234, -1872) | 9 | Atatürk Bulvarı | Kuğulu Park+604m | 
-egim | 1 | 13.02 | (2050, 5392) | 9 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+113m | 
-egim | 221 | 29.78 | (17, -1273) | 9 | Akay Kavşağı | Meclis+140m | 
-egim | 116 | 29.31 | (1628, 4789) | 9 | Şehit Ömer Halisdemir Bulvarı | Altınpark+47m | 
-egim | 11 | 21.65 | (154, -1607) | 10 | Atatürk Bulvarı | Meclis+501m | 
-egim | 8 | 29.43 | (54, 388) | 10 | Atatürk Bulvarı | Kızılay+292m | 
-egim | 3 | 21.94 | (1082, 4204) | 12 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+139m | 
-egim | 2 | 19.53 | (355, 3232) | 13 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+277m | 
-egim | 6 | 28.68 | (63, 504) | 13 | Atatürk Bulvarı | Sıhhiye+269m | 
-egim | 6 | 22.28 | (2097, 5426) | 14 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+144m | 
-egim | 5 | 14.03 | (2470, 5296) | 15 | residential | Pazar Yeri+148m | 
-egim | 11 | 27.2 | (789, 3802) | 19 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+73m | 
-egim | 14 | 25.4 | (-88, 1241) | 22 | primary_link | Opera+225m | 
-egim | 70 | 29.62 | (56, 603) | 24 | Celal Bayar Bulvarı | Sıhhiye+172m | 
-egim | 277 | 29.84 | (98, -4246) | 28 | Simon Bolivar Bulvarı | Atakule+31m | 
-egim | 1 | 13.16 | (1386, 4548) | 30 | secondary | Atatürk Anadolu İmam Hatip Lisesi+124m | 
-egim | 36 | 29.63 | (-117, 1200) | 35 | Talatpaşa Bulvarı | Opera+273m | 
-egim | 2 | 14.06 | (2294, 5547) | 41 | 48. Sokak | Hasköy Akşemsettin Camii+98m | 
-egim | 12 | 14.36 | (-12, 607) | 42 | Atatürk Bulvarı | Sıhhiye+161m | 
-egim | 20 | 16.13 | (991, 3986) | 44 | Turgut Özal 2 Bulvarı | Veteriner Fakültesi+340m | 
-egim | 2 | 13.33 | (356, -2505) | 45 | Kuveyt Caddesi | Kuğulu Park+69m | 
-egim | 4 | 13.9 | (264, 2872) | 47 | Uzunyol Caddesi | Yıba Çarşısı+108m | 
-egim | 3 | 14.49 | (263, -2077) | 49 | service | Kuğulu Park+400m | 
-egim | 7 | 21.15 | (2081, 5472) | 63 | residential | Hasköy Akşemsettin Camii+154m | 
-egim | 2 | 14.09 | (3932, 5032) | 65 | service | Güneşevler Spor Tesisleri+211m | 
-egim | 81 | 28.73 | (857, 3985) | 67 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+269m | 
-egim | 1 | 14.73 | (2462, 5132) | 68 | Kaman Sokak | Pazar Yeri+107m | 
-egim | 14 | 17.81 | (46, -1146) | 72 | Tunus Caddesi | Meclis+76m | 
-egim | 1 | 13.68 | (262, -2152) | 73 | service | Kuğulu Park+331m | 
-egim | 3 | 15.22 | (1767, 5136) | 73 | Sandalcı Caddesi | Subayevleri+270m | 
+serit | 8 | None | (34, 376) | 30 | Atatürk Bulvarı | Kızılay+276m | Donus_1_00
+egim | 220 | 23.92 | (192, -3261) | 0 | Cinnah Caddesi | Farabi+293m | 
+egim | 2 | 12.72 | (302, -2882) | 1 | Cinnah Caddesi | Farabi+102m | 
+egim | 6 | 16.69 | (983, 4048) | 1 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+321m | 
+egim | 6 | 20.65 | (934, 3981) | 1 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+301m | 
+egim | 12 | 19.4 | (242, -3087) | 1 | Cinnah Caddesi | Farabi+112m | 
+egim | 2 | 14.41 | (360, -2671) | 2 | Cinnah Caddesi | Kuğulu Park+222m | 
+egim | 9 | 13.93 | (136, -3446) | 2 | Cinnah Caddesi | Kırkpınar Sokağı+194m | 
+egim | 1 | 15.88 | (4, 2364) | 3 | Beşik Caddesi | Ulus+419m | 
+egim | 4 | 13.66 | (4084, 5044) | 3 | residential | Güneşevler+150m | 
+egim | 2 | 13.47 | (83, -3630) | 3 | Cinnah Caddesi | Kırkpınar Sokağı+3m | 
+egim | 2 | 17.07 | (-19, 1713) | 3 | Kediseven Caddesi | Ulus+232m | 
+egim | 99 | 29.34 | (381, -2604) | 4 | Cinnah Caddesi | Kuğulu Park+153m | 
+egim | 6 | 19.56 | (-17, 1898) | 4 | Kızılbey Caddesi | Ulus+47m | 
+egim | 2 | 18.6 | (-45, -852) | 4 | Vekaletler Caddesi | Meclis+290m | 
+egim | 1 | 12.03 | (1542, 4658) | 4 | Uzayan Sokak | Altınpark+202m | 
+egim | 10 | 21.16 | (196, 2863) | 4 | Çankırı Caddesi | Yıba Çarşısı+52m | 
+egim | 3 | 15.4 | (331, -2767) | 4 | Cinnah Caddesi | Farabi+220m | 
+egim | 24 | 29.3 | (279, -2979) | 5 | Cinnah Caddesi | Farabi+10m | 
+egim | 74 | 22.64 | (135, -1570) | 5 | Atatürk Bulvarı | Meclis+460m | 
+egim | 4 | 13.61 | (46, -3821) | 5 | Cinnah Caddesi | Pilot Sokağı+13m | 
+egim | 1 | 13.18 | (68, -3722) | 5 | Cinnah Caddesi | Kırkpınar Sokağı+91m | 
+egim | 6 | 13.35 | (407, -2456) | 5 | Cinnah Caddesi | Kuğulu Park+8m | 
+egim | 1 | 13.28 | (376, 3274) | 5 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+231m | 
+egim | 3 | 16.26 | (1175, 4283) | 5 | Çağdaş Sokak | Çağdaş Sokak+17m | 
+egim | 2 | 14.09 | (115, -3545) | 5 | Cinnah Caddesi | Kırkpınar Sokağı+93m | 
+egim | 2 | 19.56 | (-30, 1335) | 5 | Derman Sokak | Opera+121m | 
+egim | 1 | 12.78 | (2214, 5458) | 5 | Tuğrulbey Sokak | Hasköy Akşemsettin Camii+23m | 
+egim | 1 | 14.83 | (256, -3022) | 6 | Cinnah Caddesi | Farabi+46m | 
+egim | 1 | 12.44 | (-16, 1846) | 6 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+99m | 
+egim | 10 | 28.48 | (405, -2519) | 6 | Cinnah Caddesi | Kuğulu Park+67m | 
+egim | 21 | 20.32 | (-0, 2122) | 6 | Çam Sokak | Ulus+178m | 
+egim | 1 | 14.32 | (26, -3904) | 6 | Hava Sokağı | Pilot Sokağı+78m | 
+egim | 1 | 12.23 | (106, -3582) | 6 | Cinnah Caddesi | Kırkpınar Sokağı+56m | 
+egim | 5 | 17.0 | (-15, 1551) | 6 | A.Adnan Saygun Caddesi | Opera+96m | 
+egim | 4 | 19.88 | (74, -1415) | 6 | Atatürk Bulvarı | Meclis+293m | 
+egim | 8 | 14.37 | (3412, 5284) | 6 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+373m | 
+egim | 5 | 15.64 | (3317, 5317) | 7 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+435m | 
+egim | 1 | 12.89 | (4226, 5006) | 7 | Taşdelen Caddesi | Güneşevler+6m | 
+egim | 1 | 13.37 | (2902, 5410) | 7 | residential | Çiçek Taksi+11m | 
+egim | 2 | 13.49 | (3131, 5380) | 7 | Mehmet Akif Ersoy Caddesi | Çiçek Taksi+241m | 
+egim | 4 | 16.78 | (367, -2295) | 8 | service | Kuğulu Park+161m | 
+egim | 11 | 29.58 | (176, -1668) | 8 | Atatürk Bulvarı | Meclis+566m | 
+egim | 25 | 28.72 | (401, -2384) | 8 | Cinnah Caddesi | Kuğulu Park+69m | 
+egim | 5 | 26.61 | (192, -1710) | 8 | Atatürk Bulvarı | Meclis+611m | 
+egim | 3 | 20.83 | (-55, 1295) | 8 | Atatürk Bulvarı | Opera+164m | 
+egim | 3 | 14.36 | (10, 668) | 9 | Atatürk Bulvarı | Sıhhiye+99m | 
+egim | 40 | 26.31 | (321, 3064) | 9 | Çankırı Caddesi | Yıba Çarşısı+289m | 
+egim | 1 | 17.58 | (3954, 5104) | 11 | Mehmet Akif Ersoy Caddesi | Güneşevler Spor Tesisleri+198m | 
+egim | 1 | 23.77 | (62, 508) | 13 | Atatürk Bulvarı | Sıhhiye+265m | 
+egim | 2 | 19.38 | (355, 3232) | 13 | Şehit Ömer Halisdemir Bulvarı | Dışkapı Hastanesi+277m | 
+egim | 3 | 15.31 | (913, 3923) | 13 | Kenar Sokak | Veteriner Fakültesi+242m | 
+egim | 1 | 13.81 | (2694, 5320) | 14 | 129. Sokak | Esenevler Anadolu Lisesi+96m | 
+egim | 4 | 14.99 | (2622, 5270) | 14 | 126. Sokak | Esenevler Anadolu Lisesi+19m | 
+egim | 5 | 13.96 | (2470, 5296) | 15 | residential | Pazar Yeri+148m | 
+egim | 1 | 14.6 | (208, 2904) | 18 | Sanatkarlar Caddesi | Yıba Çarşısı+94m | 
+egim | 50 | 28.3 | (363, -2186) | 18 | Atatürk Bulvarı | Kuğulu Park+269m | 
+egim | 30 | 22.44 | (997, 4100) | 18 | trunk | Çağdaş Sokak+272m | 
+egim | 5 | 23.55 | (800, 3817) | 18 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+91m | 
+egim | 2 | 18.45 | (2107, 5437) | 20 | residential | Hasköy Akşemsettin Camii+131m | 
+egim | 2 | 16.73 | (-26, -645) | 20 | Atatürk Bulvarı | Güvenpark+225m | 
+egim | 1 | 13.27 | (-12, 722) | 20 | Atatürk Bulvarı | Sıhhiye+48m | 
+egim | 5 | 14.36 | (-58, 1196) | 22 | Talatpaşa Bulvarı | Opera+262m | 
+egim | 12 | 23.79 | (4, 183) | 23 | Atatürk Bulvarı | Kızılay+81m | 
+egim | 4 | 23.19 | (1616, 4796) | 23 | Cihangir Caddesi | Altınpark+53m | 
+egim | 21 | 26.72 | (27, 496) | 23 | Atatürk Bulvarı | Sıhhiye+272m | 
+egim | 1 | 14.72 | (40, 394) | 23 | Atatürk Bulvarı | Kızılay+295m | 
+egim | 37 | 29.02 | (299, -2105) | 24 | service | Kuğulu Park+362m | 
+egim | 56 | 25.3 | (-46, 1556) | 24 | Erbakan Meydanı | Opera+104m | 
+egim | 36 | 29.99 | (58, 602) | 26 | Celal Bayar Bulvarı | Sıhhiye+173m | 
+egim | 126 | 24.35 | (15, 2064) | 26 | Anafartalar Caddesi | Ulus+124m | 
+egim | 281 | 29.4 | (101, -4259) | 27 | Simon Bolivar Caddesi | Atakule+29m | 
+egim | 3 | 12.18 | (-94, 1244) | 29 | primary_link | Opera+224m | 
+egim | 25 | 27.1 | (-110, 1201) | 29 | Talatpaşa Bulvarı | Opera+270m | 
+egim | 4 | 13.82 | (22, 332) | 36 | Atatürk Bulvarı | Kızılay+230m | 
+egim | 4 | 15.71 | (2294, 5546) | 39 | 48. Sokak | Hasköy Akşemsettin Camii+98m | 
+egim | 1 | 14.67 | (1032, 4184) | 40 | residential | Çağdaş Sokak+190m | 
+egim | 12 | 22.51 | (-12, 607) | 42 | Atatürk Bulvarı | Sıhhiye+161m | 
+egim | 2 | 13.49 | (356, -2505) | 45 | Kuveyt Caddesi | Kuğulu Park+69m | 
+egim | 4 | 14.02 | (264, 2872) | 47 | Uzunyol Caddesi | Yıba Çarşısı+108m | 
+egim | 3 | 14.71 | (263, -2077) | 49 | service | Kuğulu Park+400m | 
+egim | 2 | 16.7 | (25, -1449) | 53 | Ballı Sokak | Meclis+313m | 
+egim | 34 | 18.69 | (2377, 5565) | 54 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+172m | 
+egim | 96 | 29.02 | (2219, 5531) | 59 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+64m | 
+egim | 1 | 14.14 | (8, -4256) | 61 | Hoşdere Caddesi | Atakule+65m | 
+egim | 2 | 14.29 | (3932, 5032) | 65 | service | Güneşevler Spor Tesisleri+211m | 
+egim | 87 | 27.66 | (857, 3986) | 67 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+269m | 
+egim | 1 | 14.62 | (2462, 5132) | 68 | Kaman Sokak | Pazar Yeri+107m | 
+egim | 12 | 16.63 | (46, -1146) | 72 | Tunus Caddesi | Meclis+76m | 
+egim | 1 | 15.07 | (262, -2152) | 73 | service | Kuğulu Park+331m | 
+egim | 3 | 15.21 | (1767, 5136) | 73 | Sandalcı Caddesi | Subayevleri+270m | 
 egim | 3 | 15.67 | (1737, 5087) | 74 | Sandalcı Caddesi | Altınpark+278m | 
-egim | 1 | 15.01 | (2406, 5560) | 74 | primary_link | Hasköy Akşemsettin Camii+194m | 
+egim | 4 | 29.25 | (-152, 1224) | 76 | Talatpaşa Bulvarı | Opera+268m | 
 egim | 1 | 12.24 | (1696, 5024) | 77 | Şabanözü Sokak | Altınpark+207m | 
-egim | 1 | 15.06 | (72, 2146) | 77 | Çam Sokak | Ulus+220m | 
-egim | 1 | 15.04 | (416, 3072) | 77 | Altındağ Caddesi | Yıba Çarşısı+353m | 
-egim | 32 | 20.89 | (2216, 5551) | 78 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+84m | 
+egim | 1 | 15.57 | (72, 2146) | 77 | Çam Sokak | Ulus+220m | 
+egim | 1 | 15.05 | (416, 3072) | 77 | Altındağ Caddesi | Yıba Çarşısı+353m | 
 egim | 3 | 13.25 | (316, -3141) | 84 | Üsküp Caddesi | Farabi+169m | 
-egim | 13 | 25.13 | (1576, 4853) | 88 | Cihangir Caddesi | Altınpark+94m | 
-egim | 1 | 12.57 | (1534, 4794) | 88 | Dinç Sokak | Altınpark+133m | 
-egim | 2 | 14.39 | (70, 1977) | 90 | Alsancak Sokak | Ulus+93m | 
-egim | 2 | 14.65 | (310, -2505) | 91 | Kuveyt Caddesi | Kuğulu Park+104m | 
-egim | 87 | 27.85 | (-113, 1618) | 91 | İstiklal Caddesi | Opera+188m | 
-egim | 1 | 15.0 | (-64, 618) | 91 | primary_link | Sıhhiye+164m | 
-egim | 5 | 14.53 | (2385, 5225) | 93 | Tuğrulbey Sokak | Pazar Yeri+180m | 
-egim | 10 | 16.49 | (76, 1845) | 98 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+137m | 
-egim | 2 | 14.61 | (-91, -1290) | 98 | service | Meclis+161m | 
-egim | 6 | 15.57 | (77, 1796) | 99 | Sanayi Caddesi | Ulus+176m | 
-egim | 10 | 12.94 | (-8, 2713) | 101 | Giriş Caddesi | Yıba Çarşısı+207m | 
-egim | 24 | 22.49 | (96, 819) | 106 | Kızılay Caddesi | Sıhhiye+105m | 
-egim | 14 | 18.36 | (-4, -4334) | 106 | Yunus Nadi Sokağı | Atakule+104m | 
-egim | 1 | 12.34 | (30, 1186) | 108 | Talatpaşa Bulvarı | Opera+273m | 
+egim | 13 | 26.02 | (1576, 4853) | 88 | Cihangir Caddesi | Altınpark+94m | 
+egim | 1 | 12.6 | (1534, 4794) | 88 | Dinç Sokak | Altınpark+133m | 
+egim | 2 | 14.51 | (70, 1977) | 90 | Alsancak Sokak | Ulus+93m | 
+egim | 2 | 14.76 | (310, -2505) | 91 | Kuveyt Caddesi | Kuğulu Park+104m | 
+egim | 88 | 27.73 | (-112, 1618) | 91 | İstiklal Caddesi | Opera+188m | 
+egim | 1 | 14.99 | (-64, 618) | 91 | primary_link | Sıhhiye+164m | 
+egim | 5 | 14.57 | (2385, 5225) | 93 | Tuğrulbey Sokak | Pazar Yeri+180m | 
+egim | 10 | 16.66 | (76, 1845) | 98 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+137m | 
+egim | 1 | 14.41 | (-28, -4266) | 98 | Hoşdere Caddesi | Atakule+101m | 
+egim | 2 | 14.43 | (-91, -1290) | 98 | service | Meclis+161m | 
+egim | 5 | 15.4 | (78, 1796) | 100 | Sanayi Caddesi | Ulus+177m | 
+egim | 10 | 13.41 | (-8, 2713) | 101 | Giriş Caddesi | Yıba Çarşısı+207m | 
+egim | 24 | 22.48 | (96, 819) | 106 | Kızılay Caddesi | Sıhhiye+105m | 
+egim | 14 | 18.58 | (-4, -4334) | 106 | Yunus Nadi Sokağı | Atakule+104m | 
+egim | 37 | 24.06 | (87, 1898) | 108 | Kızılbey Caddesi | Ulus+114m | 
 egim | 5 | 16.18 | (76, -3273) | 108 | Kıbrıs Sokağı | Farabi+352m | 
-egim | 2 | 15.07 | (57, 1258) | 110 | residential | Opera+211m | 
 egim | 32 | 15.56 | (287, -3332) | 110 | Üsküp Caddesi | Farabi+354m | 
-egim | 2 | 12.9 | (2335, 5287) | 111 | Dilek Sokak | Hasköy Akşemsettin Camii+208m | 
-egim | 30 | 23.74 | (92, 1899) | 113 | Kızılbey Caddesi | Ulus+118m | 
+egim | 2 | 12.96 | (2335, 5287) | 111 | Dilek Sokak | Hasköy Akşemsettin Camii+208m | 
+egim | 1 | 13.08 | (58, 1258) | 111 | residential | Opera+211m | 
 egim | 1 | 16.69 | (3788, 5274) | 116 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+118m | 
 egim | 33 | 25.95 | (467, 3112) | 116 | residential | Dışkapı Hastanesi+347m | 
-egim | 1 | 13.03 | (3256, 5454) | 116 | Türkmen Caddesi | Çiçek Taksi+368m | 
-egim | 1 | 14.97 | (154, -1976) | 118 | service | Kuğulu Park+536m | 
-egim | 52 | 24.2 | (410, 2956) | 119 | Hacı Bayram Bulvarı | Yıba Çarşısı+276m | 
-egim | 68 | 26.72 | (1897, 5405) | 120 | Çubuklu Sokak | Subayevleri+124m | 
-egim | 1 | 15.14 | (3906, 4980) | 122 | residential | Güneşevler Spor Tesisleri+228m | 
+egim | 1 | 14.95 | (154, -1976) | 118 | service | Kuğulu Park+536m | 
+egim | 68 | 26.55 | (1897, 5403) | 118 | Çubuklu Sokak | Subayevleri+123m | 
+egim | 52 | 24.19 | (410, 2956) | 119 | Hacı Bayram Bulvarı | Yıba Çarşısı+276m | 
+egim | 1 | 15.18 | (3906, 4980) | 122 | residential | Güneşevler Spor Tesisleri+228m | 
 egim | 2 | 14.86 | (207, -3655) | 123 | Üsküp Caddesi | Kırkpınar Sokağı+128m | 
-egim | 4 | 16.64 | (2288, 5347) | 126 | Doruk Sokak | Hasköy Akşemsettin Camii+134m | 
+egim | 1 | 12.02 | (2674, 5120) | 125 | 119. Sokak | Pazar Yeri+129m | 
+egim | 4 | 16.75 | (2288, 5347) | 126 | Doruk Sokak | Hasköy Akşemsettin Camii+134m | 
 egim | 1 | 15.53 | (3796, 5016) | 127 | 44. Sokak | Güneşevler Spor Tesisleri+146m | 
-egim | 2 | 16.01 | (430, -2903) | 128 | Bükreş Caddesi | Farabi+178m | 
-egim | 98 | 25.45 | (134, -4377) | 128 | Simon Bolivar Caddesi | Atakule+129m | 
-egim | 4 | 13.12 | (2212, 5608) | 131 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+141m | 
-egim | 2 | 12.35 | (4304, 5124) | 132 | Taşdelen Caddesi | Güneşevler+136m | 
-egim | 23 | 23.13 | (103, -1114) | 133 | Esat Caddesi | Meclis+136m | 
-egim | 5 | 17.08 | (64, -3218) | 136 | Kıbrıs Sokağı | Farabi+315m | 
-egim | 1 | 12.17 | (116, 1612) | 138 | Sanayi Caddesi | Opera+206m | 
-egim | 1 | 13.35 | (4374, 5004) | 139 | Mehmet Akif Ersoy Caddesi | Güneşevler+144m | 
-egim | 3 | 18.36 | (3967, 5237) | 140 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+219m | 
+egim | 2 | 15.99 | (430, -2903) | 128 | Bükreş Caddesi | Farabi+178m | 
+egim | 128 | 29.43 | (498, -2652) | 129 | Atatürk Bulvarı | Kuğulu Park+222m | 
+egim | 72 | 21.03 | (135, -4379) | 131 | Simon Bolivar Caddesi | Atakule+131m | 
+egim | 4 | 13.56 | (2212, 5608) | 131 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+141m | 
+egim | 3 | 12.48 | (4303, 5125) | 132 | Taşdelen Caddesi | Güneşevler+136m | 
+egim | 23 | 23.22 | (103, -1114) | 133 | Esat Caddesi | Meclis+136m | 
+egim | 5 | 17.11 | (64, -3218) | 136 | Kıbrıs Sokağı | Farabi+315m | 
+egim | 85 | 28.6 | (1994, 5507) | 136 | residential | Subayevleri+200m | 
+egim | 1 | 13.45 | (4374, 5004) | 139 | Mehmet Akif Ersoy Caddesi | Güneşevler+144m | 
+egim | 3 | 18.35 | (3967, 5237) | 140 | Yıldıztepe Caddesi | Güneşevler Spor Tesisleri+219m | 
 egim | 3 | 15.14 | (220, 2625) | 141 | Beştepeler Sokak | Yıba Çarşısı+197m | 
-egim | 161 | 29.39 | (506, -2672) | 142 | Atatürk Bulvarı | Kuğulu Park+244m | 
-egim | 1 | 13.62 | (4242, 5156) | 143 | Yıldıztepe Caddesi | Güneşevler+146m | 
-egim | 1 | 12.06 | (64, 1174) | 144 | Talatpaşa Bulvarı | Opera+293m | 
+egim | 1 | 13.6 | (4242, 5156) | 143 | Yıldıztepe Caddesi | Güneşevler+146m | 
 egim | 1 | 12.15 | (494, -2184) | 144 | Tunalı Hilmi Caddesi | Kuğulu Park+284m | 
-egim | 188 | 26.7 | (-5, -3419) | 145 | Bürümcek Sokak | Kırkpınar Sokağı+230m | 
-egim | 1 | 16.26 | (2754, 5498) | 145 | 137/1. Sokak | Çeyizciler+150m | 
+egim | 188 | 26.66 | (-5, -3419) | 145 | Bürümcek Sokak | Kırkpınar Sokağı+230m | 
+egim | 1 | 16.31 | (2754, 5498) | 145 | 137/1. Sokak | Çeyizciler+150m | 
 egim | 5 | 16.28 | (366, 2845) | 146 | Deliler Tepesi Sokak | Yıba Çarşısı+197m | 
-egim | 1 | 12.72 | (3304, 5472) | 148 | 184. Sokak | Çiçek Taksi+418m | 
-egim | 71 | 28.59 | (1977, 5513) | 150 | residential | Subayevleri+206m | 
-egim | 1 | 12.29 | (14, -4402) | 152 | Yunus Nadi Sokağı | Atakule+151m | 
-egim | 44 | 15.47 | (225, -2325) | 152 | service | Kuğulu Park+216m | 
-egim | 1 | 16.1 | (-124, -3974) | 154 | Hava Sokağı | Botanik Parkı+175m | 
-egim | 3 | 24.21 | (2167, 5613) | 155 | 47. Sokak | Hasköy Akşemsettin Camii+159m | 
-egim | 1 | 13.32 | (-164, -1278) | 163 | service | Meclis+192m | 
-egim | 127 | 29.17 | (-187, 1680) | 165 | İstiklal Caddesi | Opera+281m | 
-egim | 8 | 12.64 | (143, 1842) | 165 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+191m | 
-egim | 17 | 18.98 | (142, 877) | 165 | Türkocağı Sokağı | Sıhhiye+176m | 
-egim | 2 | 14.93 | (201, 598) | 166 | Celal Bayar Bulvarı | Sıhhiye+259m | 
-egim | 3 | 16.76 | (145, 1557) | 166 | Sanayi Caddesi | Opera+192m | 
-egim | 2 | 13.96 | (3353, 5475) | 168 | 165. Sokak | Çiçek Taksi+467m | 
-egim | 1 | 13.52 | (146, 1736) | 168 | residential | Ulus+265m | 
-egim | 20 | 23.89 | (1901, 5477) | 169 | Palandöken Sokak | Subayevleri+185m | 
-egim | 6 | 17.41 | (533, 3197) | 169 | Atmaca Caddesi | Dışkapı Hastanesi+258m | 
+egim | 7 | 13.57 | (1104, 3965) | 147 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+342m | 
+egim | 26 | 14.75 | (229, -2324) | 149 | service | Kuğulu Park+214m | 
+egim | 1 | 12.36 | (14, -4402) | 152 | Yunus Nadi Sokağı | Atakule+151m | 
+egim | 1 | 16.07 | (-124, -3974) | 154 | Hava Sokağı | Botanik Parkı+175m | 
+egim | 3 | 24.24 | (2167, 5613) | 155 | 47. Sokak | Hasköy Akşemsettin Camii+159m | 
+egim | 1 | 13.27 | (-164, -1278) | 163 | service | Meclis+192m | 
+egim | 127 | 29.36 | (-187, 1680) | 165 | İstiklal Caddesi | Opera+281m | 
+egim | 8 | 12.7 | (143, 1842) | 165 | Şehit Teğmen Kalmaz Posta Caddesi | Ulus+191m | 
+egim | 17 | 18.97 | (142, 877) | 165 | Türkocağı Sokağı | Sıhhiye+176m | 
+egim | 17 | 25.9 | (-239, 1245) | 165 | Talatpaşa Bulvarı | Opera+306m | 
+egim | 2 | 14.77 | (201, 598) | 166 | Celal Bayar Bulvarı | Sıhhiye+259m | 
+egim | 3 | 16.04 | (145, 1557) | 166 | Sanayi Caddesi | Opera+192m | 
+egim | 1 | 13.51 | (146, 1736) | 168 | residential | Ulus+265m | 
+egim | 20 | 23.87 | (1901, 5477) | 169 | Palandöken Sokak | Subayevleri+185m | 
+egim | 6 | 17.48 | (533, 3197) | 169 | Atmaca Caddesi | Dışkapı Hastanesi+258m | 
 egim | 6 | 17.68 | (1774, 5334) | 170 | Centilmen Caddesi | Subayevleri+202m | 
 egim | 6 | 12.53 | (360, 2791) | 171 | Deliler Tepesi Sokak | Yıba Çarşısı+190m | 
-egim | 1 | 12.61 | (-172, 2366) | 173 | residential | Ulus+449m | 
-egim | 1 | 13.48 | (3568, 5040) | 174 | residential | Güneşevler Spor Tesisleri+228m | 
-egim | 14 | 29.2 | (729, 3989) | 175 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+258m | 
-egim | 1 | 14.25 | (3554, 5414) | 177 | Asalet Sokak | Güneşevler Spor Tesisleri+330m | 
-egim | 1 | 12.68 | (-238, -218) | 178 | Gazi Mustafa Kemal Bulvarı | Güvenpark+272m | 
+egim | 1 | 12.6 | (-172, 2366) | 173 | residential | Ulus+449m | 
+egim | 1 | 13.49 | (3568, 5040) | 174 | residential | Güneşevler Spor Tesisleri+228m | 
+egim | 14 | 29.18 | (729, 3989) | 175 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+258m | 
+egim | 1 | 14.08 | (3554, 5414) | 177 | Asalet Sokak | Güneşevler Spor Tesisleri+330m | 
+egim | 1 | 12.67 | (-238, -218) | 178 | Gazi Mustafa Kemal Bulvarı | Güvenpark+272m | 
 egim | 2 | 15.45 | (1622, 5101) | 180 | Şabanözü Sokak | Altınpark+285m | 
-egim | 5 | 15.3 | (166, -1173) | 183 | Güfte Caddesi | Meclis+199m | 
-egim | 1 | 16.55 | (-154, -3926) | 185 | Vali Dr. Reşit Sokak | Pilot Sokağı+213m | 
-egim | 3 | 23.26 | (124, -277) | 186 | Ziya Gökalp Caddesi | Güvenpark+233m | 
-egim | 21 | 21.33 | (47, -3091) | 188 | Kıbrıs Sokak | Farabi+249m | 
-egim | 3 | 15.57 | (2792, 5572) | 188 | 135. Sokak | Çiçek Taksi+193m | 
+egim | 5 | 15.29 | (166, -1173) | 183 | Güfte Caddesi | Meclis+199m | 
+egim | 1 | 16.51 | (-154, -3926) | 185 | Vali Dr. Reşit Sokak | Pilot Sokağı+213m | 
+egim | 3 | 23.15 | (124, -277) | 186 | Ziya Gökalp Caddesi | Güvenpark+233m | 
+egim | 21 | 21.31 | (47, -3091) | 188 | Kıbrıs Sokak | Farabi+249m | 
+egim | 3 | 15.6 | (2792, 5572) | 188 | 135. Sokak | Çiçek Taksi+193m | 
 egim | 2 | 19.64 | (1582, 5058) | 192 | Şair Mehmet Emin Caddesi | Altınpark+253m | 
-egim | 2 | 14.56 | (3324, 5100) | 196 | residential | Güneşevler Spor Tesisleri+443m | 
-egim | 5 | 16.33 | (174, 1646) | 196 | Doğan Sokak | Opera+271m | 
-egim | 6 | 27.29 | (-270, 1252) | 196 | Talatpaşa Bulvarı | Opera+323m | 
-egim | 114 | 26.28 | (2493, 5650) | 197 | secondary | Hasköy Akşemsettin Camii+316m | 
-egim | 1 | 12.11 | (2124, 5646) | 203 | residential | Hasköy Akşemsettin Camii+208m | 
-egim | 1 | 12.44 | (3076, 5172) | 204 | Celal Esat Arseven Caddesi | Çiçek Taksi+298m | 
+egim | 137 | 29.95 | (2491, 5650) | 196 | secondary | Hasköy Akşemsettin Camii+314m | 
+egim | 2 | 14.05 | (3324, 5100) | 196 | residential | Güneşevler Spor Tesisleri+443m | 
+egim | 5 | 16.3 | (174, 1646) | 196 | Doğan Sokak | Opera+271m | 
+egim | 25 | 18.62 | (543, -2758) | 197 | service | Kuğulu Park+337m | 
+egim | 1 | 12.13 | (2124, 5646) | 203 | residential | Hasköy Akşemsettin Camii+208m | 
 egim | 1 | 13.99 | (1462, 4892) | 204 | Dinç Sokak | Altınpark+215m | 
-egim | 2 | 17.13 | (472, 2892) | 204 | Çankırı Caddesi | Yıba Çarşısı+309m | 
-egim | 5 | 21.18 | (-268, -190) | 210 | Gazi Mustafa Kemal Bulvarı | Güvenpark+313m | 
-egim | 4 | 16.26 | (1283, 4700) | 210 | Yakakent Sokak | Atatürk Anadolu İmam Hatip Lisesi+263m | 
-egim | 173 | 29.94 | (206, 2138) | 211 | Hükümet Caddesi | Ulus+295m | 
-egim | 3 | 13.31 | (3459, 5484) | 211 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+446m | 
+egim | 2 | 17.19 | (472, 2892) | 204 | Çankırı Caddesi | Yıba Çarşısı+309m | 
+egim | 5 | 21.12 | (-268, -190) | 210 | Gazi Mustafa Kemal Bulvarı | Güvenpark+313m | 
+egim | 4 | 16.24 | (1283, 4700) | 210 | Yakakent Sokak | Atatürk Anadolu İmam Hatip Lisesi+263m | 
+egim | 2 | 12.69 | (3460, 5483) | 211 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+444m | 
+egim | 174 | 30.0 | (206, 2138) | 211 | Hükümet Caddesi | Ulus+295m | 
 egim | 9 | 20.09 | (1533, 5015) | 212 | Aşiyan Sokak | Altınpark+236m | 
 egim | 4 | 20.66 | (186, 897) | 213 | service | Sıhhiye+223m | 
-egim | 14 | 18.46 | (1778, 5413) | 213 | Fethibey Sokak | Subayevleri+223m | 
-egim | 6 | 23.57 | (3983, 4856) | 214 | residential | Güneşevler+292m | 
+egim | 14 | 18.47 | (1778, 5413) | 213 | Fethibey Sokak | Subayevleri+223m | 
+egim | 6 | 23.62 | (3983, 4856) | 214 | residential | Güneşevler+292m | 
 egim | 77 | 21.85 | (314, 2643) | 214 | Beştepeler Sokak | Yıba Çarşısı+224m | 
-egim | 2 | 16.4 | (-184, -3881) | 217 | Piyade Sokağı | Pilot Sokağı+225m | 
-egim | 3 | 15.24 | (-115, -4369) | 218 | Ahmet Mithat Efendi Sokağı | Atakule+216m | 
+egim | 2 | 16.41 | (-184, -3881) | 217 | Piyade Sokağı | Pilot Sokağı+225m | 
+egim | 3 | 15.23 | (-115, -4369) | 218 | Ahmet Mithat Efendi Sokağı | Atakule+216m | 
 egim | 1 | 14.06 | (620, -2502) | 218 | İran Caddesi | Kuğulu Park+225m | 
-egim | 3 | 19.64 | (197, 1841) | 218 | Susam Caddesi | Ulus+238m | 
+egim | 3 | 19.66 | (197, 1841) | 218 | Susam Caddesi | Ulus+238m | 
 egim | 5 | 16.24 | (353, 2694) | 220 | Deliler Tepesi Sokak | Yıba Çarşısı+219m | 
 egim | 1 | 12.97 | (266, -1316) | 222 | Bilezik Sokağı | Meclis+344m | 
-egim | 10 | 21.41 | (1490, 4964) | 222 | Cihangir Caddesi | Altınpark+227m | 
+egim | 10 | 21.43 | (1490, 4964) | 222 | Cihangir Caddesi | Altınpark+227m | 
 egim | 3 | 14.09 | (44, -2972) | 223 | Kıbrıs Sokak | Farabi+225m | 
-egim | 516 | 29.86 | (1209, 4647) | 224 | secondary | Atatürk Anadolu İmam Hatip Lisesi+237m | 
+egim | 517 | 29.85 | (1209, 4647) | 224 | secondary | Atatürk Anadolu İmam Hatip Lisesi+237m | 
 egim | 53 | 26.76 | (141, 1034) | 229 | service | Sıhhiye+299m | 
 egim | 4 | 15.14 | (696, 3302) | 234 | Ateşböceği Sokak | Dışkapı Hastanesi+232m | 
-egim | 125 | 27.89 | (205, -1114) | 234 | Esat Caddesi | Meclis+236m | 
+egim | 125 | 27.94 | (205, -1114) | 234 | Esat Caddesi | Meclis+236m | 
 egim | 1 | 13.93 | (-54, -3268) | 235 | Bürümcek Sokak | Kırkpınar Sokağı+388m | 
-egim | 101 | 28.27 | (1811, 5485) | 238 | Vadi Sokak | Subayevleri+242m | 
-egim | 17 | 26.15 | (-196, 521) | 239 | Strazburg Caddesi | Sıhhiye+318m | 
+egim | 101 | 28.26 | (1811, 5485) | 238 | Vadi Sokak | Subayevleri+242m | 
+egim | 18 | 26.51 | (-196, 521) | 238 | Strazburg Caddesi | Sıhhiye+317m | 
 egim | 3 | 17.6 | (3005, 5673) | 239 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+290m | 
 egim | 2 | 14.26 | (645, 3233) | 239 | Ayçe Caddesi | Dışkapı Hastanesi+254m | 
 egim | 6 | 12.38 | (142, 3318) | 240 | Fatih Caddesi | Dışkapı Hastanesi+402m | 
 egim | 1 | 12.27 | (-196, -1416) | 241 | service | Meclis+321m | 
 egim | 110 | 28.62 | (588, 3066) | 244 | residential | Dışkapı Hastanesi+393m | 
-egim | 14 | 17.32 | (-266, 1895) | 245 | Cumhuriyet Caddesi | Ulus+254m | 
+egim | 14 | 17.3 | (-266, 1895) | 245 | Cumhuriyet Caddesi | Ulus+254m | 
 egim | 1 | 12.29 | (2826, 5660) | 247 | 136. Sokak | Çiçek Taksi+262m | 
-egim | 77 | 29.06 | (512, 2873) | 248 | Etlik Caddesi | Yıba Çarşısı+344m | 
+egim | 77 | 29.11 | (512, 2873) | 248 | Etlik Caddesi | Yıba Çarşısı+344m | 
 egim | 1 | 12.38 | (296, 2536) | 249 | Ulucak Sokak | Yıba Çarşısı+307m | 
 egim | 3 | 13.69 | (3077, 5655) | 250 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+311m | 
 egim | 11 | 18.71 | (208, -929) | 251 | Olgunlar Caddesi | Meclis+319m | 
 egim | 1 | 14.17 | (132, -2548) | 252 | Kuveyt Caddesi | Kuğulu Park+285m | 
-egim | 1 | 14.86 | (-186, -4270) | 252 | Portakal Çiçeği Caddesi | Atakule+259m | 
+egim | 1 | 14.84 | (-186, -4270) | 252 | Portakal Çiçeği Caddesi | Atakule+259m | 
 egim | 1 | 13.94 | (114, 3282) | 259 | Kazım Karabekir Caddesi | Dışkapı Hastanesi+442m | 
-egim | 19 | 17.91 | (2608, 5571) | 260 | Şht. Pilot Fatih Korçam Sokak | Çeyizciler+283m | 
 egim | 5 | 18.39 | (521, 3860) | 260 | Fatih Caddesi | Veteriner Fakültesi+273m | 
+egim | 92 | 23.34 | (2610, 5570) | 261 | Şht. Pilot Fatih Korçam Sokak | Çeyizciler+280m | 
 egim | 1 | 12.13 | (3792, 5426) | 262 | Asalet Sokak | Güneşevler Spor Tesisleri+269m | 
 egim | 2 | 12.98 | (1635, 5284) | 262 | Adil Sokak | Subayevleri+341m | 
 egim | 2 | 16.3 | (4023, 4790) | 264 | 47. Cadde | Güneşevler+302m | 
-egim | 3 | 16.05 | (2744, 4986) | 268 | 119. Sokak | Pazar Yeri+267m | 
+egim | 3 | 16.06 | (2744, 4986) | 268 | 119. Sokak | Pazar Yeri+267m | 
 egim | 139 | 24.79 | (-167, -3528) | 271 | Andrey Karlov Sokağı | Kırkpınar Sokağı+269m | 
 egim | 3 | 24.71 | (675, -2495) | 273 | Tahran Caddesi | Kuğulu Park+278m | 
 egim | 2 | 18.36 | (1265, 3973) | 273 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+333m | 
@@ -1238,21 +1234,22 @@ egim | 7 | 24.12 | (-78, -3208) | 275 | Bürümcek Sokak | Farabi+416m |
 egim | 29 | 27.58 | (591, 2972) | 275 | residential | Yıba Çarşısı+447m | 
 egim | 8 | 22.73 | (4510, 5002) | 275 | residential | Güneşevler+280m | 
 egim | 4 | 15.94 | (1224, 4734) | 276 | Boğazkale Sokak | Atatürk Anadolu İmam Hatip Lisesi+311m | 
-egim | 4 | 16.8 | (-237, -3804) | 277 | Platin Sokak | Pilot Sokağı+272m | 
+egim | 4 | 16.81 | (-237, -3804) | 277 | Platin Sokak | Pilot Sokağı+272m | 
 egim | 1 | 12.7 | (3132, 5666) | 278 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+354m | 
 egim | 6 | 17.0 | (350, 2577) | 278 | Ulucak Sokak | Yıba Çarşısı+299m | 
 egim | 42 | 27.74 | (383, -3611) | 281 | residential | Kırkpınar Sokağı+303m | 
 egim | 4 | 14.76 | (110, -4545) | 284 | 736. Cadde | Atakule+284m | 
 egim | 3 | 12.75 | (277, 833) | 285 | Kızılay Caddesi | Sıhhiye+280m | 
 egim | 2 | 14.38 | (442, -1584) | 287 | Büklüm Caddesi | Meclis+647m | 
-egim | 14 | 20.98 | (-267, 635) | 287 | Celal Bayar Bulvarı | Sıhhiye+302m | 
+egim | 14 | 20.99 | (-267, 635) | 287 | Celal Bayar Bulvarı | Sıhhiye+302m | 
 egim | 18 | 20.9 | (369, -3692) | 289 | service | Kırkpınar Sokağı+294m | 
 egim | 5 | 20.32 | (644, 3131) | 290 | residential | Dışkapı Hastanesi+346m | 
-egim | 239 | 29.71 | (231, -247) | 291 | Ziya Gökalp Caddesi | Güvenpark+338m | 
+egim | 239 | 29.72 | (231, -247) | 291 | Ziya Gökalp Caddesi | Güvenpark+338m | 
 egim | 8 | 18.8 | (717, 3235) | 292 | residential | Dışkapı Hastanesi+294m | 
-egim | 1 | 24.66 | (270, 1482) | 293 | A.Adnan Saygun Caddesi | Opera+289m | 
+egim | 1 | 24.65 | (270, 1482) | 293 | A.Adnan Saygun Caddesi | Opera+289m | 
 egim | 3 | 13.66 | (3207, 5656) | 293 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+402m | 
-egim | 3 | 15.94 | (-369, 1277) | 298 | Talatpaşa Bulvarı | Opera+394m | 
+egim | 3 | 15.9 | (-369, 1277) | 298 | Talatpaşa Bulvarı | Opera+394m | 
+egim | 1 | 12.66 | (3674, 5502) | 299 | Gülpınar Caddesi | Güneşevler Spor Tesisleri+355m | 
 egim | 99 | 27.76 | (550, 3951) | 300 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+305m | 
 egim | 13 | 28.34 | (314, 2422) | 301 | residential | Yıba Çarşısı+419m | 
 egim | 1 | 12.19 | (44, -2684) | 303 | Çiftevler Sokak | Farabi+370m | 
@@ -1263,13 +1260,12 @@ egim | 2 | 13.3 | (1620, 5353) | 310 | Fethibey Sokak | Subayevleri+358m |
 egim | 2 | 15.66 | (557, -1827) | 311 | Bülten Caddesi | Kuğulu Park+645m | 
 egim | 10 | 15.92 | (-273, -4107) | 312 | Portakal Çiçeği Caddesi | Botanik Parkı+307m | 
 egim | 1 | 14.28 | (608, -2964) | 316 | Atatürk Bulvarı | Farabi+339m | 
-egim | 1 | 12.31 | (3724, 5506) | 318 | 168. Sokak | Güneşevler Spor Tesisleri+350m | 
-egim | 6 | 16.89 | (3369, 5631) | 320 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+527m | 
+egim | 6 | 16.87 | (3369, 5631) | 320 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+527m | 
 egim | 1 | 15.07 | (4062, 4722) | 320 | 47. Cadde | Güneşevler+334m | 
 egim | 3 | 16.35 | (3907, 4769) | 321 | residential | Güneşevler+403m | 
-egim | 1 | 12.3 | (4234, 5340) | 321 | Ferah Caddesi | Güneşevler+330m | 
+egim | 1 | 12.29 | (4234, 5340) | 321 | Ferah Caddesi | Güneşevler+330m | 
 egim | 2 | 17.25 | (517, -3296) | 322 | And Sokağı | Farabi+403m | 
-egim | 462 | 29.43 | (238, 1129) | 323 | Talatpaşa Bulvarı | Opera+415m | 
+egim | 465 | 29.4 | (237, 1129) | 322 | Talatpaşa Bulvarı | Opera+414m | 
 egim | 4 | 20.01 | (1384, 4990) | 324 | Dinç Sokak | Altınpark+328m | 
 egim | 3 | 27.49 | (304, 1515) | 326 | residential | Opera+327m | 
 egim | 1 | 14.45 | (672, -2144) | 326 | Billur Sokak | Kuğulu Park+411m | 
@@ -1282,14 +1278,14 @@ egim | 8 | 17.97 | (290, -924) | 333 | Olgunlar Caddesi | Meclis+387m |
 egim | 6 | 18.93 | (437, -1436) | 334 | Beykoz Sokağı | Meclis+552m | 
 egim | 4 | 19.17 | (313, 1631) | 335 | Demiray Caddesi | Opera+375m | 
 egim | 3 | 18.95 | (1335, 4943) | 336 | Üçyıldız Caddesi | Altınpark+352m | 
-egim | 2 | 12.68 | (4355, 5325) | 336 | 812. Sokak | Güneşevler+339m | 
-egim | 1 | 18.96 | (738, -2408) | 337 | Güniz Sokağı | Kuğulu Park+341m | 
+egim | 2 | 12.65 | (4355, 5325) | 336 | 812. Sokak | Güneşevler+339m | 
+egim | 1 | 18.97 | (738, -2408) | 337 | Güniz Sokağı | Kuğulu Park+341m | 
 egim | 8 | 23.15 | (37, -2566) | 338 | Kuveyt Caddesi | Kuğulu Park+380m | 
 egim | 18 | 27.77 | (-359, 1867) | 338 | primary_link | Ulus+351m | 
 egim | 1 | 21.07 | (1456, 5132) | 338 | Aşiyan Sokak | Altınpark+376m | 
 egim | 2 | 28.47 | (711, 3157) | 339 | 771 Sokak | Dışkapı Hastanesi+353m | 
 egim | 1 | 12.74 | (-54, 3090) | 339 | Aslanbey Caddesi | Yıba Çarşısı+354m | 
-egim | 5 | 13.16 | (3805, 5503) | 340 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+347m | 
+egim | 5 | 14.14 | (3805, 5503) | 340 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+347m | 
 egim | 1 | 15.58 | (576, -3162) | 340 | Şehit Ersan Caddesi | Farabi+358m | 
 egim | 1 | 14.27 | (292, 1236) | 342 | Yenice Sokak | Opera+379m | 
 egim | 13 | 22.51 | (-282, -3690) | 343 | Platin Sokak | Pilot Sokağı+345m | 
@@ -1298,14 +1294,14 @@ egim | 61 | 27.99 | (378, -3918) | 345 | Prof. Dr. Aziz Sancar Caddesi | Pilot S
 egim | 3 | 21.9 | (61, 3405) | 345 | Etlik Caddesi | Dışkapı Hastanesi+462m | 
 egim | 28 | 23.2 | (323, 1448) | 346 | Eğerciler Sokak | Opera+340m | 
 egim | 3 | 15.45 | (3038, 5775) | 346 | residential | Çiçek Taksi+397m | 
-egim | 28 | 23.6 | (3449, 5630) | 346 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+567m | 
 egim | 303 | 19.89 | (-87, -2980) | 347 | Güvenlik Caddesi | Farabi+356m | 
+egim | 19 | 23.6 | (3451, 5631) | 348 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+566m | 
 egim | 19 | 16.95 | (546, 4029) | 348 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+367m | 
 egim | 1 | 12.54 | (-234, -4430) | 351 | Halide Nusret Zorlutuna Caddesi | Atakule+349m | 
 egim | 3 | 18.1 | (3089, 5765) | 354 | residential | Çiçek Taksi+409m | 
 egim | 1 | 13.03 | (4264, 4656) | 356 | residential | Güneşevler+356m | 
 egim | 76 | 23.62 | (335, 1571) | 357 | Taşçılar Sokak | Opera+372m | 
-egim | 2 | 12.5 | (2638, 5723) | 357 | 136. Sokak | Çeyizciler+400m | 
+egim | 2 | 12.53 | (2638, 5723) | 357 | 136. Sokak | Çeyizciler+400m | 
 egim | 7 | 25.77 | (34, 3370) | 358 | Etlik Caddesi | Dışkapı Hastanesi+494m | 
 egim | 28 | 26.37 | (518, -1582) | 359 | John F. Kennedy Caddesi | Meclis+703m | 
 egim | 3 | 13.17 | (-377, 85) | 360 | Yesilirmak Sokak | Kızılay+366m | 
@@ -1314,21 +1310,21 @@ egim | 65 | 19.02 | (266, -4570) | 361 | Simon Bolivar Caddesi | Atakule+362m |
 egim | 1 | 18.78 | (28, -2408) | 362 | Yazanlar Sokağı | Kuğulu Park+375m | 
 egim | 4 | 15.67 | (3948, 4711) | 362 | residential | Güneşevler+411m | 
 egim | 2 | 28.53 | (-409, -46) | 364 | Gazi Mustafa Kemal Bulvarı | Kızılay+407m | 
-egim | 10 | 25.67 | (4266, 5378) | 366 | Ferah Caddesi | Güneşevler+370m | 
-egim | 2 | 14.11 | (3414, 4887) | 367 | tertiary | Güneşevler Spor Tesisleri+442m | 
+egim | 10 | 25.62 | (4266, 5378) | 366 | Ferah Caddesi | Güneşevler+370m | 
+egim | 2 | 14.07 | (3414, 4887) | 367 | tertiary | Güneşevler Spor Tesisleri+442m | 
 egim | 5 | 29.78 | (2098, 5816) | 368 | Üçpınar Caddesi | Hasköy Akşemsettin Camii+372m | 
 egim | 26 | 13.65 | (718, 3079) | 370 | residential | Dışkapı Hastanesi+424m | 
-egim | 1 | 14.53 | (4092, 5436) | 370 | Asalet Sokak | Güneşevler Spor Tesisleri+430m | 
+egim | 1 | 14.73 | (4092, 5436) | 370 | Asalet Sokak | Güneşevler Spor Tesisleri+430m | 
 egim | 70 | 25.55 | (345, 1387) | 371 | Kargı Sokak | Opera+369m | 
 egim | 1 | 13.43 | (-244, -1628) | 371 | service | Meclis+532m | 
 egim | 4 | 13.66 | (587, -1724) | 374 | Büklüm Caddesi | Kuğulu Park+753m | 
-egim | 6 | 19.96 | (3546, 5629) | 377 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+518m | 
+egim | 6 | 19.95 | (3546, 5629) | 377 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+518m | 
 egim | 2 | 15.62 | (483, -1428) | 380 | Beykoz Sokağı | Meclis+588m | 
-egim | 2 | 13.19 | (3670, 5590) | 381 | residential | Güneşevler Spor Tesisleri+442m | 
+egim | 2 | 13.18 | (3670, 5590) | 381 | residential | Güneşevler Spor Tesisleri+442m | 
 egim | 1 | 14.36 | (84, -4644) | 381 | 736. Cadde | Atakule+381m | 
 egim | 1 | 13.74 | (3224, 5744) | 382 | residential | Çiçek Taksi+474m | 
+egim | 1 | 20.15 | (2610, 5796) | 382 | 134. Sokak | Çeyizciler+478m | 
 egim | 3 | 29.38 | (-5, 3323) | 383 | residential | Yıba Çarşısı+536m | 
-egim | 3 | 19.74 | (2611, 5797) | 383 | 134. Sokak | Çeyizciler+478m | 
 egim | 17 | 27.15 | (-17, -2319) | 384 | Ali Dede Caddesi | Kuğulu Park+438m | 
 egim | 3 | 12.99 | (-416, -1135) | 385 | service | Meclis+386m | 
 egim | 36 | 21.24 | (539, -3447) | 385 | service | Kırkpınar Sokağı+495m | 
@@ -1361,19 +1357,19 @@ egim | 216 | 24.18 | (372, 1279) | 411 | A.Adnan Saygun Caddesi | Opera+428m |
 egim | 2 | 14.01 | (1273, 4985) | 411 | Üçyıldız Caddesi | Altınpark+425m | 
 egim | 1 | 12.45 | (1342, 5084) | 411 | residential | Altınpark+417m | 
 egim | 1 | 13.9 | (3992, 4644) | 413 | residential | Güneşevler+437m | 
-egim | 243 | 28.47 | (1429, 3958) | 413 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+417m | 
+egim | 243 | 28.46 | (1429, 3958) | 413 | Turgut Özal 2 Bulvarı | Çağdaş Sokak+417m | 
 egim | 7 | 21.64 | (421, 2369) | 416 | Yayık Sokak | Yıba Çarşısı+512m | 
 egim | 16 | 27.69 | (1021, 4732) | 417 | secondary | Atatürk Anadolu İmam Hatip Lisesi+421m | 
-egim | 6 | 21.32 | (3646, 5637) | 417 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+493m | 
+egim | 6 | 21.34 | (3646, 5637) | 417 | Şehit Hasan Cevher Caddesi | Güneşevler Spor Tesisleri+493m | 
 egim | 85 | 28.29 | (3345, 5742) | 418 | residential | Çiçek Taksi+564m | 
-egim | 4 | 16.23 | (3722, 5612) | 418 | residential | Güneşevler Spor Tesisleri+456m | 
+egim | 4 | 16.26 | (3722, 5612) | 418 | residential | Güneşevler Spor Tesisleri+456m | 
 egim | 1 | 15.53 | (420, 2232) | 420 | Yay Sokak | Ulus+523m | 
 egim | 200 | 17.33 | (643, -3224) | 422 | Atatürk Bulvarı | Farabi+448m | 
 egim | 180 | 27.53 | (-178, -3023) | 423 | Meneviş Sokak | Farabi+450m | 
 egim | 5 | 15.18 | (792, -2698) | 424 | Arjantin Caddesi | Kuğulu Park+462m | 
-egim | 3 | 17.54 | (4093, 5494) | 425 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+471m | 
+egim | 3 | 18.43 | (4093, 5494) | 425 | Celal Esat Arseven Caddesi | Güneşevler Spor Tesisleri+471m | 
 egim | 118 | 29.8 | (892, 3239) | 425 | Altındağ Caddesi | Dışkapı Hastanesi+428m | 
-egim | 8 | 18.24 | (4659, 4971) | 426 | Mehmet Akif Ersoy Caddesi | Güneşevler+431m | 
+egim | 8 | 18.25 | (4659, 4971) | 426 | Mehmet Akif Ersoy Caddesi | Güneşevler+431m | 
 egim | 5 | 19.22 | (407, 1792) | 429 | Anafartalar Caddesi | Ulus+451m | 
 egim | 67 | 29.84 | (2044, 5858) | 429 | secondary | Hasköy Akşemsettin Camii+433m | 
 egim | 4 | 18.85 | (1834, 5753) | 430 | 56. Sokak | Subayevleri+467m | 
@@ -1384,60 +1380,64 @@ egim | 26 | 25.8 | (1532, 5447) | 434 | residential | Subayevleri+464m |
 egim | 4 | 14.99 | (355, 3937) | 434 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+456m | 
 egim | 36 | 25.39 | (-467, 22) | 435 | Necatibey Caddesi | Kızılay+462m | 
 egim | 8 | 15.83 | (4664, 5084) | 435 | 877.Sokak | Güneşevler+440m | 
-egim | 7 | 13.19 | (3553, 5688) | 435 | residential | Güneşevler Spor Tesisleri+570m | 
+egim | 7 | 13.21 | (3553, 5688) | 435 | residential | Güneşevler Spor Tesisleri+570m | 
 egim | 98 | 26.09 | (834, 3150) | 437 | 775 Sokak | Dışkapı Hastanesi+437m | 
 egim | 1 | 12.41 | (790, -2130) | 444 | Bülten Caddesi | Kuğulu Park+506m | 
 egim | 1 | 12.67 | (438, 2108) | 444 | Kevgirli Sokak | Ulus+483m | 
 egim | 3 | 13.3 | (3015, 5882) | 446 | residential | Çiçek Taksi+491m | 
 egim | 1 | 13.53 | (456, 758) | 446 | Ankara Hastane Acil Girişi  | Sıhhiye+451m | 
 egim | 7 | 21.74 | (-320, -3423) | 447 | Portakal Çiçeği Caddesi | Kırkpınar Sokağı+452m | 
-egim | 1 | 16.13 | (4508, 5366) | 448 | secondary | Güneşevler+451m | 
+egim | 1 | 16.27 | (4508, 5366) | 448 | secondary | Güneşevler+451m | 
 egim | 1 | 14.2 | (-420, -3972) | 450 | Pak Sokağı | Botanik Parkı+458m | 
 egim | 6 | 12.22 | (452, 979) | 492 | A.Adnan Saygun Caddesi | Sıhhiye+495m | 
-egim | 5 | 16.09 | (-436, 403) | 496 | Strazburg Caddesi | Kızılay+519m | 
+egim | 5 | 16.11 | (-436, 403) | 496 | Strazburg Caddesi | Kızılay+519m | 
 egim | 41 | 29.64 | (720, 4620) | 556 | Fatih Caddesi | Çağdaş Sokak+566m | 
 egim | 9 | 13.2 | (738, 4681) | 585 | Fatih Caddesi | Çağdaş Sokak+590m | 
-nesne | 1 | 2.25 | (-90, 1321) | 49 | Atatürk Bulvarı | Opera+152m | Landmarks/OperaBinasi (gömülü 2.25 m)
-dal | 24 | 0.96 | (336, 3069) | 2 | Samsun- Ankara Yolu | Yıba Çarşısı+301m | 
-dal | 12 | 0.77 | (339, 3122) | 10 | Samsun- Ankara Yolu | Yıba Çarşısı+348m | 
-dal | 2 | 3.75 | (1868, 5184) | 11 | Şehit Ömer Halisdemir Bulvarı | Subayevleri+163m | 
-dal | 136 | 0.5 | (20, 605) | 11 | Atatürk Bulvarı | Sıhhiye+163m | 
-dal | 18 | 0.11 | (-67, 1201) | 12 | Talatpaşa Bulvarı | Opera+258m | 
-dal | 2 | 4.19 | (-142, 1168) | 47 | Talatpaşa Bulvarı | Opera+313m | 
-dal | 2 | 2.34 | (358, 2952) | 77 | Hacı Bayram Bulvarı | Yıba Çarşısı+230m | 
-dal | 6 | 0.17 | (-68, 563) | 105 | Strazburg Caddesi | Sıhhiye+216m | 
-dal | 22 | 0.76 | (406, 2959) | 115 | Çankırı Caddesi | Yıba Çarşısı+274m | 
+nesne | 1 | 3.62 | (-90, 1321) | 49 | Atatürk Bulvarı | Opera+152m | Landmarks/OperaBinasi (gömülü 3.62 m)
+dal | 48 | 0.79 | (323, 3052) | 2 | Etlik Caddesi | Yıba Çarşısı+279m | 
+dal | 94 | 0.17 | (340, 3098) | 3 | Samsun- Ankara Yolu | Yıba Çarşısı+328m | 
+dal | 22 | 0.8 | (47, 585) | 12 | service | Sıhhiye+186m | 
+dal | 54 | 1.07 | (7, 606) | 24 | Atatürk Bulvarı | Sıhhiye+160m | 
+dal | 4 | 2.2 | (-143, 1169) | 48 | Talatpaşa Bulvarı | Opera+312m | 
+dal | 2 | 2.43 | (358, 2952) | 77 | Hacı Bayram Bulvarı | Yıba Çarşısı+230m | 
+dal | 24 | 1.4 | (-56, 611) | 85 | Strazburg Caddesi | Sıhhiye+168m | 
+dal | 2 | 0.38 | (-66, 568) | 102 | Strazburg Caddesi | Sıhhiye+211m | 
+dal | 6 | 1.1 | (2438, 5578) | 111 | Şehit Ömer Halisdemir Bulvarı | Hasköy Akşemsettin Camii+231m | 
+dal | 30 | 1.95 | (408, 2958) | 116 | Hacı Bayram Bulvarı | Yıba Çarşısı+275m | 
 dal | 12 | 0.8 | (-119, 605) | 148 | Celal Bayar Bulvarı | Sıhhiye+204m | 
 dal | 26 | 0.08 | (128, 3294) | 248 | Etlik Caddesi | Dışkapı Hastanesi+424m | 
-dal | 2 | 3.82 | (326, 590) | 287 | Celal Bayar Bulvarı | Sıhhiye+367m | 
+dal | 2 | 3.83 | (326, 590) | 287 | Celal Bayar Bulvarı | Sıhhiye+367m | 
 dal | 22 | 2.48 | (548, 3970) | 313 | Fatih Caddesi | Veteriner Fakültesi+320m | 
 dal | 24 | 1.31 | (439, 3952) | 383 | Turgut Özal 1 Bulvarı | Veteriner Fakültesi+391m | 
-cakisma | 14 | 0.41 | (794, 3776) | 0 | Şehit Ömer Halisdemir Bulvarı | Veteriner Fakültesi+53m | yol
-cakisma | 1 | 0.34 | (68, -1420) | 2 | Atatürk Bulvarı | Meclis+296m | yol
-cakisma | 1 | 0.37 | (2342, 5518) | 2 | Malazgirt Caddesi | Hasköy Akşemsettin Camii+118m | yol
-cakisma | 1 | 0.32 | (362, -2670) | 4 | Cinnah Caddesi | Kuğulu Park+221m | yol
-cakisma | 1 | 0.4 | (-2, -1234) | 4 | primary_link | Meclis+97m | yol
-cakisma | 26 | 0.31 | (319, 3054) | 7 | Etlik Caddesi | Yıba Çarşısı+279m | yol
-cakisma | 322 | 0.3 | (980, 4057) | 7 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+315m | yol
-cakisma | 16 | 0.41 | (407, -2393) | 12 | Atatürk Bulvarı | Kuğulu Park+60m | yol
-cakisma | 7 | 0.85 | (358, -2190) | 12 | Atatürk Bulvarı | Kuğulu Park+266m | yol
-cakisma | 5 | 0.32 | (80, 360) | 16 | Atatürk Bulvarı | Kızılay+272m | yol
-cakisma | 15 | 0.3 | (55, 604) | 23 | Celal Bayar Bulvarı | Sıhhiye+170m | yol
-cakisma | 3 | 0.3 | (366, -2503) | 35 | Kuveyt Caddesi | Kuğulu Park+61m | yol
-cakisma | 23 | 0.37 | (-8, 609) | 38 | Celal Bayar Bulvarı | Sıhhiye+158m | yol
-cakisma | 5 | 0.31 | (442, 3272) | 54 | Atmaca Caddesi | Dışkapı Hastanesi+199m | yol
-cakisma | 1 | 0.33 | (-14, 1200) | 62 | residential | Opera+255m | yol
-cakisma | 8 | 0.31 | (2412, 5559) | 80 | residential | Hasköy Akşemsettin Camii+200m | yol
+cakisma | 1 | 0.31 | (2342, 5518) | 2 | Malazgirt Caddesi | Hasköy Akşemsettin Camii+118m | yol
+cakisma | 5 | 0.32 | (1077, 4171) | 3 | Arılık Sokak | Çağdaş Sokak+166m | yol
+cakisma | 4 | 0.34 | (-45, -856) | 4 | Vekaletler Caddesi | Meclis+286m | yol
+cakisma | 2 | 0.32 | (69, -1428) | 4 | Havuzlu Sokağı | Meclis+303m | yol
+cakisma | 3 | 0.34 | (362, -2672) | 4 | Cinnah Caddesi | Kuğulu Park+223m | yol
+cakisma | 2 | 0.31 | (181, -1693) | 4 | Atatürk Bulvarı | Meclis+591m | yol
+cakisma | 1 | 0.42 | (354, -2706) | 4 | Cinnah Caddesi | Kuğulu Park+258m | yol
+cakisma | 6 | 0.42 | (124, -1540) | 5 | Atatürk Bulvarı | Meclis+428m | yol
+cakisma | 34 | 0.33 | (-40, 1342) | 6 | Atatürk Bulvarı | Opera+115m | yol
+cakisma | 36 | 0.33 | (321, 3058) | 7 | Etlik Caddesi | Yıba Çarşısı+284m | yol
+cakisma | 52 | 0.3 | (356, -2191) | 10 | primary | Kuğulu Park+265m | yol
+cakisma | 263 | 0.3 | (957, 4032) | 11 | Şehit Ömer Halisdemir Bulvarı | Çağdaş Sokak+350m | yol
+cakisma | 14 | 0.31 | (407, -2394) | 12 | Atatürk Bulvarı | Kuğulu Park+58m | yol
+cakisma | 47 | 0.37 | (18, 607) | 13 | Atatürk Bulvarı | Sıhhiye+160m | yol
+cakisma | 3 | 0.36 | (79, -1399) | 18 | Gülözü Sk. | Meclis+280m | yol
+cakisma | 1 | 0.3 | (34, 472) | 20 | Atatürk Bulvarı | Sıhhiye+296m | yol
+cakisma | 3 | 0.31 | (366, -2503) | 35 | Kuveyt Caddesi | Kuğulu Park+61m | yol
+cakisma | 1 | 0.31 | (370, 2994) | 66 | Hacı Bayram Bulvarı | Yıba Çarşısı+266m | yol
+cakisma | 6 | 0.3 | (2411, 5558) | 78 | residential | Hasköy Akşemsettin Camii+198m | yol
+cakisma | 1 | 0.31 | (1068, 4006) | 94 | Şehit Cemalettin Caddesi | Çağdaş Sokak+313m | yol
 cakisma | 4 | 0.31 | (-68, 620) | 95 | primary_link | Sıhhiye+164m | yol
-cakisma | 91 | 0.3 | (-174, 1227) | 97 | Talatpaşa Bulvarı | Opera+276m | yol
-cakisma | 4 | 0.33 | (56, 1259) | 109 | residential | Opera+209m | yol
-cakisma | 5 | 0.31 | (32, 1185) | 110 | Talatpaşa Bulvarı | Opera+275m | yol
+cakisma | 94 | 0.3 | (-174, 1227) | 97 | Talatpaşa Bulvarı | Opera+276m | yol
+cakisma | 16 | 0.31 | (38, 1221) | 103 | residential | Opera+241m | yol
 cakisma | 2 | 0.3 | (210, 3197) | 150 | service | Yıba Çarşısı+382m | yol
-cakisma | 20 | 0.3 | (-112, 544) | 152 | service | Sıhhiye+252m | yol
+cakisma | 19 | 0.3 | (-112, 544) | 152 | service | Sıhhiye+251m | yol
 cakisma | 27 | 0.33 | (514, -2692) | 155 | Atatürk Bulvarı | Kuğulu Park+265m | yol
-cakisma | 4 | 0.3 | (199, 602) | 164 | Celal Bayar Bulvarı | Sıhhiye+255m | yol
+cakisma | 3 | 0.35 | (200, 602) | 165 | Celal Bayar Bulvarı | Sıhhiye+255m | yol
 cakisma | 3 | 0.33 | (473, 2891) | 206 | Çankırı Caddesi | Yıba Çarşısı+310m | yol
-cakisma | 1 | 0.34 | (2524, 5624) | 208 | primary_link | Hasköy Akşemsettin Camii+329m | yol
+cakisma | 1 | 0.35 | (2524, 5624) | 208 | primary_link | Hasköy Akşemsettin Camii+329m | yol
 cakisma | 1 | 0.3 | (2420, 5766) | 254 | primary_link | Hasköy Akşemsettin Camii+350m | yol
 cakisma | 4 | 0.31 | (524, 3854) | 255 | Fatih Caddesi | Veteriner Fakültesi+269m | yol
 cakisma | 9 | 0.31 | (108, 3281) | 265 | primary_link | Dışkapı Hastanesi+448m | yol
@@ -1453,7 +1453,7 @@ cakisma | 1 | 0.32 | (726, -2668) | 353 | Arjantin Caddesi | Kuğulu Park+391m |
 cakisma | 1 | 0.32 | (326, 1336) | 356 | A.Adnan Saygun Caddesi | Opera+364m | yol
 cakisma | 2 | 0.33 | (2640, 5727) | 361 | 133. Sokak | Çeyizciler+403m | yol
 cakisma | 3 | 0.32 | (-378, 701) | 383 | Celal Bayar Bulvarı | Sıhhiye+389m | yol
-cakisma | 4 | 0.31 | (2610, 5799) | 384 | 134. Sokak | Çeyizciler+481m | yol
+cakisma | 5 | 0.3 | (2610, 5799) | 384 | 134. Sokak | Çeyizciler+480m | yol
 cakisma | 4 | 0.43 | (335, -263) | 396 | secondary_link | Güvenpark+424m | yol
 cakisma | 1 | 0.37 | (382, 1618) | 404 | Denizciler Caddesi | Opera+432m | yol
 cakisma | 11 | 0.74 | (4577, 5299) | 447 | residential | Güneşevler+452m | yol
@@ -1471,7 +1471,7 @@ cakisma | 2 | 0.89 | (4470, 4629) | 449 | Kibar Ulu Caddesi | Güneşevler+451m 
 cakisma | 2 | 0.89 | (2585, 4706) | 449 | Altınpark Caddesi | Pazar Yeri+473m | yol
 cakisma | 1 | 0.9 | (4656, 4856) | 449 | Kibar Ulu Caddesi | Güneşevler+453m | yol
 cakisma | 4 | 0.68 | (4507, 5368) | 449 | secondary | Güneşevler+452m | yol
-cakisma | 5 | 0.83 | (4332, 5449) | 449 | Ferah Caddesi | Güneşevler+451m | yol
+cakisma | 5 | 0.81 | (4332, 5449) | 449 | Ferah Caddesi | Güneşevler+451m | yol
 cakisma | 2 | 0.9 | (2799, 5867) | 449 | Şehit Hasan Cevher Caddesi | Çiçek Taksi+470m | yol
 cakisma | 1 | 0.91 | (-438, -1360) | 449 | service | Meclis+463m | yol
 cakisma | 2 | 0.92 | (399, -198) | 449 | Ziya Gökalp Caddesi | Kızılay+448m | yol
@@ -1555,7 +1555,7 @@ cakisma | 3 | 0.86 | (3458, 4786) | 449 | residential | Güneşevler Spor Tesisl
 cakisma | 1 | 0.9 | (1286, 5068) | 449 | Kemalettin Sami Paşa Caddesi | Altınpark+453m | yol
 cakisma | 2 | 0.89 | (1415, 5280) | 449 | Fethibey Sokak | Altınpark+524m | yol
 cakisma | 2 | 0.9 | (1495, 5414) | 449 | residential | Subayevleri+491m | yol
-cakisma | 4 | 0.8 | (4160, 5496) | 449 | Celal Esat Arseven Caddesi | Güneşevler+491m | yol
+cakisma | 4 | 0.67 | (4160, 5496) | 449 | Celal Esat Arseven Caddesi | Güneşevler+491m | yol
 cakisma | 1 | 0.9 | (3830, 5610) | 449 | 162. Cadde | Güneşevler Spor Tesisleri+457m | yol
 cakisma | 1 | 0.89 | (3464, 5734) | 449 | tertiary | Güneşevler Spor Tesisleri+649m | yol
 cakisma | 4 | 0.77 | (1957, 5840) | 449 | Dr. Besim Ömer Caddesi | Hasköy Akşemsettin Camii+463m | yol
@@ -1581,6 +1581,7 @@ cakisma | 1 | 0.9 | (4218, 5476) | 449 | 805. Sokak | Güneşevler+466m | yol
 cakisma | 3 | 0.9 | (3778, 5627) | 449 | residential | Güneşevler Spor Tesisleri+469m | yol
 cakisma | 1 | 0.94 | (2018, 5868) | 449 | residential | Hasköy Akşemsettin Camii+453m | yol
 cakisma | 1 | 0.9 | (-486, 1396) | 449 | service | Opera+472m | yol
+cakisma | 3 | 0.9 | (-470, 1940) | 449 | primary_link | Ulus+453m | yol
 cakisma | 1 | 0.92 | (-452, 2196) | 449 | Agah Efendi Caddesi | Ulus+502m | yol
 cakisma | 1 | 0.9 | (-152, 3142) | 449 | Aslanbey Caddesi | Yıba Çarşısı+459m | yol
 cakisma | 2 | 0.9 | (407, 4013) | 449 | Yavuz Sultan Selim Bulvarı | Veteriner Fakültesi+453m | yol
@@ -1590,7 +1591,6 @@ cakisma | 1 | 0.91 | (3196, 4876) | 449 | residential | Çiçek Taksi+612m | yol
 cakisma | 1 | 0.88 | (3636, 5674) | 449 | Gülpınar Caddesi | Güneşevler Spor Tesisleri+531m | yol
 cakisma | 1 | 0.95 | (3348, 5774) | 449 | 165. Sokak | Çiçek Taksi+586m | yol
 cakisma | 3 | 0.88 | (499, -4116) | 449 | service | Atakule+451m | yol
-cakisma | 6 | 0.9 | (-470, 1943) | 449 | İstanbul Caddesi | Ulus+453m | yol
 cakisma | 3 | 0.9 | (515, 2521) | 449 | Etlik Caddesi | Yıba Çarşısı+453m | yol
 cakisma | 2 | 0.83 | (363, 1087) | 450 | service | Sıhhiye+480m | yol
 cakisma | 18 | 0.43 | (-402, 425) | 458 | Strazburg Caddesi | Kızılay+505m | yol

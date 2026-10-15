@@ -54,16 +54,16 @@ namespace AnkaraBus.EditorTools
             return "?";
         }
 
-        /// <summary>Komut satırı: Hat 2 sahnesini kurar (bake yok).</summary>
-        public static void Hat2Batch()
+        /// <summary>Komut satırı: Hat 1 (408 Atakule) sahnesini kurar (bake yok).</summary>
+        public static void Hat1Batch()
         {
-            Hat2SahneKurucu.Build();
+            Hat1SahneKurucu.Build();
             EditorApplication.Exit(0);
         }
 
         /// <summary>
         /// Komut satırı: Hat 3 parça FBX'lerini yeniden içe aktarır (ilk içe aktarmada Maps/Hat3/Materials henüz yoktu, FBX'ler
-        /// kendi dokusuz malzemelerini aldı), sonra Hat 3 ve Hat 2 sahnelerini kurar.
+        /// kendi dokusuz malzemelerini aldı), sonra Hat 3 ve Hat 1 sahnelerini kurar.
         /// </summary>
         public static void YenidenAktarBatch()
         {
@@ -82,7 +82,7 @@ namespace AnkaraBus.EditorTools
             }
             Log($"{yollar.Length} FBX yeniden içe aktarıldı, {(System.DateTime.Now - t0).TotalSeconds:F0} sn");
             Hat3SahneKurucu.Build();
-            Hat2SahneKurucu.Build();
+            Hat1SahneKurucu.Build();
             EditorApplication.Exit(0);
         }
 

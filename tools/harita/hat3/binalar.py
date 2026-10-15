@@ -122,7 +122,10 @@ def _haric():
 HARIC = _haric()      # simgeler.py: yerine hazır model konan OSM binaları
 # adı bilinen tarihî/kamu binaları (Ulus): kesme taş ya da kamu cephesi
 AD_STIL = {"Bankası": "ulus_tas", "Müzesi": "ulus_tas", "Han": "ulus_tas", "Palas": "ulus_tas", "Valiliği": "ulus_tas",
-           "Çarşısı": "kamu", "Postane": "ulus_tas", "PTT": "ulus_tas", "Hastanesi": "kurum", "Fakültesi": "kurum"}
+           "Çarşısı": "kamu", "Postane": "ulus_tas", "PTT": "ulus_tas", "Hastanesi": "kurum", "Fakültesi": "kurum",
+           "Meclis": "ulus_tas", "Bakanlığı": "kamu", "Büyükelçiliği": "kamu", "Elçiliği": "kamu"}
+# OSM'de kat bilgisi olmayan simge binalar (gerçek kat sayısı): TBMM ana bina (Holzmeister, ~6 kat), Atakule AVM (3 kat podyum)
+OZEL_KAT = {67624843: 6, 681425145: 3}
 
 
 def bina_listesi(o, koridor):
@@ -167,6 +170,8 @@ def bina_listesi(o, koridor):
 
 
 def kat_sayisi(wid, t, pg, bolge, tur):
+    if wid in OZEL_KAT:
+        return OZEL_KAT[wid]
     for k in ("building:levels", "levels"):
         if k in t:
             try:

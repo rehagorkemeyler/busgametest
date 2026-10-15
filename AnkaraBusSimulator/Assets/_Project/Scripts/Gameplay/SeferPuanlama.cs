@@ -143,7 +143,9 @@ namespace AnkaraBus.Gameplay
             lastSide = new float[signalLanes.Length];
             for (int i = 0; i < signalLanes.Length; i++)
                 lastSide[i] = float.NaN;
-            ozet.hat = tracker != null && tracker.Route != null ? tracker.Route.LineNumber : "";
+            // en iyi puan hat kimliğiyle (iki 408 hattı aynı numarayı taşır)
+            ozet.hat = OyunSecimi.SahneKimligi(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
+                       ?? (tracker != null && tracker.Route != null ? tracker.Route.LineNumber : "");
             ozet.hedefSure = TargetTime();
             ignoreAccelUntil = Time.time + 1.5f;
             lastVelocity = body.linearVelocity;

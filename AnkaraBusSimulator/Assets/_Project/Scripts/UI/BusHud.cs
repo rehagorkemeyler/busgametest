@@ -26,6 +26,14 @@ namespace AnkaraBus.UI
         private void Start()
         {
             telemetry = tracker.GetComponent<IVehicleTelemetry>();
+            // uzun hat/durak adları ("408  Kızılay – Güneşevler", "Atatürk Anadolu İmam Hatip Lisesi") kesilmesin: sığmazsa küçülür
+            foreach (var t in new[] { lineText, nextStopText })
+                if (t != null)
+                {
+                    t.fontSizeMax = t.fontSize;
+                    t.fontSizeMin = Mathf.Round(t.fontSize * 0.6f);
+                    t.enableAutoSizing = true;
+                }
         }
 
         private void Update()

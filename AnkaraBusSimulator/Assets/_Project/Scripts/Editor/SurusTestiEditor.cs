@@ -7,8 +7,8 @@ namespace AnkaraBus.EditorTools
 {
     /// <summary>
     /// Bir hattı Play modunda otomatik pilotla baştan sona sürer ve durakların tamamlandığını doğrular.
-    /// Menü: Ankara Bus > Hat 1 / Hat 2 Sürüş Testi (otomatik pilot), Ses ve Puan Testi (Hat 1)
-    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1Batch (veya RunHat2Batch);
+    /// Menü: Ankara Bus > Hat 1 Sürüş Testi (otomatik pilot), Ses ve Puan Testi (Hat 1)
+    /// Komut satırı: -executeMethod AnkaraBus.EditorTools.SurusTestiEditor.RunHat1Batch;
     /// bitince Unity kapanır
     /// </summary>
     [InitializeOnLoad]
@@ -33,12 +33,7 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Hat 1 Sürüş Testi (otomatik pilot)")]
         public static void RunHat1Menu() => RunMenu(Hat1SahneKurucu.ScenePath);
 
-        [MenuItem("Ankara Bus/Hat 2 Sürüş Testi (otomatik pilot)")]
-        public static void RunHat2Menu() => RunMenu(Hat2SahneKurucu.ScenePath);
-
         public static void RunHat1Batch() => Start(Hat1SahneKurucu.ScenePath, batch: true);
-
-        public static void RunHat2Batch() => Start(Hat2SahneKurucu.ScenePath, batch: true);
 
         /// <summary>Komut satırı: menüde seçilen otobüs "-otobus N" ile verilir (OyunSecimi.Otobus), sonra Hat 1.</summary>
         public static void RunHat1OtobusBatch()
@@ -49,15 +44,15 @@ namespace AnkaraBus.EditorTools
             Start(Hat1SahneKurucu.ScenePath, batch: true);
         }
 
-        /// <summary>Komut satırı: körüklü fırlama testi (KorukluTesti). "-otobus N" (varsayılan 2, Conecto), "-hat 1|2".</summary>
+        /// <summary>Komut satırı: körüklü fırlama testi (KorukluTesti). "-otobus N" (varsayılan 2, Conecto), "-hat 1|3".</summary>
         public static void RunKorukluBatch()
         {
             var args = System.Environment.GetCommandLineArgs();
             int i = System.Array.IndexOf(args, "-otobus");
             AnkaraBus.Gameplay.OyunSecimi.Otobus = i >= 0 && i + 1 < args.Length ? int.Parse(args[i + 1]) : 2;
             int h = System.Array.IndexOf(args, "-hat");
-            bool hat2 = h >= 0 && h + 1 < args.Length && args[h + 1] == "2";
-            Start(hat2 ? Hat2SahneKurucu.ScenePath : Hat1SahneKurucu.ScenePath, batch: true, koruklu: true);
+            bool hat3 = h >= 0 && h + 1 < args.Length && args[h + 1] == "3";
+            Start(hat3 ? Hat3SahneKurucu.ScenePath : Hat1SahneKurucu.ScenePath, batch: true, koruklu: true);
         }
 
         [MenuItem("Ankara Bus/Körüklü Fırlama Testi (Hat 1)")]

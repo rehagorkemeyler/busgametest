@@ -9,7 +9,8 @@ using UnityEngine.UI;
 namespace AnkaraBus.EditorTools
 {
     /// <summary>
-    /// Hat 1 sahnesi. Işık ve occlusion bake'i: Ankara Bus > Hat 1 Işık ve Occlusion Bake (HatIsikBake).
+    /// Hat 1 sahnesi (EGO 408 Kızılay → Atakule, Hat 3 ile aynı gerçek coğrafyalı parçalı harita; docs/PLAN_HARITA_V2.md).
+    /// Işık bake'i yok: güneş gerçek zamanlı.
     /// Menü: Ankara Bus > Hat 1 Sahnesini Kur
     /// </summary>
     public static class Hat1SahneKurucu
@@ -18,18 +19,13 @@ namespace AnkaraBus.EditorTools
 
         [MenuItem("Ankara Bus/Hat 1 Sahnesini Kur")]
         public static void Build() => HatSahneKurucu.Kur(ScenePath, HaritaKurucu.Build, "Hat 1");
-    }
 
-    /// <summary>
-    /// Hat 2 sahnesi (Kızılay → Ulus). Işık ve occlusion bake'i: Ankara Bus > Hat 2 Işık ve Occlusion Bake.
-    /// Menü: Ankara Bus > Hat 2 Sahnesini Kur
-    /// </summary>
-    public static class Hat2SahneKurucu
-    {
-        public const string ScenePath = "Assets/_Project/Scenes/Hat2_KizilayUlus.unity";
-
-        [MenuItem("Ankara Bus/Hat 2 Sahnesini Kur")]
-        public static void Build() => HatSahneKurucu.Kur(ScenePath, HaritaKurucu.BuildHat2, "Hat 2");
+        /// <summary>Komut satırı: -executeMethod AnkaraBus.EditorTools.Hat1SahneKurucu.BuildBatch</summary>
+        public static void BuildBatch()
+        {
+            Build();
+            EditorApplication.Exit(0);
+        }
     }
 
     /// <summary>

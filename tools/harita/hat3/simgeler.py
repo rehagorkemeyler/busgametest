@@ -36,6 +36,7 @@ HAZIR = [
     ("Landmarks/ZaferAniti", ("node", 2726221369), "merkez"),
     ("Landmarks/HititGunesKursu", ("node", 2726234695), "merkez"),
     ("Landmarks/OperaBinasi", ("alan", 404878536), "on"),
+    ("Landmarks/Atakule", ("way", 72079962), "merkez"),      # man_made=tower, height 125 (model 125 m, kaide r 10 m)
 ]
 ATATURK_ANITI = 9396947281
 
@@ -90,6 +91,13 @@ class Simgeler:
                 p = self.guz.interpolate(self.guz.project(Point(x, z)))
                 rot = math.degrees(math.atan2(p.x - x, p.y - z))
                 self.items.append({"model": model, "pos": [round(x, 2), round(y, 2), round(z, 2)], "rotY": round(rot % 360, 1),
+                                   "group": "SimgeYapilar"})
+                continue
+            if tur == "way" and yer == "merkez":
+                pg = self.pg(kimlik)
+                c = pg.centroid
+                y = float(self.ar.y(c.x, c.y)[0])
+                self.items.append({"model": model, "pos": [round(c.x, 2), round(y, 2), round(c.y, 2)], "rotY": 0.0,
                                    "group": "SimgeYapilar"})
                 continue
             if tur == "alan":
@@ -195,6 +203,44 @@ class Simgeler:
                           self.A.uv(tas["D"], 0, 2, 0, 4), cati_uv(1, 0.5, 0.5).tolist())
         print("  kale surları")
 
+    # ------------------------------------------------------------ bahçe duvarları
+    def duvarlar(self):
+        """OSM barrier=wall (güzergâha ≤ 250 m): TBMM yerleşkesi, büyükelçilik ve park duvarları. 2,4 m sıvalı taş duvar,
+        0,5 m kalınlık, üstte harpuşta; asfaltın içine düşen parçalar atlanır (kapı/geçit açıklığı)."""
+        tas = self.A.uv(self.A.j["temel"])
+        A = self.geo["A"]
+        S = self.geo.get("S")
+        sayi, uz = 0, 0.0
+        for wid, w in self.o["ways"].items():
+            if w["t"].get("barrier") != "wall":
+                continue
+            ns = [self.o["xy"][n] for n in w["n"] if n in self.o["xy"]]
+            if len(ns) < 2:
+                continue
+            L = LineString(ns)
+            if L.length < 6 or L.distance(self.guz) > 250:
+                continue
+            xz = np.array([L.interpolate(s_).coords[0] for s_ in np.linspace(0, L.length, max(2, int(L.length / 4) + 1))])
+            y = self.ar.y(xz[:, 0], xz[:, 1])
+            for i in range(len(xz) - 1):
+                a, b = xz[i], xz[i + 1]
+                m = (a + b) / 2
+                if shapely.contains_xy(A, m[0], m[1]) or (S is not None and shapely.contains_xy(S, m[0], m[1])) \
+                        or self.guz.distance(Point(*m)) < 9.0:
+                    continue                # yol üstü/kenarı (alt geçit istinat duvarları OSM'de barrier=wall) çizilmez
+                t_ = (b - a) / (np.linalg.norm(b - a) or 1)
+                n = np.array([t_[1], -t_[0]])
+                ya, yb = float(y[i]), float(y[i + 1])
+                for yon in (1, -1):
+                    aa, bb = a + n * 0.25 * yon, b + n * 0.25 * yon
+                    V, _, F = yonlu_duvar(aa, bb, ya - 0.4, yb - 0.4, ya + 2.4, yb + 2.4, n * yon)
+                    self.pc.ag(anahtar(*m), "H3_Cephe@SimgeYapilar").ekle(V, tas, F)
+                V, UV, F = serit(np.array([a, b]), np.array([ya + 2.5, yb + 2.5]), 0.35, 0.35)
+                self.pc.ekle_dunya("H3_Bordur@SimgeYapilar", V, UV, F)
+                uz += float(np.linalg.norm(b - a))
+            sayi += 1
+        print(f"  bahçe duvarı {sayi} ({uz:.0f} m)")
+
     # ------------------------------------------------------------ Atatürk anıtı (Kızılay)
     def ataturk(self):
         if ATATURK_ANITI not in self.o["xy"]:
@@ -291,6 +337,7 @@ def main():
     s.hazir()
     s.su()
     s.kale()
+    s.duvarlar()
     s.ataturk()
     s.metro()
     s.ust_gecit()

@@ -16,7 +16,7 @@ namespace AnkaraBus.EditorTools
     /// <item>Ankara Bus > Hava ve Gece Malzemelerini Kur: Resources/Hava altında palet malzemesinin gece (pencereler yanan),
     /// ıslak ve gece+ıslak kopyaları, lamba parlama malzemesi, yağmur damlası dokusu/malzemesi ve Yagmur prefabı;
     /// sis shader varyantlarının build'de kalması.</item>
-    /// <item>Ankara Bus > Akşam ve Gece Işığını Bake Et > Hat 1 / Hat 2: sahneyi akşam ve gece ayarıyla (sokak lambaları
+    /// <item>Ankara Bus > Akşam ve Gece Işığını Bake Et > Hat 1 (yalnız stilize, bake edilen sahneler): sahneyi akşam ve gece ayarıyla (sokak lambaları
     /// bake ışığı olarak yanık) iki kez bake eder, lightmap ve probları Resources/IsikSetleri'ne kopyalar, sonra gündüz
     /// bake'ini (HatIsikBake) yeniden yapar. Sahne yeniden kurulup gündüz bake edilince bu da tekrarlanmalı.</item>
     /// </list>
@@ -116,12 +116,7 @@ namespace AnkaraBus.EditorTools
         [MenuItem("Ankara Bus/Akşam ve Gece Işığını Bake Et/Hat 1")]
         public static void BakeHat1Menu() => BakeMenu(Hat1SahneKurucu.ScenePath);
 
-        [MenuItem("Ankara Bus/Akşam ve Gece Işığını Bake Et/Hat 2")]
-        public static void BakeHat2Menu() => BakeMenu(Hat2SahneKurucu.ScenePath);
-
         public static void BakeHat1Batch() => EditorApplication.Exit(Bake(Hat1SahneKurucu.ScenePath) ? 0 : 1);
-
-        public static void BakeHat2Batch() => EditorApplication.Exit(Bake(Hat2SahneKurucu.ScenePath) ? 0 : 1);
 
         private static void BakeMenu(string scenePath)
         {
@@ -135,6 +130,11 @@ namespace AnkaraBus.EditorTools
         {
             KlasorHazirla(IsikKlasoru);
             var scene = EditorSceneManager.OpenScene(scenePath);
+            if (Object.FindAnyObjectByType<AnkaraBus.Harita.ParcaAkisi>() != null)
+            {
+                Debug.LogWarning($"[HavaZaman] {scene.name}: parçalı harita, akşam/gece bake'i yapılmaz (ışık gerçek zamanlı).");
+                return true;
+            }
             Light gunes = null;
             foreach (var l in Object.FindObjectsByType<Light>())
                 if (l.type == LightType.Directional)
