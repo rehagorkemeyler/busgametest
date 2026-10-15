@@ -53,9 +53,9 @@ verdiği için köprü tabliyesi ile altındaki yol — ikisi aynı `…_Yol` a�
 | 5045–5050 | AİHL üst geçidi | 4,79 m | ✔ |
 | 5511–5514 | Altınpark üst geçidi | 7,74 m | ✔ |
 
-Planın "en dar açıklık 5,2 m" hesabı üç yerde tutmuyor (Sıhhiye girişi, Opera rampası, Aydınlıkevler). **Dışkapı'da güzergâh köprünün
-üstünde** değil: Dışkapı çevresinde (s 3 300–3 700) otobüsün üstünden geçen yapı yok, ayrı bir köprü tabliyesi de bulunmadı
-(Etlik Cd. kavşağı düz). Telefonda körüklüyle geçiş: bkz. 4.4.
+Planın "en dar açıklık 5,2 m" hesabı üç yerde tutmuyor (Sıhhiye girişi, Opera rampası, Aydınlıkevler). Dışkapı'da güzergâhın köprü
+üstünden geçtiği doğrulanamadı: Dışkapı çevresinde (s 3 300–3 700) otobüsün üstünden geçen yapı yok, güzergâh altında ayrı bir tabliye
+de görünmüyor (ölçüm yalnız üstten geçenleri buluyor). Telefonda körüklüyle geçiş: 3.4.
 
 ### 2.2 Güzergâh asfaltın dışında (şerit ↔ yol ağı uyuşmazlığı)
 Güzergâhın altındaki yüzey: asfalt 4 730, **refüj 315, kaldırım 286, yol yok (arazi) 161** örnek (2 m). 142 kesit; tam liste
@@ -99,4 +99,101 @@ En dik 20 m: **%9,2** s≈8 977 (Güneşevler+141 m); %7 üstü 78 örnek (≈16
   Liste ve köşe sayıları `editor_analizi.txt` "simge yapılar".
 - Yolda engel (bina/simge yapı çarpışması şerit üstünde): **yok** ✔. Üst geçit merdiven kuleleri yolda değil ✔ (açıklıklar 4,8–7,7 m, orta = yan).
 
-(Telefon bölümleri aşağıda.)
+
+## 3. Telefonda (S24 FE, Hat 3, `h3` görevi)
+
+Test sürücüsü (`H3Testi.Sur`) güzergâhı (şeritten hesaplanan `RotaRehberi` yolu) izler; oyunda otomatik pilot yok. İlk turda ışınlama
+hatası vardı (uzak parçalar ParcaAkisi'yle kapalı olduğu için zemin bulunamıyor, otobüs yerinde kalıyordu); düzeltildi
+(`H3Testi.Yerlestir`: önce taşı, parçaları aç, sonra zemine oturt). Köprü ve trafik adımları düzeltmeden sonra yeniden koşuldu.
+Wi-Fi adb her 2–3 dakikada koptuğu için görüntüler parça parça çekildi.
+
+### 3.1 Duraklar (Yüksek, gündüz, BMC)
+| | Sonuç |
+|---|---|
+| Durak sayılıyor mu | **17/18** ✔ (kapılar açılınca 10–25 sn'de). **Atatürk A. İmam Hatip Lisesi (08)**: otobüs durak alanında değil, sayılmadı (`s24/h3_Yuksek_Gunduz_durak08_hava`: sundurma otobüsün içinde). O tur ışınlama düzeltmesinden önceydi; durak noktası AİHL üst geçidine 30 m, güzergâh orada refüjde (2.2). Tekrar ölçülemedi. |
+| Biniş / iniş | Her durakta bekleyenler bindi (2–8), Hasköy'den sonra inenler var; son durakta 33 → 0 ✔ (`durak09_kapi`) |
+| Anons | **16/17** kalkışta doğru durak anonsu (`sonraki_sihhiye` … `sonraki_son_gunesevler`) ✔; AİHL'de kalkış olmadığı için çalmadı |
+| Trafik (otobüsün 150 m çevresi) | 3–17 araç, toplam 24; son durakta 14 → **9 km'de kaybolmuyor** ✔ |
+| Sundurma | Kaldırımda/çim şeritte, otobüsün sağında ✔ (`durak03_hava`); Güneşevler son durakta otobüs kaldırıma açılı (`durak17_ekran`) |
+| HUD / LED / mini harita | Mini harita hazır doku + sarı güzergâh ✔, "Sıradaki durak", "Hat tamamlandı" ✔. LED ön tabela kayan "408 GÜNEŞEVLER", arka "408" ✔. **HUD'da hat adı kesik: "408 Kızılay – Güneşevle"** (`durak00_ekran`) |
+
+### 3.2 Trafik (40 sn, otobüs duruyor)
+| Yer | Çevrede araç | Kırmızıda duran (örnek) | Kırmızıda çizgiyi geçen |
+|---|---|---|---|
+| Kızılay | 9 | 118 | 2 (sarıda duramayan) |
+| Işık K09 | 11 | 181 | 0 |
+| Işık K10 | 13 | 223 | 0 |
+
+Araçlar kırmızıda duruyor ✔ (`s24/h3_Yuksek_Gunduz_trafik_kizilay_2`, `_isik_Isik_K09_2`). Çapraz yollardan geçen ve T kavşakta katılan
+araçlar sayısal ölçülmedi; görüntülerde çapraz yolda araç var. Şeritler 2.2'deki gibi asfaltın sağına kaydığı için araçlar dönüşlerde
+kaldırımdan geçiyor.
+
+### 3.3 Yokuş (Mehmet Akif Ersoy, kütle +5,6 t = 80 yolcu, tam gaz)
+s 8 700 → 9 080, 19,8 m yükselme, 36 sn, **en düşük 27 km/s, çıktı** ✔ (`s24/h3_Yuksek_Gunduz_yokus_2`). Not: oyunda yolcu kütlesi yok
+(`BusPassengers` kütleye eklemiyor); test kütleyi elle artırdı.
+
+### 3.4 Köprü ve üst geçitler (BMC 18 körüklü, 20 km/s, 100 m)
+| Yer | Sonuç |
+|---|---|
+| Sıhhiye üst geçidi, Veteriner üst geçidi, Altınpark | **geçti** ✔ (`kopru_sihhiye_ustgecit`, `kopru_altinpark_kokpit`) |
+| **Sıhhiye köprüsü** (s 500 → 515) | ✘ **takıldı**, hız 0, gövde teması yok (alt geçit girişindeki 6 m'de 3 m'lik basamak/rampa, 2.1, `editor/kopru_00_alti`) |
+| **Opera / Talatpaşa** (s 1 205 → 1 232) | ✘ **takıldı**, köprü rampası duvarı (açıklık 0,38 m, `editor/kopru_02_alti`) |
+| **Aydınlıkevler 1** (s 4 320) | ✘ 6 m'de bir trafik aracına çarptı; tekrar edilmedi |
+| **Aydınlıkevler 2** (s 4 345 → 4 359) | ✘ **takıldı** (alçak, eğik tabliye ve kırık yüzey, `editor/kopru_06_alti`) |
+| **AİHL üst geçidi** (s 4 987 → 5 038) | ✘ üst geçit yapısına çarptı (`H3_5_17_SimgeYapilar`): şerit refüjde, otobüs ayağa giriyor (`s24/h3_Yuksek_Gunduz_kopru_aihl_ustgecit`). Asfalttan giden oyuncu için açıklık 4,79 m yeterli |
+
+Takılan üç yerde telefondan görüntü yok (otobüs çekim noktasına varmadan durdu); editör görüntüleri geçerli.
+
+### 3.5 Harita kenarı / uzak şehir (havadan, 45 m; gündüz, akşam, yağmur)
+- Akşam ve yağmurda uzak şehir halkası (Ufuk, 61 parça) ve tepeler sise karışıyor, Kızılay'dan Ulus yönünde harita sonu boşluğu
+  görünmüyor ✔ (`s24/h3_Yuksek_Aksam_ufuk_kizilay_yukari`, `_ulus_yukari`, `h3_Yuksek_GunduzYagmur_ufuk_kizilay_yukari`).
+- ✘ **Kızılay'dan kuzeye (Ulus) bakışta, yağmurda sis çizgisinin üstünde havada koyu, yassı bir şekil** (sise karışmıyor) ve solda
+  uzak halkanın **düz yatay kenarı** görünüyor (`s24/ufuk_yagmur_kizilay_yakin`). Hangi nesne olduğu belirlenmedi.
+- Güneşevler'de havadan: bina seyrek, bloklar arası geniş kaldırım dokulu düzlük (`h3_Yuksek_Aksam_ufuk_gunesevler_yukari`).
+- ✘ **Göz hizası ufuk görüntüleri alınamadı**: test kamerası otobüsün içinde kaldı (test aracı hatası). Gündüz göz hizası için durak
+  görüntüleri: ufukta boşluk yok (`durak00_ekran`, `durak03_ekran`). Gündüz havadan ufuk görüntüleri ışınlama hatası yüzünden yanlış yerde.
+- ParcaAkisi açılıp kapanırken belirme ölçülmedi (sürüş görüntüsü yok).
+
+### 3.6 Performans (S24 FE, gündüz, durakta trafik ve yolcularla; dış / kokpit 12'şer sn)
+| Kalite | Yer | FPS (1% düşük) | GPU ms | CPU ms | Çizim | Üçgen | Bellek MB |
+|---|---|---|---|---|---|---|---|
+| Yüksek (900 m) | Kızılay | 60,0 (59,5) / 60,0 | 10,3 / 10,4 | 9,7 | 659 / 599 | 877 / 768 bin | 669 |
+| Yüksek | Ulus | 60,0 / 60,0 | 10,2 / 9,8 | 9,7 | 537 / 488 | 769 / 617 bin | 696 |
+| Yüksek | Dışkapı | 60,0 / 60,0 | 10,4 / 10,0 | 9,7 | 508 / 421 | 734 / 544 bin | 701 |
+| Yüksek | Altınpark | 60,0 / 60,0 | 9,7 / 10,2 | 10,0 | 500 / 427 | 831 / 591 bin | 712 |
+| Yüksek | Güneşevler | 60,0 / 60,0 (58,3) | 9,5 / 8,6 | 9,0 | 297 / 221 | 572 / 366 bin | 714 |
+| Normal (650 m) | Kızılay | 60,0 / 60,0 | 5,4 / 5,5 | 8,0 | 524 / 418 | 663 / 547 bin | 545 |
+| Normal | Ulus | 60,0 / 60,0 | 4,8 / 5,6 | 8,5 | 394 / 381 | 498 / 423 bin | 551 |
+| Normal | Dışkapı | 60,0 / 60,0 | 4,5 / 5,2 | 8,6 | 229 / 328 | 310 / 344 bin | 551 |
+| Normal | Altınpark | 59,8 / 60,0 | 5,0–5,3 / 6,0 | 4,8–7,6 | 300 / 282 | 405–435 / 372 bin | 547 |
+| Normal | Güneşevler | 60,0 | 4,0 | 8,1 | 188 | 261 bin | 547 |
+
+**S24 kabul (60 FPS) ✔** her yerde. Kızılay Yüksek'te 659 çizim, 877 bin üçgen en yüksek değer (Hat 1'in iki katı); bellek Yüksek'te
+670–714 MB. `ParcaAkisi.Yaricap` ve LOD eşikleri değiştirilmedi. **A32 ölçülmedi** (bağlı değildi).
+
+### 3.7 Hattı baştan sona sürme
+Yapılmadı: oyunda otomatik pilot yok ve otopilotla sürüş testi kullanıcı kararıyla koşulmuyor. Duraklar tek tek (3.1), köprüler (3.4) ve
+yokuş (3.3) test sürücüsüyle parça parça denendi; tam sürüş (süre, puan) elle sürülerek yapılmalı. Takılınacak yerler: Sıhhiye ve
+Opera köprü girişleri, Aydınlıkevler.
+
+## 4. Menü ve APK
+- **Menü (S24, 2340×1080):** üç hat kartı (1, 2, 408) ekrana sığıyor, alt bilgiler okunuyor ✔ (`s24/menu_uc_kart`). 408 kartı seçilip
+  "Sefere Başla" → Hat 3 sahnesi açıldı, Kızılay durağında ✔ (`s24/menu_408_sahne`). 1920×1080 ekranda denenmedi (telefon 1080 yükseklik).
+- APK'lar hatasız: test 1,37 GB, **oyun 1,28 GB** (Hat 2/3 parçalarıyla; önceki ~0,3 GB'tan büyük). Oyun APK'sı (üç hat) S24'e kuruldu,
+  `~/Desktop/AnkaraOtobus.apk`'ye kopyalandı; telefonda test APK'sı kalmadı. Testler ayarları değiştirdiği için menüde hava "Açık"a geri alındı.
+
+## 5. Bulut için özet (öncelik sırasıyla)
+1. **Köprü girişleri**: Opera/Talatpaşa rampası şeridi kesiyor (0,38 m), Sıhhiye alt geçit girişi (2,2 m açıklık, 6 m'de 3 m basamak),
+   Aydınlıkevler ikinci tabliye (2,6 m, kırık yüzey). Körüklü üçünde de takılıyor (2.1, 3.4).
+2. **Şeritler asfaltın dışında** (142 kesit, özellikle Ulus Meydanı ve Hasköy–Güneşevler dönüşleri; AİHL'de refüjdeki üst geçit ayağı):
+   mini harita çizgisi, trafik ve durak yanaşması etkileniyor (2.2, 3.1, 3.4).
+3. **Su yüzeyleri −33 616 m** (32 parça, 2.6).
+4. Ufukta Ulus yönünde havada koyu şekil ve uzak halkanın düz kenarı (3.5).
+5. Malzemeler FBX'ten önce kurulmalı (1); `preserveHierarchy` yerelde eklendi, bulut korumalı (1).
+6. Küçükler: HUD'da hat adı kesik ("Güneşevle"), Pazar Yeri/Çiçek Taksi sundurmaları 0,3 m havada, Opera'da 5 m delik (2.3, 2.5, 3.1).
+
+## 6. Test araçları (yeni)
+- `Editor/H3Kurulum.cs`: `AnalizBatch` (hiyerarşi, malzeme, güzergâh boyunca yüzey/açıklık/eğim/kesitler, duraklar, simge yapılar,
+  görüntüler `Builds/H3/editor`), `NoktaBatch` (`H3_NOKTA="x,z;…"`: noktadaki ışınlar ve üçgenler), `YenidenAktarBatch`, `Hat2Batch`.
+- `Diagnostics/H3Testi.cs` (`-e gorev h3 -e sahne Hat3_KizilayGunesevler -e adim durak|perf|ufuk|trafik|kopru|yokus|hepsi`);
+  `Y10Baslatici`'ya `sahne` ve `adim` intent'leri. Bilinen kusur: `ufuk` adımının göz hizası kamerası otobüsün içinde (düzeltilecek).

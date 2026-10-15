@@ -102,9 +102,7 @@ namespace AnkaraBus.Diagnostics
         private IEnumerator Isinla(Vector3 p, Vector3 ileri)
         {
             ileri.y = 0f;
-            OtobusIsinla.ZemineTasi(bus, p + Vector3.up * 0.3f, Quaternion.LookRotation(ileri.normalized), 0.3f);
-            kor?.ArkayiHizala();
-            akis?.Guncelle(false);
+            Yerlestir(p + Vector3.up * 0.3f, Quaternion.LookRotation(ileri.normalized), 0.3f);
             for (int i = 0; i < 10; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -116,10 +114,32 @@ namespace AnkaraBus.Diagnostics
         {
             typeof(RouteTracker).GetProperty("NextStopIndex").SetValue(tracker, hedef);
             var durak = tracker.Route.GetStop(hedef);
-            OtobusIsinla.ZemineTasi(bus, durak.transform.position, Quaternion.Euler(0f, durak.transform.eulerAngles.y, 0f), 0.2f);
-            kor?.ArkayiHizala();
-            akis?.Guncelle(false);
+            Yerlestir(durak.transform.position, Quaternion.Euler(0f, durak.transform.eulerAngles.y, 0f), 0.2f);
             return durak;
+        }
+
+        /// <summary>
+        /// Önce otobüsü hedefe taşıyıp ParcaAkisi'yle oradaki parçaları açar (uzak parçalar kapalı: çarpıştırıcı yok, zemin bulunamaz),
+        /// sonra zemine oturtur. Zemin ışını şeridin 3 m üstünden başlar: köprü tabliyesine/üst geçide konmasın.
+        /// </summary>
+        private void Yerlestir(Vector3 konum, Quaternion donus, float yerden)
+        {
+            OtobusIsinla.Tasi(bus, konum + Vector3.up * 0.5f, donus);
+            akis?.Guncelle(false);
+            Physics.SyncTransforms();
+            var kolay = konum + Vector3.up * 3f;
+            float y = float.NaN, enYakin = float.MaxValue;
+            foreach (var h in Physics.RaycastAll(kolay, Vector3.down, 8f, ~0, QueryTriggerInteraction.Ignore))
+            {
+                if (h.collider is WheelCollider || h.transform.IsChildOf(bus.transform) || (kor != null && kor.ArkaGovde != null && h.transform.IsChildOf(kor.ArkaGovde.transform)))
+                    continue;
+                if (h.distance < enYakin) { enYakin = h.distance; y = h.point.y; }
+            }
+            if (float.IsNaN(y))
+                Log($"UYARI zemin bulunamadı {konum}");
+            else
+                OtobusIsinla.Tasi(bus, new Vector3(konum.x, y + yerden, konum.z), donus);
+            kor?.ArkayiHizala();
         }
 
         private IEnumerator Cek(string ad, Vector3 konum, Vector3 bak, float fov = 60f)
@@ -419,6 +439,7 @@ namespace AnkaraBus.Diagnostics
                 string temas = null;
                 bool cekildi = false;
                 float s0 = GuzergahKonum(bus.transform.position);
+                Log($"köprü {ad}: başlangıç s={s0:F0} konum={bus.transform.position}");
                 while (Time.time - t0 < 25f)
                 {
                     yield return new WaitForFixedUpdate();
