@@ -35,7 +35,7 @@ BOLME = 3.0             # bölme genişliği (m)
 KAT = 2.9
 ZEMIN_KAT_DUKKAN = 4.0
 ZEMIN_KAT = 3.0
-TEXTURES = os.path.join(kok.KLASOR, "..", "..", "AnkaraBusSimulator", "Assets", "_Project", "Maps", "Hat3", "Textures")
+TEXTURES = os.environ.get("HARITA_DOKULAR", os.path.join(kok.KLASOR, "..", "..", "AnkaraBusSimulator", "Assets", "_Project", "Maps", "Hat3", "Textures"))
 
 # (güzergâh s sonu, ad, kat aralığı, stil ağırlıkları, cadde cephesinde dükkân olasılığı)
 # bölgeler hat başına, güzergâh boyunca s (m) üst sınırıyla: (s_son, ad, kat aralığı, stil ağırlıkları, dolgu oranı)
