@@ -38,6 +38,13 @@ ZEMIN_KAT = 3.0
 TEXTURES = os.path.join(kok.KLASOR, "..", "..", "AnkaraBusSimulator", "Assets", "_Project", "Maps", "Hat3", "Textures")
 
 # (güzergâh s sonu, ad, kat aralığı, stil ağırlıkları, cadde cephesinde dükkân olasılığı)
+# bölgeler hat başına, güzergâh boyunca s (m) üst sınırıyla: (s_son, ad, kat aralığı, stil ağırlıkları, dolgu oranı)
+BOLGELER_ATAKULE = [
+    (700, "Kızılay–Güvenpark", (6, 10), {"bulvar60": 5, "cam_ofis": 2, "kamu": 2, "mantolama": 1}, 0.9),
+    (1700, "Bakanlıklar–Meclis", (5, 9), {"kamu": 5, "kurum": 2, "bulvar60": 2}, 0.5),
+    (2650, "Kavaklıdere", (4, 8), {"bulvar60": 3, "mantolama": 3, "cam_ofis": 1, "tugla": 1}, 0.7),
+    (1e9, "Cinnah–Çankaya", (4, 7), {"mantolama": 4, "bulvar60": 2, "tugla": 2, "kamu": 1}, 0.6),
+]
 BOLGELER = [
     (720, "Kızılay–Sıhhiye", (5, 10), {"bulvar60": 6, "mantolama": 2, "cam_ofis": 1, "kamu": 1, "tugla": 1}, 0.9),
     (1450, "Sıhhiye–Opera", (5, 9), {"kamu": 4, "bulvar60": 3, "kurum": 2, "mantolama": 1}, 0.6),
@@ -49,6 +56,15 @@ BOLGELER = [
     (7650, "Güneşevler", (3, 6), {"mantolama": 3, "tugla": 2, "gecekondu": 2, "bulvar60": 1}, 0.6),
     (1e9, "Ali Ersoy", (4, 8), {"mantolama": 5, "tugla": 1, "gecekondu": 1}, 0.4),
 ]
+def bolge_sec(hat, s):
+    """(hat, s) → bölge satırı. Uretici'ye s < 0 gelirse Atakule hattında −1 − s."""
+    if hat == "408_atakule":
+        return next(b for b in BOLGELER_ATAKULE if s < b[0])
+    if s < 0:
+        return next(b for b in BOLGELER_ATAKULE if -1.0 - s < b[0])
+    return next(b for b in BOLGELER if s < b[0])
+
+
 KUCUK = ("garage", "garages", "shed", "kiosk", "hut", "container", "service", "toilets", "carport", "transformer_tower",
          "greenhouse", "cabin")
 EV = ("house", "detached", "bungalow", "semidetached_house", "terrace")
@@ -342,7 +358,7 @@ class Uretici:
         tur = t.get("building", "yes")
         if t.get("amenity") == "place_of_worship" and (t.get("religion") == "muslim" or tur == "mosque") or tur == "mosque":
             return self.cami(wid, pg, t, minareler)
-        bolge = next(b for b in BOLGELER if s < b[0])
+        bolge = bolge_sec("", s)
         katlar = kat_sayisi(wid, t, pg, bolge, tur)
         stil = stil_sec(wid, t, bolge, tur)
         renk = int(hash01(wid, "renk") * len(self.atlas.j["stiller"][stil]))
@@ -561,7 +577,9 @@ def main():
         if t.get("tower:type") == "minaret":
             continue                         # minare ayrı bina olarak çizilmez (camiyle birlikte)
         c = pg.representative_point()
-        s = guz.project(c)
+        hat, s = kok.hat_s(c.x, c.y)
+        if hat == "408_atakule":
+            s = -1.0 - s            # Uretici.bina: s < 0 → Atakule bölgeleri (bolge_sec)
         dg = guz.distance(pg)
         try:
             u.bina(wid, pg, t, s, dg, minareler)

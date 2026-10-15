@@ -1,7 +1,8 @@
 """
 A6/A7 — Hat 3 yerleşim dosyası (HaritaKurucu şeması + parçalar) ve mini harita dokusu.
 
-Maps/Hat3/Hat3_Yerlesim.json (ve aynı haritada Hat 2: Maps/Hat2/Hat2_Yerlesim.json, ilk dört durak):
+Hat başına yerleşim (kok.HATLAR): Maps/Hat3/Hat3_Yerlesim.json (408 Kızılay → Güneşevler), Maps/Hat1/Hat1_Yerlesim.json
+(408 Kızılay → Atakule). Harita ortak: öğeler, bütün hatların şeritleri ve ışıkları her dosyada; duraklar ve başlangıç hatta özgü.
     lineNumber "408", lineName, spawnPos, spawnRotY
     items     hazır modeller (simgeler.py), lambalar (Lambalar), durak sundurmaları (Duraklar)
     stops     18 durak: güzergâhta durağın izdüşümü, sağ şeridin kaldırıma yakın yarısında (kaldırım ≤ 7 m sağda)
@@ -36,24 +37,17 @@ SERIT = 3.4
 ISIK_YESIL = (30.0, 15.0)
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--maps", required=True)
-    args = ap.parse_args()
-    o = kok.osm()
-    g = kok.guzergah()
-    geo = pickle.load(open(os.path.join(kok.ISLEM, "yollar_geo.pkl"), "rb"))
-    A, S, guz = geo["A"], geo["S"], geo["guzergah"]
-    d = np.load(os.path.join(kok.ISLEM, "arazi.npz"))
-    yh = Yukseklik(d["dugum_xz"], d["dugum_y"], d["dugum_fark"])
-    ar = SonArazi()
-    shapely.prepare(A)
-    shapely.prepare(S)
+def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
+    """Bir hattın (g: hat408_guzergah.py çıktısı) şeritleri, ışıkları, durakları, sundurma ve lambaları, başlangıcı.
+    on_ek: ikinci hattın şerit/ışık adlarına önek (Unity'de adlar tekil olmalı)."""
+    A, S = geo["A"], geo["S"]
+    guz = LineString([kok.yerel(*p) for p in g["yol"]])
+    guz_id = set(g["osm_yollar"])
 
     # güzergâh yollarının şerit bilgisi (s'ye göre)
     guz_yol = {}
     for sr in geo["seritler"]:
-        if sr["guzergah"]:
+        if sr["id"] in guz_id:
             guz_yol[sr["id"]] = sr
     yol_geo = [(LineString(d["dugum_xz"][sr["d"]]), sr) for sr in guz_yol.values()]
     agac_y = shapely.STRtree([gg for gg, _ in yol_geo])
@@ -155,7 +149,7 @@ def main():
             q = P[j] - N[j] * (abs(karsi[j]) + 2.6)
             heads.append({"model": "Props/Trafik_Lambasi", "pos": [round(q[0], 2), round(float(ar.y(*q)[0]) + 0.15, 2), round(q[1], 2)],
                           "rotY": round(yaw % 360, 1), "group": 0})
-        signals.append({"name": f"K{k + 1:02d}", "heads": heads,
+        signals.append({"name": f"{on_ek}K{k + 1:02d}", "heads": heads,
                         "phases": [{"greenGroups": [0], "green": ISIK_YESIL[0], "yellow": 3.0, "allRed": 2.0},
                                    {"greenGroups": [1], "green": ISIK_YESIL[1], "yellow": 3.0, "allRed": 2.0}]})
 
@@ -176,13 +170,13 @@ def main():
 
     gidis = []
     for k in range(len(sinirlar) - 1):
-        ln = serit_parcasi(f"Gidis_1_{k:02d}", sinirlar[k], sinirlar[k + 1], of1)
+        ln = serit_parcasi(f"{on_ek}Gidis_1_{k:02d}", sinirlar[k], sinirlar[k + 1], of1)
         if ln is None:
             continue
         if k < len(isik_s):
             n_pts = len(ln["points"]) // 3
             uz = sum(math.dist(ln["points"][3 * a:3 * a + 3], ln["points"][3 * a + 3:3 * a + 6]) for a in range(n_pts - 1))
-            ln["signal"] = f"K{k + 1:02d}"
+            ln["signal"] = f"{on_ek}K{k + 1:02d}"
             ln["stopLine"] = round(max(uz - 4.0, 0.0), 1)
         gidis.append(ln)
     for a, b in zip(gidis, gidis[1:]):
@@ -200,7 +194,7 @@ def main():
             bas = i
         elif not var and bas is not None:
             if (i - bas) * ADIM >= 150:
-                ln = serit_parcasi(f"Gidis_2_{parca_no:02d}", bas * ADIM, (i - 1) * ADIM, iki)
+                ln = serit_parcasi(f"{on_ek}Gidis_2_{parca_no:02d}", bas * ADIM, (i - 1) * ADIM, iki)
                 if ln:
                     lanes.append(ln)
                     parca_no += 1
@@ -214,7 +208,7 @@ def main():
             bas = i
         elif not var and bas is not None:
             if (i - bas) * ADIM >= 80:
-                ln = serit_parcasi(f"Donus_1_{parca_no:02d}", bas * ADIM, (i - 1) * ADIM, karsi, ters=True)
+                ln = serit_parcasi(f"{on_ek}Donus_1_{parca_no:02d}", bas * ADIM, (i - 1) * ADIM, karsi, ters=True)
                 if ln:
                     lanes.append(ln)
                     parca_no += 1
@@ -223,7 +217,7 @@ def main():
     CAPRAZ = 120.0
     cap_sayi = 0
     tum_yollar = [(LineString(d["dugum_xz"][sr["d"]]), sr) for sr in geo["seritler"]
-                  if not sr["guzergah"] and sr["sinif"] in ("trunk", "primary", "secondary", "tertiary", "unclassified",
+                  if sr["id"] not in guz_id and sr["sinif"] in ("trunk", "primary", "secondary", "tertiary", "unclassified",
                                                             "residential", "primary_link", "secondary_link", "trunk_link")]
     agac_t = shapely.STRtree([gg for gg, _ in tum_yollar])
     for k, s0 in enumerate(isik_s):
@@ -264,12 +258,12 @@ def main():
                 durma = max(uz[dmin] - (W[i] / 2 + 6.0), 0.0)
                 if durma < 10:
                     continue
-                ad = f"Capraz_{k + 1:02d}_{sr['id']}_{int(ters)}"
+                ad = f"{on_ek}Capraz_{k + 1:02d}_{sr['id']}_{int(ters)}"
                 # ışık başı: çapraz yolun sağında, durma çizgisinde, gelen trafiğe bakar (şerit kısaltılmadan önce)
                 q = pts[dmin] + nn[dmin] * 3.5 - tt[dmin] * (W[i] / 2 + 5)
                 yawq = math.degrees(math.atan2(tt[dmin][0], tt[dmin][1]))
                 ln = {"name": ad, "limitKmh": 40.0, "points": [], "exits": [], "stopLine": round(float(durma), 1),
-                      "group": 1, "signal": f"K{k + 1:02d}"}
+                      "group": 1, "signal": f"{on_ek}K{k + 1:02d}"}
                 # T kavşak (yol güzergâhta bitiyor): durma çizgisinden sonra sağa dönüp en yakın uygun şeride bağlanır
                 devam = uz[-1] - uz[dmin]
                 if devam < 30:
@@ -278,7 +272,7 @@ def main():
                     p0, t0v = pts[-1], tt[min(son, len(tt) - 1)]
                     hedef = None
                     for hl in lanes:
-                        if not (hl["name"].startswith("Gidis_1") or hl["name"].startswith("Donus_1")):
+                        if not (hl["name"].startswith(on_ek + "Gidis_1") or hl["name"].startswith(on_ek + "Donus_1")):
                             continue
                         hp = np.array(hl["points"]).reshape(-1, 3)[:, [0, 2]]
                         dd = np.linalg.norm(hp - p0, axis=1)
@@ -337,7 +331,7 @@ def main():
         if s - son < 33 or any(abs(s - d_) < 15 for d_ in durak_s):
             continue
         yaw = math.degrees(math.atan2(T[i][0], T[i][1]))
-        nostaljik = s < 2150
+        nostaljik = s < nostaljik_s
         if not np.isnan(refuj_orta[i]):
             p = nokta(i, refuj_orta[i])
             model = "SKP/Props/Lamba_Nostaljik" if nostaljik else "Props/Lamba_Bulvar"
@@ -352,7 +346,38 @@ def main():
                       "rotY": round(rot % 360, 1), "group": "Lambalar"})
         son = s
     print(f"  lamba {sum(1 for it in items if it['group'] == 'Lambalar')}, durak {len(stops)}")
-    items = json.load(open(os.path.join(kok.ISLEM, "simge_items.json"), encoding="utf-8")) + items
+    i0 = 2
+    yaw0 = math.degrees(math.atan2(T[i0][0], T[i0][1]))
+    sp = nokta(i0, of1[i0])
+    spawn = ([round(sp[0], 2), round(float(y_at([sp])[0]) + 0.3, 2), round(sp[1], 2)], round(yaw0 % 360, 1))
+    return lanes, signals, stops, items, spawn
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--maps", required=True)
+    args = ap.parse_args()
+    o = kok.osm()
+    geo = pickle.load(open(os.path.join(kok.ISLEM, "yollar_geo.pkl"), "rb"))
+    A, S = geo["A"], geo["S"]
+    d = np.load(os.path.join(kok.ISLEM, "arazi.npz"))
+    yh = Yukseklik(d["dugum_xz"], d["dugum_y"], d["dugum_fark"])
+    ar = SonArazi()
+    shapely.prepare(A)
+    shapely.prepare(S)
+    # hat başına bileşenler; harita ortak: bütün hatların şeritleri, ışıkları, sundurma ve lambaları her sahnede
+    hatlar = kok.hatlar()
+    bilesen = {}
+    for k, (ad, g) in enumerate(hatlar.items()):
+        print(f"  hat {ad}")
+        bilesen[ad] = hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="" if k == 0 else "A_",
+                                      nostaljik_s=2150.0 if ad == "408_gunesevler" else 2650.0)
+    items = json.load(open(os.path.join(kok.ISLEM, "simge_items.json"), encoding="utf-8"))
+    lanes, signals = [], []
+    for ad, (ln, sg, st, it, sp) in bilesen.items():
+        lanes += ln
+        signals += sg
+        items += it
 
     # --- parçalar
     parcalar = []
@@ -374,8 +399,8 @@ def main():
     # --- mini harita dokusu (0,4 px/m): yeşil, su, yollar, kaldırım, binalar
     pm = 0.4
     x0, z0, x1, z1 = geo["koridor"].bounds
-    w, h = int((x1 - x0) * pm) + 1, int((z1 - z0) * pm) + 1
-    im = Image.new("RGB", (w, h), (38, 46, 41))
+    w, h_ = int((x1 - x0) * pm) + 1, int((z1 - z0) * pm) + 1
+    im = Image.new("RGB", (w, h_), (38, 46, 41))
     dr = ImageDraw.Draw(im)
 
     def ciz(gg, renk):
@@ -399,29 +424,18 @@ def main():
     os.makedirs(os.path.join(args.maps, "Hat3"), exist_ok=True)
     im.save(os.path.join(args.maps, "Hat3", "Hat3_Harita.png"))
 
-    i0 = 2
-    yaw0 = math.degrees(math.atan2(T[i0][0], T[i0][1]))
-    sp = nokta(i0, of1[i0])
-    yerlesim = {
-        "lineNumber": "408", "lineName": "Kızılay – Güneşevler",
-        "spawnPos": [round(sp[0], 2), round(float(y_at([sp])[0]) + 0.3, 2), round(sp[1], 2)], "spawnRotY": round(yaw0 % 360, 1),
-        "items": items, "stops": stops, "lanes": lanes, "signals": signals, "parcalar": parcalar,
-        "haritaDokusu": {"dosya": "Hat3/Hat3_Harita.png", "min": [round(x0, 2), round(z0, 2)], "pikselMetre": pm},
-    }
-    yol = os.path.join(args.maps, "Hat3", "Hat3_Yerlesim.json")
-    json.dump(yerlesim, open(yol, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    # Hat 2 (Kızılay → Ulus) aynı gerçek haritada: ilk dört durak (Kızılay, Sıhhiye, Opera, Ulus). Eski stilize Hat 2
-    # (harita_hat2.py) harita kenarları görünüyordu (kullanıcı, 14 Ekim).
-    hat2 = dict(yerlesim)
-    hat2["lineNumber"], hat2["lineName"] = "2", "Kızılay – Ulus"
-    hat2["stops"] = stops[:4]
-    assert [st["name"] for st in hat2["stops"]] == ["Kızılay", "Sıhhiye", "Opera", "Ulus"]
-    os.makedirs(os.path.join(args.maps, "Hat2"), exist_ok=True)
-    json.dump(hat2, open(os.path.join(args.maps, "Hat2", "Hat2_Yerlesim.json"), "w", encoding="utf-8"), ensure_ascii=False,
-              separators=(",", ":"))
-    print(f"{yol}: {len(items)} öğe, {len(stops)} durak, {len(lanes)} şerit, {len(signals)} ışık, {len(parcalar)} parça; "
-          f"harita dokusu {w}×{h}")
-
+    for ad, (ln, sg, stops, it, (sp, sp_yaw)) in bilesen.items():
+        h = kok.HATLAR[ad]
+        yerlesim = {
+            "lineNumber": h["numara"], "lineName": h["ad"], "spawnPos": sp, "spawnRotY": sp_yaw,
+            "items": items, "stops": stops, "lanes": lanes, "signals": signals, "parcalar": parcalar,
+            "haritaDokusu": {"dosya": "Hat3/Hat3_Harita.png", "min": [round(x0, 2), round(z0, 2)], "pikselMetre": pm},
+        }
+        os.makedirs(os.path.join(args.maps, h["klasor"]), exist_ok=True)
+        yol = os.path.join(args.maps, h["klasor"], h["dosya"])
+        json.dump(yerlesim, open(yol, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        print(f"{yol}: {len(items)} öğe, {len(stops)} durak, {len(lanes)} şerit, {len(signals)} ışık, {len(parcalar)} parça; "
+              f"harita dokusu {w}×{h_}")
 
 if __name__ == "__main__":
     main()

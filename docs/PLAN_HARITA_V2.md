@@ -193,3 +193,21 @@ Kaynak: OSM ayak izleri + kat bilgisi, Wikimedia Commons fotoğrafları (yalnız
   - **Zemin dokusu** (`zemin.png`) kaldırım taşına benziyor: arazi ile kaldırım ayırt edilmiyor (bütün görüntülerde) → M4'te zemin
     dokusu yeniden (toprak/çim/kentsel boşluk).
   - Basamak/eğim kümelerinin bir kısmı kavşaklarda yol yüzeyinin kırık/eğik üçgenleri (`basamak_09_yer`).
+
+### M2 ✔ (15 Ekim, yerel) — veri ve birleşik harita
+- **DEM:** kuzeydeki "uçurum"un kaynağı, z15 terrarium'da 39.985 K'deki bütün karo satırının sunucuda boş (−32 768 m) olması (z14'te de).
+  `arazi.dem_mozaik` geçersiz pikselleri (< 300 m) z14 → z13'ten doldurur; `dem.py` aynı geri dönüşle. DEM 39.855–39.995 K,
+  32.815–32.935 D (216 z15 + 60 z14 + 20 z13 karo). Denetim: **uç köşe 89 küme → 0**.
+- **OSM:** güney karoları (39.865–39.915 K, 45 karo) eski veriyle birleşti → `veri/osm_ankara.json.gz` (335 bin düğüm, 58,6 bin yol/alan).
+  `osm_indir.sh` sınır alır, `osm_birlestir.py --taban`.
+- **Hatlar:** `veri/hatlar/408_gunesevler.json` (8 930 m, değişmedi), `veri/hatlar/408_atakule.json` (**4 484 m**: Atatürk Bulvarı
+  2,6 km → Kuğulu Park → Cinnah Caddesi 1,8 km → Simon Bolivar Cd.; 9 durak OSM'deki EGO numaralarıyla). `hat408_guzergah.py --hat`.
+- **Üretim çok hatlı:** `kok.hatlar()`, `kok.guzergah_cizgisi()` (iki hat), `kok.hat_s()`; bina bölge kuralları hat başına
+  (`BOLGELER_ATAKULE`: Kızılay–Güvenpark, Bakanlıklar–Meclis, Kavaklıdere, Cinnah–Çankaya); `yerlesim.py` hat başına JSON yazar
+  (`Hat3/Hat3_Yerlesim.json`, `Hat1/Hat1_Yerlesim.json`; şerit/ışık/öğeler ortak, Atakule adları `A_` önekli). Hat 2 çıktısı yok.
+- Birleşik harita: 405 parça + 88 uzak halka (önce 264 + 61), asfalt 145 ha, 6 830 bina, 10 931 ağaç; tam üretim ~1,5 dk.
+  Atakule güzergâhı sürücü gözü önizlemesi `docs/gorseller/harita_v2/m2/`. Denetim (`denetim_m2.txt`): açıklık 60, basamak 631,
+  eğim 346, şerit asfalt dışı %16, kesik 221 küme (harita büyüdü; M3–M5 kapatır).
+- Not: Atakule güzergâhında OSM'den yalnız 2 ışıklı kavşak bulundu (Atatürk Bulvarı'nda gerçekte daha fazla): M5'te ışıklar yol
+  ağının kesişen düğümlerinden de aranacak.
+- Unity'ye taşıma M8'de (repodaki Hat3 FBX'leri o zamana kadar değişmez).

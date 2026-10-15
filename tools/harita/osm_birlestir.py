@@ -24,8 +24,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--karolar", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--taban", default=None, help="önceki birleşik JSON (karoları olmayan alan); karolar üstüne yazar")
     args = ap.parse_args()
     nodes, tagged, ways, rels = {}, {}, {}, {}
+    if args.taban:
+        t = json.load(gzip.open(args.taban, "rt", encoding="utf-8"))
+        nodes = {int(k): v for k, v in t["nodes"].items()}
+        tagged = {int(k): v for k, v in t["tagged_nodes"].items()}
+        ways = {int(k): v for k, v in t["ways"].items()}
+        rels = {int(k): v for k, v in t["relations"].items()}
     for f in sorted(glob.glob(os.path.join(args.karolar, "*.osm"))):
         for ev, el in ET.iterparse(f):
             if el.tag == "node":

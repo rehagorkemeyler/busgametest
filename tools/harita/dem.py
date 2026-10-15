@@ -15,13 +15,20 @@ from PIL import Image
 
 
 class Dem:
-    def __init__(self, klasor, z=15):
+    # terrarium'da "veri yok" siyah piksel (−32 768 m); z15 ve z14'te Ankara'nın kuzeyinde (39.985 K) bütün bir karo satırı boş,
+    # bazı karolarda tek tük bozuk piksel var. Bu eşiğin altındaki değerler geçersiz: bir alt yakınlaştırmadan örneklenir.
+    GECERSIZ = 300.0
+
+    def __init__(self, klasor, z=15, yedek=(14, 13)):
         self.z = z
         self.karolar = {}
         for f in glob.glob(os.path.join(klasor, f"{z}_*_*.png")):
             _, x, y = os.path.basename(f)[:-4].split("_")
             a = np.asarray(Image.open(f).convert("RGB"), dtype=np.float64)
             self.karolar[(int(x), int(y))] = a[:, :, 0] * 256 + a[:, :, 1] + a[:, :, 2] / 256 - 32768
+        self.yedek = None
+        if yedek and glob.glob(os.path.join(klasor, f"{yedek[0]}_*_*.png")):
+            self.yedek = Dem(klasor, yedek[0], yedek[1:])
 
     def _piksel(self, lat, lon):
         n = 2 ** self.z * 256
@@ -41,10 +48,17 @@ class Dem:
         py -= 0.5
         x0, y0 = math.floor(px), math.floor(py)
         fx, fy = px - x0, py - y0
-        v00 = self._deger(x0, y0)
-        v10 = self._deger(x0 + 1, y0)
-        v01 = self._deger(x0, y0 + 1)
-        v11 = self._deger(x0 + 1, y0 + 1)
+        try:
+            v00 = self._deger(x0, y0)
+            v10 = self._deger(x0 + 1, y0)
+            v01 = self._deger(x0, y0 + 1)
+            v11 = self._deger(x0 + 1, y0 + 1)
+        except KeyError:
+            if self.yedek is None:
+                raise
+            return self.yedek.rakim(lat, lon)
+        if min(v00, v10, v01, v11) < self.GECERSIZ and self.yedek is not None:
+            return self.yedek.rakim(lat, lon)
         return (v00 * (1 - fx) + v10 * fx) * (1 - fy) + (v01 * (1 - fx) + v11 * fx) * fy
 
 

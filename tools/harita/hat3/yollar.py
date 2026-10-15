@@ -71,7 +71,7 @@ def main():
     P, Y, F = d["dugum_xz"], d["dugum_y"], d["dugum_fark"]
     yollar = json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))
     g = kok.guzergah()
-    guz = LineString([kok.yerel(*p) for p in g["yol"]])
+    guz = kok.guzergah_cizgisi()
     koridor = guz.buffer(KORIDOR, quad_segs=16)
 
     asfalt, dis, katmanli, seritler = [], [], [], []

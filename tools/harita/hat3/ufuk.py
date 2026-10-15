@@ -22,7 +22,7 @@ from shapely.strtree import STRtree
 
 from . import kok
 from .arazi import Arazi
-from .binalar import BOLGELER, KAT, Atlas, bina_listesi, cati_uv, hash01, kat_sayisi, stil_sec
+from .binalar import BOLGELER, KAT, bolge_sec, Atlas, bina_listesi, cati_uv, hash01, kat_sayisi, stil_sec
 from .mesh import Parcalar, ucgenle
 
 UFUK = 2000.0
@@ -105,8 +105,7 @@ def main():
         if pg is None or pg.is_empty:
             continue
         c = pg.representative_point()
-        s = guz.project(c)
-        bolge = next(b for b in BOLGELER if s < b[0])
+        bolge = bolge_sec(*kok.hat_s(c.x, c.y))
         tur = t.get("building", "yes")
         katlar = kat_sayisi(wid, t, pg, bolge, tur)
         stil = stil_sec(wid, t, bolge, tur)

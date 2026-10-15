@@ -14,3 +14,4 @@ __pycache__/
 .venv-skp/
 tools/harita/veri/_islem/
 tools/harita/.venv/
+tools/harita/veri/karolar/

@@ -40,20 +40,52 @@ DEM_Z = 15
 RAYLAR = ("rail", "light_rail", "tram", "narrow_gauge")
 
 
-def dem_mozaik(klasor=None):
-    """Terrarium karolarını tek diziye birleştirir: (dizi, ilk karo x, ilk karo y)."""
-    klasor = klasor or os.path.join(kok.VERI, "dem")
+GECERSIZ = 300.0     # m; terrarium "veri yok" (−32 768) ve bozuk pikseller (Ankara > 700 m)
+
+
+def _mozaik(klasor, z):
     karolar = {}
-    for f in glob.glob(os.path.join(klasor, f"{DEM_Z}_*_*.png")):
+    for f in glob.glob(os.path.join(klasor, f"{z}_*_*.png")):
         _, x, y = os.path.basename(f)[:-4].split("_")
         a = np.asarray(Image.open(f).convert("RGB"), dtype=np.float64)
         karolar[(int(x), int(y))] = a[:, :, 0] * 256 + a[:, :, 1] + a[:, :, 2] / 256 - 32768
+    if not karolar:
+        return None
     xs = sorted({k[0] for k in karolar})
     ys = sorted({k[1] for k in karolar})
-    m = np.zeros((len(ys) * 256, len(xs) * 256))
+    m = np.full(((ys[-1] - ys[0] + 1) * 256, (xs[-1] - xs[0] + 1) * 256), -32768.0)
     for (x, y), a in karolar.items():
         m[(y - ys[0]) * 256:(y - ys[0] + 1) * 256, (x - xs[0]) * 256:(x - xs[0] + 1) * 256] = a
     return m, xs[0], ys[0]
+
+
+def dem_mozaik(klasor=None):
+    """Terrarium karolarını tek diziye birleştirir: (dizi, ilk karo x, ilk karo y).
+
+    z15'te Ankara'nın kuzeyinde (39.985 K) bütün bir karo satırı "veri yok" (sunucuda boş; z14'te de); geçersiz ya da eksik
+    pikseller sırayla z14 ve z13 mozaiklerinden çift doğrusal örneklenir.
+    """
+    klasor = klasor or os.path.join(kok.VERI, "dem")
+    m, kx0, ky0 = _mozaik(klasor, DEM_Z)
+    for z in (DEM_Z - 1, DEM_Z - 2):
+        kotu = m < GECERSIZ
+        if not kotu.any():
+            break
+        alt = _mozaik(klasor, z)
+        if alt is None:
+            continue
+        ma, ax0, ay0 = alt
+        r, c = np.nonzero(kotu)
+        k = 2 ** (DEM_Z - z)
+        py = ((ky0 * 256 + r + 0.5) / k) - ay0 * 256 - 0.5
+        px = ((kx0 * 256 + c + 0.5) / k) - ax0 * 256 - 0.5
+        v = ndimage.map_coordinates(ma, [py, px], order=1, mode="nearest")
+        iyi = v >= GECERSIZ
+        m[r[iyi], c[iyi]] = v[iyi]
+        print(f"  DEM: z{DEM_Z}'te {len(r)} geçersiz piksel, {int(iyi.sum())} tanesi z{z}'ten dolduruldu")
+    if (m < GECERSIZ).any():
+        raise ValueError(f"DEM'de hâlâ {int((m < GECERSIZ).sum())} geçersiz piksel (karo eksik mi?)")
+    return m, kx0, ky0
 
 
 def dem_ornekle(m, kx0, ky0, lat, lon):
@@ -116,7 +148,7 @@ def yol_agi(arazi):
     xy = o["xy"]
     g = kok.guzergah()
     guz_id = set(g["osm_yollar"])
-    guz_hat = LineString([kok.yerel(*p) for p in g["yol"]])
+    guz_hat = kok.guzergah_cizgisi()
     secili = []
     for wid, w in o["ways"].items():
         t = w["t"]

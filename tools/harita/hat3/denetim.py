@@ -350,7 +350,11 @@ def main():
     PX = d["dugum_xz"]
     hatlar = [LineString(PX[s["d"]]) for s in seritler]
     tr_yol = STRtree(hatlar)
-    duraklar = [(s["name"], s["pos"][0], s["pos"][2]) for s in yer["stops"]]
+    duraklar = []
+    for h in kok.HATLAR.values():
+        f = os.path.join(a.maps, h["klasor"], h["dosya"])
+        if os.path.exists(f):
+            duraklar += [(s["name"], s["pos"][0], s["pos"][2]) for s in json.load(open(f, encoding="utf-8"))["stops"]]
     from scipy.spatial import cKDTree
     kat_i = np.array(sorted(katman.keys()))
     kd = cKDTree(P[kat_i])

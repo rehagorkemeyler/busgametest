@@ -33,7 +33,7 @@ def osm():
     """OSM verisi (osm_birlestir.py çıktısı): düğümler yerel koordinata çevrilmiş."""
     global _osm
     if _osm is None:
-        d = json.load(gzip.open(os.path.join(VERI, "osm_hat408.json.gz"), "rt", encoding="utf-8"))
+        d = json.load(gzip.open(os.path.join(VERI, "osm_ankara.json.gz"), "rt", encoding="utf-8"))
         d["xy"] = {int(k): yerel(*v) for k, v in d["nodes"].items()}
         d["tagged_nodes"] = {int(k): v for k, v in d["tagged_nodes"].items()}
         d["ways"] = {int(k): v for k, v in d["ways"].items()}
@@ -42,8 +42,50 @@ def osm():
     return _osm
 
 
+# Hatlar (docs/PLAN_HARITA_V2.md): her biri hat408_guzergah.py çıktısı, veri/hatlar/<ad>.json. Harita iki hattın birleşik
+# koridorunu kapsar; sahneler (Unity) hat başına ayrı yerleşim JSON'u alır.
+HATLAR = {
+    "408_gunesevler": {"klasor": "Hat3", "dosya": "Hat3_Yerlesim.json", "numara": "408", "ad": "Kızılay – Güneşevler"},
+    "408_atakule": {"klasor": "Hat1", "dosya": "Hat1_Yerlesim.json", "numara": "408", "ad": "Kızılay – Atakule"},
+}
+
+
+def hatlar():
+    """{hat adı: güzergâh JSON'u} — yalnız dosyası olanlar."""
+    sonuc = {}
+    for ad in HATLAR:
+        f = os.path.join(VERI, "hatlar", f"{ad}.json")
+        if os.path.exists(f):
+            sonuc[ad] = json.load(open(f, encoding="utf-8"))
+    return sonuc
+
+
 def guzergah():
-    return json.load(open(os.path.join(VERI, "hat408.json"), encoding="utf-8"))
+    """Bütün hatların birleşimi: duraklar (sırayla, hat hat), osm_yollar birleşimi. Tek çizgi için guzergah_cizgisi()."""
+    h = hatlar()
+    return {"duraklar": [dz for g in h.values() for dz in g["duraklar"]],
+            "osm_yollar": sorted({w for g in h.values() for w in g["osm_yollar"]}),
+            "hatlar": h}
+
+
+_cizgiler = None
+
+
+def hat_s(x, z):
+    """Noktaya en yakın hat ve o hat boyunca konum: (hat adı, s m). Bölge kuralları (binalar) hat başına."""
+    global _cizgiler
+    from shapely.geometry import LineString, Point
+    if _cizgiler is None:
+        _cizgiler = {ad: LineString([yerel(*p) for p in g["yol"]]) for ad, g in hatlar().items()}
+    p = Point(x, z)
+    ad = min(_cizgiler, key=lambda a: _cizgiler[a].distance(p))
+    return ad, _cizgiler[ad].project(p)
+
+
+def guzergah_cizgisi():
+    """Bütün hatların güzergâhları (yerel xz), shapely MultiLineString."""
+    from shapely.geometry import LineString, MultiLineString
+    return MultiLineString([LineString([yerel(*p) for p in g["yol"]]) for g in hatlar().values()])
 
 
 # araç yolları: sınıf → (varsayılan toplam şerit (iki yön), şerit genişliği m, kaldırım m)

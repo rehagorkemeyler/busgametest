@@ -13,7 +13,7 @@ caddeye zorlamak için.
 "caddeler": [[ad, uzunluk_m], ...], "uzunluk_m": ...}
 
 Kullanım:
-    python hat408_guzergah.py --osm osm.json.gz --out hat408.json
+    python hat408_guzergah.py --osm osm.json.gz --out hat408.json [--hat 408_gunesevler | 408_atakule]
 Veri: © OpenStreetMap katkıcıları (ODbL); durak listesi: EGO Genel Müdürlüğü.
 """
 import argparse
@@ -23,7 +23,7 @@ import json
 import math
 
 # (EGO no, ad, lat, lon, yaklaşık mı) — Kızılay → Güneşevler (408 dönüş yönü, sıra 67–84)
-DURAKLAR = [
+DURAKLAR_GUNESEVLER = [
     (11621, "Kızılay", None, None, False),
     (30010, "Sıhhiye", 39.93030, 32.85448, True),      # OSM'de 30010 yok; kuzey yönü, demiryolu köprüsünün kuzeyi (Hacettepe Mh.)
     (30384, "Opera", None, None, False),
@@ -43,6 +43,20 @@ DURAKLAR = [
     (41530, "Güneşevler Spor Tesisleri", 39.96985, 32.89870, True),  # Mehmet Akif Ersoy Cd. (doğu yönü), yüzme havuzu tesisleri karşısı
     (41488, "Güneşevler", 39.96860, 32.90420, True),    # Ali Ersoy Mh., son durak
 ]
+# Kızılay → Atakule (408 gidiş yönü, sıra 30–38): Atatürk Bulvarı güneye, Kuğulu Park'tan Cinnah Caddesi, Simon Bolivar Cd.
+# Hepsi OSM'de EGO numarasıyla (15 Ekim 2026). 14360 OSM'de "Kırıkpınar Sokağı"; EGO adı Kırkpınar Sk.
+DURAKLAR_ATAKULE = [
+    (11616, "Kızılay", None, None, False),
+    (12206, "Güvenpark", None, None, False),
+    (12217, "Meclis", None, None, False),
+    (12251, "Kuğulu Park", None, None, False),
+    (12264, "Farabi", None, None, False),
+    (14360, "Kırkpınar Sokağı", None, None, False),
+    (12177, "Pilot Sokağı", None, None, False),
+    (12176, "Botanik Parkı", None, None, False),
+    (12178, "Atakule", None, None, False),
+]
+HATLAR = {"408_gunesevler": DURAKLAR_GUNESEVLER, "408_atakule": DURAKLAR_ATAKULE}
 # durak sırası arasında zorunlu ara noktalar (lat, lon): önceki durak no → [noktalar]
 GECIS = {
     40079: [(39.97250, 32.88290)],      # Malazgirt Caddesi'ne sağa dönüş
@@ -66,7 +80,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--osm", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--hat", default="408_gunesevler", choices=sorted(HATLAR))
     args = ap.parse_args()
+    DURAKLAR = HATLAR[args.hat]
     d = json.load(gzip.open(args.osm, "rt", encoding="utf-8"))
     N = {int(k): v for k, v in d["nodes"].items()}
     G, kenar = {}, {}
