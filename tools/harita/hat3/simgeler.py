@@ -251,9 +251,9 @@ class Simgeler:
             if L.distance(self.guz) > 3 or L.length < 12:
                 continue
             xz = np.array([L.interpolate(s).coords[0] for s in np.linspace(0, L.length, max(3, int(L.length / 4)))])
-            # tabliye: altındaki yolun en yüksek noktası + 5,6 m
+            # tabliye: altındaki yolun en yüksek noktası + 6,3 m (alt yüz 5,5 m)
             yol = self.yh(xz[:, 0], xz[:, 1])
-            dy = float(yol.max()) + 5.6
+            dy = float(yol.max()) + 6.3
             yy = np.full(len(xz), dy)
             V, UV, F = serit(xz, yy, 1.5, 1.5)
             self.pc.ekle_dunya("H3_Bordur@SimgeYapilar", V, UV, F)

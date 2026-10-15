@@ -150,7 +150,7 @@ def katman(t):
 # yinelemeli açıklık kısıtı: üstteki yol yüzeyi alttakinin en az ACIKLIK_Y üstünde (5,0 m açıklık + 1,2 m tabliye).
 # Bağlı yollar (rampa ↔ ana yol) birbirinin izi içinde aynı yükseklikte: rampa ancak ana yoldan ayrılınca yükselir.
 RAMPA_EGIM = 0.06
-ACIKLIK_Y = 6.2
+ACIKLIK_Y = 6.4
 
 
 def yol_agi(arazi):
@@ -284,7 +284,7 @@ def yol_agi(arazi):
         komsu[i].append((j, l))
         komsu[j].append((i, l))
 
-    def gevset(kaynak, R=150.0, w_min=0.2):
+    def gevset(kaynak, R=250.0, w_min=0.1):
         """Kaynak düğümlerden R m (yol boyunca) içindeki düğümlerin araziye bağlılığı w_min: rampayı yay sistemi kurar
         (ölçek √(LAMBDA/w)·adım ≈ 100 m → 6,5 m'de ~%6)."""
         import heapq
@@ -465,7 +465,8 @@ def yol_agi(arazi):
     iz("bağlı iz")
 
     # katmanlı sayılan düğümler (yüzeyler: köprü/alt geçit şeridi): hedefi ya da sonucu zeminden > 0,5 m farklı
-    fark = np.where(np.abs(hedef) > 0.3, y - zemin, 0.0)
+    # rampanın gevşetilmiş (köprü/tünel çevresindeki) kısmı da araziden sapıyorsa katmanlıdır: yarma (istinat duvarı) ya da dolgu
+    fark = np.where((np.abs(hedef) > 0.3) | ((W < 0.99) & (np.abs(y - zemin) > 1.5)), y - zemin, 0.0)
     fark[np.abs(fark) < 0.5] = 0.0
     for w in yollar:
         dd = np.array(w["d"])

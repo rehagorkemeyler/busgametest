@@ -29,7 +29,7 @@ from shapely.geometry import LineString, Point
 from . import kok
 from .mesh import PARCA, cokgenler
 from .ufuk import PARCA_UFUK
-from .yollar import serit_bilgisi
+from .yollar import BORDUR, serit_bilgisi
 from .yuzeyler import SonArazi, Yukseklik
 
 ADIM = 5.0
@@ -118,6 +118,14 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
         xz = np.asarray(xz)
         return yh(xz[:, 0], xz[:, 1])
 
+    def zemin_y(p):
+        """Öğenin durduğu yüzey: kaldırım/refüj (yol + bordür), asfalt (yol) ya da son arazi."""
+        if shapely.contains_xy(S, p[0], p[1]):
+            return float(yh(np.array([p[0]]), np.array([p[1]]))[0]) + BORDUR
+        if shapely.contains_xy(A, p[0], p[1]):
+            return float(yh(np.array([p[0]]), np.array([p[1]]))[0])
+        return float(ar.y(*p)[0])
+
     # --- trafik ışıkları: OSM düğümleri güzergâhta, s'ye göre kümelenir
     isiklar = []
     for nid, t in o["tagged_nodes"].items():
@@ -142,12 +150,12 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
         # güzergâh yönü: sağ kaldırım kenarında, gelen trafiğe bakar
         p = P[i] + N[i] * (sag_kenar[i] + 0.8)
         yaw = math.degrees(math.atan2(T[i][0], T[i][1]))
-        heads.append({"model": "Props/Trafik_Lambasi", "pos": [round(p[0], 2), round(float(ar.y(*p)[0]) + 0.15, 2), round(p[1], 2)],
+        heads.append({"model": "Props/Trafik_Lambasi", "pos": [round(p[0], 2), round(zemin_y(p), 2), round(p[1], 2)],
                       "rotY": round((yaw + 180) % 360, 1), "group": 0})
         j = min(i + 6, len(P) - 1)
         if not np.isnan(karsi[j]):
             q = P[j] - N[j] * (abs(karsi[j]) + 2.6)
-            heads.append({"model": "Props/Trafik_Lambasi", "pos": [round(q[0], 2), round(float(ar.y(*q)[0]) + 0.15, 2), round(q[1], 2)],
+            heads.append({"model": "Props/Trafik_Lambasi", "pos": [round(q[0], 2), round(zemin_y(q), 2), round(q[1], 2)],
                           "rotY": round(yaw % 360, 1), "group": 0})
         signals.append({"name": f"{on_ek}K{k + 1:02d}", "heads": heads,
                         "phases": [{"greenGroups": [0], "green": ISIK_YESIL[0], "yellow": 3.0, "allRed": 2.0},
@@ -304,7 +312,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                 ln["points"] = [round(float(v), 2) for xyz in zip(pts[:, 0], ys, pts[:, 1]) for v in xyz]
                 lanes.append(ln)
                 signals[k]["heads"].append({"model": "Props/Trafik_Lambasi",
-                                            "pos": [round(q[0], 2), round(float(ar.y(*q)[0]) + 0.15, 2), round(q[1], 2)],
+                                            "pos": [round(q[0], 2), round(zemin_y(q), 2), round(q[1], 2)],
                                             "rotY": round((yawq + 180) % 360, 1), "group": 1})
                 cap_sayi += 1
     print(f"  şerit {len(lanes)} (gidiş {len(gidis)}, çapraz {cap_sayi})")
@@ -321,7 +329,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                       "rotY": round(yaw % 360, 1), "radius": 10.0})
         # sundurma: kaldırımda, kenardan 2,4 m içeride
         q = nokta(i, sag_kenar[i] + 2.4)
-        items.append({"model": "Props/EGO_Durak", "pos": [round(q[0], 2), round(float(ar.y(*q)[0]) + 0.15, 2), round(q[1], 2)],
+        items.append({"model": "Props/EGO_Durak", "pos": [round(q[0], 2), round(zemin_y(q), 2), round(q[1], 2)],
                       "rotY": round((yaw - 90) % 360, 1), "group": "Duraklar"})
     # --- lambalar: refüj varsa ortasında, yoksa sağ kaldırımda; Atatürk Bulvarı'nda nostaljik
     son = -1e9
@@ -342,7 +350,7 @@ def hat_bilesenleri(o, g, geo, d, yh, ar, on_ek="", nostaljik_s=2150.0):
                 continue
             model = "Props/Lamba_Bulvar"
             rot = yaw + 90
-        items.append({"model": model, "pos": [round(p[0], 2), round(float(ar.y(*p)[0]) + 0.15, 2), round(p[1], 2)],
+        items.append({"model": model, "pos": [round(p[0], 2), round(zemin_y(p), 2), round(p[1], 2)],
                       "rotY": round(rot % 360, 1), "group": "Lambalar"})
         son = s
     print(f"  lamba {sum(1 for it in items if it['group'] == 'Lambalar')}, durak {len(stops)}")
@@ -378,6 +386,22 @@ def main():
         lanes += ln
         signals += sg
         items += it
+    # öğeleri üretilmiş yüzey ağlarına oturt (yol, kaldırım, refüj, zemin): tabanın 1 m üstüne kadarki en yüksek yüzey
+    from .denetim import agac, sorgu, ucgenler
+    T, _ = ucgenler("yol_*.pkl", ("H3_Asfalt", "H3_Kaldirim", "H3_Refuj", "H3_Zemin", "H3_Cim"))
+    oturt = items + [h for sg in signals for h in sg["heads"]]
+    IP = np.array([[it["pos"][0], it["pos"][2]] for it in oturt], float)
+    pi, ti, py = sorgu(agac(T), T, IP)
+    yuz = {}
+    for k_, y_ in zip(pi, py):
+        yuz.setdefault(int(k_), []).append(float(y_))
+    oturan = 0
+    for k_, it in enumerate(oturt):
+        ys = [v for v in yuz.get(k_, []) if v <= it["pos"][1] + 1.0]
+        if ys:
+            it["pos"][1] = round(max(ys), 2)
+            oturan += 1
+    print(f"  yüzeye oturan öğe {oturan}/{len(oturt)}")
 
     # --- parçalar
     parcalar = []

@@ -259,16 +259,35 @@ def main():
     pc = Parcalar()
     P = np.array([(x, z) for x, z, _ in noktalar])
     Y = ar.y(P[:, 0], P[:, 1])
-    for (x, z, tur), y in zip(noktalar, Y):
+    # budama: tacı asfalta uzanan ağaçta taç yolun en az BUDAMA m üstüne kalkar (gövde uzar), asfalta çok yakınsa daralır
+    BUDAMA = 4.6
+    d_asfalt = shapely.distance(shapely.points(P), A)
+    budanan = 0
+    for (x, z, tur), y, dA in zip(noktalar, Y, d_asfalt):
         u = hash01(round(x, 1), round(z, 1))
         olc = 0.75 + 0.5 * u
         aci = u * 2 * math.pi * 7
         ca, sa = math.cos(aci), math.sin(aci)
         k = anahtar(x, z)
+        gb, _, tm, (rh, rv), _, _ = TURLER[tur]
+        yatay = 1.0
+        kalk = 0.0
+        if dA < rh * olc:
+            kalk = max(0.0, BUDAMA - (tm - rv) * olc)
+            if dA < 1.0:
+                yatay = 0.8
+            budanan += 1
         for mal, (V, UV, F) in sablonlar[tur].items():
             Vr = np.stack([V[:, 0] * ca - V[:, 2] * sa, V[:, 1], V[:, 0] * sa + V[:, 2] * ca], 1) * olc
+            if kalk > 0:
+                if mal.startswith("H3_Yaprak"):
+                    Vr[:, 1] += kalk
+                    Vr[:, [0, 2]] *= yatay
+                else:
+                    Vr[:, 1] *= (gb * olc + kalk) / (gb * olc)      # gövde tacın yeni altına kadar uzar
             Vr += (x, y - 0.1, z)
             pc.ag(k, mal).ekle(Vr, UV, F)
+    print(f"  budanan (tacı yola uzanan) ağaç {budanan}")
     klasor = os.path.join(kok.ISLEM, "parcalar")
     for f in os.listdir(klasor):
         if f.startswith("agac_"):

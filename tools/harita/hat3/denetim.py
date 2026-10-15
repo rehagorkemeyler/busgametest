@@ -110,7 +110,7 @@ class Kume:
             e["y"] += float(y)
             e["ny"] += 1
         if deger is not None:
-            e["deger"] = deger if e["deger"] is None else (min(e["deger"], deger) if tur in ("aciklik", "dal") else max(e["deger"], deger))
+            e["deger"] = deger if e["deger"] is None else (min(e["deger"], deger) if tur in ("aciklik", "dal", "cakisma") else max(e["deger"], deger))
 
     def kumeler(self):
         """Komşu hücreleri birleştir."""
@@ -134,7 +134,7 @@ class Kume:
             x = sum(g["x"] for g in grup) / n
             z = sum(g["z"] for g in grup) / n
             ds = [g["deger"] for g in grup if g["deger"] is not None]
-            d = (min(ds) if k[0] in ("aciklik", "dal") else max(ds)) if ds else None
+            d = (min(ds) if k[0] in ("aciklik", "dal", "cakisma") else max(ds)) if ds else None
             ny = sum(g["ny"] for g in grup)
             yy = sum(g["y"] for g in grup) / ny if ny else None
             sonuc.append({"tur": k[0], "n": n, "x": round(x, 1), "z": round(z, 1), "y": None if yy is None else round(yy, 1),
@@ -249,7 +249,7 @@ def main():
 
     # açıklık: yüzeyin üstündeki her şey (yolun diğer katmanı, bina, simge, ağaç gövdesi), ağaç dalı ayrı
     engeller = [(TY, "yol"), (TD, "yol"), (TB, "bina"), (TS, "simge"), (TG, "agac")]
-    n_ac = 0
+    n_ac = n_cak = 0
     for T, ad in engeller:
         if len(T) == 0:
             continue
@@ -263,7 +263,12 @@ def main():
                 if 0.05 < d < ACIKLIK:
                     # yolun kendi yüzeyi: şerit çizgileri asfaltın ~5 cm üstünde, kaldırım/bordür kenarda ~15–30 cm; bunlar
                     # "üstten geçen yapı" değil (basamak denetimi ölçer). Üst katman ancak 0,5 m'den yüksekse sayılır.
-                    if ad == "yol" and d < 0.5:
+                    if ad == "yol" and d < 0.3:
+                        continue
+                    if ad == "yol" and d < 1.0:
+                        # 0,3–1 m: iki yol yüzeyi üst üste (rampa kaldırımı/komşu asfalt): üst engel değil, görsel çakışma
+                        n_cak += 1
+                        K.ekle("cakisma", P[p, 0], P[p, 1], d, ad, y=yv)
                         continue
                     n_ac += 1
                     K.ekle("aciklik", P[p, 0], P[p, 1], d, ad, y=yv)
@@ -274,7 +279,7 @@ def main():
             if 0.05 < yy - yv < DAL:
                 n_dal += 1
                 K.ekle("dal", P[p, 0], P[p, 1], yy - yv, y=yv)
-    print(f"  açıklık {n_ac}, dal {n_dal} ({time.time() - t0:.0f} sn)")
+    print(f"  açıklık {n_ac}, çakışma {n_cak}, dal {n_dal} ({time.time() - t0:.0f} sn)")
 
     # şeritler asfaltta
     Ab = A.buffer(0.05)
@@ -368,7 +373,7 @@ def main():
         dn = min(duraklar, key=lambda s: (s[1] - k["x"]) ** 2 + (s[2] - k["z"]) ** 2)
         k["durak"] = f"{dn[0]}+{math.hypot(dn[1] - k['x'], dn[2] - k['z']):.0f}m"
         k["guzergah"] = round(float(geo["guzergah"].distance(pt)), 1)
-    sira = {"aciklik": 0, "delik": 1, "basamak": 2, "kesik": 3, "serit": 4, "egim": 5, "nesne": 6, "dal": 7, "kose": 8}
+    sira = {"aciklik": 0, "cakisma": 9.5, "delik": 1, "basamak": 2, "kesik": 3, "serit": 4, "egim": 5, "nesne": 6, "dal": 7, "kose": 8}
     kumeler.sort(key=lambda k: (sira.get(k["tur"], 9), k["guzergah"]))
 
     os.makedirs(os.path.dirname(a.cikti), exist_ok=True)
@@ -376,7 +381,8 @@ def main():
     for k in kumeler:
         say[k["tur"]] = say.get(k["tur"], 0) + 1
     ozet = (f"Harita denetimi ({time.strftime('%Y-%m-%d %H:%M')}): örnek {len(P)} nokta (2 m), şerit örneği {n_serit}\n"
-            f"nokta sayıları: delik {len(delik)}, basamak {n_basamak}, eğim>%{EGIM * 100:.0f} {n_egim}, açıklık<{ACIKLIK} m {n_ac}, "
+            f"nokta sayıları: delik {len(delik)}, basamak {n_basamak}, eğim>%{EGIM * 100:.0f} {n_egim}, açıklık 1–{ACIKLIK} m {n_ac}, "
+            f"çakışma 0,3–1 m {n_cak}, "
             f"dal<{DAL} m {n_dal}, şerit asfalt dışı {n_serit_kotu}/{n_serit}, kesik yol ucu {n_kesik}, uç köşe {n_kose}, nesne {n_nesne}\n"
             f"kümeler: " + ", ".join(f"{t} {n}" for t, n in sorted(say.items(), key=lambda x: sira.get(x[0], 9))) + "\n")
     with open(a.cikti + ".txt", "w", encoding="utf-8") as fh:

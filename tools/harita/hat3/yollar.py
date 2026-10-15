@@ -139,13 +139,23 @@ def main():
     print(f"  kavşak köşeleri ({time.time() - t0:.0f} sn)")
     S = ops.unary_union(dis + yaya).difference(A).buffer(0)
     print(f"  kaldırım ({time.time() - t0:.0f} sn)")
-    # açık yarma (alt geçide inen, tünel etiketsiz katmanlı parça, zeminden > 0,5 m aşağıda): üstüne taşan zemin asfaltı ve
-    # kaldırımı kesilir (yarmanın kenarında istinat duvarı var). Kapalı tünel (tunnel=yes) kesilmez: üstündeki yol tavandır.
+    # katmanlı yolların alçak kısmı (zeminden 0,3–5,5 m: rampa, dolgu, açık yarma) zemindeki asfalt ve kaldırımın üstüne/altına
+    # taşmasın: izi zemin çokgenlerinden kesilir. Yüksek tabliyenin (> 5,5 m) altı ve kapalı tünelin (tunnel=yes) üstü kalır.
     etiket = {w["id"]: w["t"] for w in yollar}
-    yarma = [LineString(kp["xz"]).buffer(kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.3, cap_style="flat")
-             for kp in katmanli if np.min(kp["fark"]) < -0.5 and not etiket.get(kp["id"], {}).get("tunnel")]
-    if yarma:
-        Y_ = ops.unary_union(yarma)
+    kes = []
+    for kp in katmanli:
+        f = np.abs(np.asarray(kp["fark"], float))
+        tunel = bool(etiket.get(kp["id"], {}).get("tunnel"))
+        r = kp["genislik"] / 2 + max(kp["kaldirim"], 0.6) + 0.3
+        for i in range(len(kp["xz"]) - 1):
+            fi = max(f[i], f[i + 1])
+            if not (0.3 < fi < 5.5):
+                continue
+            if tunel and min(kp["fark"][i], kp["fark"][i + 1]) < 0:
+                continue
+            kes.append(LineString(kp["xz"][i:i + 2]).buffer(r, cap_style="flat"))
+    if kes:
+        Y_ = ops.unary_union(kes)
         A = A.difference(Y_).buffer(0)
         S = S.difference(Y_).buffer(0)
     A = A.intersection(koridor)

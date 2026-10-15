@@ -73,16 +73,52 @@ class SonArazi:
 class Yukseklik:
     """Zemin seviyesindeki yol düğümlerinden yükseklik (ters uzaklık ağırlıklı)."""
 
+    """Zemin seviyesindeki yol yüzeyinin yüksekliği: noktanın en yakın yol ekseni parçasına izdüşümü, eksen boyunca doğrusal
+    (yollar enine düz). En yakın iki eksen 3 m'den yakınsa uzaklıkla karışır (kavşak). Eski yöntem (en yakın 4 düğümden ters
+    uzaklık) kavşakta ve paralel/ farklı kottaki yollarda (çift yönlü yolun iki yanı, rampa) tümsek ve kırık üretiyordu."""
+
     def __init__(self, P, Y, F):
         m = np.abs(F) < 0.3
+        yollar = json.load(open(os.path.join(kok.ISLEM, "yollar.json"), encoding="utf-8"))
+        a, b = [], []
+        for w in yollar:
+            d_ = w["d"]
+            for i, j in zip(d_, d_[1:]):
+                if m[i] and m[j]:
+                    a.append(i)
+                    b.append(j)
+        self.a, self.b = np.array(a), np.array(b)
+        self.A, self.B = P[self.a], P[self.b]
+        self.YA, self.YB = Y[self.a], Y[self.b]
+        self.agac = shapely.STRtree(shapely.linestrings(np.stack([self.A, self.B], axis=1)))
         self.P, self.Y = P[m], Y[m]
-        self.agac = cKDTree(self.P)
+
+    def _seg(self, k, q):
+        ab = self.B[k] - self.A[k]
+        L2 = np.maximum((ab ** 2).sum(1), 1e-9)
+        t = np.clip(((q - self.A[k]) * ab).sum(1) / L2, 0, 1)
+        y = self.YA[k] + (self.YB[k] - self.YA[k]) * t
+        d = np.linalg.norm(q - (self.A[k] + ab * t[:, None]), axis=1)
+        return y, d
 
     def __call__(self, x, z):
-        q = np.stack([np.atleast_1d(x), np.atleast_1d(z)], 1)
-        d, i = self.agac.query(q, k=4)
-        w = 1.0 / np.maximum(d, 0.5) ** 2
-        return (self.Y[i] * w).sum(1) / w.sum(1)
+        q = np.stack([np.atleast_1d(np.asarray(x, float)), np.atleast_1d(np.asarray(z, float))], 1)
+        noktalar = shapely.points(q)
+        k1 = self.agac.query_nearest(noktalar, all_matches=False)[1]
+        y1, d1 = self._seg(k1, q)
+        # ikinci en yakın: 3 m daha uzağa kadar (kavşak karışımı)
+        pi, ki = self.agac.query(noktalar, predicate="dwithin", distance=min(float(d1.max()), 25.0) + 3.0)
+        y = y1.copy()
+        if len(pi):
+            yy, dd = self._seg(ki, q[pi])
+            ok = (ki != k1[pi]) & (dd < d1[pi] + 3.0)
+            pi, yy, dd = pi[ok], yy[ok], dd[ok]
+            if len(pi):
+                w = 1.0 / np.maximum(dd, 0.3) ** 2
+                ws = np.bincount(pi, weights=w, minlength=len(q)) + 1.0 / np.maximum(d1, 0.3) ** 2
+                ys = np.bincount(pi, weights=w * yy, minlength=len(q)) + y1 / np.maximum(d1, 0.3) ** 2
+                y = ys / ws
+        return y
 
 
 def kesikli(xz, y, cizgi=3.0, bosluk=6.0):
@@ -415,6 +451,7 @@ def main():
         if f.startswith("yol_"):
             os.remove(os.path.join(klasor, f))
     toplam = {}
+    ciktilar = {}
     for (i, j), mals in pc.p.items():
         cikti = {}
         for mal, ag in mals.items():
@@ -422,6 +459,27 @@ def main():
             if dz is not None:
                 cikti[mal] = dz
                 toplam[mal] = toplam.get(mal, 0) + len(dz[2])
+        ciktilar[(i, j)] = cikti
+    # şerit çizgileri ve yaya geçitleri altlarındaki asfalta oturur (zemin düğümlerinden ara değerleme köprü/rampa/yarma
+    # asfaltından 0,5 m'ye kadar sapıyordu): en yakın asfalt yüzeyi + 2,5 cm
+    from .denetim import agac, sorgu
+    TA = np.concatenate([c["H3_Asfalt"][0][c["H3_Asfalt"][2]] for c in ciktilar.values() if "H3_Asfalt" in c])
+    trA = agac(TA)
+    oturan = 0
+    for c in ciktilar.values():
+        if "H3_Cizgi" not in c:
+            continue
+        V = c["H3_Cizgi"][0]
+        pi, ti, yy = sorgu(trA, TA, V[:, [0, 2]])
+        en = np.full(len(V), np.nan)
+        for k_, y_ in zip(pi, yy):
+            if np.isnan(en[k_]) or abs(y_ - V[k_, 1]) < abs(en[k_] - V[k_, 1]):
+                en[k_] = y_
+        m = ~np.isnan(en) & (np.abs(en - V[:, 1]) < 1.5)
+        V[m, 1] = en[m] + 0.025
+        oturan += int(m.sum())
+    print(f"  asfalta oturan çizgi köşesi {oturan}")
+    for (i, j), cikti in ciktilar.items():
         pickle.dump(cikti, open(os.path.join(klasor, f"yol_{i}_{j}.pkl"), "wb"))
     print(f"{len(pc.p)} parça; üçgen: " + ", ".join(f"{k} {v}" for k, v in sorted(toplam.items())) +
           f" ({time.time() - t0:.0f} sn)")
